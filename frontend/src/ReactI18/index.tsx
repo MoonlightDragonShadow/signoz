@@ -3,10 +3,15 @@ import i18n from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import Backend from 'i18next-http-backend';
 import { getBasePath } from 'utils/basePath';
+import { getScopedKey } from 'utils/storage';
 
 import cacheBursting from '../../i18n-translations-hash.json';
 
-i18n
+i18n.on('languageChanged', (language: string) => {
+	document.documentElement.lang = language;
+});
+
+void i18n
 	// load translation using http -> see /public/locales
 	.use(Backend)
 	// detect user language
@@ -17,6 +22,13 @@ i18n
 	.init({
 		debug: false,
 		fallbackLng: 'en',
+		supportedLngs: ['en', 'en-GB', 'zh-CN'],
+		load: 'currentOnly',
+		detection: {
+			order: ['localStorage'],
+			caches: ['localStorage'],
+			lookupLocalStorage: getScopedKey('i18nextLng'),
+		},
 		interpolation: {
 			escapeValue: false, // not needed for react as it escapes by default
 		},
@@ -26,7 +38,9 @@ i18n
 				const namespace = namespaces[0];
 				const pathkey = `/${language}/${namespace}`;
 				const hash = cacheBursting[pathkey as keyof typeof cacheBursting] || '';
-				return `${getBasePath()}locales/${language}/${namespace}.json?h=${hash}`;
+				return hash
+					? `${getBasePath()}locales/${language}/${namespace}.json?h=${hash}`
+					: '';
 			},
 		},
 		react: {

@@ -1,5 +1,7 @@
 import { ReactNode } from 'react';
+import { useTranslation } from 'react-i18next';
 import { ConfigProvider } from 'antd';
+import zhCN from 'antd/locale/zh_CN';
 import { useThemeConfig } from 'hooks/useDarkMode';
 import { NotificationProvider } from 'hooks/useNotifications';
 import { CmdKProvider } from 'providers/cmdKProvider';
@@ -28,9 +30,13 @@ export interface AppShellProps {
  */
 function AppShell({ children, router, overlays }: AppShellProps): JSX.Element {
 	const themeConfig = useThemeConfig();
+	const { i18n } = useTranslation();
 
 	return (
-		<ConfigProvider theme={themeConfig}>
+		<ConfigProvider
+			theme={themeConfig}
+			locale={i18n?.language === 'zh-CN' ? zhCN : undefined}
+		>
 			{router(
 				<CmdKProvider>
 					<NotificationProvider>

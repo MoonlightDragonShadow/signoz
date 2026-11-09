@@ -11,7 +11,7 @@
     "storybook:build": "storybook build -o storybook-static",
     "test:storybook": "bash scripts/test-storybook.sh",
     "scaffold": "node .claude/skills/scaffold-feature/scaffold.mjs",
-    "build": "vite build",
+    "build": "pnpm i18n:generate-hash && vite build",
     "preview": "vite preview",
     "prettify": "oxfmt",
     "fmt": "oxfmt --check",

@@ -18,7 +18,11 @@ fs
 	.forEach((entry) => {
 		const file = path.join(entry.parentPath, entry.name);
 		const content = fs.readFileSync(file, { encoding: 'utf-8' });
-		const key = path.relative(localesDir, file).replace(/\.json$/, '');
+		const key = path
+			.relative(localesDir, file)
+			.split(path.sep)
+			.join('/')
+			.replace(/\.json$/, '');
 		result[`/${key}`] = generateChecksum(content);
 	});
 
