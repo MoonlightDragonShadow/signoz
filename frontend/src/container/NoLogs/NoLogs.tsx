@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Typography } from '@signozhq/ui/typography';
 import logEvent from 'api/common/logEvent';
 import ROUTES from 'constants/routes';
@@ -17,6 +18,7 @@ export default function NoLogs({
 }: {
 	dataSource: DataSource;
 }): JSX.Element {
+	const translate = useConsoleTranslation();
 	const { isCloudUser: isCloudUserVal } = useGetTenantLicense();
 
 	const handleLinkClick = (
@@ -47,15 +49,15 @@ export default function NoLogs({
 			<div className="no-logs-container-content">
 				<img className="eyes-emoji" src={eyesEmojiUrl} alt="eyes emoji" />
 				<Typography className="no-logs-text">
-					No {dataSource} yet.
+					{translate(`No ${dataSource} yet.`)}
 					<span className="sub-text">
 						{' '}
-						When we receive {dataSource}, they would show up here
+						{translate(`When we receive ${dataSource}, they would show up here`)}
 					</span>
 				</Typography>
 
 				<Typography.Link className="send-logs-link" onClick={handleLinkClick}>
-					Sending {dataSource} to SigNoz <ArrowUpRight size={16} />
+					{translate(`Sending ${dataSource} to SigNoz`)} <ArrowUpRight size={16} />
 				</Typography.Link>
 			</div>
 		</div>

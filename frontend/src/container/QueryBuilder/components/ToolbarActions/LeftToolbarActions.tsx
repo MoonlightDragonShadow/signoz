@@ -8,6 +8,7 @@ import {
 } from '@signozhq/icons';
 import { Button, Tooltip } from 'antd';
 import cx from 'classnames';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { ExplorerViews } from 'pages/LogsExplorer/utils';
 
 import './ToolbarActions.styles.scss';
@@ -29,12 +30,13 @@ export default function LeftToolbarActions({
 	showFilter,
 	handleFilterVisibilityChange,
 }: LeftToolbarActionsProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const { clickhouse, list, timeseries, table, trace } = items;
 
 	return (
 		<div className="left-toolbar">
 			{!showFilter && (
-				<Tooltip title="Show Filters">
+				<Tooltip title={translate('Show Filters')}>
 					<Button onClick={handleFilterVisibilityChange} className="filter-btn">
 						<Filter size={12} />
 						<ArrowUpToLine size={12} style={{ transform: 'rotate(90deg)' }} />
@@ -43,7 +45,7 @@ export default function LeftToolbarActions({
 			)}
 			<div className="left-toolbar-query-actions">
 				{list?.show && (
-					<Tooltip title="List View">
+					<Tooltip title={translate('List View')}>
 						<Button
 							disabled={list.disabled}
 							className={cx(
@@ -56,13 +58,13 @@ export default function LeftToolbarActions({
 							aria-pressed={selectedView === list.key}
 						>
 							<SquareMousePointer size={14} data-testid="search-view" />
-							List View
+							{translate('List View')}
 						</Button>
 					</Tooltip>
 				)}
 
 				{trace?.show && (
-					<Tooltip title="Trace View">
+					<Tooltip title={translate('Trace View')}>
 						<Button
 							disabled={trace.disabled}
 							className={cx(
@@ -75,13 +77,13 @@ export default function LeftToolbarActions({
 							aria-pressed={selectedView === trace.key}
 						>
 							<SquareMousePointer size={14} data-testid="trace-view" />
-							Trace View
+							{translate('Trace View')}
 						</Button>
 					</Tooltip>
 				)}
 
 				{timeseries?.show && (
-					<Tooltip title="Time Series">
+					<Tooltip title={translate('Time Series')}>
 						<Button
 							disabled={timeseries.disabled}
 							className={cx(
@@ -94,7 +96,7 @@ export default function LeftToolbarActions({
 							aria-pressed={selectedView === timeseries.key}
 						>
 							<Atom size={14} data-testid="query-builder-view" />
-							Time Series
+							{translate('Time Series')}
 						</Button>
 					</Tooltip>
 				)}
@@ -117,7 +119,7 @@ export default function LeftToolbarActions({
 				)}
 
 				{table?.show && (
-					<Tooltip title="Table">
+					<Tooltip title={translate('Table')}>
 						<Button
 							disabled={table.disabled}
 							className={cx(
@@ -130,7 +132,7 @@ export default function LeftToolbarActions({
 							aria-pressed={selectedView === table.key}
 						>
 							<Binoculars size={14} data-testid="query-builder-view-v2" />
-							Table
+							{translate('Table')}
 						</Button>
 					</Tooltip>
 				)}

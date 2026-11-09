@@ -53,6 +53,8 @@ import { useSelectPopupContainer } from 'utils/selectPopupContainer';
 import { v4 as uuid } from 'uuid';
 
 import { selectStyle } from './config';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
+
 import { PLACEHOLDER } from './constant';
 import {
 	checkCommaInValue,
@@ -153,6 +155,7 @@ function QueryBuilderSearchV2(
 		selectProps,
 	} = props;
 
+	const translate = useConsoleTranslation();
 	const getPopupContainer = useSelectPopupContainer();
 
 	const { registerShortcut, deregisterShortcut } = useKeyboardHotkeys();
@@ -965,7 +968,9 @@ function QueryBuilderSearchV2(
 				onDropdownVisibleChange={setIsOpen}
 				autoClearSearchValue={false}
 				mode="multiple"
-				placeholder={placeholder}
+				placeholder={
+					placeholder === PLACEHOLDER ? translate(PLACEHOLDER) : placeholder
+				}
 				value={queryTags}
 				searchValue={searchValue}
 				className={cx(

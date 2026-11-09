@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import {
 	isValidElement,
 	MouseEvent,
@@ -95,6 +96,7 @@ import { getActiveMenuKeyFromPath } from './sideNav.utils';
 import './SideNav.styles.scss';
 
 function SortableFilter({ item }: { item: SidebarItem }): JSX.Element {
+	const translate = useConsoleTranslation();
 	const { attributes, listeners, setNodeRef, transform, transition } =
 		useSortable({ id: item.key });
 
@@ -118,7 +120,9 @@ function SortableFilter({ item }: { item: SidebarItem }): JSX.Element {
 
 				<div className="reorder-shortcut-nav-item-icon">{item.icon}</div>
 
-				<div className="reorder-shortcut-nav-item-label">{item.label}</div>
+				<div className="reorder-shortcut-nav-item-label">
+					{typeof item.label === 'string' ? translate(item.label) : item.label}
+				</div>
 			</div>
 		</div>
 	);
@@ -126,6 +130,7 @@ function SortableFilter({ item }: { item: SidebarItem }): JSX.Element {
 
 // eslint-disable-next-line sonarjs/cognitive-complexity
 function SideNav({ isPinned }: { isPinned: boolean }): JSX.Element {
+	const translate = useConsoleTranslation();
 	const { openCmdK } = useCmdK();
 	const { pathname, search } = useAppLocation();
 	const { currentVersion, latestVersion, isCurrentVersionError } = useSelector<
@@ -953,7 +958,10 @@ function SideNav({ isPinned }: { isPinned: boolean }): JSX.Element {
 			return {
 				type: 'item',
 				value: String(item.key),
-				label: item.label ?? '',
+				label:
+					typeof item.label === 'string'
+						? translate(item.label)
+						: (item.label ?? ''),
 				testId: item.itemKey ? `help-menu-${item.itemKey}` : undefined,
 				prefix: isValidElement(item.icon) ? item.icon : undefined,
 				onClick: (event: MouseEvent): void => {
@@ -1104,10 +1112,12 @@ function SideNav({ isPinned }: { isPinned: boolean }): JSX.Element {
 												<MousePointerClick size={16} />
 											</div>
 
-											<div className="nav-section-title-text">SHORTCUTS</div>
+											<div className="nav-section-title-text">
+												{translate('SHORTCUTS')}
+											</div>
 
 											{pinnedMenuItems.length > 1 && (
-												<Tooltip title="Manage shortcuts" placement="right">
+												<Tooltip title={translate('Manage shortcuts')} placement="right">
 													<div
 														className="nav-section-title-icon reorder"
 														data-testid="manage-shortcuts-btn"
@@ -1124,7 +1134,7 @@ function SideNav({ isPinned }: { isPinned: boolean }): JSX.Element {
 
 										{pinnedMenuItems.length === 0 && (
 											<div className="nav-section-subtitle">
-												You have not added any shortcuts yet.
+												{translate('You have not added any shortcuts yet.')}
 											</div>
 										)}
 									</div>
@@ -1172,7 +1182,7 @@ function SideNav({ isPinned }: { isPinned: boolean }): JSX.Element {
 												<Ellipsis size={16} />
 											</div>
 
-											<div className="nav-section-title-text">MORE</div>
+											<div className="nav-section-title-text">{translate('MORE')}</div>
 
 											<div className="collapse-expand-section-icon">
 												{isMoreMenuCollapsed ? (
@@ -1206,7 +1216,9 @@ function SideNav({ isPinned }: { isPinned: boolean }): JSX.Element {
 									<ChevronsDown size={16} />
 								</div>
 
-								<div className="scroll-for-more-label">Scroll for more</div>
+								<div className="scroll-for-more-label">
+									{translate('Scroll for more')}
+								</div>
 							</div>
 						</div>
 					</div>
@@ -1227,7 +1239,9 @@ function SideNav({ isPinned }: { isPinned: boolean }): JSX.Element {
 										<div className="nav-item-data" data-testid="help-support-nav-item">
 											<div className="nav-item-icon">{helpSupportMenuItem.icon}</div>
 
-											<div className="nav-item-label">{helpSupportMenuItem.label}</div>
+											<div className="nav-item-label">
+												{translate(helpSupportMenuItem.label)}
+											</div>
 										</div>
 									</div>
 								</Dropdown>
@@ -1235,7 +1249,11 @@ function SideNav({ isPinned }: { isPinned: boolean }): JSX.Element {
 
 							<div className="nav-dropdown-item">
 								<Dropdown
-									items={userSettingsItems}
+									items={userSettingsItems.map((item) =>
+										'label' in item && typeof item.label === 'string'
+											? { ...item, label: translate(item.label) }
+											: item,
+									)}
 									nativeButton={false}
 									side="top"
 									align="start"
@@ -1246,7 +1264,9 @@ function SideNav({ isPinned }: { isPinned: boolean }): JSX.Element {
 										<div className="nav-item-data" data-testid="settings-nav-item">
 											<div className="nav-item-icon">{userSettingsMenuItem.icon}</div>
 
-											<div className="nav-item-label">{userSettingsMenuItem.label}</div>
+											<div className="nav-item-label">
+												{translate(userSettingsMenuItem.label)}
+											</div>
 										</div>
 									</div>
 								</Dropdown>
@@ -1258,7 +1278,7 @@ function SideNav({ isPinned }: { isPinned: boolean }): JSX.Element {
 
 			<Modal
 				className="reorder-shortcut-nav-items-modal"
-				title={<span className="title">Manage Shortcuts</span>}
+				title={<span className="title">{translate('Manage Shortcuts')}</span>}
 				open={isReorderShortcutNavItemsModalOpen}
 				closable
 				onCancel={(): void => {

@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useQueryClient } from 'react-query';
 import * as Sentry from '@sentry/react';
@@ -45,6 +46,7 @@ import { ExplorerViews } from './utils';
 import './LogsExplorer.styles.scss';
 
 function LogsExplorer(): JSX.Element {
+	const translate = useConsoleTranslation();
 	const [showLiveLogs, setShowLiveLogs] = useState<boolean>(false);
 
 	// Get panel type from URL
@@ -176,27 +178,27 @@ function LogsExplorer(): JSX.Element {
 		() => ({
 			list: {
 				name: 'list',
-				label: 'List',
+				label: translate('List'),
 				show: true,
 				key: 'list',
 			},
 			timeseries: {
 				name: 'timeseries',
-				label: 'Timeseries',
+				label: translate('Timeseries'),
 				disabled: false,
 				show: true,
 				key: 'timeseries',
 			},
 			trace: {
 				name: 'trace',
-				label: 'Trace',
+				label: translate('Trace'),
 				disabled: false,
 				show: false,
 				key: 'trace',
 			},
 			table: {
 				name: 'table',
-				label: 'Table',
+				label: translate('Table'),
 				disabled: false,
 				show: true,
 				key: 'table',
@@ -209,7 +211,7 @@ function LogsExplorer(): JSX.Element {
 				key: 'clickhouse',
 			},
 		}),
-		[],
+		[translate],
 	);
 
 	const handleShowLiveLogs = useCallback(() => {
@@ -271,7 +273,9 @@ function LogsExplorer(): JSX.Element {
 							</div>
 							<div className="logs-explorer-views">
 								{isCancelled ? (
-									<QueryCancelledPlaceholder subText='Click "Run Query" to load logs.' />
+									<QueryCancelledPlaceholder
+										subText={translate('Click "Run Query" to load logs.')}
+									/>
 								) : (
 									<LogsExplorerViewsContainer
 										listQueryKeyRef={listQueryKeyRef}

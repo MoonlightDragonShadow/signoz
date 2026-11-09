@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import {
 	Dispatch,
 	SetStateAction,
@@ -114,6 +115,7 @@ function CustomTimePickerPopoverContent({
 	customDateTimeInputStatus = CustomTimePickerInputStatus.UNSET,
 	inputErrorDetails,
 }: CustomTimePickerPopoverContentProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const { pathname } = useAppLocation();
 
 	const isLogsExplorerPage = useMemo(
@@ -186,7 +188,7 @@ function CustomTimePickerPopoverContent({
 							onSelectHandler(option.label, option.value);
 						}}
 					>
-						{option.label}
+						{translate(option.label)}
 					</Button>
 				))}
 			</div>
@@ -254,7 +256,7 @@ function CustomTimePickerPopoverContent({
 							data-testid="time-picker-live"
 							onClick={handleGoLive}
 						>
-							Live
+							{translate('Live')}
 						</Button>
 					)}
 					{options.map((option) => (
@@ -275,7 +277,7 @@ function CustomTimePickerPopoverContent({
 									: selectedTime === option.value && !isLiveLogsEnabled && 'active',
 							)}
 						>
-							<span className="time-label">{option.label}</span>
+							<span className="time-label">{translate(option.label)}</span>
 
 							{option.value !== 'custom' && option.value !== '1month' && (
 								<span className="time-value">{option.value}</span>
@@ -318,13 +320,13 @@ function CustomTimePickerPopoverContent({
 								)}
 
 							<div className="relative-times-container">
-								<div className="time-heading">RELATIVE TIMES</div>
+								<div className="time-heading">{translate('RELATIVE TIMES')}</div>
 								<div>{getTimeChips(RelativeDurationSuggestionOptions)}</div>
 							</div>
 
 							{showRecentlyUsed && recentlyUsedTimeRanges.length > 0 && (
 								<div className="recently-used-container">
-									<div className="time-heading">RECENTLY USED</div>
+									<div className="time-heading">{translate('RECENTLY USED')}</div>
 									<div className="recently-used-range">
 										{recentlyUsedTimeRanges.map((range: RecentlyUsedDateTimeRange) => (
 											<div
@@ -378,7 +380,7 @@ function CustomTimePickerPopoverContent({
 							onClick={handleTimezoneHintClick}
 							icon={<PenLine size={10} />}
 						>
-							Change Timezone
+							{translate('Change Timezone')}
 						</Button>
 					</div>
 				</div>

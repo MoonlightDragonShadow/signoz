@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useMemo, useState } from 'react';
 import {
 	ArrowUpToLine,
@@ -45,6 +46,7 @@ import { FiltersType, IQuickFiltersProps, QuickFiltersSource } from './types';
 import './QuickFilters.styles.scss';
 
 export default function QuickFilters(props: IQuickFiltersProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const {
 		className,
 		config,
@@ -183,14 +185,14 @@ export default function QuickFilters(props: IQuickFiltersProps): JSX.Element {
 	const renderLeftActions = (): JSX.Element => (
 		<section className="left-actions">
 			<Typography.Text className="text">
-				{displayedQueryName ? 'Filters for' : 'Filters'}
+				{translate(displayedQueryName ? 'Filters for' : 'Filters')}
 			</Typography.Text>
 			{queryOptions.length > 1 &&
 			!isAIObservabilityRowView &&
 			(!isListView || shouldShowDropdownInListView) ? (
 				<Combobox open={open} onOpenChange={setOpen}>
 					<ComboboxTrigger
-						placeholder="Select a query"
+						placeholder={translate('Select a query')}
 						value={queryOptions.find((f) => f.value === validQueryIndex)?.label || ''}
 						className="select-box"
 					/>
@@ -232,26 +234,26 @@ export default function QuickFilters(props: IQuickFiltersProps): JSX.Element {
 
 	const renderRightActions = (): JSX.Element => (
 		<section className="right-actions">
-			<Tooltip title="Reset All">
+			<Tooltip title={translate('Reset All')}>
 				<Button
 					variant="ghost"
 					color="secondary"
 					size="sm"
 					icon
-					aria-label="Reset All"
+					aria-label={translate('Reset All')}
 					onClick={handleReset}
 				>
 					<RefreshCw size={14} />
 				</Button>
 			</Tooltip>
 			{showFilterCollapse && handleFilterVisibilityChange && (
-				<Tooltip title="Collapse Filters">
+				<Tooltip title={translate('Collapse Filters')}>
 					<Button
 						variant="ghost"
 						color="secondary"
 						size="sm"
 						icon
-						aria-label="Collapse Filters"
+						aria-label={translate('Collapse Filters')}
 						onClick={handleFilterVisibilityChange}
 					>
 						<ArrowUpToLine style={{ rotate: '270deg' }} size={14} />
@@ -266,20 +268,20 @@ export default function QuickFilters(props: IQuickFiltersProps): JSX.Element {
 						color="secondary"
 						size="sm"
 						icon
-						aria-label="Settings"
+						aria-label={translate('Settings')}
 						onClick={(): void => setIsSettingsOpen(true)}
 						testId="settings-icon-container"
 					>
 						<SettingsIcon data-testid="settings-icon" size={14} />
 					</AuthZButton>
 				) : (
-					<Tooltip title="Settings">
+					<Tooltip title={translate('Settings')}>
 						<Button
 							variant="ghost"
 							color="secondary"
 							size="sm"
 							icon
-							aria-label="Settings"
+							aria-label={translate('Settings')}
 							aria-expanded={isSettingsOpen}
 							onClick={(): void => setIsSettingsOpen(true)}
 							testId="settings-icon-container"

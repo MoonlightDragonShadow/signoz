@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Color, Spacing } from '@signozhq/design-tokens';
 import { Button } from '@signozhq/ui/button';
@@ -60,6 +61,7 @@ function LogDetailInner({
 	getContainer,
 	onApplyLogFilter,
 }: LogDetailInnerProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const initialContextQuery = useInitialQuery(log);
 	const [contextQuery, setContextQuery] = useState<Query | undefined>(
 		initialContextQuery,
@@ -337,7 +339,7 @@ function LogDetailInner({
 									label: (
 										<div className="view-title">
 											<Table size={14} />
-											Overview
+											{translate('Overview')}
 										</div>
 									),
 								},
@@ -346,7 +348,7 @@ function LogDetailInner({
 									label: (
 										<div className="view-title">
 											<TextSelect size={14} />
-											Context
+											{translate('Context')}
 										</div>
 									),
 								},
@@ -355,7 +357,7 @@ function LogDetailInner({
 									label: (
 										<div className="view-title">
 											<Histogram size="md" />
-											Metrics
+											{translate('Metrics')}
 										</div>
 									),
 								},
@@ -365,9 +367,9 @@ function LogDetailInner({
 						<div className="log-detail-drawer__actions">
 							{selectedView === VIEW_TYPES.CONTEXT && (
 								<Tooltip
-									title="Show Filters"
+									title={translate('Show Filters')}
 									placement="topLeft"
-									aria-label="Show Filters"
+									aria-label={translate('Show Filters')}
 									mouseLeaveDelay={0}
 								>
 									<Button
@@ -375,7 +377,7 @@ function LogDetailInner({
 										color="secondary"
 										size="sm"
 										icon
-										aria-label="Show Filters"
+										aria-label={translate('Show Filters')}
 										onClick={handleFilterVisible}
 									>
 										<Filter size="lg" />

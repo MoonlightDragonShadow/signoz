@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useQuery } from 'react-query';
 import { Button } from '@signozhq/ui/button';
@@ -45,6 +46,7 @@ const ENTER_VALID_EMAIL = 'Enter a valid email address';
 
 // eslint-disable-next-line sonarjs/cognitive-complexity
 function Login(): JSX.Element {
+	const translate = useConsoleTranslation();
 	const urlQueryParams = useUrlQuery();
 	// override for callbackAuthN in case of some misconfiguration
 	const isPasswordAuthNEnabled = (urlQueryParams.get('password') || 'N') === 'Y';
@@ -308,17 +310,18 @@ function Login(): JSX.Element {
 						<img src={tvUrl} alt="TV" width="32" height="32" />
 					</div>
 					<Typography.Title level={4} className="login-form-title">
-						Sign in to your workspace
+						{translate('Sign in to your workspace')}
 					</Typography.Title>
 					<Typography.Text className="login-form-description">
-						Sign in to monitor, trace, and troubleshoot your applications
-						effortlessly.
+						{translate(
+							'Sign in to monitor, trace, and troubleshoot your applications effortlessly.',
+						)}
 					</Typography.Text>
 				</div>
 
 				<div className="login-form-card">
 					<ParentContainer>
-						<Label htmlFor="signupEmail">Email address</Label>
+						<Label htmlFor="signupEmail">{translate('Email address')}</Label>
 						<FormContainer.Item name="email">
 							<Input
 								type="email"
@@ -335,13 +338,13 @@ function Login(): JSX.Element {
 
 					{sessionsContext && sessionsContext.orgs.length > 1 && (
 						<ParentContainer>
-							<Label htmlFor="orgId">Organization Name</Label>
+							<Label htmlFor="orgId">{translate('Organization Name')}</Label>
 							<FormContainer.Item name="orgId">
 								<Select
 									id="orgId"
 									data-testid="orgId"
 									className="login-form-input login-form-select-no-border"
-									placeholder="Select your organization"
+									placeholder={translate('Select your organization')}
 									options={sessionsContext.orgs.map((org) => ({
 										value: org.id,
 										label: org.name || 'default',
@@ -357,7 +360,7 @@ function Login(): JSX.Element {
 					{sessionsContext && isPasswordAuthN && (
 						<ParentContainer>
 							<div className="password-label-container">
-								<Label htmlFor="Password">Password</Label>
+								<Label htmlFor="Password">{translate('Password')}</Label>
 								<Typography.Link
 									className="forgot-password-link"
 									onClick={(event): void => {
@@ -365,13 +368,13 @@ function Login(): JSX.Element {
 										handleForgotPasswordClick();
 									}}
 								>
-									Forgot password?
+									{translate('Forgot password?')}
 								</Typography.Link>
 							</div>
 							<FormContainer.Item name="password">
 								<Input.Password
 									required
-									placeholder="Enter password"
+									placeholder={translate('Enter password')}
 									id="currentPassword"
 									data-testid="password"
 									disabled={isSubmitting}
@@ -391,14 +394,14 @@ function Login(): JSX.Element {
 							color="primary"
 							loading={isNextLoading}
 							disabled={!isEmailValid}
-							disabledTooltip={ENTER_VALID_EMAIL}
+							disabledTooltip={translate(ENTER_VALID_EMAIL)}
 							variant="solid"
 							onClick={onNextHandler}
 							testId="initiate_login"
 							width="100%"
 							suffix={<ArrowRight />}
 						>
-							Next
+							{translate('Next')}
 						</Button>
 					)}
 
@@ -407,7 +410,7 @@ function Login(): JSX.Element {
 							size="md"
 							loading={isSubmitting}
 							disabled={!!submitDisabledReason}
-							disabledTooltip={submitDisabledReason}
+							disabledTooltip={submitDisabledReason && translate(submitDisabledReason)}
 							variant="solid"
 							type="submit"
 							color="primary"
@@ -416,7 +419,7 @@ function Login(): JSX.Element {
 							width="100%"
 							suffix={<ArrowRight />}
 						>
-							Sign in with SSO
+							{translate('Sign in with SSO')}
 						</Button>
 					)}
 
@@ -425,7 +428,7 @@ function Login(): JSX.Element {
 							size="md"
 							loading={isSubmitting}
 							disabled={!!submitDisabledReason}
-							disabledTooltip={submitDisabledReason}
+							disabledTooltip={submitDisabledReason && translate(submitDisabledReason)}
 							variant="solid"
 							color="primary"
 							testId="password_authn_submit"
@@ -434,7 +437,7 @@ function Login(): JSX.Element {
 							width="100%"
 							suffix={<ArrowRight />}
 						>
-							Sign in with Password
+							{translate('Sign in with Password')}
 						</Button>
 					)}
 				</div>

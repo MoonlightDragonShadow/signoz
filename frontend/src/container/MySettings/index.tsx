@@ -1,9 +1,11 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useEffect, useState } from 'react';
 import { useMutation } from 'react-query';
 import { Badge } from '@signozhq/ui/badge';
 import { Switch } from '@signozhq/ui/switch';
 import { ToggleGroup } from '@signozhq/ui/toggle-group';
 import setLocalStorageApi from 'api/browser/localstorage/set';
+import LanguageSelector from 'components/LanguageSelector/LanguageSelector';
 import logEvent from 'api/common/logEvent';
 import updateUserPreference from 'api/v1/user/preferences/name/update';
 import { AxiosError } from 'axios';
@@ -22,6 +24,7 @@ import UserInfo from './UserInfo';
 import './MySettings.styles.scss';
 
 function MySettings(): JSX.Element {
+	const translate = useConsoleTranslation();
 	const isDarkMode = useIsDarkMode();
 	const { userPreferences, updateUserPreferenceInContext } = useAppContext();
 	const { toggleTheme, autoSwitch, setAutoSwitch } = useThemeMode();
@@ -56,7 +59,7 @@ function MySettings(): JSX.Element {
 		{
 			label: (
 				<div className="theme-option">
-					<Moon data-testid="dark-theme-icon" size={12} /> Dark{' '}
+					<Moon data-testid="dark-theme-icon" size={12} /> {translate('Dark')}{' '}
 				</div>
 			),
 			value: 'dark',
@@ -64,7 +67,7 @@ function MySettings(): JSX.Element {
 		{
 			label: (
 				<div className="theme-option">
-					<Sun size={12} data-testid="light-theme-icon" /> Light{' '}
+					<Sun size={12} data-testid="light-theme-icon" /> {translate('Light')}{' '}
 					<Badge variant="solid" color="primary">
 						Beta
 					</Badge>
@@ -75,7 +78,8 @@ function MySettings(): JSX.Element {
 		{
 			label: (
 				<div className="theme-option">
-					<MonitorCog size={12} data-testid="auto-theme-icon" /> System{' '}
+					<MonitorCog size={12} data-testid="auto-theme-icon" />{' '}
+					{translate('System')}{' '}
 				</div>
 			),
 			value: 'auto',
@@ -163,10 +167,10 @@ function MySettings(): JSX.Element {
 		<div className="my-settings-container">
 			<div className="user-info-section">
 				<div className="user-info-section-header">
-					<div className="user-info-section-title">Account </div>
+					<div className="user-info-section-title">{translate('Account ')}</div>
 
 					<div className="user-info-section-subtitle">
-						Manage your account settings.
+						{translate('Manage your account settings.')}
 					</div>
 				</div>
 
@@ -177,17 +181,19 @@ function MySettings(): JSX.Element {
 
 			<div className="user-preference-section">
 				<div className="user-preference-section-header">
-					<div className="user-preference-section-title">User Preferences</div>
+					<div className="user-preference-section-title">
+						{translate('User Preferences')}
+					</div>
 
 					<div className="user-preference-section-subtitle">
-						Tailor the SigNoz console to work according to your needs.
+						{translate('Tailor the SigNoz console to work according to your needs.')}
 					</div>
 				</div>
 
 				<div className="user-preference-section-content">
 					<div className="user-preference-section-content-item theme-selector">
 						<div className="user-preference-section-content-item-title-action">
-							Select your theme
+							{translate('Select your theme')}
 							<ToggleGroup
 								variant="outlined"
 								color="secondary"
@@ -201,39 +207,47 @@ function MySettings(): JSX.Element {
 						</div>
 
 						<div className="user-preference-section-content-item-description">
-							Select if SigNoz&apos;s appearance should be light, dark, or
-							automatically follow your system preference
+							{translate(
+								"Select if SigNoz's appearance should be light, dark, or automatically follow your system preference",
+							)}
 						</div>
 
 						{autoSwitch && (
 							<div className="auto-theme-info">
 								<div className="auto-theme-status">
-									Currently following system theme:{' '}
-									<strong>{systemTheme === 'dark' ? 'Dark' : 'Light'}</strong>
+									{translate('Currently following system theme:')}{' '}
+									<strong>
+										{systemTheme === 'dark' ? translate('Dark') : translate('Light')}
+									</strong>
 								</div>
 							</div>
 						)}
+					</div>
+
+					<div className="user-preference-section-content-item">
+						<LanguageSelector />
 					</div>
 
 					<TimezoneAdaptation />
 
 					<div className="user-preference-section-content-item">
 						<div className="user-preference-section-content-item-title-action">
-							Keep the primary sidebar always open{' '}
+							{translate('Keep the primary sidebar always open')}{' '}
 							<Switch
 								color="primary"
 								textPlacement="right"
 								value={sideNavPinned}
 								onChange={handleSideNavPinnedChange}
 								disabled={isUpdatingUserPreference}
-								disabledTooltip="Saving your preference"
+								disabledTooltip={translate('Saving your preference')}
 								testId="side-nav-pinned-switch"
 							/>
 						</div>
 
 						<div className="user-preference-section-content-item-description">
-							Keep the primary sidebar always open by default, unless collapsed with
-							the keyboard shortcut
+							{translate(
+								'Keep the primary sidebar always open by default, unless collapsed with the keyboard shortcut',
+							)}
 						</div>
 					</div>
 				</div>

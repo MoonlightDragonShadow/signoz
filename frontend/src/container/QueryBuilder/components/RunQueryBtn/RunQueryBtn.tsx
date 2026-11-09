@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { ReactNode } from 'react';
 import { Button } from '@signozhq/ui/button';
 import {
@@ -38,6 +39,7 @@ function RunQueryBtn({
 	disabledTooltip,
 	testId,
 }: RunQueryBtnProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const isMac = getUserOperatingSystem() === UserOperatingSystem.MACOS;
 	const isLoading = isLoadingQueries ?? false;
 
@@ -52,7 +54,7 @@ function RunQueryBtn({
 			onClick={handleCancelQuery}
 			testId={testId ? `${testId}-cancel` : undefined}
 		>
-			Cancel
+			{translate('Cancel')}
 		</Button>
 	) : (
 		<Button
@@ -77,7 +79,7 @@ function RunQueryBtn({
 				</div>
 			}
 		>
-			{label || 'Run Query'}
+			{label || translate('Run Query')}
 		</Button>
 	);
 }

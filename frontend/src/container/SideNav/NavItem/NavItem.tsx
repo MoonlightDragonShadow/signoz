@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Tooltip } from 'antd';
 import { Badge } from '@signozhq/ui/badge';
 import cx from 'classnames';
@@ -26,6 +27,7 @@ export default function NavItem({
 	showIcon?: boolean;
 	dataTestId?: string;
 }): JSX.Element {
+	const translate = useConsoleTranslation();
 	const { label, icon, isBeta, isNew, isEarlyAccess, tooltip } = item;
 
 	const handleTogglePinClick = (
@@ -58,12 +60,14 @@ export default function NavItem({
 					</div>
 				)}
 
-				<div className="nav-item-label">{label}</div>
+				<div className="nav-item-label">
+					{typeof label === 'string' ? translate(label) : label}
+				</div>
 
 				{isBeta && (
 					<div className="nav-item-beta">
 						<Badge variant="solid" color="primary">
-							Beta
+							{translate('Beta')}
 						</Badge>
 					</div>
 				)}
@@ -71,7 +75,7 @@ export default function NavItem({
 				{isNew && (
 					<div className="nav-item-new">
 						<Badge variant="solid" color="primary">
-							New
+							{translate('New')}
 						</Badge>
 					</div>
 				)}
@@ -79,33 +83,33 @@ export default function NavItem({
 				{isEarlyAccess && (
 					<div className="nav-item-early-access">
 						<Badge variant="solid" color="primary">
-							Early Access
+							{translate('Early Access')}
 						</Badge>
 					</div>
 				)}
 
 				{onTogglePin && !isPinned && (
-					<Tooltip title="Add to shortcuts" placement="right">
+					<Tooltip title={translate('Add to shortcuts')} placement="right">
 						<Pin
 							size={12}
 							className="nav-item-pin-icon"
 							onClick={handleTogglePinClick}
 							color="var(--Vanilla-400, #c0c1c3)"
 							data-testid={`nav-item-pin-${item.itemKey}`}
-							aria-label="Add to shortcuts"
+							aria-label={translate('Add to shortcuts')}
 						/>
 					</Tooltip>
 				)}
 
 				{onTogglePin && isPinned && (
-					<Tooltip title="Remove from shortcuts" placement="right">
+					<Tooltip title={translate('Remove from shortcuts')} placement="right">
 						<PinOff
 							size={12}
 							className="nav-item-pin-icon"
 							onClick={handleTogglePinClick}
 							color="var(--Vanilla-400, #c0c1c3)"
 							data-testid={`nav-item-pin-${item.itemKey}`}
-							aria-label="Remove from shortcuts"
+							aria-label={translate('Remove from shortcuts')}
 						/>
 					</Tooltip>
 				)}

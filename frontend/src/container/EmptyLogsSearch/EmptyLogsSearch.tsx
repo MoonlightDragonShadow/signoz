@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useEffect, useRef } from 'react';
 import { Typography } from '@signozhq/ui/typography';
 import logEvent from 'api/common/logEvent';
@@ -22,6 +23,7 @@ export default function EmptyLogsSearch({
 	panelType,
 	customMessage,
 }: EmptyLogsSearchProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const logEventCalledRef = useRef(false);
 	useEffect(() => {
 		if (!logEventCalledRef.current) {
@@ -56,23 +58,23 @@ export default function EmptyLogsSearch({
 						<>
 							<div className="empty-logs-search__header">
 								<Typography.Text className="empty-logs-search__title">
-									{customMessage.title}
+									{translate(customMessage.title)}
 								</Typography.Text>
 								{customMessage.subTitle && (
 									<Typography.Text className="empty-logs-search__subtitle">
-										{customMessage.subTitle}
+										{translate(customMessage.subTitle)}
 									</Typography.Text>
 								)}
 							</div>
 							{Array.isArray(customMessage.description) ? (
 								<ul className="empty-logs-search__description-list">
 									{customMessage.description.map((desc) => (
-										<li key={desc}>{desc}</li>
+										<li key={desc}>{translate(desc)}</li>
 									))}
 								</ul>
 							) : (
 								<Typography.Text className="empty-logs-search__description">
-									{customMessage.description}
+									{translate(customMessage.description)}
 								</Typography.Text>
 							)}
 							{/* Clear filters button */}
@@ -82,10 +84,11 @@ export default function EmptyLogsSearch({
 									className="empty-logs-search__clear-filters-btn"
 									onClick={customMessage.onClearFilters}
 								>
-									{customMessage.clearFiltersButtonText}
+									{customMessage.clearFiltersButtonText &&
+										translate(customMessage.clearFiltersButtonText)}
 									<span className="empty-logs-search__clear-filters-btn-icon">
 										<Delete size={14} />
-										Clear filters
+										{translate('Clear filters')}
 									</span>
 								</button>
 							)}
@@ -93,18 +96,20 @@ export default function EmptyLogsSearch({
 					) : (
 						<Typography.Text>
 							<span className="empty-logs-search__sub-text">
-								This query had no results.{' '}
+								{translate('This query had no results.')}{' '}
 							</span>
-							Edit your query and try again!
+							{translate('Edit your query and try again!')}
 						</Typography.Text>
 					)}
 				</div>
 				{customMessage?.documentationLinks && (
 					<div className="empty-logs-search__resources-card">
-						<div className="empty-logs-search__resources-title">RESOURCES</div>
+						<div className="empty-logs-search__resources-title">
+							{translate('RESOURCES')}
+						</div>
 						<div className="empty-logs-search__resources-links">
 							{customMessage.documentationLinks.map((link) => (
-								<LearnMore key={link.text} text={link.text} url={link.url} />
+								<LearnMore key={link.text} text={translate(link.text)} url={link.url} />
 							))}
 						</div>
 					</div>

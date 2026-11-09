@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Button } from '@signozhq/ui/button';
 import { Divider } from '@signozhq/ui/divider';
 import { Dropdown, type DropdownItemType } from '@signozhq/ui/dropdown';
@@ -42,27 +43,28 @@ function LogDetailsHeader({
 	showOpenInExplorer = false,
 	onOpenInExplorer,
 }: LogDetailsHeaderProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const [, copyToClipboard] = useCopyToClipboard();
 	const { onLogCopy } = useCopyLogLink(log?.id);
 	const { formatTimezoneAdjustedTimestamp } = useTimezone();
 
 	const handleCopyLog = (): void => {
 		copyToClipboard(aggregateAttributesResourcesToString(log));
-		toast.success('Copied to clipboard', { position: 'bottom-right' });
+		toast.success(translate('Copied to clipboard'), { position: 'bottom-right' });
 	};
 
 	const menuItems: DropdownItemType[] = [
 		{
 			type: 'item',
 			value: 'copy-log',
-			label: 'Copy log',
+			label: translate('Copy log'),
 			prefix: <Copy size={14} />,
 			onClick: handleCopyLog,
 		},
 		{
 			type: 'item',
 			value: 'copy-link',
-			label: 'Copy link to log',
+			label: translate('Copy link to log'),
 			prefix: <Link size={14} />,
 			onClick: (): void => onLogCopy(),
 		},
@@ -97,7 +99,7 @@ function LogDetailsHeader({
 						prefix={<Compass size={16} />}
 						onClick={onOpenInExplorer}
 					>
-						Open in Explorer
+						{translate('Open in Explorer')}
 					</Button>
 				)}
 
@@ -107,7 +109,7 @@ function LogDetailsHeader({
 						variant="link"
 						color="secondary"
 						icon
-						aria-label="Log actions"
+						aria-label={translate('Log actions')}
 						testId="log-details-header-menu"
 						onClick={(e: MouseEvent): void => e.stopPropagation()}
 					>
@@ -117,16 +119,16 @@ function LogDetailsHeader({
 
 				<div className={styles.arrows}>
 					<Tooltip
-						title={isPrevDisabled ? undefined : 'Move to previous log'}
+						title={isPrevDisabled ? undefined : translate('Move to previous log')}
 						side="top"
 					>
 						<Button
-							disabledTooltip="No previous log"
+							disabledTooltip={translate('No previous log')}
 							size="md"
 							variant="outlined"
 							color="secondary"
 							icon
-							aria-label="Move to previous log"
+							aria-label={translate('Move to previous log')}
 							disabled={isPrevDisabled}
 							onClick={onNavigatePrev}
 							testId="log-details-header-prev"
@@ -135,16 +137,16 @@ function LogDetailsHeader({
 						</Button>
 					</Tooltip>
 					<Tooltip
-						title={isNextDisabled ? undefined : 'Move to next log'}
+						title={isNextDisabled ? undefined : translate('Move to next log')}
 						side="top"
 					>
 						<Button
-							disabledTooltip="No next log"
+							disabledTooltip={translate('No next log')}
 							size="md"
 							variant="outlined"
 							color="secondary"
 							icon
-							aria-label="Move to next log"
+							aria-label={translate('Move to next log')}
 							disabled={isNextDisabled}
 							onClick={onNavigateNext}
 							testId="log-details-header-next"

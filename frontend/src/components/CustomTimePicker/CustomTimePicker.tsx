@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import {
 	ChangeEvent,
 	Dispatch,
@@ -99,6 +100,7 @@ function CustomTimePicker({
 	isModalTimeSelection = false,
 	'data-testid': dataTestId,
 }: CustomTimePickerProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const [selectedTimePlaceholderValue, setSelectedTimePlaceholderValue] =
 		useState('Select / Enter Time Range');
 
@@ -612,7 +614,7 @@ function CustomTimePicker({
 								: ''
 						}
 						readOnly={!open || showLiveLogs}
-						placeholder={selectedTimePlaceholderValue}
+						placeholder={translate(selectedTimePlaceholderValue)}
 						value={inputValue}
 						onMouseDown={(e): void => {
 							// Only treat as "click from input" when the actual input element is clicked (not suffix/chevron)
@@ -654,15 +656,15 @@ function CustomTimePicker({
 				</Popover>
 			</Tooltip>
 			{!showLiveLogs && !isModalTimeSelection && (
-				<Tooltip title={zoomOutDisabled ? undefined : 'Zoom out'}>
+				<Tooltip title={zoomOutDisabled ? undefined : translate('Zoom out')}>
 					<Button
-						disabledTooltip="Zoom out time range is limited to 1 month"
+						disabledTooltip={translate('Zoom out time range is limited to 1 month')}
 						size="md"
 						onClick={handleZoomOut}
 						disabled={zoomOutDisabled}
 						testId="zoom-out-btn"
 						icon
-						aria-label="Zoom out"
+						aria-label={translate('Zoom out')}
 						variant="solid"
 						color="secondary"
 					>
