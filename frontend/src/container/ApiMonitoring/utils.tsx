@@ -5,7 +5,8 @@ import { Color } from '@signozhq/design-tokens';
 import { TableColumnType as ColumnType, Tooltip } from 'antd';
 import { Progress } from '@signozhq/ui/progress';
 import { Badge } from '@signozhq/ui/badge';
-import { convertFiltersToExpressionWithExistingQuery } from 'components/QueryBuilderV2/utils';
+import { combineInitialAndUserExpression } from 'components/QueryBuilderV2/QueryV2/QuerySearch/utils';
+import { formatValueForExpression } from 'components/QueryBuilderV2/utils';
 import {
 	FiltersType,
 	IQuickFiltersConfig,
@@ -58,30 +59,28 @@ export const getDisplayValue = (value: unknown): string =>
 	isEmptyFilterValue(value) ? '-' : String(value);
 
 export const getDomainNameFilterExpression = (domainName: string): string =>
-	`http_host = '${domainName}'`;
+	`${SPAN_ATTRIBUTES.SERVER_NAME} = ${formatValueForExpression(domainName)}`;
 
-export const clientKindExpression = `kind_string = 'Client'`;
+export const clientKindExpression = "kind_string = 'Client'";
 
-/**
- * Converts filters to expression
- * @param filters Filters to convert
- * @param baseExpression Base expression to combine with filters
- * @returns Filter expression string
- */
-export const convertFiltersWithUrlHandling = (
-	filters: IBuilderQuery['filters'],
-	baseExpression: string,
-): string => {
-	if (!filters) {
-		return baseExpression;
-	}
+export const getHttpUrlExpression = (endPointName: string): string =>
+	endPointName
+		? `${SPAN_ATTRIBUTES.HTTP_URL} = ${formatValueForExpression(endPointName, '=')}`
+		: '';
 
-	const { filter } = convertFiltersToExpressionWithExistingQuery(
-		filters,
-		baseExpression,
-	);
-	return filter.expression;
-};
+// The domain (and endpoint) the drawer is locked to, built from the same
+// expressions as the requests' filters so the chip shows what runs.
+export const getDomainScopeExpression = (
+	domainName: string,
+	endPointName = '',
+): string =>
+	[
+		clientKindExpression,
+		getDomainNameFilterExpression(domainName),
+		getHttpUrlExpression(endPointName),
+	]
+		.filter(Boolean)
+		.join(' AND ');
 
 export const ApiMonitoringQuickFiltersConfig: IQuickFiltersConfig[] = [
 	{
@@ -364,7 +363,7 @@ export const getDomainMetricsQueryPayload = (
 	domainName: string,
 	start: number,
 	end: number,
-	filters: IBuilderQuery['filters'],
+	filterExpression: string,
 ): GetQueryResultsProps[] => [
 	{
 		selectedTime: 'GLOBAL_TIME',
@@ -385,9 +384,9 @@ export const getDomainMetricsQueryPayload = (
 						spaceAggregation: 'sum',
 						functions: [],
 						filter: {
-							expression: convertFiltersWithUrlHandling(
-								filters || { items: [], op: 'AND' },
+							expression: combineInitialAndUserExpression(
 								`${getDomainNameFilterExpression(domainName)} AND ${urlExpression}`,
+								filterExpression,
 							),
 						},
 						expression: 'A',
@@ -413,9 +412,9 @@ export const getDomainMetricsQueryPayload = (
 						spaceAggregation: 'sum',
 						functions: [],
 						filter: {
-							expression: convertFiltersWithUrlHandling(
-								filters || { items: [], op: 'AND' },
+							expression: combineInitialAndUserExpression(
 								`${getDomainNameFilterExpression(domainName)}`,
+								filterExpression,
 							),
 						},
 						expression: 'B',
@@ -441,9 +440,9 @@ export const getDomainMetricsQueryPayload = (
 						spaceAggregation: 'sum',
 						functions: [],
 						filter: {
-							expression: convertFiltersWithUrlHandling(
-								filters || { items: [], op: 'AND' },
+							expression: combineInitialAndUserExpression(
 								`${getDomainNameFilterExpression(domainName)} AND has_error = true`,
+								filterExpression,
 							),
 						},
 						expression: 'C',
@@ -469,9 +468,9 @@ export const getDomainMetricsQueryPayload = (
 						spaceAggregation: 'sum',
 						functions: [],
 						filter: {
-							expression: convertFiltersWithUrlHandling(
-								filters || { items: [], op: 'AND' },
+							expression: combineInitialAndUserExpression(
 								`${getDomainNameFilterExpression(domainName)}`,
+								filterExpression,
 							),
 						},
 						expression: 'D',
@@ -841,7 +840,7 @@ export const getEndPointsQueryPayload = (
 
 function buildFilterExpression(
 	domainName: string,
-	filters: IBuilderQuery['filters'],
+	filterExpression: string,
 	showStatusCodeErrors: boolean,
 ): string {
 	const baseFilterParts = [
@@ -853,21 +852,22 @@ function buildFilterExpression(
 	if (showStatusCodeErrors) {
 		baseFilterParts.push('status_message EXISTS');
 	}
-	const filterExpression = baseFilterParts.join(' AND ');
-
-	return convertFiltersWithUrlHandling(filters, filterExpression);
+	return combineInitialAndUserExpression(
+		baseFilterParts.join(' AND '),
+		filterExpression,
+	);
 }
 
 export const getTopErrorsQueryPayload = (
 	domainName: string,
 	start: number,
 	end: number,
-	filters: IBuilderQuery['filters'],
+	filterExpression: string,
 	showStatusCodeErrors = true,
 ): QueryRangePayloadV5 => {
-	const filterExpression = buildFilterExpression(
+	const combinedExpression = buildFilterExpression(
 		domainName,
-		filters,
+		filterExpression,
 		showStatusCodeErrors,
 	);
 
@@ -886,7 +886,7 @@ export const getTopErrorsQueryPayload = (
 						stepInterval: 60,
 						disabled: false,
 						aggregations: [{ expression: 'count()' }],
-						filter: { expression: filterExpression },
+						filter: { expression: combinedExpression },
 						groupBy: [
 							{
 								name: SPAN_ATTRIBUTES.HTTP_URL,
@@ -1422,15 +1422,14 @@ export const createFiltersForSelectedRowData = (
 
 // First query payload for endpoint metrics
 // Second query payload for endpoint status code table
-// Third query payload for endpoint dropdown selection
-// Fourth query payload for endpoint dependant services
-// Fifth query payload for endpoint response status count bar chart
-// Sixth query payload for endpoint response status code latency bar chart
+// Third query payload for endpoint dependant services
+// Fourth query payload for endpoint response status count bar chart
+// Fifth query payload for endpoint response status code latency bar chart
 export const getEndPointDetailsQueryPayload = (
 	domainName: string,
 	start: number,
 	end: number,
-	filters: IBuilderQuery['filters'],
+	filterExpression: string,
 ): GetQueryResultsProps[] => [
 	{
 		selectedTime: 'GLOBAL_TIME',
@@ -1449,11 +1448,11 @@ export const getEndPointDetailsQueryPayload = (
 						disabled: false,
 						expression: 'A',
 						filter: {
-							expression: convertFiltersWithUrlHandling(
-								filters || { items: [], op: 'AND' },
+							expression: combineInitialAndUserExpression(
 								`${getDomainNameFilterExpression(
 									domainName,
 								)} AND ${clientKindExpression}`,
+								filterExpression,
 							),
 						},
 						functions: [],
@@ -1479,11 +1478,11 @@ export const getEndPointDetailsQueryPayload = (
 						disabled: false,
 						expression: 'B',
 						filter: {
-							expression: convertFiltersWithUrlHandling(
-								filters || { items: [], op: 'AND' },
+							expression: combineInitialAndUserExpression(
 								`${getDomainNameFilterExpression(
 									domainName,
 								)} AND ${clientKindExpression}`,
+								filterExpression,
 							),
 						},
 						functions: [],
@@ -1509,11 +1508,11 @@ export const getEndPointDetailsQueryPayload = (
 						disabled: true,
 						expression: 'C',
 						filter: {
-							expression: convertFiltersWithUrlHandling(
-								filters || { items: [], op: 'AND' },
+							expression: combineInitialAndUserExpression(
 								`${getDomainNameFilterExpression(
 									domainName,
 								)} AND ${clientKindExpression} AND has_error = true`,
+								filterExpression,
 							),
 						},
 						functions: [],
@@ -1539,11 +1538,11 @@ export const getEndPointDetailsQueryPayload = (
 						disabled: false,
 						expression: 'D',
 						filter: {
-							expression: convertFiltersWithUrlHandling(
-								filters || { items: [], op: 'AND' },
+							expression: combineInitialAndUserExpression(
 								`${getDomainNameFilterExpression(
 									domainName,
 								)} AND ${clientKindExpression}`,
+								filterExpression,
 							),
 						},
 						functions: [],
@@ -1569,11 +1568,11 @@ export const getEndPointDetailsQueryPayload = (
 						disabled: true,
 						expression: 'E',
 						filter: {
-							expression: convertFiltersWithUrlHandling(
-								filters || { items: [], op: 'AND' },
+							expression: combineInitialAndUserExpression(
 								`${getDomainNameFilterExpression(
 									domainName,
 								)} AND ${clientKindExpression}`,
+								filterExpression,
 							),
 						},
 						functions: [],
@@ -1641,11 +1640,11 @@ export const getEndPointDetailsQueryPayload = (
 						disabled: false,
 						expression: 'A',
 						filter: {
-							expression: convertFiltersWithUrlHandling(
-								filters || { items: [], op: 'AND' },
+							expression: combineInitialAndUserExpression(
 								`${getDomainNameFilterExpression(
 									domainName,
 								)} AND ${clientKindExpression} AND response_status_code EXISTS`,
+								filterExpression,
 							),
 						},
 						functions: [],
@@ -1677,11 +1676,11 @@ export const getEndPointDetailsQueryPayload = (
 						disabled: false,
 						expression: 'B',
 						filter: {
-							expression: convertFiltersWithUrlHandling(
-								filters || { items: [], op: 'AND' },
+							expression: combineInitialAndUserExpression(
 								`${getDomainNameFilterExpression(
 									domainName,
 								)} AND ${clientKindExpression} AND response_status_code EXISTS`,
+								filterExpression,
 							),
 						},
 						functions: [],
@@ -1715,11 +1714,11 @@ export const getEndPointDetailsQueryPayload = (
 						spaceAggregation: 'sum',
 						functions: [],
 						filter: {
-							expression: convertFiltersWithUrlHandling(
-								filters || { items: [], op: 'AND' },
+							expression: combineInitialAndUserExpression(
 								`${getDomainNameFilterExpression(
 									domainName,
 								)} AND ${clientKindExpression} AND response_status_code EXISTS`,
+								filterExpression,
 							),
 						},
 						expression: 'C',
@@ -1775,77 +1774,6 @@ export const getEndPointDetailsQueryPayload = (
 			builder: {
 				queryData: [
 					{
-						dataSource: DataSource.TRACES,
-						queryName: 'A',
-						aggregateOperator: 'count',
-						aggregations: [
-							{
-								expression: 'count()',
-							},
-						],
-						timeAggregation: 'count',
-						spaceAggregation: 'sum',
-						functions: [],
-						filter: {
-							expression: convertFiltersWithUrlHandling(
-								filters || { items: [], op: 'AND' },
-								`${getDomainNameFilterExpression(
-									domainName,
-								)} AND ${clientKindExpression} AND ${SPAN_ATTRIBUTES.HTTP_URL} EXISTS`,
-							),
-						},
-						expression: 'A',
-						disabled: false,
-						stepInterval: null,
-						having: [],
-						legend: '',
-						limit: null,
-						orderBy: [],
-						groupBy: [
-							{
-								key: SPAN_ATTRIBUTES.HTTP_URL,
-								dataType: DataTypes.String,
-								type: 'attribute',
-							},
-						],
-						reduceTo: ReduceOperators.AVG,
-					},
-				],
-				queryFormulas: [],
-				queryTraceOperator: [],
-			},
-			clickhouse_sql: [
-				{
-					disabled: false,
-					legend: '',
-					name: 'A',
-					query: '',
-				},
-			],
-			id: '315b15fa-ff0c-442f-89f8-2bf4fb1af2f2',
-			promql: [
-				{
-					disabled: false,
-					legend: '',
-					name: 'A',
-					query: '',
-				},
-			],
-			queryType: EQueryType.QUERY_BUILDER,
-		},
-		variables: {},
-		formatForWeb: true,
-		start,
-		end,
-		step: 60,
-	},
-	{
-		selectedTime: 'GLOBAL_TIME',
-		graphType: PANEL_TYPES.TABLE,
-		query: {
-			builder: {
-				queryData: [
-					{
 						aggregations: [
 							{
 								expression: 'count(span_id)',
@@ -1856,11 +1784,11 @@ export const getEndPointDetailsQueryPayload = (
 						disabled: false,
 						expression: 'A',
 						filter: {
-							expression: convertFiltersWithUrlHandling(
-								filters || { items: [], op: 'AND' },
+							expression: combineInitialAndUserExpression(
 								`${getDomainNameFilterExpression(
 									domainName,
 								)} AND ${clientKindExpression}`,
+								filterExpression,
 							),
 						},
 						functions: [],
@@ -1893,11 +1821,11 @@ export const getEndPointDetailsQueryPayload = (
 						disabled: false,
 						expression: 'B',
 						filter: {
-							expression: convertFiltersWithUrlHandling(
-								filters || { items: [], op: 'AND' },
+							expression: combineInitialAndUserExpression(
 								`${getDomainNameFilterExpression(
 									domainName,
 								)} AND ${clientKindExpression}`,
+								filterExpression,
 							),
 						},
 						functions: [],
@@ -1930,11 +1858,11 @@ export const getEndPointDetailsQueryPayload = (
 						disabled: false,
 						expression: 'C',
 						filter: {
-							expression: convertFiltersWithUrlHandling(
-								filters || { items: [], op: 'AND' },
+							expression: combineInitialAndUserExpression(
 								`${getDomainNameFilterExpression(
 									domainName,
 								)} AND ${clientKindExpression}`,
+								filterExpression,
 							),
 						},
 						functions: [],
@@ -1967,11 +1895,11 @@ export const getEndPointDetailsQueryPayload = (
 						disabled: true,
 						expression: 'D',
 						filter: {
-							expression: convertFiltersWithUrlHandling(
-								filters || { items: [], op: 'AND' },
+							expression: combineInitialAndUserExpression(
 								`${getDomainNameFilterExpression(
 									domainName,
 								)} AND ${clientKindExpression} AND has_error = true`,
+								filterExpression,
 							),
 						},
 						functions: [],
@@ -2046,11 +1974,11 @@ export const getEndPointDetailsQueryPayload = (
 						disabled: false,
 						expression: 'A',
 						filter: {
-							expression: convertFiltersWithUrlHandling(
-								filters || { items: [], op: 'AND' },
+							expression: combineInitialAndUserExpression(
 								`${getDomainNameFilterExpression(
 									domainName,
 								)} AND ${clientKindExpression}`,
+								filterExpression,
 							),
 						},
 						functions: [],
@@ -2117,11 +2045,11 @@ export const getEndPointDetailsQueryPayload = (
 						disabled: false,
 						expression: 'A',
 						filter: {
-							expression: convertFiltersWithUrlHandling(
-								filters || { items: [], op: 'AND' },
+							expression: combineInitialAndUserExpression(
 								`${getDomainNameFilterExpression(
 									domainName,
 								)} AND ${clientKindExpression}`,
+								filterExpression,
 							),
 						},
 						functions: [],
@@ -2173,100 +2101,82 @@ export const getEndPointDetailsQueryPayload = (
 	},
 ];
 
-export const getEndPointZeroStateQueryPayload = (
+export const getEndPointDropDownQueryPayload = (
 	domainName: string,
 	start: number,
 	end: number,
-): GetQueryResultsProps[] => [
-	{
-		selectedTime: 'GLOBAL_TIME',
-		graphType: PANEL_TYPES.TABLE,
-		query: {
-			builder: {
-				queryData: [
-					{
-						dataSource: DataSource.TRACES,
-						queryName: 'A',
-						aggregateOperator: 'count',
-						aggregateAttribute: {
-							dataType: DataTypes.String,
-							key: '',
-							type: '',
+	filterExpression: string,
+): GetQueryResultsProps => ({
+	selectedTime: 'GLOBAL_TIME',
+	graphType: PANEL_TYPES.TABLE,
+	query: {
+		builder: {
+			queryData: [
+				{
+					dataSource: DataSource.TRACES,
+					queryName: 'A',
+					aggregateOperator: 'count',
+					aggregations: [
+						{
+							expression: 'count()',
 						},
-						timeAggregation: 'count',
-						spaceAggregation: 'sum',
-						functions: [],
-						filters: {
-							items: [
-								{
-									id: '3db61dd6',
-									key: {
-										key: SPAN_ATTRIBUTES.SERVER_NAME,
-										dataType: DataTypes.String,
-										type: '',
-									},
-									op: '=',
-									value: domainName,
-								},
-								{
-									id: '212678b9',
-									key: {
-										key: 'kind_string',
-										dataType: DataTypes.String,
-										type: '',
-									},
-									op: '=',
-									value: 'Client',
-								},
-							],
-							op: 'AND',
-						},
-						expression: 'A',
-						disabled: false,
-						stepInterval: 60,
-						having: [],
-						legend: '',
-						limit: null,
-						orderBy: [],
-						groupBy: [
-							{
-								key: SPAN_ATTRIBUTES.HTTP_URL,
-								dataType: DataTypes.String,
-								type: 'tag',
-							},
-						],
-						reduceTo: ReduceOperators.AVG,
+					],
+					timeAggregation: 'count',
+					spaceAggregation: 'sum',
+					functions: [],
+					filter: {
+						expression: combineInitialAndUserExpression(
+							`${getDomainNameFilterExpression(
+								domainName,
+							)} AND ${clientKindExpression} AND ${SPAN_ATTRIBUTES.HTTP_URL} EXISTS`,
+							filterExpression,
+						),
 					},
-				],
-				queryFormulas: [],
-				queryTraceOperator: [],
-			},
-			clickhouse_sql: [
-				{
+					expression: 'A',
 					disabled: false,
+					stepInterval: null,
+					having: [],
 					legend: '',
-					name: 'A',
-					query: '',
+					limit: null,
+					orderBy: [],
+					groupBy: [
+						{
+							key: SPAN_ATTRIBUTES.HTTP_URL,
+							dataType: DataTypes.String,
+							type: 'attribute',
+						},
+					],
+					reduceTo: ReduceOperators.AVG,
 				},
 			],
-			id: '315b15fa-ff0c-442f-89f8-2bf4fb1af2f2',
-			promql: [
-				{
-					disabled: false,
-					legend: '',
-					name: 'A',
-					query: '',
-				},
-			],
-			queryType: EQueryType.QUERY_BUILDER,
+			queryFormulas: [],
+			queryTraceOperator: [],
 		},
-		variables: {},
-		formatForWeb: true,
-		start,
-		end,
-		step: 60,
+		clickhouse_sql: [
+			{
+				disabled: false,
+				legend: '',
+				name: 'A',
+				query: '',
+			},
+		],
+		id: '315b15fa-ff0c-442f-89f8-2bf4fb1af2f2',
+		promql: [
+			{
+				disabled: false,
+				legend: '',
+				name: 'A',
+				query: '',
+			},
+		],
+		queryType: EQueryType.QUERY_BUILDER,
 	},
-];
+	variables: {},
+	formatForWeb: true,
+	start,
+	end,
+	step: 60,
+});
 
 interface EndPointMetricsResponseRow {
 	data: {
@@ -2428,8 +2338,8 @@ export const statusCodeWidgetInfo = [
 
 interface EndPointDropDownResponseRow {
 	data: {
-		[SPAN_ATTRIBUTES.HTTP_URL]: string;
-		A: number;
+		[SPAN_ATTRIBUTES.HTTP_URL]?: string;
+		A?: number;
 	};
 }
 
@@ -2777,7 +2687,7 @@ export const groupStatusCodes = (
 
 export const getStatusCodeBarChartWidgetData = (
 	domainName: string,
-	filters: IBuilderQuery['filters'],
+	filterExpression: string,
 ): Widgets => ({
 	query: {
 		builder: {
@@ -2793,22 +2703,13 @@ export const getStatusCodeBarChartWidgetData = (
 					dataSource: DataSource.TRACES,
 					disabled: false,
 					expression: 'A',
-					filters: {
-						items: [
-							{
-								id: 'c6724407',
-								key: {
-									dataType: DataTypes.String,
-									key: SPAN_ATTRIBUTES.SERVER_NAME,
-									type: '',
-								},
-								op: '=',
-								value: domainName,
-							},
-							...(filters?.items || []),
-						],
-						op: 'AND',
+					filter: {
+						expression: combineInitialAndUserExpression(
+							getDomainNameFilterExpression(domainName),
+							filterExpression,
+						),
 					},
+					filters: { items: [], op: 'AND' },
 					functions: [],
 					groupBy: [],
 					having: [],
@@ -2889,18 +2790,15 @@ export const getFormattedEndPointStatusCodeChartData = (
 export const END_POINT_DETAILS_QUERY_KEYS_ARRAY = [
 	REACT_QUERY_KEY.GET_ENDPOINT_METRICS_DATA,
 	REACT_QUERY_KEY.GET_ENDPOINT_STATUS_CODE_DATA,
-	REACT_QUERY_KEY.GET_ENDPOINT_DROPDOWN_DATA,
 	REACT_QUERY_KEY.GET_ENDPOINT_DEPENDENT_SERVICES_DATA,
 	REACT_QUERY_KEY.GET_ENDPOINT_STATUS_CODE_BAR_CHARTS_DATA,
 	REACT_QUERY_KEY.GET_ENDPOINT_STATUS_CODE_LATENCY_BAR_CHARTS_DATA,
-	REACT_QUERY_KEY.GET_ENDPOINT_RATE_OVER_TIME_DATA,
-	REACT_QUERY_KEY.GET_ENDPOINT_LATENCY_OVER_TIME_DATA,
 ];
 
 export const getAllEndpointsWidgetData = (
 	groupBy: BaseAutocompleteData[],
 	domainName: string,
-	filters: IBuilderQuery['filters'],
+	filterExpression: string,
 	// eslint-disable-next-line sonarjs/cognitive-complexity
 ): Widgets => {
 	const isGroupedByAttribute = groupBy.length > 0;
@@ -2922,11 +2820,11 @@ export const getAllEndpointsWidgetData = (
 					disabled: false,
 					expression: 'A',
 					filter: {
-						expression: convertFiltersWithUrlHandling(
-							filters,
+						expression: combineInitialAndUserExpression(
 							`${getDomainNameFilterExpression(
 								domainName,
 							)} AND ${clientKindExpression} AND http_url EXISTS`,
+							filterExpression,
 						),
 					},
 					functions: [],
@@ -2954,11 +2852,11 @@ export const getAllEndpointsWidgetData = (
 					disabled: false,
 					expression: 'B',
 					filter: {
-						expression: convertFiltersWithUrlHandling(
-							filters,
+						expression: combineInitialAndUserExpression(
 							`${getDomainNameFilterExpression(
 								domainName,
 							)} AND ${clientKindExpression} AND http_url EXISTS`,
+							filterExpression,
 						),
 					},
 					functions: [],
@@ -2986,11 +2884,11 @@ export const getAllEndpointsWidgetData = (
 					disabled: false,
 					expression: 'C',
 					filter: {
-						expression: convertFiltersWithUrlHandling(
-							filters,
+						expression: combineInitialAndUserExpression(
 							`${getDomainNameFilterExpression(
 								domainName,
 							)} AND ${clientKindExpression} AND http_url EXISTS`,
+							filterExpression,
 						),
 					},
 					functions: [],
@@ -3018,11 +2916,11 @@ export const getAllEndpointsWidgetData = (
 					disabled: true,
 					expression: 'D',
 					filter: {
-						expression: convertFiltersWithUrlHandling(
-							filters,
+						expression: combineInitialAndUserExpression(
 							`${getDomainNameFilterExpression(
 								domainName,
 							)} AND ${clientKindExpression} AND has_error = true AND http_url EXISTS`,
+							filterExpression,
 						),
 					},
 					functions: [],
@@ -3148,38 +3046,26 @@ export const getAllEndpointsWidgetData = (
 	return widget;
 };
 
-const keysToRemove = [SPAN_ATTRIBUTES.HTTP_URL, 'A', 'B', 'C', 'F1'];
+const keysToRemove = [SPAN_ATTRIBUTES.HTTP_URL, 'key', 'A', 'B', 'C', 'F1'];
 
-export const getGroupByFiltersFromGroupByValues = (
-	rowData: any,
-	groupBy: BaseAutocompleteData[],
-): IBuilderQuery['filters'] => {
-	const items = Object.keys(rowData)
+// A group without a value for a key is the set of spans missing that attribute.
+export const getGroupByExpressionFromRowData = (
+	rowData: Record<string, string | number | boolean | null | undefined>,
+): string =>
+	Object.keys(rowData)
 		.filter((key) => !keysToRemove.includes(key))
 		.map((key) => {
-			const groupByAttribute = groupBy.find((gb) => gb.key === key);
-			return {
-				id: groupByAttribute?.id || v4(),
-				key: {
-					dataType: groupByAttribute?.dataType || DataTypes.String,
-					key: groupByAttribute?.key || key,
-					type: groupByAttribute?.type || '',
-				},
-				op: '=', // operator for every attribute -> discuss
-				value: rowData[key],
-			};
-		});
-
-	return {
-		items,
-		op: 'AND',
-	};
-};
+			const value = rowData[key];
+			return value === null || value === undefined
+				? `${key} NOT EXISTS`
+				: `${key} = ${formatValueForExpression(value)}`;
+		})
+		.join(' AND ');
 
 export const getRateOverTimeWidgetData = (
 	domainName: string,
 	endPointName: string,
-	filters: IBuilderQuery['filters'],
+	filterExpression: string,
 ): Widgets => {
 	let legend = domainName;
 	if (endPointName) {
@@ -3203,9 +3089,9 @@ export const getRateOverTimeWidgetData = (
 					disabled: false,
 					expression: 'A',
 					filter: {
-						expression: convertFiltersWithUrlHandling(
-							filters || { items: [], op: 'AND' },
+						expression: combineInitialAndUserExpression(
 							`http_host = '${domainName}'`,
+							filterExpression,
 						),
 					},
 					functions: [],
@@ -3229,7 +3115,7 @@ export const getRateOverTimeWidgetData = (
 export const getLatencyOverTimeWidgetData = (
 	domainName: string,
 	endPointName: string,
-	filters: IBuilderQuery['filters'],
+	filterExpression: string,
 ): Widgets => {
 	let legend = domainName;
 	if (endPointName) {
@@ -3253,9 +3139,9 @@ export const getLatencyOverTimeWidgetData = (
 					disabled: false,
 					expression: 'A',
 					filter: {
-						expression: convertFiltersWithUrlHandling(
-							filters || { items: [], op: 'AND' },
+						expression: combineInitialAndUserExpression(
 							`http_host = '${domainName}'`,
+							filterExpression,
 						),
 					},
 					functions: [],

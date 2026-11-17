@@ -4,7 +4,7 @@ The interface language selector is available on the sign-in page and under Accou
 
 - Keep Chinese resources under `public/locales/zh-CN`. The `console` namespace uses original English display strings as keys. Existing namespaces retain their upstream keys.
 - Keep route IDs, query syntax, log attributes, API values, and user content independent of translated labels.
-- From a new upstream release tag, create an upgrade branch and cherry-pick the bilingual commits in order. Reconcile changed source strings and prefer upstream translation keys when the new release introduces them.
+- Create a new `i18n/bilingual-vX.Y.Z` branch from the previous bilingual release and merge the new upstream release tag. Keep the upstream APIs and query syntax, reconcile changed display strings, and prefer upstream translation keys. Verify the merge before tagging the bilingual build.
 - Run `pnpm build` to refresh the locale hashes and bundle the resources. Check both languages on the sign-in page, sidebar, time picker, and log explorer. Verify a refresh preserves the selection and that an untranslated label falls back to English.
 - To reuse an existing SigNoz instance during local development, set `VITE_FRONTEND_API_ENDPOINT` to its origin before running `pnpm dev`. The endpoint should support the browser's development origin. Use a matching frontend and backend release when validating a production deployment.
 

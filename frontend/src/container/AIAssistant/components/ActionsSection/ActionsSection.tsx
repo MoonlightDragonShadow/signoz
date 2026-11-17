@@ -49,18 +49,19 @@ import { AIAssistantEvents, SuggestedPromptCategory } from '../../events';
 import { useAIAssistantAnalyticsContext } from '../../hooks/useAIAssistantAnalyticsContext';
 import { useAIAssistantStore } from '../../store/useAIAssistantStore';
 
+import { getOpenResourceTarget } from './utils/getOpenResourceTarget';
 import {
 	getPanelTypeForRequestType,
 	requestTypeFromActionQuery,
 } from './utils/getPanelTypeForRequestType';
+import { isOnResourcePage } from './utils/isOnResourcePage';
 import { openSavedViewByKey } from './utils/openSavedView';
 import {
 	isSavedViewOpenAction,
-	resolveOpenResourceType,
 	resolveResourceId,
 	resolveSavedViewSourceHint,
 } from './utils/resolveOpenResource';
-import { ResourceType, resourceRoute } from './utils/resourceRoute';
+import { ResourceType } from './utils/resourceRoute';
 
 import styles from './ActionsSection.module.scss';
 
@@ -399,7 +400,7 @@ export default function ActionsSection({
 	messageId,
 }: ActionsSectionProps): JSX.Element | null {
 	const translateConsole = useConsoleTranslation();
-	const { pathname } = useAppLocation();
+	const { pathname, search } = useAppLocation();
 	const sendMessage = useAIAssistantStore((s) => s.sendMessage);
 	const { threadId, page, mode } = useAIAssistantAnalyticsContext();
 	const { redirectWithQueryBuilderData, handleSetQueryData } = useQueryBuilder();
@@ -495,23 +496,17 @@ export default function ActionsSection({
 			return;
 		}
 
-		const resourceType = resolveOpenResourceType(action);
-		const resourceId = resolveResourceId(action);
-		if (!resourceType || !resourceId) {
-			return;
-		}
-
-		const path = resourceRoute(resourceType, resourceId);
-		if (!path) {
+		const target = getOpenResourceTarget(action);
+		if (!target) {
 			return;
 		}
 		void logEvent(AIAssistantEvents.ResourceOpened, {
 			threadId,
 			messageId,
-			targetModule: targetModuleForResource(resourceType),
-			resourceId,
+			targetModule: targetModuleForResource(target.resourceType),
+			resourceId: target.resourceId,
 		});
-		navigate(path);
+		navigate(target.path);
 	};
 
 	const handleClick = (key: string, action: MessageActionDTO): void => {
@@ -611,6 +606,10 @@ export default function ActionsSection({
 					// is still surfaced visually via the suffix pill below.
 
 					const tooltip = isError ? result.error : (action.tooltip ?? undefined);
+					const openTarget = getOpenResourceTarget(action);
+					const isViewingResource =
+						openTarget !== null &&
+						isOnResourcePage(openTarget.path, { pathname, search });
 
 					let icon: JSX.Element;
 					if (isSuccess) {
@@ -623,12 +622,16 @@ export default function ActionsSection({
 
 					const chip = (
 						<Button
-							disabledTooltip={translateConsole('This action already ran')}
+							disabledTooltip={
+								isViewingResource
+									? translateConsole("You're already viewing this page")
+									: translateConsole('This action already ran')
+							}
 							variant="outlined"
 							color="secondary"
 							size="sm"
 							onClick={(): void => handleClick(key, action)}
-							disabled={isSuccess}
+							disabled={isSuccess || isViewingResource}
 							loading={isLoading}
 							aria-label={action.label}
 							testId={`ai-action-chip-${action.kind}`}

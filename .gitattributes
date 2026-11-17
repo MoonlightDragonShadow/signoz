@@ -8,3 +8,5 @@ tests/e2e/drivers/** linguist-generated=true
 # by the specs that read them, so they are collapsed in review.
 tests/e2e/testdata/** linguist-generated=true
 tests/e2e/**/__generated__/** linguist-generated=true
+
+build-source-image.sh text eol=lf

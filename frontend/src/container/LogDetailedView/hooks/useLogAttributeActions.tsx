@@ -2,7 +2,6 @@ import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useMemo } from 'react';
 import { CircleMinus, CirclePlus, Layers, RefreshCw } from '@signozhq/icons';
 import { convertFiltersToExpression } from 'components/QueryBuilderV2/utils';
-import { FeatureKeys } from 'constants/features';
 import { useQueryBuilder } from 'hooks/queryBuilder/useQueryBuilder';
 import {
 	ChangeViewFunctionType,
@@ -14,7 +13,7 @@ import {
 	PrettyViewAction,
 	VisibleActionsConfig,
 } from 'periscope/components/PrettyView/PrettyView';
-import { useAppContext } from 'providers/App/App';
+import { useIsBodyJsonEnabled } from 'hooks/logs/useIsBodyJsonEnabled';
 import { IBuilderQuery } from 'types/api/queryBuilder/queryBuilderData';
 
 import { LogDetailsAction } from '../constants';
@@ -56,11 +55,7 @@ export function useLogAttributeActions({
 }: UseLogAttributeActionsParams): UseLogAttributeActionsResult {
 	const translateRemainingCopy = useConsoleTranslation();
 	const { stagedQuery, updateQueriesData } = useQueryBuilder();
-	const { featureFlags } = useAppContext();
-
-	const isBodyJsonQueryEnabled =
-		featureFlags?.find((flag) => flag.name === FeatureKeys.USE_JSON_BODY)
-			?.active || false;
+	const isBodyJsonQueryEnabled = useIsBodyJsonEnabled();
 
 	const filterFor = useCallback(
 		(context: FieldContext, isFilterIn: boolean): void => {

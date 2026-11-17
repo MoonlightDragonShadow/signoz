@@ -1,6 +1,6 @@
 # SigNoz 前端汉化变更与升级指南
 
-本说明对应当前源码快照；执行前请再次查看 Git 状态。当前版本基于 SigNoz 官方 `v0.149.0`，官方基线提交为 `4cb022dd06f018c8b6956e49e51f9f3fe4bc7d07`，本地分支为 `i18n/bilingual-v0.149.0`。
+本文和变更清单记录 `i18n/bilingual-v0.149.0` 的历史快照，官方基线为 `4cb022dd06f018c8b6956e49e51f9f3fe4bc7d07`。`i18n/bilingual-v0.150.0` 已通过合并官方 `v0.150.0` 升级，后续使用[当前汉化维护说明](../frontend/docs/bilingual-console.md)。
 
 ## 现有记录在哪里
 

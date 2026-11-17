@@ -1,7 +1,7 @@
 import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useMemo, useState } from 'react';
 import { UseQueryResult } from 'react-query';
-import { Skeleton, Table, TablePaginationConfig } from 'antd';
+import { Table, TablePaginationConfig } from 'antd';
 import { Typography } from '@signozhq/ui/typography';
 import { QueryParams } from 'constants/query';
 import {
@@ -55,10 +55,6 @@ function DependentServices({
 		}),
 		[isExpanded, dependentServicesData.length],
 	);
-
-	if (isLoading || isRefetching) {
-		return <Skeleton />;
-	}
 
 	if (isError) {
 		return <ErrorState refetch={refetch} />;

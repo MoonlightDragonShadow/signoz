@@ -7,10 +7,8 @@ import { Button } from '@signozhq/ui/button';
 import { DrawerWrapper, DrawerWrapperProps } from '@signozhq/ui/drawer';
 import { toast } from '@signozhq/ui/sonner';
 import { Typography } from '@signozhq/ui/typography';
-import logEvent from 'api/common/logEvent';
 import ErrorContent from 'components/ErrorModal/components/ErrorContent';
 import APIError from 'types/api/error';
-import { InfraMonitoringEvents } from 'constants/events';
 import {
 	GlobalTimeProvider,
 	NANO_SECOND_MULTIPLIER,
@@ -68,7 +66,6 @@ const DRAWER_MOTION_PROPS = {
 
 export default function K8sBaseDetails<T>({
 	category,
-	eventCategory,
 	getSelectedItemExpression,
 	fetchEntityData,
 	getEntityName,
@@ -227,16 +224,6 @@ export default function K8sBaseDetails<T>({
 		};
 	}, [entity, entityName, category]);
 
-	useEffect(() => {
-		if (entity) {
-			void logEvent(InfraMonitoringEvents.PageVisited, {
-				entity: InfraMonitoringEvents.K8sEntity,
-				page: InfraMonitoringEvents.DetailedPage,
-				category: eventCategory,
-			});
-		}
-	}, [entity, eventCategory]);
-
 	// Names the resource it returns to, so a drill several levels deep stays clear
 	const backTarget = previousEntry
 		? translateRuntimeCopy('Back to {{value1}}', {
@@ -340,7 +327,6 @@ export default function K8sBaseDetails<T>({
 					<K8sBaseDetailsContent<T>
 						entity={entity}
 						category={category}
-						eventCategory={eventCategory}
 						metadataConfig={metadataConfig}
 						countsConfig={countsConfig}
 						getCountsFilterExpression={getCountsFilterExpression}

@@ -1,11 +1,12 @@
 import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback } from 'react';
-import { useQueryClient } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import { useCopyToClipboard } from 'react-use';
 import { toast } from '@signozhq/ui/sonner';
 import {
+	getGetSavedViewQueryOptions,
+	updateSavedView,
 	useDeleteSavedView,
-	useUpdateSavedView,
 } from 'api/generated/services/saved-view';
 import {
 	RenderErrorResponseDTO,
@@ -47,8 +48,39 @@ export function useSavedViewRowActions(
 	const timeSearch = useTimeSearchParams();
 	const [, copyToClipboard] = useCopyToClipboard();
 	const logSavedViewEvent = useSavedViewLogEvent(source);
-	const { mutateAsync: updateSavedView, isLoading: isRenaming } =
-		useUpdateSavedView();
+	// The update replaces the whole spec, so it starts from the stored view, not
+	// the list row, which can be stale. Without read on the view, the list row is
+	// the only copy there is.
+	const { mutateAsync: renameSavedView, isLoading: isRenaming } = useMutation(
+		async ({
+			view,
+			displayName,
+		}: {
+			view: SavedviewtypesSavedViewDTO;
+			displayName: string;
+		}) => {
+			let { spec } = view;
+			try {
+				({
+					data: { spec },
+				} = await queryClient.fetchQuery(
+					getGetSavedViewQueryOptions({ id: view.id }),
+				));
+			} catch (error) {
+				if ((error as ErrorType<unknown>).response?.status !== 403) {
+					throw error;
+				}
+			}
+			await updateSavedView(
+				{ id: view.id },
+				{
+					source,
+					schemaVersion: SAVED_VIEW_SCHEMA_VERSION,
+					spec: { ...spec, displayName },
+				},
+			);
+		},
+	);
 	const { mutateAsync: deleteSavedView, isLoading: isDeleting } =
 		useDeleteSavedView();
 
@@ -83,14 +115,7 @@ export function useSavedViewRowActions(
 			displayName: string,
 		): Promise<boolean> => {
 			try {
-				await updateSavedView({
-					pathParams: { id: view.id },
-					data: {
-						source,
-						schemaVersion: SAVED_VIEW_SCHEMA_VERSION,
-						spec: { ...view.spec, displayName },
-					},
-				});
+				await renameSavedView({ view, displayName });
 				await invalidateSavedViews(queryClient, source, view.id);
 				toast.success(translateToast('View updated'), {
 					position: SAVED_VIEW_TOAST_POSITION,
@@ -104,7 +129,7 @@ export function useSavedViewRowActions(
 				return false;
 			}
 		},
-		[translateToast, updateSavedView, source, queryClient, logSavedViewEvent],
+		[translateToast, renameSavedView, source, queryClient, logSavedViewEvent],
 	);
 
 	// The deleted view's own query is left alone: refetching it would fail

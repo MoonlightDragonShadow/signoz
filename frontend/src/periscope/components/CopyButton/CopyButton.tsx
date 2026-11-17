@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { CSSProperties, type MouseEvent, useCallback } from 'react';
 import { Check, Copy } from '@signozhq/icons';
 import { Button } from '@signozhq/ui/button';
@@ -29,11 +30,12 @@ export interface CopyButtonProps {
 function CopyButton({
 	value,
 	size = 14,
-	ariaLabel = 'Copy',
+	ariaLabel,
 	testId,
 	onCopy,
 	tooltipSide = 'top',
 }: CopyButtonProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const { copyToClipboard, isCopied } = useCopyButton();
 
 	const handleClick = useCallback(
@@ -45,18 +47,19 @@ function CopyButton({
 		[copyToClipboard, value, onCopy],
 	);
 
+	const label = isCopied ? translate('Copied') : ariaLabel ?? translate('Copy');
 	const stackStyle: CSSProperties = { width: size, height: size };
 
 	return (
 		// TODO: remove wrapper once Button supports tooltip
-		<Tooltip title={isCopied ? 'Copied' : ariaLabel} side={tooltipSide}>
+		<Tooltip title={label} side={tooltipSide}>
 			<Button
 				variant="ghost"
 				color="secondary"
 				size="sm"
 				icon
 				onClick={handleClick}
-				aria-label={isCopied ? 'Copied' : ariaLabel}
+				aria-label={label}
 				testId={testId}
 			>
 				<span
@@ -74,7 +77,7 @@ function CopyButton({
 
 CopyButton.defaultProps = {
 	size: 14,
-	ariaLabel: 'Copy',
+	ariaLabel: undefined,
 	testId: undefined,
 	onCopy: undefined,
 };

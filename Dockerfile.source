@@ -12,7 +12,7 @@ RUN --mount=type=cache,target=/pnpm/store CI=1 pnpm fetch
 COPY frontend/ ./
 RUN --mount=type=cache,target=/pnpm/store CI=1 pnpm install --offline --frozen-lockfile
 
-ARG SIGNOZ_VERSION=v0.149.0
+ARG SIGNOZ_VERSION=v0.150.0
 # An empty API endpoint makes the browser use the same origin as SigNoz.
 # Local .env files are excluded by Dockerfile.source.dockerignore.
 RUN CI=1 \
@@ -35,7 +35,7 @@ COPY ee/ ./ee/
 COPY pkg/ ./pkg/
 
 ARG TARGETARCH
-ARG SIGNOZ_VERSION=v0.149.0
+ARG SIGNOZ_VERSION=v0.150.0
 ARG SIGNOZ_REVISION=unknown
 ARG SIGNOZ_BRANCH=unknown
 ARG SIGNOZ_BUILD_TIME=unknown
@@ -61,7 +61,7 @@ RUN --mount=type=cache,target=/go/pkg/mod \
 # Match the official image's operating-system family, paths and entrypoint.
 FROM alpine:3.20.3
 LABEL maintainer="signoz"
-ARG SIGNOZ_VERSION=v0.149.0
+ARG SIGNOZ_VERSION=v0.150.0
 ARG SIGNOZ_REVISION=unknown
 LABEL org.opencontainers.image.version="${SIGNOZ_VERSION}" \
       org.opencontainers.image.revision="${SIGNOZ_REVISION}"

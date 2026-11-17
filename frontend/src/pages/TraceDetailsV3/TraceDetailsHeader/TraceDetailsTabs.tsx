@@ -9,20 +9,13 @@ import { useTraceDetailsTab } from '../hooks/useTraceDetailsTab';
 
 import styles from './TraceDetailsHeader.module.scss';
 
-const TAB_ITEMS = [
-	{
-		value: TraceDetailsTab.Overview,
-		label: 'Overview',
-		testId: 'trace-details-tab-overview',
-	},
-	{
-		value: TraceDetailsTab.Thread,
-		label: 'Thread',
-		testId: 'trace-details-tab-thread',
-	},
-];
+interface TraceDetailsTabsProps {
+	hasAiSummary: boolean;
+}
 
-function TraceDetailsTabs(): JSX.Element {
+function TraceDetailsTabs({
+	hasAiSummary,
+}: TraceDetailsTabsProps): JSX.Element {
 	const translateCopy = useConsoleTranslation();
 	const { id: traceId = '' } = useAppParams<'id'>();
 	const [tab, setTab] = useTraceDetailsTab();
@@ -37,6 +30,26 @@ function TraceDetailsTabs(): JSX.Element {
 		void setTab(value as TraceDetailsTab, { history: 'push' });
 	};
 
+	const items = [
+		{
+			value: TraceDetailsTab.Overview,
+			label: translateCopy('Overview'),
+			testId: 'trace-details-tab-overview',
+		},
+		{
+			value: TraceDetailsTab.Thread,
+			label: translateCopy('Thread'),
+			testId: 'trace-details-tab-thread',
+			suffix: hasAiSummary ? (
+				<span
+					className={styles.aiDot}
+					aria-hidden
+					data-testid="trace-details-tab-thread-ai-dot"
+				/>
+			) : undefined,
+		},
+	];
+
 	return (
 		<div className={styles.tabs}>
 			<ToggleGroup
@@ -46,10 +59,7 @@ function TraceDetailsTabs(): JSX.Element {
 				value={tab}
 				onChange={handleChange}
 				size="sm"
-				items={TAB_ITEMS.map((item) => ({
-					...item,
-					label: translateCopy(item.label),
-				}))}
+				items={items}
 			/>
 		</div>
 	);

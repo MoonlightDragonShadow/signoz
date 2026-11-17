@@ -64,7 +64,6 @@ import styles from './EntityOverview.module.scss';
 
 export interface EntityOverviewProps {
 	category: InfraMonitoringEntity;
-	eventEntity: string;
 	/** The drawer entity's own attributes, which scope every related query */
 	attributes: EntityAttributes;
 	/** The drawer's own record and query prefix, so a row click can leave a
@@ -83,7 +82,6 @@ interface ContentProps extends EntityOverviewProps {
 
 function EntityOverviewContent({
 	category,
-	eventEntity,
 	attributes,
 	entity,
 	entityName,
@@ -192,11 +190,7 @@ function EntityOverviewContent({
 	return (
 		<div className={styles.container}>
 			<div className={styles.controls}>
-				<EntityDateTimeSelector
-					eventEntity={eventEntity}
-					category={category}
-					view={VIEW_TYPES.OVERVIEW}
-				/>
+				<EntityDateTimeSelector category={category} />
 
 				<RunQueryBtn
 					isLoadingQueries={isFetching}

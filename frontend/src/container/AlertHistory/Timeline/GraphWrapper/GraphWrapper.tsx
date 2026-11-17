@@ -1,7 +1,9 @@
 import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { useMemo } from 'react';
-import useUrlQuery from 'hooks/useUrlQuery';
-import { useGetAlertRuleDetailsTimelineGraphData } from 'pages/AlertDetails/hooks';
+import {
+	useAlertHistoryQueryParams,
+	useGetAlertRuleDetailsTimelineGraphData,
+} from 'pages/AlertDetails/hooks';
 import DataStateRenderer from 'periscope/components/DataStateRenderer/DataStateRenderer';
 import { AlertRuleTimelineGraphResponse } from 'types/api/alerts/def';
 
@@ -14,9 +16,7 @@ function GraphWrapper({
 }: {
 	totalCurrentTriggers: number;
 }): JSX.Element {
-	const urlQuery = useUrlQuery();
-
-	const relativeTime = urlQuery.get('relativeTime');
+	const { relativeTime } = useAlertHistoryQueryParams();
 
 	const { isLoading, isRefetching, isError, data, isValidRuleId, ruleId } =
 		useGetAlertRuleDetailsTimelineGraphData();

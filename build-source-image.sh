@@ -10,7 +10,7 @@ Options:
   --mirror        Use m.daocloud.io/docker.io for Docker Hub images
   --mirror=PATH   Use another Docker Hub mirror prefix (without https://)
 Environment variables:
-  SIGNOZ_VERSION          Source release version (default: v0.149.0)
+  SIGNOZ_VERSION          Source release version (default: v0.150.0)
   SIGNOZ_IMAGE            Output image tag (default: signoz-zh:<SIGNOZ_VERSION>)
   SIGNOZ_DOCKERHUB_MIRROR Docker Hub mirror prefix; also enables mirror mode
 
@@ -45,7 +45,7 @@ fi
 source_dir="$(CDPATH= cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 cd "$source_dir"
 
-signoz_version="${SIGNOZ_VERSION:-v0.149.0}"
+signoz_version="${SIGNOZ_VERSION:-v0.150.0}"
 signoz_image="${SIGNOZ_IMAGE:-signoz-zh:${signoz_version}}"
 case "$signoz_version" in
   *[!a-zA-Z0-9._+-]*|'')
