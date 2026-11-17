@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { ArrowLeft, Mail } from '@signozhq/icons';
 import { Button } from '@signozhq/ui/button';
 
@@ -13,10 +14,15 @@ function SuccessScreen({ onBackToLogin }: SuccessScreenProps): JSX.Element {
 					<div className="login-form-emoji">
 						<Mail size={32} />
 					</div>
-					<h4 className="forgot-password-title">Check your email</h4>
+					<h4 className="forgot-password-title">
+						<ConsoleText message={'Check your email'} />
+					</h4>
 					<p className="forgot-password-description">
-						We&apos;ve sent a password reset link to your email. Please check your
-						inbox and follow the instructions to reset your password.
+						<ConsoleText
+							message={
+								"We've sent a password reset link to your email. Please check your inbox and follow the instructions to reset your password."
+							}
+						/>
 					</p>
 				</div>
 
@@ -31,7 +37,7 @@ function SuccessScreen({ onBackToLogin }: SuccessScreenProps): JSX.Element {
 						onClick={onBackToLogin}
 						prefix={<ArrowLeft size={12} />}
 					>
-						Back to login
+						<ConsoleText message={'Back to login'} />
 					</Button>
 				</div>
 			</div>

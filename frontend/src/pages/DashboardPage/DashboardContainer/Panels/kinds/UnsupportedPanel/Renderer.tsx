@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { CircleHelp } from '@signozhq/icons';
 
 import PanelMessage from '../../components/PanelMessage/PanelMessage';
@@ -9,6 +10,7 @@ import PanelStyles from '../../panel.module.scss';
  * place of the chart, so the panel keeps its slot in the layout instead of leaving a hole.
  */
 function UnsupportedPanelRenderer(): JSX.Element {
+	const translate = useConsoleTranslation();
 	return (
 		<div
 			data-testid="unsupported-panel-renderer"
@@ -16,8 +18,10 @@ function UnsupportedPanelRenderer(): JSX.Element {
 		>
 			<PanelMessage
 				icon={<CircleHelp size={18} />}
-				title="Unsupported panel type"
-				description="This panel was built with a newer version of SigNoz. Upgrade to view it."
+				title={translate('Unsupported panel type')}
+				description={translate(
+					'This panel was built with a newer version of SigNoz. Upgrade to view it.',
+				)}
 			/>
 		</div>
 	);

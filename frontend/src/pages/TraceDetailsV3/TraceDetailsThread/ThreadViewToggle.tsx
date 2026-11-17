@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { ToggleGroup } from '@signozhq/ui/toggle-group';
 
 import { ThreadView } from './types';
@@ -18,6 +19,7 @@ function ThreadViewToggle({
 	onChange,
 	testId,
 }: ThreadViewToggleProps): JSX.Element {
+	const translateCopy = useConsoleTranslation();
 	const handleChange = (next: string): void => {
 		// Clicking the active item deselects it and reports ''.
 		if (next) {
@@ -33,7 +35,10 @@ function ThreadViewToggle({
 			size="sm"
 			value={value}
 			onChange={handleChange}
-			items={VIEW_OPTIONS}
+			items={VIEW_OPTIONS.map((item) => ({
+				...item,
+				label: translateCopy(item.label),
+			}))}
 			testId={testId}
 		/>
 	);

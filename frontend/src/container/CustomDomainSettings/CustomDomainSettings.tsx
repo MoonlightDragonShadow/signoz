@@ -1,3 +1,5 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useEffect, useMemo, useState } from 'react';
 import {
 	Check,
@@ -34,13 +36,15 @@ function DomainUpdateToast({
 	toastId: string | number;
 	url: string;
 }): JSX.Element {
+	const translate = useConsoleTranslation();
 	const displayUrl = url?.split('://')[1] ?? url;
 
 	return (
 		<div className="custom-domain-toast">
 			<span className="custom-domain-toast-message">
-				Your workspace URL is being updated to <strong>{displayUrl}</strong>. This
-				may take a few minutes.
+				<ConsoleText message={'Your workspace URL is being updated to'} />{' '}
+				<strong>{displayUrl}</strong>
+				<ConsoleText message={'. This may take a few minutes.'} />
 			</span>
 			<div className="custom-domain-toast-actions">
 				<Button
@@ -53,7 +57,7 @@ function DomainUpdateToast({
 						window.open(url, '_blank', 'noopener,noreferrer');
 					}}
 				>
-					Visit new URL
+					<ConsoleText message={'Visit new URL'} />
 				</Button>
 				<Button
 					color="secondary"
@@ -63,7 +67,7 @@ function DomainUpdateToast({
 					onClick={(): void => {
 						toast.dismiss(toastId);
 					}}
-					aria-label="Dismiss"
+					aria-label={translate('Dismiss')}
 				>
 					<X size={14} />
 				</Button>
@@ -73,6 +77,8 @@ function DomainUpdateToast({
 }
 
 export default function CustomDomainSettings(): JSX.Element {
+	const translateRuntimeCopy = useConsoleTranslation();
+	const translate = useConsoleTranslation();
 	const { org } = useAppContext();
 	const { timezone } = useTimezone();
 
@@ -256,7 +262,7 @@ export default function CustomDomainSettings(): JSX.Element {
 				</div>
 
 				<Button
-					disabledTooltip="Wait for the URL update to finish"
+					disabledTooltip={translate('Wait for the URL update to finish')}
 					size="md"
 					variant="solid"
 					color="secondary"
@@ -265,7 +271,7 @@ export default function CustomDomainSettings(): JSX.Element {
 					loading={isFetchingHosts}
 					onClick={(): void => setIsEditModalOpen(true)}
 				>
-					Edit workspace link
+					<ConsoleText message={'Edit workspace link'} />
 				</Button>
 			</div>
 
@@ -276,7 +282,10 @@ export default function CustomDomainSettings(): JSX.Element {
 					className="custom-domain-callout"
 					size="small"
 					icon={<SolidAlertCircle size={13} color="primary" />}
-					title={`Updating your URL to ⎯ ${customDomainSubdomain}.${dnsSuffix}. This may take a few mins.`}
+					title={translateRuntimeCopy(
+						'Updating your URL to ⎯ {{value1}}.{{value2}}. This may take a few mins.',
+						{ value1: customDomainSubdomain, value2: dnsSuffix },
+					)}
 				/>
 			)}
 

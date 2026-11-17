@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useMemo } from 'react';
 import { Tabs, TabsProps } from 'antd';
 import { useAppLocation } from 'lib/router/useAppLocation';
@@ -47,6 +48,7 @@ const CONFIGURATION_SIDEBAR_ITEMS: ConfigurationSidebarItem[] = [
 ];
 
 function AllAlertList(): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const urlQuery = useUrlQuery();
 	const location = useAppLocation();
 	const { safeNavigate } = useSafeNavigate();
@@ -143,7 +145,9 @@ function AllAlertList(): JSX.Element {
 							onClick={(): void => handleSubTabChange(item.key)}
 							data-testid={item.itemKey}
 						>
-							<span className="sidebar-nav-item-label">{item.label}</span>
+							<span className="sidebar-nav-item-label">
+								{translateConsole(item.label)}
+							</span>
 						</button>
 					))}
 				</div>
@@ -172,6 +176,7 @@ function AllAlertList(): JSX.Element {
 			</div>
 		),
 		[
+			translateConsole,
 			activeSubTab,
 			handleSubTabChange,
 			isChannelsNew,
@@ -185,7 +190,7 @@ function AllAlertList(): JSX.Element {
 			label: (
 				<div className="periscope-tab top-level-tab">
 					<GalleryVerticalEnd size={14} />
-					Triggered Alerts
+					{translateConsole('Triggered Alerts')}
 				</div>
 			),
 			key: AlertListTabs.TRIGGERED_ALERTS,
@@ -195,7 +200,7 @@ function AllAlertList(): JSX.Element {
 			label: (
 				<div className="periscope-tab top-level-tab">
 					<Pyramid size={14} />
-					Alert Rules
+					{translateConsole('Alert Rules')}
 				</div>
 			),
 			key: AlertListTabs.ALERT_RULES,
@@ -209,7 +214,7 @@ function AllAlertList(): JSX.Element {
 			label: (
 				<div className="periscope-tab top-level-tab">
 					<ConfigureIcon width={14} height={14} />
-					Configuration
+					{translateConsole('Configuration')}
 				</div>
 			),
 			key: AlertListTabs.CONFIGURATION,

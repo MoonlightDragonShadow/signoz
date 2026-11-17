@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { useCallback, useState } from 'react';
 import { ChevronDown, ChevronRight } from '@signozhq/icons';
 
@@ -72,7 +73,7 @@ function ResourcePermissionCard({
 					className={styles.grantedCount}
 					testId={`granted-count-${resourceKind}`}
 				>
-					{grantedCount} / {totalCount} granted
+					{grantedCount} / {totalCount} <ConsoleText message={'granted'} />
 				</Typography>
 			</button>
 

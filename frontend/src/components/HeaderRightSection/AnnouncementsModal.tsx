@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { Typography } from '@signozhq/ui/typography';
 
 function AnnouncementsModal(): JSX.Element {
@@ -5,7 +6,7 @@ function AnnouncementsModal(): JSX.Element {
 		<div className="announcements-modal-container">
 			<div className="announcements-modal-container-header">
 				<Typography.Text className="announcements-modal-title">
-					Announcements
+					<ConsoleText message={'Announcements'} />
 				</Typography.Text>
 			</div>
 		</div>

@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { DashboardtypesHeatmapYScaleDTO } from 'api/generated/services/sigNoz.schemas';
 import type {
 	SectionEditorProps,
@@ -28,19 +29,20 @@ function AxesSection({
 	controls,
 	onChange,
 }: SectionEditorProps<SectionKind.Axes>): JSX.Element {
+	const translate = useConsoleTranslation();
 	const reset = createFieldResetter(value, savedValue, onChange);
 
 	if (controls.y) {
 		const scale = value?.y?.scale ?? DashboardtypesHeatmapYScaleDTO.auto;
 		return (
 			<ConfigField
-				label="Y-axis scale"
+				label={translate('Y-axis scale')}
 				help={BUCKET_SCALE_HELP[scale]}
 				{...reset('y')}
 			>
 				<ConfigTiles
 					testId="panel-editor-v2-y-scale"
-					aria-label="Y-axis scale"
+					aria-label={translate('Y-axis scale')}
 					value={scale}
 					items={BUCKET_SCALE_OPTIONS}
 					onChange={(next): void =>
@@ -52,7 +54,10 @@ function AxesSection({
 	}
 
 	return (
-		<ConfigField label="Y axis" {...reset('softMin', 'softMax', 'isLogScale')}>
+		<ConfigField
+			label={translate('Y axis')}
+			{...reset('softMin', 'softMax', 'isLogScale')}
+		>
 			<AxisFields>
 				{controls.minMax && (
 					<AxisRangeField
@@ -65,7 +70,7 @@ function AxesSection({
 				{controls.logScale && (
 					<AxisScaleField
 						testId="panel-editor-v2-log-scale"
-						aria-label="Y-axis scale"
+						aria-label={translate('Y-axis scale')}
 						value={value?.isLogScale ? 'log' : 'linear'}
 						items={LOG_SCALE_OPTIONS}
 						help={SCALE_HELP}

@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { DatePicker, Modal } from 'antd';
 import dayjs, { Dayjs } from 'dayjs';
@@ -12,6 +13,7 @@ function CustomDateTimeModal({
 	onCancel,
 	setCustomDTPickerVisible,
 }: CustomDateTimeModalProps): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
 	const [selectedDate, setDateTime] = useState<DateTimeRangeType>();
 
 	const onModalOkHandler = (date_time: any): void => {
@@ -35,9 +37,9 @@ function CustomDateTimeModal({
 	return (
 		<Modal
 			open={visible}
-			title="Chose date and time range"
-			okText="Apply"
-			cancelText="Cancel"
+			title={translateInterfaceCopy('Chose date and time range')}
+			okText={translateInterfaceCopy('Apply')}
+			cancelText={translateInterfaceCopy('Cancel')}
 			onCancel={onCancel}
 			onOk={onOk}
 		>

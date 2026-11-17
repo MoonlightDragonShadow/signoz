@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useQueryClient } from 'react-query';
@@ -140,6 +141,7 @@ function ServiceDetails({
 }: {
 	type: IntegrationType;
 }): JSX.Element | null {
+	const translateConsole = useConsoleTranslation();
 	const urlQuery = useUrlQuery();
 	const cloudAccountId = urlQuery.get('cloudAccountId');
 	const serviceId = urlQuery.get('service');
@@ -334,7 +336,7 @@ function ServiceDetails({
 						onError: (error) => {
 							console.error('Failed to update service config:', error);
 
-							toast.error('Failed to update service config', {
+							toast.error(translateConsole('Failed to update service config'), {
 								description: error?.message,
 							});
 						},
@@ -392,7 +394,7 @@ function ServiceDetails({
 							<div className="aws-service-details-overview-configuration-logs">
 								<div className="aws-service-details-overview-configuration-title">
 									<div className="aws-service-details-overview-configuration-title-text">
-										<span>Log Collection</span>
+										<span>{translateConsole('Log Collection')}</span>
 									</div>
 									<div className="configuration-action">
 										<Controller<ServiceConfigFormValues, 'logsEnabled'>
@@ -441,7 +443,7 @@ function ServiceDetails({
 							<div className="aws-service-details-overview-configuration-metrics">
 								<div className="aws-service-details-overview-configuration-title">
 									<div className="aws-service-details-overview-configuration-title-text">
-										<span>Metric Collection</span>
+										<span>{translateConsole('Metric Collection')}</span>
 									</div>
 									<div className="configuration-action">
 										<Controller<ServiceConfigFormValues, 'metricsEnabled'>
@@ -471,7 +473,7 @@ function ServiceDetails({
 						{hasUnsavedChanges && !isReadOnly && (
 							<div className="aws-service-details-overview-configuration-actions">
 								<Button
-									disabledTooltip="Wait for the changes to save"
+									disabledTooltip={translateConsole('Wait for the changes to save')}
 									variant="solid"
 									color="secondary"
 									testId="cloud-service-discard-btn"
@@ -482,10 +484,10 @@ function ServiceDetails({
 									width={100}
 									type="button"
 								>
-									Discard
+									{translateConsole('Discard')}
 								</Button>
 								<Button
-									disabledTooltip="Select at least one S3 bucket"
+									disabledTooltip={translateConsole('Select at least one S3 bucket')}
 									variant="solid"
 									color="primary"
 									size="sm"
@@ -496,7 +498,7 @@ function ServiceDetails({
 									loading={isUpdatingServiceConfig}
 									disabled={isS3SyncBucketsMissing}
 								>
-									Save
+									{translateConsole('Save')}
 								</Button>
 							</div>
 						)}
@@ -543,12 +545,12 @@ function ServiceDetails({
 					{
 						children: renderOverview(),
 						key: 'overview',
-						label: 'Overview',
+						label: translateConsole('Overview'),
 					},
 					{
 						children: renderDataCollected(),
 						key: 'data-collected',
-						label: 'Data Collected',
+						label: translateConsole('Data Collected'),
 					},
 				]}
 				variant="secondary"

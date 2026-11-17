@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Color } from '@signozhq/design-tokens';
 import { Drawer } from 'antd';
 import { useIsDarkMode } from 'hooks/useDarkMode';
@@ -16,6 +17,7 @@ function ViewAllDrawer({
 	topContributorsData: AlertRuleTopContributors[];
 	totalCurrentTriggers: AlertRuleStats['totalCurrentTriggers'];
 }): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const isDarkMode = useIsDarkMode();
 	return (
 		<Drawer
@@ -29,7 +31,7 @@ function ViewAllDrawer({
 				overscrollBehavior: 'contain',
 				background: isDarkMode ? Color.BG_INK_400 : Color.BG_VANILLA_100,
 			}}
-			title="Viewing All Contributors"
+			title={translateConsole('Viewing All Contributors')}
 		>
 			<div
 				className="top-contributors-card--view-all"

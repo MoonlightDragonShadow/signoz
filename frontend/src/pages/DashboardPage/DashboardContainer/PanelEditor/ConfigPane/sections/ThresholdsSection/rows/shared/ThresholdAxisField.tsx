@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Typography } from '@signozhq/ui/typography';
 import { DashboardtypesThresholdAxisDTO } from 'api/generated/services/sigNoz.schemas';
 
@@ -23,13 +24,16 @@ function ThresholdAxisField({
 	value,
 	onChange,
 }: ThresholdAxisFieldProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	return (
 		<div className={styles.field}>
-			<Typography.Text className={styles.fieldLabel}>Axis</Typography.Text>
+			<Typography.Text className={styles.fieldLabel}>
+				{translate('Axis')}
+			</Typography.Text>
 			<ConfigTiles
 				compact
 				testId={testId}
-				aria-label="Axis"
+				aria-label={translate('Axis')}
 				value={value}
 				items={AXIS_TILES}
 				onChange={onChange}

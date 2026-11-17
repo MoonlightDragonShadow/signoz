@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import logEvent from 'api/common/logEvent';
@@ -24,6 +25,7 @@ import { getRoutes } from './utils';
 import './Settings.styles.scss';
 
 function SettingsPage(): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const { pathname, search } = useAppLocation();
 
 	const { user, featureFlags, trialInfo, isFetchingActiveLicense } =
@@ -285,7 +287,7 @@ function SettingsPage(): JSX.Element {
 					data-testid="settings-page-title"
 				>
 					<Cog size={16} />
-					Settings
+					{translateConsole('Settings')}
 				</div>
 			</header>
 
@@ -308,7 +310,9 @@ function SettingsPage(): JSX.Element {
 								}`}
 							>
 								{section.title && (
-									<div className="settings-nav-section-title">{section.title}</div>
+									<div className="settings-nav-section-title">
+										{translateConsole(section.title)}
+									</div>
 								)}
 								{enabledItems.map((item) => (
 									<NavItem

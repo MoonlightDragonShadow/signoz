@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { useState } from 'react';
 import { Button } from '@signozhq/ui/button';
 import classNames from 'classnames';
@@ -67,7 +68,7 @@ function AnnouncementTooltip({
 						onClick={closeTooltip}
 						prefix={<Check size={16} />}
 					>
-						Okay
+						<ConsoleText message={'Okay'} />
 					</Button>
 				</div>
 			</div>

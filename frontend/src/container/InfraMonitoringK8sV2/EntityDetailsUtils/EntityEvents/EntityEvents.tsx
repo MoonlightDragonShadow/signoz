@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useEffect, useMemo } from 'react';
 import { Table, TableColumnsType } from 'antd';
 import logEvent from 'api/common/logEvent';
@@ -71,6 +72,7 @@ function EntityEventsContent({
 	queryKey,
 	category,
 }: Omit<Props, 'initialExpression'>): JSX.Element {
+	const translate = useConsoleTranslation();
 	const { timeRange } = useEntityDetailsTime();
 	const expression = useExpression();
 	const inputExpression = useInputExpression();
@@ -174,9 +176,14 @@ function EntityEventsContent({
 	const { formatTimezoneAdjustedTimestamp } = useTimezone();
 	const columns: TableColumnsType<EventDataType> = useMemo(
 		() => [
-			{ title: 'Severity', dataIndex: 'severity', key: 'severity', width: 100 },
 			{
-				title: 'Timestamp',
+				title: translate('Severity'),
+				dataIndex: 'severity',
+				key: 'severity',
+				width: 100,
+			},
+			{
+				title: translate('Timestamp'),
 				dataIndex: 'timestamp',
 				width: 240,
 				ellipsis: true,
@@ -186,9 +193,9 @@ function EntityEventsContent({
 						typeof value === 'string' ? value : value / 1e6,
 					),
 			},
-			{ title: 'Body', dataIndex: 'body', key: 'body' },
+			{ title: translate('Body'), dataIndex: 'body', key: 'body' },
 		],
-		[formatTimezoneAdjustedTimestamp],
+		[translate, formatTimezoneAdjustedTimestamp],
 	);
 
 	const handleExpandRowIcon = ({

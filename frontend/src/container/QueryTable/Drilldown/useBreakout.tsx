@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { useCallback, useMemo } from 'react';
 import { QueryParams } from 'constants/query';
 import { PANEL_TYPES } from 'constants/queryBuilder';
@@ -102,7 +103,9 @@ const useBreakout = ({
 								style={{ cursor: 'pointer' }}
 								onClick={handleBackClick}
 							/>
-							<span>Breakout by</span>
+							<span>
+								<ConsoleText message={'Breakout by'} />
+							</span>
 						</div>
 					</ContextMenu.Header>
 					<BreakoutOptions

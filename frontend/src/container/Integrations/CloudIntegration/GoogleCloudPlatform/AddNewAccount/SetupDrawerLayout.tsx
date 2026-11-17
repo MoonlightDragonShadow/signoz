@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { ReactNode, useState } from 'react';
 import { DrawerWrapper } from '@signozhq/ui/drawer';
 
@@ -14,6 +15,7 @@ function SetupDrawerLayout({
 	onClose,
 	children,
 }: SetupDrawerLayoutProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const [footerSlot, setFooterSlot] = useState<HTMLDivElement | null>(null);
 
 	return (
@@ -27,7 +29,7 @@ function SetupDrawerLayout({
 			}}
 			direction="right"
 			showCloseButton
-			title="Connect Google Cloud Platform"
+			title={translateConsole('Connect Google Cloud Platform')}
 			width="extra-wide"
 			footer={<div ref={setFooterSlot} className={styles.footerSlot} />}
 			testId="gcp-setup-drawer"

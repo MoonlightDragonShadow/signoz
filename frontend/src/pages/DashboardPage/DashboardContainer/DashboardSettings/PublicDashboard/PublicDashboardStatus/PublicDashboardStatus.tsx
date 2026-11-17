@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Globe, LockKeyhole } from '@signozhq/icons';
 import { Badge } from '@signozhq/ui/badge';
 import { Typography } from '@signozhq/ui/typography';
@@ -12,6 +13,7 @@ interface PublicDashboardStatusProps {
 function PublicDashboardStatus({
 	isPublic,
 }: PublicDashboardStatusProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	return (
 		<div
 			className={cx(styles.statusStrip, { [styles.statusStripLive]: isPublic })}
@@ -26,7 +28,9 @@ function PublicDashboardStatus({
 
 			<div className={styles.statusBody}>
 				<Typography.Text className={styles.statusTitle}>
-					{isPublic ? 'This dashboard is live' : 'This dashboard is private'}
+					{isPublic
+						? translate('This dashboard is live')
+						: translate('This dashboard is private')}
 				</Typography.Text>
 				<Typography.Text
 					className={cx(styles.statusSubtitle, {
@@ -34,8 +38,10 @@ function PublicDashboardStatus({
 					})}
 				>
 					{isPublic
-						? 'Anyone with the link can view it — no account needed.'
-						: 'Publish it to share a read-only view with anyone who has the link.'}
+						? translate('Anyone with the link can view it — no account needed.')
+						: translate(
+								'Publish it to share a read-only view with anyone who has the link.',
+							)}
 				</Typography.Text>
 			</div>
 
@@ -44,7 +50,7 @@ function PublicDashboardStatus({
 				variant="outlined"
 				color={isPublic ? 'primary' : 'secondary'}
 			>
-				{isPublic ? 'Public' : 'Private'}
+				{isPublic ? translate('Public') : translate('Private')}
 			</Badge>
 		</div>
 	);

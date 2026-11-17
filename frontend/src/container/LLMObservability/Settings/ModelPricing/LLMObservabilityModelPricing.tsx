@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useEffect } from 'react';
 import { Badge } from '@signozhq/ui/badge';
 import { Tabs } from 'antd';
@@ -11,6 +12,7 @@ import ModelCostTabPanel from './ModelCostTabPanel';
 import UnpricedModelsTab from './UnpricedModelsTab';
 
 function LLMObservabilityModelPricing(): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const [activeTab, setActiveTab] = useQueryState(
 		TAB_KEY,
 		parseAsStringEnum([MODEL_COSTS_TAB, UNPRICED_MODELS_TAB]).withDefault(
@@ -46,7 +48,7 @@ function LLMObservabilityModelPricing(): JSX.Element {
 						key: UNPRICED_MODELS_TAB,
 						label: (
 							<span className={styles.tabLabel}>
-								Unpriced models
+								{translateConsole('Unpriced models')}
 								{unpricedCount > 0 && (
 									<Badge color="primary" variant="solid" testId="unpriced-models-count">
 										{unpricedCount}

@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { TabRoutes } from 'components/RouteTab/types';
 import ROUTES from 'constants/routes';
 import { Compass, Workflow } from '@signozhq/icons';
@@ -8,7 +9,7 @@ export const logsExplorer: TabRoutes = {
 	Component: (): JSX.Element => <LogsExplorer />,
 	name: (
 		<div className="tab-item">
-			<Compass size={16} /> Explorer
+			<Compass size={16} /> <ConsoleText message="Explorer" />
 		</div>
 	),
 	route: ROUTES.LOGS,
@@ -19,7 +20,7 @@ export const logsPipelines: TabRoutes = {
 	Component: (): JSX.Element => <Pipelines />,
 	name: (
 		<div className="tab-item">
-			<Workflow size={16} /> Pipelines
+			<Workflow size={16} /> <ConsoleText message="Pipelines" />
 		</div>
 	),
 	route: ROUTES.LOGS_PIPELINES,

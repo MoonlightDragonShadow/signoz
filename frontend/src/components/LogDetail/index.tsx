@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Color, Spacing } from '@signozhq/design-tokens';
@@ -431,7 +432,7 @@ function LogDetailInner({
 									color="muted"
 									className="log-detail-drawer__footer-hint-text"
 								>
-									Use
+									<ConsoleText message={'Use'} />
 								</Typography.Text>
 								<ArrowUp size={14} className="log-detail-drawer__footer-hint-icon" />
 								<span>/</span>
@@ -440,7 +441,7 @@ function LogDetailInner({
 									color="muted"
 									className="log-detail-drawer__footer-hint-text"
 								>
-									to view previous/next log
+									<ConsoleText message={'to view previous/next log'} />
 								</Typography.Text>
 							</div>
 						</div>

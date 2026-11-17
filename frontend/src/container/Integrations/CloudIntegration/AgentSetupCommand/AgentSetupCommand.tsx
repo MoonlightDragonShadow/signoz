@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { ReactNode } from 'react';
 import { Typography } from '@signozhq/ui/typography';
 import CodeBlock from 'components/CodeBlock/CodeBlock';
@@ -15,11 +16,12 @@ function AgentSetupCommand({
 	command,
 	testId,
 }: AgentSetupCommandProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	return (
 		<div className={styles.commands} data-testid={testId}>
 			<div className={styles.commandsHead}>
 				<Typography.Text weight="bold" size="base">
-					Deploy the SigNoz agent
+					{translateConsole('Deploy the SigNoz agent')}
 				</Typography.Text>
 				<Typography.Text as="p" size="small" color="muted">
 					{description}

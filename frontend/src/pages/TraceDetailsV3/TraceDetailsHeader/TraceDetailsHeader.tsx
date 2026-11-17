@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useEffect, useState } from 'react';
 import { Button } from '@signozhq/ui/button';
 import { Tooltip } from '@signozhq/ui/tooltip';
@@ -57,6 +58,7 @@ function TraceDetailsHeader({
 	onFilteredSpansChange,
 	showTraceDetailsHeaderOptions,
 }: TraceDetailsHeaderProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const { id: traceID = '' } = useAppParams<'id'>();
 	const [showTraceDetails, setShowTraceDetails] = useState(true);
 	const [isFilterExpanded, setIsFilterExpanded] = useState(false);
@@ -128,7 +130,7 @@ function TraceDetailsHeader({
 							size="sm"
 							icon
 							onClick={handlePreviousBtnClick}
-							aria-label="Back"
+							aria-label={translateConsole('Back')}
 						>
 							<ArrowLeft size={14} />
 						</Button>
@@ -149,13 +151,13 @@ function TraceDetailsHeader({
 					>
 						{!isFilterExpanded && (
 							<div className={styles.headerActions}>
-								<Tooltip title="Analytics">
+								<Tooltip title={translateConsole('Analytics')}>
 									<Button
 										variant="ghost"
 										size="sm"
 										icon
 										color="secondary"
-										aria-label="Analytics"
+										aria-label={translateConsole('Analytics')}
 										testId="trace-analytics-button"
 										onClick={handleToggleAnalytics}
 									>
@@ -220,7 +222,7 @@ function TraceDetailsHeader({
 
 			<FieldsSelector
 				isOpen={isPreviewFieldsOpen}
-				title="Preview fields"
+				title={translateConsole('Preview fields')}
 				fields={previewFields}
 				onFieldsChange={setPreviewFields}
 				onClose={(): void => setIsPreviewFieldsOpen(false)}

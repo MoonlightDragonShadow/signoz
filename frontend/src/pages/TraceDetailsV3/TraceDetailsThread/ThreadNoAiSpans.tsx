@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { ArrowRight } from '@signozhq/icons';
 import { Button } from '@signozhq/ui/button';
 import { openInNewTab } from 'utils/navigation';
@@ -9,15 +10,17 @@ import { LLM_OBSERVABILITY_DOCS_URL } from '../constants';
 import styles from './ThreadNoAiSpans.module.scss';
 
 function ThreadNoAiSpans(): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	return (
 		<div className={styles.root} data-testid="thread-empty">
 			<img src={noDataUrl} alt="" className={styles.noDataImg} />
 			<span className={styles.title}>
-				This trace has no spans from AI-related actions
+				{translateConsole('This trace has no spans from AI-related actions')}
 			</span>
 			<span className={styles.description}>
-				Thread view summarising your entire AI-journey history will appear here when
-				the spans have the necessary datapoints.
+				{translateConsole(
+					'Thread view summarising your entire AI-journey history will appear here when the spans have the necessary datapoints.',
+				)}
 			</span>
 			<div className={styles.actions}>
 				<Button
@@ -30,7 +33,7 @@ function ThreadNoAiSpans(): JSX.Element {
 					}}
 					testId="thread-empty-learn-more"
 				>
-					Learn more
+					{translateConsole('Learn more')}
 				</Button>
 			</div>
 		</div>

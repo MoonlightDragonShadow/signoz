@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useMemo } from 'react';
 import { toast } from '@signozhq/ui/sonner';
 import { ExportFormat } from 'lib/exportData/types';
@@ -34,6 +35,7 @@ export function useDownloadTrace({
 	endTime,
 	totalSpansCount,
 }: UseDownloadTraceProps): UseDownloadTraceReturn {
+	const translateRemainingCopy = useConsoleTranslation();
 	const isDownloading = useTraceDownloadStore((s) => s.isDownloading);
 	const startDownload = useTraceDownloadStore((s) => s.startDownload);
 
@@ -66,22 +68,30 @@ export function useDownloadTrace({
 						format,
 					});
 					if (outcome === 'completed') {
-						toast.success('Export completed successfully');
+						toast.success(translateRemainingCopy('Export completed successfully'));
 					} else if (outcome === 'cancelled') {
 						logTraceEvent(TraceDetailEvents.DownloadCancelled, {
 							[TraceDetailEventKeys.Format]: format,
 							[TraceDetailEventKeys.TotalSpansCount]: totalSpansCount,
 						});
-						toast.info('Export cancelled');
+						toast.info(translateRemainingCopy('Export cancelled'));
 					}
 				} catch (error) {
-					toast.error('Failed to download trace');
+					toast.error(translateRemainingCopy('Failed to download trace'));
 					console.error(error);
 				}
 			};
 			void run();
 		},
-		[query, timeRange, totalSpansCount, traceId, startDownload, logTraceEvent],
+		[
+			query,
+			timeRange,
+			totalSpansCount,
+			traceId,
+			startDownload,
+			logTraceEvent,
+			translateRemainingCopy,
+		],
 	);
 
 	return {

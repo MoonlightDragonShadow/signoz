@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useQuery } from 'react-query';
 // eslint-disable-next-line no-restricted-imports
@@ -62,6 +63,7 @@ import {
 } from './util';
 
 function Application(): JSX.Element {
+	const translate = useConsoleTranslation();
 	const { servicename: encodedServiceName } = useAppParams<'servicename'>();
 	const servicename = decodeURIComponent(encodedServiceName || '');
 
@@ -331,7 +333,7 @@ function Application(): JSX.Element {
 							safeNavigate,
 						})}
 					>
-						View Traces
+						{translate('View Traces')}
 					</Button>
 					<TopLevelOperation
 						handleGraphClick={handleGraphClick}
@@ -361,7 +363,7 @@ function Application(): JSX.Element {
 								safeNavigate,
 							})}
 						>
-							View Traces
+							{translate('View Traces')}
 						</Button>
 						<ApDex
 							handleGraphClick={handleGraphClick}

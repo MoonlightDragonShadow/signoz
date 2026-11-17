@@ -1,3 +1,5 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useRef, useState } from 'react';
 import { Info, Plus } from '@signozhq/icons';
 import { Button } from '@signozhq/ui/button';
@@ -38,6 +40,8 @@ function ItemInputSelector({
 	hasError = false,
 	prefixElement,
 }: ItemInputSelectorProps): JSX.Element {
+	const translateRuntimeCopy = useConsoleTranslation();
+	const translate = useConsoleTranslation();
 	const [inputValue, setInputValue] = useState('');
 	const badgesRef = useRef<HTMLDivElement>(null);
 
@@ -140,11 +144,11 @@ function ItemInputSelector({
 						size="sm"
 						onClick={handleAddClick}
 						disabled={!inputValue.trim()}
-						disabledTooltip="Enter a value first"
+						disabledTooltip={translate('Enter a value first')}
 						testId={`item-input-selector-add-btn-${testId}`}
 						prefix={<Plus size={14} />}
 					>
-						Add
+						<ConsoleText message={'Add'} />
 					</Button>
 				}
 			/>
@@ -156,7 +160,9 @@ function ItemInputSelector({
 							<Pill.Closeable
 								key={id}
 								testId={`item-badge-${testId}-${index}`}
-								closeAriaLabel={`Remove ${id}`}
+								closeAriaLabel={translateRuntimeCopy('Remove {{value1}}', {
+									value1: id,
+								})}
 								onClose={(e): void => handleBadgeClose(e, id, index)}
 							>
 								<Typography as="span" size="small" truncate={1} title={id}>
@@ -168,15 +174,16 @@ function ItemInputSelector({
 					<Tooltip
 						title={
 							<Typography align="left">
-								Still not sure on how to add selectors? <br />
+								<ConsoleText message={'Still not sure on how to add selectors?'} />{' '}
+								<br />
 								<Typography.Link
 									href={`${BASE_DOCS_URL}#${docsAnchor}`}
 									target="_blank"
 									rel="noopener noreferrer"
 								>
-									Check the docs
+									<ConsoleText message={'Check the docs'} />
 								</Typography.Link>{' '}
-								to understand selectors for this resource.
+								<ConsoleText message={'to understand selectors for this resource.'} />
 							</Typography>
 						}
 					>
@@ -185,15 +192,15 @@ function ItemInputSelector({
 				</div>
 			) : (
 				<Typography className={styles.itemInputSelectorHint}>
-					Not sure what to type here?{' '}
+					<ConsoleText message={'Not sure what to type here?'} />{' '}
 					<Typography.Link
 						href={`${BASE_DOCS_URL}#${docsAnchor}`}
 						target="_blank"
 						rel="noopener noreferrer"
 					>
-						Check the docs
+						<ConsoleText message={'Check the docs'} />
 					</Typography.Link>{' '}
-					to understand selectors for this resource.
+					<ConsoleText message={'to understand selectors for this resource.'} />
 				</Typography>
 			)}
 		</div>

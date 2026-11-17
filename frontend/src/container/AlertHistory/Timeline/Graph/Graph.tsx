@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useMemo, useRef } from 'react';
 // eslint-disable-next-line no-restricted-imports
 import { useDispatch } from 'react-redux';
@@ -29,6 +30,7 @@ function HorizontalTimelineGraph({
 	isDarkMode: boolean;
 	data: AlertRuleTimelineGraphResponse[];
 }): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const transformedData: AlignedData = useMemo(() => {
 		if (!data?.length) {
 			return [[], []];
@@ -72,10 +74,10 @@ function HorizontalTimelineGraph({
 			padding: [null, 0, null, 0],
 			series: [
 				{
-					label: 'Time',
+					label: translateConsole('Time'),
 				},
 				{
-					label: 'States',
+					label: translateConsole('States'),
 				},
 			],
 			hooks: {
@@ -126,6 +128,7 @@ function HorizontalTimelineGraph({
 				uPlot.tzDate(new Date(timestamp * 1e3), timezone.value),
 		}),
 		[
+			translateConsole,
 			width,
 			isDarkMode,
 			transformedData.length,

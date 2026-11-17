@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Table } from 'antd';
 import { Typography } from '@signozhq/ui/typography';
 import { BarChart, ScrollText } from '@signozhq/icons';
@@ -10,20 +11,21 @@ interface DataCollectedProps {
 }
 
 function DataCollected(props: DataCollectedProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const { logsData, metricsData } = props;
 	const logsColumns = [
 		{
-			title: 'Name',
+			title: translateConsole('Name'),
 			dataIndex: 'name',
 			key: 'name',
 		},
 		{
-			title: 'Path',
+			title: translateConsole('Path'),
 			dataIndex: 'path',
 			key: 'path',
 		},
 		{
-			title: 'Type',
+			title: translateConsole('Type'),
 			dataIndex: 'type',
 			key: 'type',
 		},
@@ -31,17 +33,17 @@ function DataCollected(props: DataCollectedProps): JSX.Element {
 
 	const metricsColumns = [
 		{
-			title: 'Name',
+			title: translateConsole('Name'),
 			dataIndex: 'name',
 			key: 'name',
 		},
 		{
-			title: 'Type',
+			title: translateConsole('Type'),
 			dataIndex: 'type',
 			key: 'type',
 		},
 		{
-			title: 'Unit',
+			title: translateConsole('Unit'),
 			dataIndex: 'unit',
 			key: 'unit',
 		},
@@ -54,7 +56,7 @@ function DataCollected(props: DataCollectedProps): JSX.Element {
 			<div className="logs-section">
 				<div className="logs-heading">
 					<ScrollText size={14} />
-					<Typography.Text>Logs</Typography.Text>
+					<Typography.Text>{translateConsole('Logs')}</Typography.Text>
 				</div>
 				<Table
 					data-testid="integration-logs-table"
@@ -70,7 +72,7 @@ function DataCollected(props: DataCollectedProps): JSX.Element {
 			<div className="metrics-section">
 				<div className="metrics-heading">
 					<BarChart size={14} />
-					<Typography.Text>Metrics</Typography.Text>
+					<Typography.Text>{translateConsole('Metrics')}</Typography.Text>
 				</div>
 				<Table
 					data-testid="integration-metrics-table"

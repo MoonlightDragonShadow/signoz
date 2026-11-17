@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useEffect } from 'react';
 import { Button } from '@signozhq/ui/button';
 import { Progress } from '@signozhq/ui/progress';
@@ -12,6 +13,7 @@ const PANEL_WIDTH = 356;
 const PANEL_HEIGHT = 76;
 
 function TraceDownloadPanel(): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const isDownloading = useTraceDownloadStore((s) => s.isDownloading);
 	const progress = useTraceDownloadStore((s) => s.progress);
 	const cancelDownload = useTraceDownloadStore((s) => s.cancelDownload);
@@ -32,7 +34,7 @@ function TraceDownloadPanel(): JSX.Element {
 			<div className={styles.downloadPanel} data-testid="trace-download-panel">
 				<div className={`${styles.header} floating-panel__drag-handle`}>
 					<span className={styles.title}>
-						Downloading trace
+						{translateConsole('Downloading trace')}
 						<LoaderCircle size={14} className={`animate-spin ${styles.loader}`} />
 					</span>
 					<span className={styles.percent} data-testid="trace-download-percent">
@@ -44,7 +46,7 @@ function TraceDownloadPanel(): JSX.Element {
 						icon
 						color="secondary"
 						onClick={cancelDownload}
-						aria-label="Cancel download"
+						aria-label={translateConsole('Cancel download')}
 						testId="trace-download-cancel"
 					>
 						<X size={16} />

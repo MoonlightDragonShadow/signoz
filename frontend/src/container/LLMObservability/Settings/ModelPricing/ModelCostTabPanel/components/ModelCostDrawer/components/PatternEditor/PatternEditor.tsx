@@ -1,3 +1,5 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useState } from 'react';
 import { Badge } from '@signozhq/ui/badge';
 import { Button } from '@signozhq/ui/button';
@@ -19,6 +21,8 @@ function PatternEditor({
 	isReadOnly,
 	onChange,
 }: PatternEditorProps): JSX.Element {
+	const translateRuntimeCopy = useConsoleTranslation();
+	const translateConsole = useConsoleTranslation();
 	const [patternInput, setPatternInput] = useState<string>('');
 
 	const addPattern = (): void => {
@@ -38,9 +42,9 @@ function PatternEditor({
 	return (
 		<div className={styles.drawerSection}>
 			<span className={styles.fieldLabel}>
-				Model name patterns{' '}
+				{translateConsole('Model name patterns')}{' '}
 				<Typography.Text as="span" color="muted">
-					(prefix match)
+					{translateConsole('(prefix match)')}
 				</Typography.Text>
 			</span>
 			<div className={styles.patternBox}>
@@ -57,7 +61,9 @@ function PatternEditor({
 								{!isReadOnly && (
 									<button
 										type="button"
-										aria-label={`Remove pattern ${pattern}`}
+										aria-label={translateRuntimeCopy('Remove pattern {{value1}}', {
+											value1: pattern,
+										})}
 										className={styles.patternChipRemove}
 										onClick={(): void => removePattern(pattern)}
 									>
@@ -71,7 +77,7 @@ function PatternEditor({
 				{!isReadOnly && (
 					<div className={styles.patternAdd}>
 						<Input
-							placeholder="Add pattern…"
+							placeholder={translateConsole('Add pattern…')}
 							value={patternInput}
 							onChange={(e): void => setPatternInput(e.target.value)}
 							onKeyDown={(e): void => {
@@ -89,14 +95,17 @@ function PatternEditor({
 							onClick={addPattern}
 							testId="drawer-pattern-add-btn"
 						>
-							+ Add
+							{translateConsole('+ Add')}
 						</Button>
 					</div>
 				)}
 			</div>
 			<Typography.Text as="p" size="small" color="muted">
-				Each pattern uses <strong>prefix matching</strong> against{' '}
-				<code>gen_ai.request.model</code>.
+				<ConsoleText message={'Each pattern uses'} />{' '}
+				<strong>
+					<ConsoleText message={'prefix matching'} />
+				</strong>{' '}
+				<ConsoleText message={'against'} /> <code>gen_ai.request.model</code>.
 			</Typography.Text>
 		</div>
 	);

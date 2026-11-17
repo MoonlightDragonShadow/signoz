@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Typography } from '@signozhq/ui/typography';
 import { DashboardtypesThresholdFormatDTO } from 'api/generated/services/sigNoz.schemas';
 
@@ -23,6 +24,7 @@ function ThresholdFormatField({
 	color,
 	onChange,
 }: ThresholdFormatFieldProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const items: ConfigTileItem<DashboardtypesThresholdFormatDTO>[] = [
 		{
 			value: DashboardtypesThresholdFormatDTO.background,
@@ -47,11 +49,11 @@ function ThresholdFormatField({
 	return (
 		<div className={styles.field}>
 			<Typography.Text className={styles.fieldLabel}>
-				Apply color to
+				{translate('Apply color to')}
 			</Typography.Text>
 			<ConfigTiles
 				testId={testId}
-				aria-label="Apply color to"
+				aria-label={translate('Apply color to')}
 				value={value}
 				items={items}
 				onChange={onChange}

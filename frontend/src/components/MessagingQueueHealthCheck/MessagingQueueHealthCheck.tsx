@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useEffect, useMemo, useState } from 'react';
 import { Button } from 'antd';
 import cx from 'classnames';
@@ -16,6 +17,7 @@ interface MessagingQueueHealthCheckProps {
 function MessagingQueueHealthCheck({
 	serviceToInclude,
 }: MessagingQueueHealthCheckProps): JSX.Element {
+	const translateRuntimeCopy = useConsoleTranslation();
 	const [loading, setLoading] = useState(false);
 	const [checkListOpen, setCheckListOpen] = useState(false);
 
@@ -98,7 +100,9 @@ function MessagingQueueHealthCheck({
 			>
 				<div className="config-btn-content">
 					{missingConfiguration
-						? `Missing Configuration (${missingConfiguration})`
+						? translateRuntimeCopy('Missing Configuration ({{value1}})', {
+								value1: missingConfiguration,
+							})
 						: 'Configuration'}
 				</div>
 				<FolderTree size={14} />

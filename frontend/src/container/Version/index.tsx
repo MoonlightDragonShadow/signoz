@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 // eslint-disable-next-line no-restricted-imports
@@ -41,7 +42,7 @@ function Version(): JSX.Element {
 			<header className="version-page-header">
 				<div className="version-page-header-title">
 					<Wrench size={16} />
-					Version
+					<ConsoleText message={'Version'} />
 				</div>
 			</header>
 

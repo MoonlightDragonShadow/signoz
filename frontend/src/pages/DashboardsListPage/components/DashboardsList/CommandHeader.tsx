@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Typography } from '@signozhq/ui/typography';
 
 import NewDashboardButton from './NewDashboardButton';
@@ -17,11 +18,14 @@ function CommandHeader({
 	isModified,
 	onCreate,
 }: Props): JSX.Element {
+	const translate = useConsoleTranslation();
 	return (
 		<div className={styles.commandHeader}>
 			<div className={styles.headingBlock}>
 				<Typography.Title className={styles.title}>{label}</Typography.Title>
-				{isModified && <span className={styles.dirtyDot} title="Unsaved changes" />}
+				{isModified && (
+					<span className={styles.dirtyDot} title={translate('Unsaved changes')} />
+				)}
 				<span className={styles.countPill}>{count}</span>
 			</div>
 			<div className={styles.grow} />

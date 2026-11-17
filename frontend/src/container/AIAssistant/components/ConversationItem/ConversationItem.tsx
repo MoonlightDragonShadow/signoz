@@ -1,3 +1,5 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
+import { localizeRelativeTime } from 'components/LocalizedRelativeTime/localizeRelativeTime';
 import { KeyboardEvent, useCallback, useEffect, useRef, useState } from 'react';
 import { useCopyToClipboard } from 'react-use';
 import cx from 'classnames';
@@ -64,6 +66,8 @@ export default function ConversationItem({
 	onArchive,
 	onRestore,
 }: ConversationItemProps): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
+	const translateConsole = useConsoleTranslation();
 	const [isEditing, setIsEditing] = useState(false);
 	const [editValue, setEditValue] = useState('');
 	const inputRef = useRef<HTMLInputElement>(null);
@@ -81,8 +85,15 @@ export default function ConversationItem({
 		const id = conversation.threadId ?? conversation.id;
 		const path = ROUTES.AI_ASSISTANT.replace(':conversationId', id);
 		copyToClipboard(getAbsoluteUrl(path));
-		toast.success('Conversation link copied to clipboard');
-	}, [conversation.threadId, conversation.id, copyToClipboard]);
+		toast.success(
+			translateInterfaceCopy('Conversation link copied to clipboard'),
+		);
+	}, [
+		translateInterfaceCopy,
+		conversation.threadId,
+		conversation.id,
+		copyToClipboard,
+	]);
 
 	const startEditing = useCallback((): void => {
 		setEditValue(conversation.title ?? '');
@@ -125,14 +136,14 @@ export default function ConversationItem({
 		{
 			type: 'item',
 			value: 'rename',
-			label: 'Rename',
+			label: translateInterfaceCopy('Rename'),
 			prefix: <Pencil size={12} />,
 			onClick: (): void => startEditing(),
 		},
 		{
 			type: 'item',
 			value: 'copy-link',
-			label: 'Copy link',
+			label: translateInterfaceCopy('Copy link'),
 			prefix: <Link size={12} />,
 			onClick: handleCopyLink,
 		},
@@ -191,7 +202,9 @@ export default function ConversationItem({
 						<span className={styles.title} title={displayTitle}>
 							{displayTitle}
 						</span>
-						<span className={styles.time}>{formatRelativeTime(ts)}</span>
+						<span className={styles.time}>
+							{localizeRelativeTime(formatRelativeTime(ts), translateConsole)}
+						</span>
 					</>
 				)}
 			</div>
@@ -210,7 +223,7 @@ export default function ConversationItem({
 							size="sm"
 							icon
 							color="secondary"
-							aria-label="Conversation actions"
+							aria-label={translateConsole('Conversation actions')}
 						>
 							<EllipsisVertical size={12} />
 						</Button>

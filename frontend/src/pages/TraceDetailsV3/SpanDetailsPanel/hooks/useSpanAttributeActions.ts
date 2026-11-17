@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import React, { useCallback } from 'react';
 import GroupByIcon from 'assets/CustomIcons/GroupByIcon';
 import { convertFiltersToExpressionWithExistingQuery } from 'components/QueryBuilderV2/utils';
@@ -61,6 +62,7 @@ export const SPAN_ACTION = {
 } as const;
 
 export function useSpanAttributeActions(): SpanAttributeAction[] {
+	const translateRemainingCopy = useConsoleTranslation();
 	const { currentQuery, redirectWithQueryBuilderData } = useQueryBuilder();
 
 	const handleFilter = useCallback(
@@ -149,7 +151,7 @@ export function useSpanAttributeActions(): SpanAttributeAction[] {
 
 	return [
 		{
-			label: 'Filter for value',
+			label: translateRemainingCopy('Filter for value'),
 			value: SPAN_ACTION.FILTER_IN,
 			icon: React.createElement(ArrowDownToDot, {
 				size: 14,
@@ -159,7 +161,7 @@ export function useSpanAttributeActions(): SpanAttributeAction[] {
 			shouldHide: shouldHideForKey,
 		},
 		{
-			label: 'Filter out value',
+			label: translateRemainingCopy('Filter out value'),
 			value: SPAN_ACTION.FILTER_OUT,
 			icon: React.createElement(ArrowUpFromDot, {
 				size: 14,
@@ -169,7 +171,7 @@ export function useSpanAttributeActions(): SpanAttributeAction[] {
 			shouldHide: shouldHideForKey,
 		},
 		{
-			label: 'Group by attribute',
+			label: translateRemainingCopy('Group by attribute'),
 			value: SPAN_ACTION.GROUP_BY,
 			icon: React.createElement(GroupByIcon),
 			callback: handleGroupBy,

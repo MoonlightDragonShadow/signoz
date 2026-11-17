@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import { Check, Plus, X } from '@signozhq/icons';
 import { Button, Flex } from 'antd';
@@ -100,7 +101,7 @@ function Badges({ tags, setTags }: AddTagsProps): JSX.Element {
 				>
 					<Flex justify="center" align="center" gap={4}>
 						<Plus size="md" />
-						New Tag
+						<ConsoleText message={'New Tag'} />
 					</Flex>
 				</Button>
 			)}

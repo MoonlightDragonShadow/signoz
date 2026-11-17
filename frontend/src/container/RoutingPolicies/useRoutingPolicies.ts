@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useMemo, useState } from 'react';
 import { useQueryClient } from 'react-query';
 import { useAppLocation } from 'lib/router/useAppLocation';
@@ -29,6 +30,7 @@ import {
 import './styles.scss';
 
 function useRoutingPolicies(): UseRoutingPoliciesReturn {
+	const translateToast = useConsoleTranslation();
 	const queryClient = useQueryClient();
 	const urlQuery = useUrlQuery();
 	const location = useAppLocation();
@@ -170,7 +172,7 @@ function useRoutingPolicies(): UseRoutingPoliciesReturn {
 				},
 				{
 					onSuccess: () => {
-						toast.success('Routing policy created successfully');
+						toast.success(translateToast('Routing policy created successfully'));
 						void queryClient.invalidateQueries(REACT_QUERY_KEY.GET_ROUTING_POLICIES);
 						handlePolicyDetailsModalClose();
 					},
@@ -192,12 +194,12 @@ function useRoutingPolicies(): UseRoutingPoliciesReturn {
 				},
 				{
 					onSuccess: () => {
-						toast.success('Routing policy updated successfully');
+						toast.success(translateToast('Routing policy updated successfully'));
 						void queryClient.invalidateQueries(REACT_QUERY_KEY.GET_ROUTING_POLICIES);
 						handlePolicyDetailsModalClose();
 					},
 					onError: () => {
-						toast.error('Failed to update routing policy');
+						toast.error(translateToast('Failed to update routing policy'));
 					},
 				},
 			);
@@ -225,12 +227,12 @@ function useRoutingPolicies(): UseRoutingPoliciesReturn {
 		}
 		deleteRoutingPolicy(selectedRoutingPolicy.id, {
 			onSuccess: () => {
-				toast.success('Routing policy deleted successfully');
+				toast.success(translateToast('Routing policy deleted successfully'));
 				void queryClient.invalidateQueries(REACT_QUERY_KEY.GET_ROUTING_POLICIES);
 				handleDeleteModalClose();
 			},
 			onError: () => {
-				toast.error('Failed to delete routing policy');
+				toast.error(translateToast('Failed to delete routing policy'));
 			},
 		});
 	};

@@ -1,3 +1,5 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import type { Control, UseFormRegister } from 'react-hook-form';
 import { Controller } from 'react-hook-form';
 import { LockKeyhole, Trash2, X } from '@signozhq/icons';
@@ -51,12 +53,13 @@ function EditKeyForm({
 	isUpdateDenied = false,
 	accountId = '',
 }: EditKeyFormProps): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
 	return (
 		<>
 			<form id={FORM_ID} className="edit-key-modal__form" onSubmit={onSubmit}>
 				<div className="edit-key-modal__field">
 					<label className="edit-key-modal__label" htmlFor="edit-key-name">
-						Name
+						<ConsoleText message={'Name'} />
 					</label>
 					{!canUpdate ? (
 						<AuthZTooltip
@@ -73,7 +76,7 @@ function EditKeyForm({
 						<Input
 							id="edit-key-name"
 							className="edit-key-modal__input"
-							placeholder="Enter key name"
+							placeholder={translateInterfaceCopy('Enter key name')}
 							{...register('name')}
 						/>
 					)}
@@ -91,7 +94,7 @@ function EditKeyForm({
 
 				<div className="edit-key-modal__field">
 					<label className="edit-key-modal__label" htmlFor="edit-key-display">
-						Key
+						<ConsoleText message={'Key'} />
 					</label>
 					<div id="edit-key-display" className="edit-key-modal__key-display">
 						<span className="edit-key-modal__key-text">********************</span>
@@ -100,7 +103,9 @@ function EditKeyForm({
 				</div>
 
 				<div className="edit-key-modal__field">
-					<span className="edit-key-modal__label">Expiration</span>
+					<span className="edit-key-modal__label">
+						<ConsoleText message={'Expiration'} />
+					</span>
 					<Controller
 						name="expiryMode"
 						control={control}
@@ -135,7 +140,7 @@ function EditKeyForm({
 				{expiryMode === ExpiryMode.DATE && (
 					<div className="edit-key-modal__field">
 						<label className="edit-key-modal__label" htmlFor="edit-key-datepicker">
-							Expiration Date
+							<ConsoleText message={'Expiration Date'} />
 						</label>
 						<div className="edit-key-modal__datepicker">
 							<Controller
@@ -158,7 +163,9 @@ function EditKeyForm({
 				)}
 
 				<div className="edit-key-modal__meta">
-					<span className="edit-key-modal__meta-label">Last Observed At</span>
+					<span className="edit-key-modal__meta-label">
+						<ConsoleText message={'Last Observed At'} />
+					</span>
 					<Badge textTransform="none" variant="solid" color="secondary">
 						{formatLastObservedAt(
 							keyItem?.lastObservedAt ?? null,
@@ -181,7 +188,7 @@ function EditKeyForm({
 					onClick={onRevokeClick}
 					prefix={<Trash2 size={12} />}
 				>
-					Revoke Key
+					<ConsoleText message={'Revoke Key'} />
 				</AuthZButton>
 				<div className="edit-key-modal__footer-right">
 					<Button
@@ -191,7 +198,7 @@ function EditKeyForm({
 						onClick={onClose}
 						prefix={<X size={12} />}
 					>
-						Cancel
+						<ConsoleText message={'Cancel'} />
 					</Button>
 					<AuthZButton
 						size="md"
@@ -204,7 +211,7 @@ function EditKeyForm({
 						loading={isSaving}
 						disabled={!isDirty}
 					>
-						Save Changes
+						<ConsoleText message={'Save Changes'} />
 					</AuthZButton>
 				</div>
 			</div>

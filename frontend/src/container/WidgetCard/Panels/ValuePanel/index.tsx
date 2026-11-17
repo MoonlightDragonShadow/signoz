@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { memo, useMemo } from 'react';
 import { useAppLocation } from 'lib/router/useAppLocation';
 import { Typography } from '@signozhq/ui/typography';
@@ -67,7 +68,9 @@ function GridValueComponent({
 	if (data.length === 0) {
 		return (
 			<ValueContainer>
-				<Typography>No Data</Typography>
+				<Typography>
+					<ConsoleText message={'No Data'} />
+				</Typography>
 			</ValueContainer>
 		);
 	}

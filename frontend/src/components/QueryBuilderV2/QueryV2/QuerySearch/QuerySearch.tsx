@@ -1,3 +1,6 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
+import { localizeRelativeTime } from 'components/LocalizedRelativeTime/localizeRelativeTime';
 /* eslint-disable sonarjs/cognitive-complexity */
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { CircleCheck, Info, TriangleAlert, Filter } from '@signozhq/icons';
@@ -132,6 +135,8 @@ function QuerySearch({
 	metricNamespace,
 	valueSuggestionsOverride,
 }: QuerySearchProps): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
+	const translate = useConsoleTranslation();
 	const isDarkMode = useIsDarkMode();
 	const [valueSuggestions, setValueSuggestions] = useState<any[]>([]);
 	const [activeKey, setActiveKey] = useState<string>('');
@@ -726,7 +731,7 @@ function QuerySearch({
 		if (!editingMode) {
 			return (
 				<Badge textTransform="none" variant="solid" color="secondary">
-					Unknown
+					<ConsoleText message={'Unknown'} />
 				</Badge>
 			);
 		}
@@ -735,49 +740,49 @@ function QuerySearch({
 			case 'key':
 				return (
 					<Badge textTransform="none" variant="solid" color="primary">
-						Key
+						<ConsoleText message={'Key'} />
 					</Badge>
 				);
 			case 'operator':
 				return (
 					<Badge textTransform="none" variant="solid" color="highlight-danger">
-						Operator
+						<ConsoleText message={'Operator'} />
 					</Badge>
 				);
 			case 'value':
 				return (
 					<Badge textTransform="none" variant="solid" color="success">
-						Value
+						<ConsoleText message={'Value'} />
 					</Badge>
 				);
 			case 'conjunction':
 				return (
 					<Badge textTransform="none" variant="solid" color="warning">
-						Conjunction
+						<ConsoleText message={'Conjunction'} />
 					</Badge>
 				);
 			case 'function':
 				return (
 					<Badge textTransform="none" variant="solid" color="info">
-						Function
+						<ConsoleText message={'Function'} />
 					</Badge>
 				);
 			case 'parenthesis':
 				return (
 					<Badge textTransform="none" variant="solid" color="highlight-danger">
-						Parenthesis
+						<ConsoleText message={'Parenthesis'} />
 					</Badge>
 				);
 			case 'bracketList':
 				return (
 					<Badge textTransform="none" variant="solid" color="danger">
-						Bracket List
+						<ConsoleText message={'Bracket List'} />
 					</Badge>
 				);
 			default:
 				return (
 					<Badge textTransform="none" variant="solid" color="secondary">
-						Unknown
+						<ConsoleText message={'Unknown'} />
 					</Badge>
 				);
 		}
@@ -1366,7 +1371,11 @@ function QuerySearch({
 					options = [
 						...dedupedKeySuggestions,
 						{ label: '(', type: 'parenthesis', info: 'Open nested group' },
-						{ label: 'NOT', type: 'operator', info: 'Negate expression' },
+						{
+							label: translateInterfaceCopy('NOT'),
+							type: 'operator',
+							info: 'Negate expression',
+						},
 						...options.filter((opt) => opt.type === 'function'),
 					];
 
@@ -1420,7 +1429,12 @@ function QuerySearch({
 		const recentOptions = getRecentOptions(
 			getRecentQueries(signal, signalSource ?? ''),
 			fullDoc,
-		);
+		).map((option) => ({
+			...option,
+			detail: option.detail
+				? localizeRelativeTime(option.detail, translate)
+				: option.detail,
+		}));
 		const result = autoSuggestions(context);
 
 		const suggestionOptions = (result?.options || []).map((opt) => ({
@@ -1481,7 +1495,7 @@ function QuerySearch({
 
 	const getTooltipContent = (): JSX.Element => (
 		<div>
-			Need help with search syntax?
+			<ConsoleText message={'Need help with search syntax?'} />
 			<br />
 			<a
 				href="https://signoz.io/docs/userguide/search-syntax/"
@@ -1489,7 +1503,7 @@ function QuerySearch({
 				rel="noopener noreferrer"
 				style={{ color: '#1890ff', textDecoration: 'underline' }}
 			>
-				View documentation
+				<ConsoleText message={'View documentation'} />
 			</a>
 		</div>
 	);
@@ -1498,10 +1512,10 @@ function QuerySearch({
 		<div className="code-mirror-where-clause">
 			{editingMode && (
 				<div className={`context-indicator context-indicator-${editingMode}`}>
-					Currently editing: {renderContextBadge()}
+					<ConsoleText message={'Currently editing:'} /> {renderContextBadge()}
 					{queryContext?.keyToken && (
 						<span className="triplet-info">
-							Key:{' '}
+							<ConsoleText message={'Key:'} />{' '}
 							<Badge textTransform="none" variant="solid" color="secondary">
 								{queryContext.keyToken}
 							</Badge>
@@ -1509,7 +1523,7 @@ function QuerySearch({
 					)}
 					{queryContext?.operatorToken && (
 						<span className="triplet-info">
-							Operator:{' '}
+							<ConsoleText message={'Operator:'} />{' '}
 							<Badge textTransform="none" variant="solid" color="secondary">
 								{queryContext.operatorToken}
 							</Badge>
@@ -1517,7 +1531,7 @@ function QuerySearch({
 					)}
 					{queryContext?.valueToken && (
 						<span className="triplet-info">
-							Value:{' '}
+							<ConsoleText message={'Value:'} />{' '}
 							<Badge textTransform="none" variant="solid" color="secondary">
 								{queryContext.valueToken}
 							</Badge>
@@ -1525,7 +1539,7 @@ function QuerySearch({
 					)}
 					{queryContext?.currentPair && (
 						<span className="triplet-info query-pair-info">
-							Current pair:{' '}
+							<ConsoleText message={'Current pair:'} />{' '}
 							<Badge textTransform="none" variant="solid" color="primary">
 								{queryContext.currentPair.key}
 							</Badge>
@@ -1548,7 +1562,7 @@ function QuerySearch({
 					)}
 					{queryContext?.queryPairs && queryContext.queryPairs.length > 0 && (
 						<span className="triplet-info">
-							Total pairs:{' '}
+							<ConsoleText message={'Total pairs:'} />{' '}
 							<Badge variant="solid" color="primary">
 								{queryContext.queryPairs.length}
 							</Badge>
@@ -1666,7 +1680,12 @@ function QuerySearch({
 							]),
 						),
 					]}
-					placeholder={placeholder}
+					placeholder={
+						placeholder ??
+						translate(
+							"Enter your filter query (e.g., http.status_code >= 500 AND service.name = 'frontend')",
+						)
+					}
 					basicSetup={{
 						lineNumbers: false,
 					}}
@@ -1815,8 +1834,7 @@ QuerySearch.defaultProps = {
 	onRun: undefined,
 	signalSource: '',
 	hardcodedAttributeKeys: undefined,
-	placeholder:
-		"Enter your filter query (e.g., http.status_code >= 500 AND service.name = 'frontend')",
+	placeholder: undefined,
 	showFilterSuggestionsWithoutMetric: false,
 	initialExpression: undefined,
 };

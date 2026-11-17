@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { AppLink } from 'lib/router/AppLink';
 import { buildRoutePath } from 'lib/router/buildRoutePath';
 import type { TableColumnsType as ColumnsType } from 'antd';
@@ -141,7 +142,10 @@ export const getListColumns = (
 					if (name === 'durationNano' || name === 'duration_nano') {
 						return (
 							<BlockLink to={getTraceLink(item)} openInNewTab={false}>
-								<Typography data-testid={name}>{getMs(value)}ms</Typography>
+								<Typography data-testid={name}>
+									{getMs(value)}
+									<ConsoleText message={'ms'} />
+								</Typography>
 							</BlockLink>
 						);
 					}

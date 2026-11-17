@@ -1,3 +1,5 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { ArrowLeft, CircleAlert } from '@signozhq/icons';
 import { Button } from '@signozhq/ui/button';
 import { Typography } from '@signozhq/ui/typography';
@@ -45,6 +47,7 @@ interface TokenErrorProps {
 }
 
 function TokenError({ error }: TokenErrorProps): JSX.Element {
+	const translateSettings = useConsoleTranslation();
 	const { title, subtitle } = getErrorContent(error);
 
 	return (
@@ -55,10 +58,10 @@ function TokenError({ error }: TokenErrorProps): JSX.Element {
 						<CircleAlert size={32} />
 					</div>
 					<Typography.Title level={4} className="reset-password-header-title">
-						{title}
+						{translateSettings(title)}
 					</Typography.Title>
 					<Typography.Text className="reset-password-header-subtitle">
-						{subtitle}
+						{translateSettings(subtitle)}
 					</Typography.Text>
 				</div>
 				{error && <AuthError error={error} />}
@@ -71,7 +74,7 @@ function TokenError({ error }: TokenErrorProps): JSX.Element {
 						prefix={<ArrowLeft size={12} />}
 						onClick={(): void => navigate(ROUTES.LOGIN)}
 					>
-						Back to login
+						<ConsoleText message={'Back to login'} />
 					</Button>
 				</div>
 			</div>

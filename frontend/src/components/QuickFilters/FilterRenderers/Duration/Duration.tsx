@@ -9,6 +9,7 @@ import {
 import { getMs } from 'utils/timeUtils';
 import { useGetCompositeQueryParam } from 'hooks/queryBuilder/useGetCompositeQueryParam';
 import { useQueryBuilder } from 'hooks/queryBuilder/useQueryBuilder';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { cloneDeep, isArray, isEqual, isFunction } from 'lodash-es';
 import {
 	AllTraceFilterKeys,
@@ -37,6 +38,7 @@ function Duration({
 	onFilterChange?: (query: Query) => void;
 	quickFilterSource: QuickFiltersSource;
 }): JSX.Element {
+	const translate = useConsoleTranslation();
 	const [selectedFilters, setSelectedFilters] =
 		useState<
 			Record<
@@ -286,12 +288,12 @@ function Duration({
 								selectedFilters={selectedFilters}
 							/>
 						),
-						label: 'Duration',
+						label: translate('Duration'),
 						extra: activeKeys.includes('durationNano') ? (
 							<div className="duration-reset">
 								<SectionActionButton
 									icon={<Undo2 size={14} />}
-									tooltip="Reset"
+									tooltip={translate('Reset')}
 									onClick={onClearHandler}
 									testId="collapse-duration-clearBtn"
 								/>

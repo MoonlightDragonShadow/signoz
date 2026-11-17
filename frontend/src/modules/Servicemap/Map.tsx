@@ -1,5 +1,6 @@
 /* eslint-disable  */
 //@ts-nocheck
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { memo } from 'react';
 import ForceGraph2D from 'react-force-graph-2d';
 import { useIsDarkMode } from 'hooks/useDarkMode';
@@ -7,6 +8,7 @@ import { useIsDarkMode } from 'hooks/useDarkMode';
 import { getGraphData, getTooltip, transformLabel } from './utils';
 
 function ServiceMap({ fgRef, serviceMap }: any): JSX.Element {
+	const translate = useConsoleTranslation();
 	const isDarkMode = useIsDarkMode();
 
 	const { nodes, links } = getGraphData(serviceMap, isDarkMode);
@@ -20,7 +22,7 @@ function ServiceMap({ fgRef, serviceMap }: any): JSX.Element {
 			ref={fgRef}
 			cooldownTicks={100}
 			graphData={graphData}
-			linkLabel={getTooltip}
+			linkLabel={(link) => getTooltip(link, translate)}
 			linkAutoColorBy={(d) => d.target}
 			linkDirectionalParticles="value"
 			linkDirectionalParticleSpeed={(d) => d.value}
@@ -43,7 +45,7 @@ function ServiceMap({ fgRef, serviceMap }: any): JSX.Element {
 			onLinkHover={(node) => {
 				const tooltip = document.querySelector('.graph-tooltip');
 				if (tooltip && node) {
-					tooltip.innerHTML = getTooltip(node);
+					tooltip.innerHTML = getTooltip(node, translate);
 				}
 			}}
 			onZoom={(zoom) => {

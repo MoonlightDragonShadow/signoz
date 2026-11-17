@@ -1,3 +1,5 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useState } from 'react';
 import { useMutation } from 'react-query';
 import { Button, Modal } from 'antd';
@@ -23,6 +25,7 @@ interface IntergrationsUninstallBarProps {
 function IntergrationsUninstallBar(
 	props: IntergrationsUninstallBarProps,
 ): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const {
 		integrationTitle,
 		integrationId,
@@ -69,10 +72,17 @@ function IntergrationsUninstallBar(
 	return (
 		<div className="uninstall-integration-bar">
 			<div className="unintall-integration-bar-text">
-				<Typography.Text className="heading">Remove Integration</Typography.Text>
+				<Typography.Text className="heading">
+					{translateConsole('Remove Integration')}
+				</Typography.Text>
 				<Typography.Text className="subtitle">
-					Removing the {integrationTitle} integration would make your workspace stop
-					listening for data from {integrationTitle} instances.
+					<ConsoleText message={'Removing the'} /> {integrationTitle}{' '}
+					<ConsoleText
+						message={
+							'integration would make your workspace stop listening for data from'
+						}
+					/>{' '}
+					{integrationTitle} <ConsoleText message={'instances.'} />
 				</Typography.Text>
 			</div>
 			<Button
@@ -86,10 +96,10 @@ function IntergrationsUninstallBar(
 			<Modal
 				className="remove-integration-modal"
 				open={isModalOpen}
-				title="Remove integration"
+				title={translateConsole('Remove integration')}
 				onOk={handleOk}
 				onCancel={handleCancel}
-				okText="Remove Integration"
+				okText={translateConsole('Remove Integration')}
 				okButtonProps={{
 					danger: true,
 					disabled: isUninstallLoading,
@@ -97,9 +107,17 @@ function IntergrationsUninstallBar(
 				}}
 			>
 				<Typography.Text className="remove-integration-text">
-					Removing this integration makes SigNoz stop listening for data from{' '}
-					{integrationTitle} instances. You would still have to manually remove the
-					configuration in your code to stop sending data.
+					<ConsoleText
+						message={
+							'Removing this integration makes SigNoz stop listening for data from'
+						}
+					/>{' '}
+					{integrationTitle}{' '}
+					<ConsoleText
+						message={
+							'instances. You would still have to manually remove the configuration in your code to stop sending data.'
+						}
+					/>
 				</Typography.Text>
 			</Modal>
 		</div>

@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useMemo } from 'react';
 import cx from 'classnames';
 
@@ -27,6 +28,7 @@ function SpanMessages({
 	canLinkToToolCall,
 	onToolLinkClick,
 }: SpanMessagesProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const data = useMemo(() => getSpanMessages(span), [span]);
 
 	if (!hasFormattedMessages(data)) {
@@ -35,7 +37,7 @@ function SpanMessages({
 				className={cx(styles.missing, className)}
 				data-testid="span-messages-empty"
 			>
-				This span has no input or output.
+				{translateConsole('This span has no input or output.')}
 			</div>
 		);
 	}

@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { Color } from '@signozhq/design-tokens';
 import { Button } from 'antd';
 import cx from 'classnames';
@@ -46,7 +47,7 @@ function ShowButton({
 				isDisabled && 'disabled',
 			)}
 		>
-			Load more
+			<ConsoleText message={'Load more'} />
 		</Button>
 	);
 }

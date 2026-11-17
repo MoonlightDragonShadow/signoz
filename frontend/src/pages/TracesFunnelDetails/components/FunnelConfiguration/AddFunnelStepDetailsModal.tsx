@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useEffect, useState } from 'react';
 import { Input } from 'antd';
 import SignozModal from 'components/SignozModal/SignozModal';
@@ -21,6 +22,7 @@ function AddFunnelStepDetailsModal({
 	onClose,
 	stepData,
 }: AddFunnelStepDetailsModalProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const { funnelId, steps, setSteps } = useFunnelContext();
 
 	const [stepName, setStepName] = useState<string>(stepData?.name || '');
@@ -86,12 +88,12 @@ function AddFunnelStepDetailsModal({
 	return (
 		<SignozModal
 			open={isOpen}
-			title="Add funnel step details"
+			title={translateConsole('Add funnel step details')}
 			width={384}
 			onCancel={handleCancel}
 			rootClassName="funnel-step-modal funnel-modal signoz-modal"
-			cancelText="Cancel"
-			okText="Save changes"
+			cancelText={translateConsole('Cancel')}
+			okText={translateConsole('Save changes')}
 			okButtonProps={{
 				icon: <Check size={14} />,
 				type: 'primary',
@@ -111,10 +113,12 @@ function AddFunnelStepDetailsModal({
 		>
 			<div className="funnel-step-modal-content">
 				<div className="funnel-step-modal-content__field">
-					<span className="funnel-step-modal-content__label">Step name</span>
+					<span className="funnel-step-modal-content__label">
+						{translateConsole('Step name')}
+					</span>
 					<Input
 						className="funnel-step-modal-content__input"
-						placeholder="Eg. checkout-dropoff-funnel-step1"
+						placeholder={translateConsole('Eg. checkout-dropoff-funnel-step1')}
 						value={stepName}
 						onChange={(e): void => setStepName(e.target.value)}
 						autoFocus
@@ -122,10 +126,12 @@ function AddFunnelStepDetailsModal({
 					/>
 				</div>
 				<div className="funnel-step-modal-content__field">
-					<span className="funnel-step-modal-content__label">Description</span>
+					<span className="funnel-step-modal-content__label">
+						{translateConsole('Description')}
+					</span>
 					<Input.TextArea
 						className="funnel-step-modal-content__input"
-						placeholder="Eg. checkout dropoff funnel"
+						placeholder={translateConsole('Eg. checkout dropoff funnel')}
 						value={description}
 						onChange={(e): void => setDescription(e.target.value)}
 						autoSize={{ minRows: 3, maxRows: 5 }}

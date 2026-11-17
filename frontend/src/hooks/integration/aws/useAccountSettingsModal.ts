@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import {
 	Dispatch,
 	SetStateAction,
@@ -43,6 +44,7 @@ export function useAccountSettingsModal({
 	account,
 	setActiveAccount,
 }: UseAccountSettingsModalProps): UseAccountSettingsModal {
+	const translateRuntimeCopy = useConsoleTranslation();
 	const [form] = Form.useForm();
 	const { mutate: updateAccount, isLoading } = useUpdateAccount();
 	const accountRegions = useMemo(
@@ -98,9 +100,12 @@ export function useAccountSettingsModal({
 						};
 						setActiveAccount(newActiveAccount);
 						onClose();
-						toast.success('Account settings updated successfully', {
-							position: 'bottom-right',
-						});
+						toast.success(
+							translateRuntimeCopy('Account settings updated successfully'),
+							{
+								position: 'bottom-right',
+							},
+						);
 
 						logEvent('AWS Integration: Account settings Updated', {
 							cloudAccountId: newActiveAccount.cloud_account_id,
@@ -108,7 +113,7 @@ export function useAccountSettingsModal({
 						});
 					},
 					onError: (error) => {
-						toast.error('Failed to update account settings', {
+						toast.error(translateRuntimeCopy('Failed to update account settings'), {
 							description: error?.message,
 							position: 'bottom-right',
 						});
@@ -118,7 +123,15 @@ export function useAccountSettingsModal({
 		} catch (error) {
 			console.error('Form submission failed:', error);
 		}
-	}, [form, selectedRegions, updateAccount, account, setActiveAccount, onClose]);
+	}, [
+		form,
+		selectedRegions,
+		updateAccount,
+		account,
+		setActiveAccount,
+		onClose,
+		translateRuntimeCopy,
+	]);
 
 	const isSaveDisabled = useMemo(
 		() =>

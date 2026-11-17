@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { RefreshCw, Search } from '@signozhq/icons';
 import { Button } from '@signozhq/ui/button';
 
@@ -48,7 +49,7 @@ function NoResultsEmptyState({
 						onClick={onRefresh}
 						testId="no-results-refresh-button"
 					>
-						Refresh
+						<ConsoleText message={'Refresh'} />
 					</Button>
 				)}
 			</div>

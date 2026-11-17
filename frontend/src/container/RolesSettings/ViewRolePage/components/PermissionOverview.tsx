@@ -1,3 +1,5 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { useCallback, useMemo, useState } from 'react';
 import { Typography } from '@signozhq/ui/typography';
 import { ButtonGroup } from '@signozhq/ui/button-group';
@@ -20,6 +22,7 @@ function PermissionOverview({
 	expandedResources: externalExpanded,
 	onExpandedResourcesChange,
 }: PermissionOverviewProps): JSX.Element {
+	const translateSettings = useConsoleTranslation();
 	const { data: permissions, isLoading, isError } = useRolePermissions(roleId);
 	const [internalExpanded, setInternalExpanded] = useState<Set<string>>(
 		new Set(),
@@ -80,7 +83,7 @@ function PermissionOverview({
 		return (
 			<div className={styles.container} data-testid="permission-overview-error">
 				<Typography.Text className={styles.errorText} align="center" color="danger">
-					Failed to load permissions
+					<ConsoleText message={'Failed to load permissions'} />
 				</Typography.Text>
 			</div>
 		);
@@ -97,13 +100,13 @@ function PermissionOverview({
 					items={[
 						{
 							value: 'expand-all',
-							label: 'Expand all',
+							label: translateSettings('Expand all'),
 							onClick: handleExpandAll,
 							testId: 'expand-all-button',
 						},
 						{
 							value: 'collapse-all',
-							label: 'Collapse all',
+							label: translateSettings('Collapse all'),
 							onClick: handleCollapseAll,
 							testId: 'collapse-all-button',
 						},

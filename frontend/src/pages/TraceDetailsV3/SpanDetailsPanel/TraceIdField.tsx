@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCopyToClipboard } from 'react-use';
 import { Button } from '@signozhq/ui/button';
 import { Tooltip } from '@signozhq/ui/tooltip';
@@ -21,6 +22,7 @@ interface TraceIdFieldProps {
  * existing link to the trace detail page.
  */
 export function TraceIdField({ span }: TraceIdFieldProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const { pathname } = useAppLocation();
 	const match = matchRoute<'id'>(pathname, ROUTES.TRACE_DETAIL, { exact: true });
 	const [, setCopy] = useCopyToClipboard();
@@ -30,13 +32,13 @@ export function TraceIdField({ span }: TraceIdFieldProps): JSX.Element {
 	if (isCurrentTrace) {
 		const handleCopy = (): void => {
 			setCopy(span.trace_id);
-			toast.success('Trace ID copied to clipboard', {
+			toast.success(translateConsole('Trace ID copied to clipboard'), {
 				position: 'top-right',
 			});
 		};
 
 		return (
-			<Tooltip title="Click to copy trace ID">
+			<Tooltip title={translateConsole('Click to copy trace ID')}>
 				<Button
 					size="md"
 					variant="link"

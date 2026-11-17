@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { Color } from '@signozhq/design-tokens';
 import {
 	InframonitoringtypesNodeConditionDTO,
@@ -82,7 +83,7 @@ export const k8sNodesColumnsConfig: NodeTableColumnConfig[] = [
 		id: 'condition',
 		header: (): React.ReactNode => (
 			<ColumnHeader docPath="/infrastructure-monitoring/kubernetes/nodes#node-condition">
-				Status
+				<ConsoleText message={'Status'} />
 			</ColumnHeader>
 		),
 		accessorFn: (row): string => row.condition,
@@ -134,7 +135,7 @@ export const k8sNodesColumnsConfig: NodeTableColumnConfig[] = [
 		id: 'podCountsByStatus',
 		header: (): React.ReactNode => (
 			<ColumnHeader docPath="/infrastructure-monitoring/kubernetes/nodes#pod-counts-by-status">
-				Pod Status
+				<ConsoleText message={'Pod Status'} />
 			</ColumnHeader>
 		),
 		accessorFn: (row): InframonitoringtypesNodeRecordDTO['podCountsByStatus'] =>
@@ -159,7 +160,7 @@ export const k8sNodesColumnsConfig: NodeTableColumnConfig[] = [
 		id: 'clusterName',
 		header: (): React.ReactNode => (
 			<ColumnHeader docPath="/infrastructure-monitoring/kubernetes/nodes#cluster-name">
-				Cluster Name
+				<ConsoleText message={'Cluster Name'} />
 			</ColumnHeader>
 		),
 		accessorFn: (row): string =>
@@ -175,7 +176,7 @@ export const k8sNodesColumnsConfig: NodeTableColumnConfig[] = [
 		id: 'cpu',
 		header: (): React.ReactNode => (
 			<ColumnHeader docPath="/infrastructure-monitoring/kubernetes/nodes#cpu-usage-cores">
-				CPU Usage (cores)
+				<ConsoleText message={'CPU Usage (cores)'} />
 			</ColumnHeader>
 		),
 		accessorFn: (row): number => row.nodeCPU,
@@ -199,7 +200,7 @@ export const k8sNodesColumnsConfig: NodeTableColumnConfig[] = [
 		id: 'cpu_allocatable',
 		header: (): React.ReactNode => (
 			<ColumnHeader docPath="/infrastructure-monitoring/kubernetes/nodes#cpu-alloc-cores">
-				CPU Allocatable (cores)
+				<ConsoleText message={'CPU Allocatable (cores)'} />
 			</ColumnHeader>
 		),
 		accessorFn: (row): number => row.nodeCPUAllocatable,
@@ -223,7 +224,7 @@ export const k8sNodesColumnsConfig: NodeTableColumnConfig[] = [
 		id: 'memory',
 		header: (): React.ReactNode => (
 			<ColumnHeader docPath="/infrastructure-monitoring/kubernetes/nodes#memory-usage-wss">
-				Memory Usage (WSS)
+				<ConsoleText message={'Memory Usage (WSS)'} />
 			</ColumnHeader>
 		),
 		accessorFn: (row): number => row.nodeMemory,
@@ -247,7 +248,7 @@ export const k8sNodesColumnsConfig: NodeTableColumnConfig[] = [
 		id: 'memory_allocatable',
 		header: (): React.ReactNode => (
 			<ColumnHeader docPath="/infrastructure-monitoring/kubernetes/nodes#memory-allocatable">
-				Memory Allocatable
+				<ConsoleText message={'Memory Allocatable'} />
 			</ColumnHeader>
 		),
 		accessorFn: (row): number => row.nodeMemoryAllocatable,

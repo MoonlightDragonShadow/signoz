@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { CalendarRange, Clock, RotateCw } from '@signozhq/icons';
 import logEvent from 'api/common/logEvent';
 import type { DashboardtypesPanelDTO } from 'api/generated/services/sigNoz.schemas';
@@ -43,6 +44,7 @@ function NoData({
 	panel,
 	'data-testid': testId = 'panel-no-data',
 }: NoDataProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const viewExtend = useViewPanelStore(selectViewPanelExtendWindow);
 	const globalExtend = useExtendTimeWindow();
 	// The View modal's local extender wins; the global one only applies to a panel that
@@ -77,7 +79,7 @@ function NoData({
 
 	const retryAction: PanelMessageAction | undefined = onRetry
 		? {
-				label: 'Retry',
+				label: translate('Retry'),
 				onClick: (): void => {
 					void logEvent(DashboardDetailEvents.NoDataAction, {
 						action: 'retry',

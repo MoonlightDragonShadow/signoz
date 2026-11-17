@@ -1,3 +1,5 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { useCallback, useEffect, useMemo } from 'react';
 import { useQueryClient } from 'react-query';
 import { Check, ChevronDown, Plus } from '@signozhq/icons';
@@ -42,6 +44,8 @@ import {
 import './ServiceAccountsSettings.styles.scss';
 
 function ServiceAccountsSettings(): JSX.Element {
+	const translateRuntimeCopy = useConsoleTranslation();
+	const translate = useConsoleTranslation();
 	const queryClient = useQueryClient();
 	const { permissions: authzPermissions, isLoading: isAuthZLoading } = useAuthZ([
 		SAListPermission,
@@ -144,7 +148,9 @@ function ServiceAccountsSettings(): JSX.Element {
 			value: FilterMode.All,
 			label: (
 				<div className="sa-settings-filter-option">
-					<span>All accounts ⎯ {totalCount}</span>
+					<span>
+						<ConsoleText message={'All accounts ⎯'} /> {totalCount}
+					</span>
 					{filterMode === FilterMode.All && <Check size={14} />}
 				</div>
 			),
@@ -158,7 +164,9 @@ function ServiceAccountsSettings(): JSX.Element {
 			value: FilterMode.Active,
 			label: (
 				<div className="sa-settings-filter-option">
-					<span>Active ⎯ {activeCount}</span>
+					<span>
+						<ConsoleText message={'Active ⎯'} /> {activeCount}
+					</span>
 					{filterMode === FilterMode.Active && <Check size={14} />}
 				</div>
 			),
@@ -172,7 +180,9 @@ function ServiceAccountsSettings(): JSX.Element {
 			value: FilterMode.Deleted,
 			label: (
 				<div className="sa-settings-filter-option">
-					<span>Deleted ⎯ {deletedCount}</span>
+					<span>
+						<ConsoleText message={'Deleted ⎯'} /> {deletedCount}
+					</span>
 					{filterMode === FilterMode.Deleted && <Check size={14} />}
 				</div>
 			),
@@ -190,7 +200,9 @@ function ServiceAccountsSettings(): JSX.Element {
 			case FilterMode.Deleted:
 				return `Deleted ⎯ ${deletedCount}`;
 			default:
-				return `All accounts ⎯ ${totalCount}`;
+				return translateRuntimeCopy('All accounts ⎯ {{value1}}', {
+					value1: totalCount,
+				});
 		}
 	}
 	const filterLabel = getFilterLabel();
@@ -216,16 +228,20 @@ function ServiceAccountsSettings(): JSX.Element {
 		<div className="sa-settings-page">
 			<div className="sa-settings">
 				<div className="sa-settings__header">
-					<h1 className="sa-settings__title">Service Accounts</h1>
+					<h1 className="sa-settings__title">
+						<ConsoleText message={'Service Accounts'} />
+					</h1>
 					<p className="sa-settings__subtitle">
-						Overview of service accounts added to this workspace.{' '}
+						<ConsoleText
+							message={'Overview of service accounts added to this workspace.'}
+						/>{' '}
 						<a
 							href="https://signoz.io/docs/manage/administrator-guide/iam/service-accounts"
 							target="_blank"
 							rel="noopener noreferrer"
 							className="sa-settings__learn-more"
 						>
-							Learn more
+							<ConsoleText message={'Learn more'} />
 						</a>
 					</p>
 				</div>
@@ -265,7 +281,7 @@ function ServiceAccountsSettings(): JSX.Element {
 							<Input
 								type="search"
 								name="service-accounts-search"
-								placeholder="Search by name or email..."
+								placeholder={translate('Search by name or email...')}
 								value={searchQuery}
 								onChange={(e): void => {
 									void setSearchQuery(e.target.value);
@@ -289,7 +305,7 @@ function ServiceAccountsSettings(): JSX.Element {
 						prefix={<Plus size={12} />}
 						testId="new-sa-btn"
 					>
-						New Service Account
+						<ConsoleText message={'New Service Account'} />
 					</AuthZButton>
 				</div>
 

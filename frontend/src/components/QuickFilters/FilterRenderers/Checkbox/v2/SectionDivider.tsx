@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Tooltip } from 'antd';
 import { Typography } from '@signozhq/ui/typography';
 import { Info } from '@signozhq/icons';
@@ -13,13 +14,16 @@ export function SectionDivider({
 	label,
 	tooltip,
 }: SectionDividerProps): JSX.Element {
+	const translateDisplayCopy = useConsoleTranslation();
 	const testId = label.toLowerCase().replace(/\s+/g, '-');
 	return (
 		<div className={styles.divider} data-testid={`section-divider-${testId}`}>
 			<div className={styles.line} />
-			<Typography.Text className={styles.label}>{label}</Typography.Text>
+			<Typography.Text className={styles.label}>
+				{translateDisplayCopy(label)}
+			</Typography.Text>
 			{tooltip && (
-				<Tooltip title={tooltip}>
+				<Tooltip title={translateDisplayCopy(tooltip)}>
 					<Info
 						size={12}
 						className={styles.infoIcon}

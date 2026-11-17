@@ -1,3 +1,5 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { ChangeEvent, useCallback, useMemo, useState } from 'react';
 import { Col, Input, Row, Select } from 'antd';
 import InputWithLabel from 'components/InputWithLabel/InputWithLabel';
@@ -27,6 +29,7 @@ export function Formula({
 	query,
 	isQBV2,
 }: FormulaProps): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
 	const {
 		removeQueryBuilderEntityByIndex,
 		handleSetFormulaData,
@@ -135,7 +138,7 @@ export function Formula({
 							onChange={handleChange}
 							size="middle"
 							value={formula.expression}
-							placeholder="Enter formula"
+							placeholder={translateInterfaceCopy('Enter formula')}
 							rows={2}
 						/>
 					</Col>
@@ -154,14 +157,16 @@ export function Formula({
 						<Col span={24}>
 							<div className="formula-qbv2-container">
 								<div className="periscope-input-with-label">
-									<div className="label">Order By</div>
+									<div className="label">
+										<ConsoleText message={'Order By'} />
+									</div>
 									<div className="input">
 										<Select
 											getPopupContainer={popupContainer}
 											showSearch
 											filterOption={false}
 											showArrow={false}
-											placeholder="Select order by"
+											placeholder={translateInterfaceCopy('Select order by')}
 											options={qbV2OrderByOptions}
 											onChange={handleQBV2OrderByChange}
 											value={qbV2OrderByValue}
@@ -170,12 +175,12 @@ export function Formula({
 									</div>
 								</div>
 								<InputWithLabel
-									label="Limit"
+									label={translateInterfaceCopy('Limit')}
 									type="number"
 									onChange={(value): void => handleChangeLimit(parseLimit(value))}
 									sanitize={sanitizeLimit}
 									initialValue={formula?.limit ?? undefined}
-									placeholder="Enter limit"
+									placeholder={translateInterfaceCopy('Enter limit')}
 								/>
 							</div>
 						</Col>

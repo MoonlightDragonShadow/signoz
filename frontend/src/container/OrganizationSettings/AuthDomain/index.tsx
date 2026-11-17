@@ -1,3 +1,5 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { HTMLAttributes, useCallback, useMemo, useState } from 'react';
 import { Plus, Trash2, X } from '@signozhq/icons';
 import { Button } from '@signozhq/ui/button';
@@ -33,6 +35,9 @@ export const SSOType = new Map<string, string>([
 ]);
 
 function AuthDomain(): JSX.Element {
+	const translateRuntimeCopy = useConsoleTranslation();
+	const translateInterfaceCopy = useConsoleTranslation();
+	const translateConsole = useConsoleTranslation();
 	const [record, setRecord] = useState<AuthtypesGettableAuthDomainDTO>();
 	const [addDomain, setAddDomain] = useState<boolean>(false);
 	const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -74,7 +79,7 @@ function AuthDomain(): JSX.Element {
 			{ pathParams: { id: activeDomain.id } },
 			{
 				onSuccess: () => {
-					toast.success('Domain deleted successfully');
+					toast.success(translateRuntimeCopy('Domain deleted successfully'));
 					void refetchAuthDomainListResponse();
 					hideDeleteModal();
 				},
@@ -91,9 +96,9 @@ function AuthDomain(): JSX.Element {
 		activeDomain,
 		deleteAuthDomain,
 		hideDeleteModal,
-
 		refetchAuthDomainListResponse,
 		showErrorModal,
+		translateRuntimeCopy,
 	]);
 
 	const formattedError = useMemo(() => {
@@ -113,14 +118,14 @@ function AuthDomain(): JSX.Element {
 	const columns: ColumnsType<AuthtypesGettableAuthDomainDTO> = useMemo(
 		() => [
 			{
-				title: 'Domain',
+				title: translateInterfaceCopy('Domain'),
 				dataIndex: 'name',
 				key: 'name',
 				width: 100,
 				render: (val): JSX.Element => <span>{val}</span>,
 			},
 			{
-				title: 'Enforce SSO',
+				title: translateInterfaceCopy('Enforce SSO'),
 				dataIndex: 'enabled',
 				key: 'enabled',
 				width: 80,
@@ -132,7 +137,7 @@ function AuthDomain(): JSX.Element {
 				),
 			},
 			{
-				title: 'IDP Initiated SSO URL',
+				title: translateInterfaceCopy('IDP Initiated SSO URL'),
 				dataIndex: 'relayState',
 				key: 'relayState',
 				width: 80,
@@ -147,7 +152,7 @@ function AuthDomain(): JSX.Element {
 				},
 			},
 			{
-				title: 'Action',
+				title: translateInterfaceCopy('Action'),
 				dataIndex: 'action',
 				key: 'action',
 				width: 100,
@@ -160,7 +165,8 @@ function AuthDomain(): JSX.Element {
 							variant="link"
 							testId="auth-domain-configure"
 						>
-							Configure {SSOType.get(record.config?.kind || '')}
+							<ConsoleText message={'Configure'} />
+							{SSOType.get(record.config?.kind || '')}
 						</Button>
 						<Button
 							size="md"
@@ -169,20 +175,20 @@ function AuthDomain(): JSX.Element {
 							variant="link"
 							testId="auth-domain-delete"
 						>
-							Delete
+							<ConsoleText message={'Delete'} />
 						</Button>
 					</section>
 				),
 			},
 		],
-		[showDeleteModal],
+		[showDeleteModal, translateInterfaceCopy],
 	);
 
 	return (
 		<div className="auth-domain">
 			<section className="auth-domain-header">
 				<h3 className="auth-domain-title" data-testid="auth-domain-title">
-					Authenticated Domains
+					{translateConsole('Authenticated Domains')}
 				</h3>
 				<Button
 					prefix={<Plus size="md" />}
@@ -194,7 +200,7 @@ function AuthDomain(): JSX.Element {
 					color="primary"
 					testId="auth-domain-add"
 				>
-					Add Domain
+					{translateConsole('Add Domain')}
 				</Button>
 			</section>
 			{formattedError && <ErrorContent error={formattedError} />}
@@ -231,7 +237,7 @@ function AuthDomain(): JSX.Element {
 
 			<Modal
 				className="delete-ingestion-key-modal auth-domain-delete-modal"
-				title={<span className="title">Delete Domain</span>}
+				title={<span className="title">{translateConsole('Delete Domain')}</span>}
 				open={isDeleteModalOpen}
 				closable
 				onCancel={hideDeleteModal}
@@ -246,7 +252,7 @@ function AuthDomain(): JSX.Element {
 						prefix={<X size={16} />}
 						testId="auth-domain-delete-cancel"
 					>
-						Cancel
+						{translateConsole('Cancel')}
 					</Button>,
 					<Button
 						size="md"
@@ -258,13 +264,14 @@ function AuthDomain(): JSX.Element {
 						loading={isLoading}
 						testId="auth-domain-delete-confirm"
 					>
-						Delete Domain
+						{translateConsole('Delete Domain')}
 					</Button>,
 				]}
 			>
 				<p className="delete-text">
-					Are you sure you want to delete the domain{' '}
-					<strong>{activeDomain?.name}</strong>? This action cannot be undone.
+					{translateConsole('Are you sure you want to delete the domain')}{' '}
+					<strong>{activeDomain?.name}</strong>
+					{translateConsole('? This action cannot be undone.')}
 				</p>
 			</Modal>
 		</div>

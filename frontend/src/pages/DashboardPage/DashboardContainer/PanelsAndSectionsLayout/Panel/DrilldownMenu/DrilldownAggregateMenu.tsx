@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useMemo } from 'react';
 import {
 	Braces,
@@ -58,6 +59,7 @@ function DrilldownAggregateMenu({
 	onSetDashboardVariables,
 	onClose,
 }: DrilldownAggregateMenuProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const aggregations = useMemo(
 		() => getAggregateColumnHeader(query, context.queryName).aggregations,
 		[query, context.queryName],
@@ -106,7 +108,7 @@ function DrilldownAggregateMenu({
 					onClick={onSetDashboardVariables}
 				>
 					<span data-testid="drilldown-dashboard-variables">
-						Dashboard Variables
+						{translate('Dashboard Variables')}
 					</span>
 				</ContextMenu.Item>
 			)}
@@ -123,7 +125,7 @@ function DrilldownAggregateMenu({
 				onClick={handleViewLogs}
 				disabled={isResolving}
 			>
-				<span data-testid="drilldown-view-logs">View in Logs</span>
+				<span data-testid="drilldown-view-logs">{translate('View in Logs')}</span>
 			</ContextMenu.Item>
 			<ContextMenu.Item
 				icon={
@@ -138,7 +140,9 @@ function DrilldownAggregateMenu({
 				onClick={handleViewTraces}
 				disabled={isResolving}
 			>
-				<span data-testid="drilldown-view-traces">View in Traces</span>
+				<span data-testid="drilldown-view-traces">
+					{translate('View in Traces')}
+				</span>
 			</ContextMenu.Item>
 			<ContextMenu.Item
 				icon={
@@ -148,7 +152,7 @@ function DrilldownAggregateMenu({
 				}
 				onClick={onBreakout}
 			>
-				<span data-testid="drilldown-breakout">Breakout by ..</span>
+				<span data-testid="drilldown-breakout">{translate('Breakout by ..')}</span>
 			</ContextMenu.Item>
 			{dataLinks.map((link) => (
 				<ContextMenu.Item

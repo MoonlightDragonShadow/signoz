@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { DEFAULT_OPACITY_FILL } from 'lib/uPlotV2/plugins/HeatmapPlugin/colorScale';
 
 import ColorSwatches from '../../controls/ColorSwatches/ColorSwatches';
@@ -21,20 +22,21 @@ function HeatmapFillField({
 	changed,
 	onReset,
 }: HeatmapFillFieldProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const selected = value
 		? FILL_OPTIONS.find((option) => isSameColor(option.value, value))?.value
 		: GROUP_FILL;
 
 	return (
 		<ConfigField
-			label="Base color"
+			label={translate('Base color')}
 			help="Group color gives each group its own color."
 			changed={changed}
 			onReset={onReset}
 		>
 			<ColorSwatches
 				testId="panel-editor-v2-heatmap-fill"
-				label="Base color"
+				label={translate('Base color')}
 				value={selected}
 				options={FILL_OPTIONS}
 				dividerAfter={0}

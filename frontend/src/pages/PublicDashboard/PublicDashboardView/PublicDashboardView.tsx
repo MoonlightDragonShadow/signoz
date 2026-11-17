@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import type { DashboardtypesGettablePublicDashboardDataV2DTO } from 'api/generated/services/sigNoz.schemas';
 import { Typography } from '@signozhq/ui/typography';
 import { refreshIntervalOptions } from 'container/TopNav/AutoRefreshV2/constants';
@@ -31,6 +32,7 @@ function PublicDashboardView({
 	publicDashboardId,
 	data,
 }: PublicDashboardViewProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const { dashboard, publicDashboard } = data;
 
 	const sections = useMemo(
@@ -113,7 +115,9 @@ function PublicDashboardView({
 							enabled={autoRefreshEnabled}
 							interval={autoRefreshInterval}
 							disabled={isAutoRefreshPaused}
-							disabledTooltip="Auto refresh is off for a custom time range"
+							disabledTooltip={translate(
+								'Auto refresh is off for a custom time range',
+							)}
 							onToggle={setAutoRefreshEnabled}
 							onIntervalChange={setAutoRefreshInterval}
 							onRefresh={handleRefresh}

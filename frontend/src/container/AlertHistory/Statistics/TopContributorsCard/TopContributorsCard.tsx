@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useMemo, useState } from 'react';
 import { Color } from '@signozhq/design-tokens';
 import { Button } from 'antd';
@@ -16,6 +17,7 @@ function TopContributorsCard({
 	topContributorsData,
 	totalCurrentTriggers,
 }: TopContributorsCardProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const { search } = useAppLocation();
 	const searchParams = useMemo(() => new URLSearchParams(search), [search]);
 
@@ -50,7 +52,7 @@ function TopContributorsCard({
 		<>
 			<div className="top-contributors-card" data-testid="top-contributors-card">
 				<div className="top-contributors-card__header">
-					<div className="title">top contributors</div>
+					<div className="title">{translateConsole('top contributors')}</div>
 					{topContributorsData.length > 3 && (
 						<Button
 							type="text"
@@ -58,7 +60,7 @@ function TopContributorsCard({
 							onClick={toggleViewAllDrawer}
 							data-testid="top-contributors-view-all"
 						>
-							<div className="label">View all</div>
+							<div className="label">{translateConsole('View all')}</div>
 							<div className="icon">
 								<ArrowRight
 									size={14}

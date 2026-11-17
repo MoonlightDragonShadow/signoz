@@ -1,3 +1,5 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
+import { localizeRelativeTime } from 'components/LocalizedRelativeTime/localizeRelativeTime';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import cx from 'classnames';
 import { useCopyToClipboard } from 'react-use';
@@ -70,6 +72,7 @@ export default function MessageFeedback({
 	onRegenerate,
 	isLastAssistant = false,
 }: MessageFeedbackProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const [copied, setCopied] = useState(false);
 	const [, copyToClipboard] = useCopyToClipboard();
 	const submitMessageFeedback = useAIAssistantStore(
@@ -218,14 +221,14 @@ export default function MessageFeedback({
 					</Tooltip>
 
 					{onRegenerate && (
-						<Tooltip title="Regenerate">
+						<Tooltip title={translateConsole('Regenerate')}>
 							<Button
 								size="sm"
 								icon
 								variant="ghost"
 								color="secondary"
 								onClick={onRegenerate}
-								aria-label="Regenerate response"
+								aria-label={translateConsole('Regenerate response')}
 							>
 								<RefreshCw size={12} />
 							</Button>
@@ -234,15 +237,17 @@ export default function MessageFeedback({
 				</div>
 
 				<span className={styles.time}>
-					{relativeTime} · {absoluteTime}
+					{localizeRelativeTime(relativeTime, translateConsole)} · {absoluteTime}
 				</span>
 			</div>
 
 			<DialogWrapper
 				open={isNegativeDialogOpen}
 				onOpenChange={setIsNegativeDialogOpen}
-				title="What went wrong?"
-				subTitle="Your feedback helps us improve the assistant. Comments are optional."
+				title={translateConsole('What went wrong?')}
+				subTitle={translateConsole(
+					'Your feedback helps us improve the assistant. Comments are optional.',
+				)}
 				width="base"
 				footer={
 					<div className={styles.feedbackDialogFooter}>
@@ -252,7 +257,7 @@ export default function MessageFeedback({
 							color="secondary"
 							onClick={(): void => setIsNegativeDialogOpen(false)}
 						>
-							Cancel
+							{translateConsole('Cancel')}
 						</Button>
 						<Button
 							size="md"
@@ -260,14 +265,16 @@ export default function MessageFeedback({
 							color="primary"
 							onClick={handleSubmitNegative}
 						>
-							Send feedback
+							{translateConsole('Send feedback')}
 						</Button>
 					</div>
 				}
 			>
 				<textarea
 					className={styles.feedbackTextarea}
-					placeholder="Tell us what was unhelpful, inaccurate, or unsafe…"
+					placeholder={translateConsole(
+						'Tell us what was unhelpful, inaccurate, or unsafe…',
+					)}
 					value={negativeComment}
 					onChange={(e): void => setNegativeComment(e.target.value)}
 					rows={5}

@@ -1,3 +1,5 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 /* eslint-disable sonarjs/no-duplicate-string */
 import React, { useCallback, useEffect, useState } from 'react';
 import { useMutation, useQuery } from 'react-query';
@@ -63,6 +65,7 @@ const homeInterval = 30 * 60 * 1000;
 
 // eslint-disable-next-line sonarjs/cognitive-complexity
 export default function Home(): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	useHomeStripInfo();
 
 	const { user } = useAppContext();
@@ -284,7 +287,7 @@ export default function Home(): JSX.Element {
 				<Header
 					leftComponent={
 						<div className="home-header-left">
-							<House size={14} /> Home
+							<House size={14} /> {translateConsole('Home')}
 						</div>
 					}
 					rightComponent={
@@ -318,7 +321,7 @@ export default function Home(): JSX.Element {
 										prefix={<ClipboardList size={14} />}
 										testId="welcome-checklist-btn"
 									>
-										Welcome checklist
+										{translateConsole('Welcome checklist')}
 									</Button>
 								</Popover>
 							)}
@@ -349,7 +352,7 @@ export default function Home(): JSX.Element {
 											</div>
 
 											<div className="active-ingestion-card-content-description">
-												Logs ingestion is active
+												{translateConsole('Logs ingestion is active')}
 											</div>
 										</div>
 
@@ -376,7 +379,7 @@ export default function Home(): JSX.Element {
 											}}
 										>
 											<Compass size={12} />
-											Explore Logs
+											{translateConsole('Explore Logs')}
 										</div>
 									</div>
 								</Card.Content>
@@ -393,7 +396,7 @@ export default function Home(): JSX.Element {
 											</div>
 
 											<div className="active-ingestion-card-content-description">
-												Traces ingestion is active
+												{translateConsole('Traces ingestion is active')}
 											</div>
 										</div>
 
@@ -419,7 +422,7 @@ export default function Home(): JSX.Element {
 											}}
 										>
 											<Compass size={12} />
-											Explore Traces
+											{translateConsole('Explore Traces')}
 										</div>
 									</div>
 								</Card.Content>
@@ -436,7 +439,7 @@ export default function Home(): JSX.Element {
 											</div>
 
 											<div className="active-ingestion-card-content-description">
-												Metrics ingestion is active
+												{translateConsole('Metrics ingestion is active')}
 											</div>
 										</div>
 
@@ -462,7 +465,7 @@ export default function Home(): JSX.Element {
 											}}
 										>
 											<Compass size={12} />
-											Explore Metrics
+											{translateConsole('Explore Metrics')}
 										</div>
 									</div>
 								</Card.Content>
@@ -487,10 +490,14 @@ export default function Home(): JSX.Element {
 											</div>
 
 											<div className="section-title">
-												<div className="title">Filter and save views with the Explorer</div>
+												<div className="title">
+													{translateConsole('Filter and save views with the Explorer')}
+												</div>
 
 												<div className="description">
-													Explore your data, and save useful views for everyone in the team.
+													{translateConsole(
+														'Explore your data, and save useful views for everyone in the team.',
+													)}
 												</div>
 											</div>
 										</div>
@@ -510,7 +517,7 @@ export default function Home(): JSX.Element {
 													});
 												}}
 											>
-												Open Logs Explorer
+												{translateConsole('Open Logs Explorer')}
 											</Button>
 
 											<Button
@@ -527,7 +534,7 @@ export default function Home(): JSX.Element {
 													});
 												}}
 											>
-												Open Traces Explorer
+												{translateConsole('Open Traces Explorer')}
 											</Button>
 
 											<Button
@@ -544,7 +551,7 @@ export default function Home(): JSX.Element {
 													});
 												}}
 											>
-												Open Metrics Explorer
+												{translateConsole('Open Metrics Explorer')}
 											</Button>
 										</div>
 									</div>
@@ -560,10 +567,12 @@ export default function Home(): JSX.Element {
 											</div>
 
 											<div className="section-title">
-												<div className="title">Create a dashboard</div>
+												<div className="title">
+													{translateConsole('Create a dashboard')}
+												</div>
 
 												<div className="description">
-													Create a dashboard to visualize your data.
+													{translateConsole('Create a dashboard to visualize your data.')}
 												</div>
 											</div>
 										</div>
@@ -583,7 +592,7 @@ export default function Home(): JSX.Element {
 													});
 												}}
 											>
-												Create dashboard
+												{translateConsole('Create dashboard')}
 											</Button>
 										</div>
 									</div>
@@ -605,10 +614,12 @@ export default function Home(): JSX.Element {
 											</div>
 
 											<div className="section-title">
-												<div className="title">Add an alert</div>
+												<div className="title">{translateConsole('Add an alert')}</div>
 
 												<div className="description">
-													Create bespoke alerting rules to suit your needs.
+													{translateConsole(
+														'Create bespoke alerting rules to suit your needs.',
+													)}
 												</div>
 											</div>
 										</div>
@@ -628,7 +639,7 @@ export default function Home(): JSX.Element {
 													});
 												}}
 											>
-												Create an alert
+												{translateConsole('Create an alert')}
 											</Button>
 										</div>
 									</div>
@@ -707,7 +718,7 @@ export default function Home(): JSX.Element {
 											loading={updatingUserPreferences}
 											testId="checklist-do-later-btn"
 										>
-											I&apos;ll do this later
+											<ConsoleText message={"I'll do this later"} />
 										</Button>
 									</div>
 								</Card.Footer>

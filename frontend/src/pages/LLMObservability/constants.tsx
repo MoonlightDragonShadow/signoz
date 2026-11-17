@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { TabRoutes } from 'components/RouteTab/types';
 import ROUTES from 'constants/routes';
 import LLMObservabilityAttributeMapping from 'container/LLMObservability/AttributeMapping/LLMObservabilityAttributeMapping';
@@ -15,7 +16,7 @@ export const Overview: TabRoutes = {
 	Component: OverviewPage,
 	name: (
 		<div className="tab-item">
-			<BarChart size={16} /> Overview
+			<BarChart size={16} /> <ConsoleText message="Overview" />
 		</div>
 	),
 	route: ROUTES.AI_OBSERVABILITY_OVERVIEW,
@@ -26,7 +27,7 @@ export const Explorer: TabRoutes = {
 	Component: ExplorerPage,
 	name: (
 		<div className="tab-item">
-			<Compass size={16} /> Explorer
+			<Compass size={16} /> <ConsoleText message="Explorer" />
 		</div>
 	),
 	route: ROUTES.AI_OBSERVABILITY_EXPLORER,
@@ -37,7 +38,7 @@ export const ModelPricing: TabRoutes = {
 	Component: LLMObservabilityModelPricing,
 	name: (
 		<div className="tab-item">
-			<CircleDollarSign size={16} /> Model pricing
+			<CircleDollarSign size={16} /> <ConsoleText message="Model pricing" />
 		</div>
 	),
 	route: ROUTES.AI_OBSERVABILITY_CONFIGURATION,
@@ -48,7 +49,7 @@ export const AttributeMapping: TabRoutes = {
 	Component: LLMObservabilityAttributeMapping,
 	name: (
 		<div className="tab-item">
-			<ArrowRightLeft size={16} /> Attribute Mapping
+			<ArrowRightLeft size={16} /> <ConsoleText message="Attribute Mapping" />
 		</div>
 	),
 	route: ROUTES.AI_OBSERVABILITY_ATTRIBUTE_MAPPING,

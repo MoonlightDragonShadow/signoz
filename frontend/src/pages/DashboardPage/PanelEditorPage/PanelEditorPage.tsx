@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useMemo, useRef } from 'react';
 import { buildRoutePath } from 'lib/router/buildRoutePath';
 import { Redirect } from 'lib/router/Redirect';
@@ -36,6 +37,7 @@ import styles from './PanelEditorPage.module.scss';
  * fetched dashboard spec and wires up navigate-back callbacks.
  */
 function PanelEditorPage(): JSX.Element {
+	const translate = useConsoleTranslation();
 	const { dashboardId, panelId } = useAppParams<'dashboardId' | 'panelId'>();
 	const { search, state } = useAppLocation();
 	const { safeNavigate } = useSafeNavigate();
@@ -107,13 +109,13 @@ function PanelEditorPage(): JSX.Element {
 	}, [safeNavigate, dashboardId, timeSearch]);
 
 	if (isLoading) {
-		return <Spinner tip="Loading dashboard..." />;
+		return <Spinner tip={translate('Loading dashboard...')} />;
 	}
 
 	if (isError || !dashboard) {
 		return (
 			<div className={styles.errorState}>
-				<Typography.Title>Failed to load dashboard</Typography.Title>
+				<Typography.Title>{translate('Failed to load dashboard')}</Typography.Title>
 				<Typography.Text>{(error as Error)?.message}</Typography.Text>
 			</div>
 		);

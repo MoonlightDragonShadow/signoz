@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import {
 	type KeyboardEvent,
 	type ReactNode,
@@ -65,6 +66,7 @@ function PanelEditorQueryBuilder({
 	footer,
 	stickyHeader = true,
 }: PanelEditorQueryBuilderProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	// The shared QueryBuilderV2 provider still speaks the legacy PANEL_TYPES; what the
 	// builder offers for this kind comes from the kind's own declaration.
 	const panelType = toPanelType(panelDefinition.kind);
@@ -104,7 +106,7 @@ function PanelEditorQueryBuilder({
 		> = {
 			[QueryMode.QUERY_BUILDER]: {
 				icon: <Atom size={14} />,
-				label: 'Query Builder',
+				label: translate('Query Builder'),
 				component: (
 					<div className="query-builder-v2-container">
 						<QueryBuilderV2
@@ -125,7 +127,7 @@ function PanelEditorQueryBuilder({
 			},
 			[QueryMode.CLICKHOUSE]: {
 				icon: <Terminal size={14} />,
-				label: 'ClickHouse Query',
+				label: translate('ClickHouse Query'),
 				component: <ClickHouseQueryContainer />,
 			},
 			[QueryMode.PROM]: {
@@ -139,7 +141,7 @@ function PanelEditorQueryBuilder({
 			},
 			[QueryMode.AI_QUERY_BUILDER]: {
 				icon: <Brain size={14} />,
-				label: 'AI Query Builder',
+				label: translate('AI Query Builder'),
 				component: (
 					<div className="query-builder-v2-container">
 						<QueryBuilderV2
@@ -178,7 +180,7 @@ function PanelEditorQueryBuilder({
 			// QB wants a null data source and AI pins traces: both mounted, they overwrite each other's provider config in a loop.
 			destroyInactiveTabPane: isBuilderMode(queryType),
 		}));
-	}, [panelDefinition, panelType, isDarkMode, isRawQuery]);
+	}, [translate, panelDefinition, panelType, isDarkMode, isRawQuery]);
 
 	return (
 		<div
@@ -197,9 +199,13 @@ function PanelEditorQueryBuilder({
 					onChange={onChangeQueryMode}
 					tabBarExtraContent={
 						<span className={styles.runQueryBtnContainer}>
-							<TextToolTip text="This will temporarily save the current query and graph state. This will persist across tab change" />
+							<TextToolTip
+								text={translate(
+									'This will temporarily save the current query and graph state. This will persist across tab change',
+								)}
+							/>
 							<RunQueryBtn
-								label="Run Query"
+								label={translate('Run Query')}
 								testId="panel-editor-v2-run-query"
 								onStageRunQuery={onStageRunQuery}
 								isLoadingQueries={isLoadingQueries}

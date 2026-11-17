@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { AppLink } from 'lib/router/AppLink';
 import { Breadcrumb } from 'antd';
 import ROUTES from 'constants/routes';
@@ -9,12 +10,15 @@ interface FunnelBreadcrumbProps {
 }
 
 function FunnelBreadcrumb({ funnelName }: FunnelBreadcrumbProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const breadcrumbItems = [
 		{
 			title: (
 				<AppLink to={ROUTES.TRACES_FUNNELS}>
 					<span className="funnel-breadcrumb__link">
-						<span className="funnel-breadcrumb__title">All funnels</span>
+						<span className="funnel-breadcrumb__title">
+							{translateConsole('All funnels')}
+						</span>
 					</span>
 				</AppLink>
 			),

@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 /* eslint-disable sonarjs/cognitive-complexity */
 import {
 	Dispatch,
@@ -200,6 +201,7 @@ const SpanOverview = memo(function SpanOverview({
 	onHoverEnter: (spanId: string) => void;
 	onHoverLeave: () => void;
 }): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
 	const isRootSpan = span.level === 0;
 	const { onSpanCopy } = useCopySpanLink(span);
 	const colorByFieldName = useTraceStore((s) => s.colorByField.name);
@@ -351,9 +353,9 @@ const SpanOverview = memo(function SpanOverview({
 
 			{/* Action buttons — shown on hover via CSS, right-aligned */}
 			<span className={styles.rowActions}>
-				<Tooltip title="Copy Span Link">
+				<Tooltip title={translateInterfaceCopy('Copy Span Link')}>
 					<Button
-						aria-label="Copy span link"
+						aria-label={translateInterfaceCopy('Copy span link')}
 						variant="ghost"
 						size="sm"
 						icon
@@ -363,9 +365,9 @@ const SpanOverview = memo(function SpanOverview({
 						<Link size={12} />
 					</Button>
 				</Tooltip>
-				<Tooltip title="Add to Trace Funnel">
+				<Tooltip title={translateInterfaceCopy('Add to Trace Funnel')}>
 					<Button
-						aria-label="Add to Trace Funnel"
+						aria-label={translateInterfaceCopy('Add to Trace Funnel')}
 						testId="span-add-to-funnel-btn"
 						variant="ghost"
 						size="sm"

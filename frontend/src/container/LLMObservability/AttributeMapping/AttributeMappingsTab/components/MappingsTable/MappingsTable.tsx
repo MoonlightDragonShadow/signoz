@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useState } from 'react';
 import { Button } from '@signozhq/ui/button';
 import { Typography } from '@signozhq/ui/typography';
@@ -31,6 +32,7 @@ function MappingsTable({
 	onEditGroup,
 	onAddGroup,
 }: MappingsTableProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const [expandedGroups, setExpandedGroups] = useState<string[]>([]);
 	const [targetGroupId, setTargetGroupId] = useState<string | null>(null);
 	const drawer = useMapperFormDrawer();
@@ -133,7 +135,7 @@ function MappingsTable({
 						testId="add-group-row"
 						loading={editor.isLoading}
 					>
-						Add a new group
+						{translateConsole('Add a new group')}
 					</Button>
 				</div>
 			)}
@@ -142,7 +144,7 @@ function MappingsTable({
 				<div className={styles.tableState} data-testid="mapper-groups-empty">
 					<Layers size={24} />
 					<Typography.Text as="span" size="base" color="muted">
-						No mapping groups yet.
+						{translateConsole('No mapping groups yet.')}
 					</Typography.Text>
 				</div>
 			) : (
@@ -151,9 +153,9 @@ function MappingsTable({
 						<MappingsColgroup />
 						<thead>
 							<tr className={styles.headerRow}>
-								<th className={styles.headerCell}>Target</th>
-								<th className={styles.headerCell}>Sources</th>
-								<th className={styles.headerCell}>Actions</th>
+								<th className={styles.headerCell}>{translateConsole('Target')}</th>
+								<th className={styles.headerCell}>{translateConsole('Sources')}</th>
+								<th className={styles.headerCell}>{translateConsole('Actions')}</th>
 							</tr>
 						</thead>
 					</table>

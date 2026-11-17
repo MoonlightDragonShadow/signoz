@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import {
 	Dispatch,
 	SetStateAction,
@@ -37,6 +38,7 @@ export function useAccountSettingsModal({
 	account,
 	setActiveAccount,
 }: UseAccountSettingsModalProps): UseAccountSettingsModal {
+	const translateRuntimeCopy = useConsoleTranslation();
 	const [form] = Form.useForm();
 	const { mutate: updateAccount, isLoading } = useUpdateAccount();
 	// `account.config` is the shared per-provider union (Azure | AWS | GCP).
@@ -94,9 +96,12 @@ export function useAccountSettingsModal({
 						});
 						onClose();
 
-						toast.success('Account settings updated successfully', {
-							position: 'bottom-right',
-						});
+						toast.success(
+							translateRuntimeCopy('Account settings updated successfully'),
+							{
+								position: 'bottom-right',
+							},
+						);
 
 						logEvent('Azure Integration: Account settings updated', {
 							cloudAccountId: account.cloud_account_id,
@@ -105,7 +110,7 @@ export function useAccountSettingsModal({
 						});
 					},
 					onError: (error) => {
-						toast.error('Failed to update account settings', {
+						toast.error(translateRuntimeCopy('Failed to update account settings'), {
 							description: error?.message,
 							position: 'bottom-right',
 						});
@@ -115,7 +120,14 @@ export function useAccountSettingsModal({
 		} catch (error) {
 			console.error('Form submission failed:', error);
 		}
-	}, [form, updateAccount, account, setActiveAccount, onClose]);
+	}, [
+		form,
+		updateAccount,
+		account,
+		setActiveAccount,
+		onClose,
+		translateRuntimeCopy,
+	]);
 
 	const isSaveDisabled = useMemo(() => {
 		if (!accountConfig) {

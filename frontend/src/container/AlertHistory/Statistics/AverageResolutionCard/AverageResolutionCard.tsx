@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { AlertRuleStats } from 'types/api/alerts/def';
 import { formatTime } from 'utils/timeUtils';
 
@@ -14,12 +15,13 @@ function AverageResolutionCard({
 	pastAvgResolutionTime,
 	timeSeries,
 }: TotalTriggeredCardProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	return (
 		<StatsCard
 			displayValue={formatTime(+currentAvgResolutionTime)}
 			totalCurrentCount={+currentAvgResolutionTime}
 			totalPastCount={+pastAvgResolutionTime}
-			title="Avg. Resolution Time"
+			title={translateConsole('Avg. Resolution Time')}
 			timeSeries={timeSeries}
 		/>
 	);

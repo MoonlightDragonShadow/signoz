@@ -1,3 +1,5 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useState } from 'react';
 import { Color, Style } from '@signozhq/design-tokens';
 import {
@@ -23,6 +25,7 @@ function ClaimMappingSection({
 	isExpanded,
 	onExpandChange,
 }: ClaimMappingSectionProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	// Support both controlled and uncontrolled modes
 	const [internalExpanded, setInternalExpanded] = useState(false);
 	const isControlled = isExpanded !== undefined;
@@ -64,11 +67,14 @@ function ClaimMappingSection({
 							{!expanded ? <ChevronRight size={16} /> : <ChevronDown size={16} />}
 							<div className="claim-mapping-section__collapse-header-text">
 								<h4 className="claim-mapping-section__section-title">
-									Claim Mapping (Advanced)
+									{translateConsole('Claim Mapping (Advanced)')}
 								</h4>
 								<p className="claim-mapping-section__section-description">
-									Configure how claims from your Identity Provider map to SigNoz user
-									attributes. Leave empty to use default values.
+									<ConsoleText
+										message={
+											'Configure how claims from your Identity Provider map to SigNoz user attributes. Leave empty to use default values.'
+										}
+									/>
 								</p>
 							</div>
 							{!expanded && hasErrors && (
@@ -91,8 +97,16 @@ function ClaimMappingSection({
 						{/* Email Claim */}
 						<div className="claim-mapping-section__field-group">
 							<label className="claim-mapping-section__label" htmlFor="email-claim">
-								Email Claim
-								<Tooltip title="The claim key that contains the user's email address. Default: 'email'">
+								{translateConsole('Email Claim')}
+								<Tooltip
+									title={
+										<ConsoleText
+											message={
+												"The claim key that contains the user's email address. Default: 'email'"
+											}
+										/>
+									}
+								>
 									<CircleHelp size={14} color={Style.L3_FOREGROUND} cursor="help" />
 								</Tooltip>
 							</label>
@@ -100,15 +114,23 @@ function ClaimMappingSection({
 								name={[...fieldNamePrefix, 'email']}
 								className="claim-mapping-section__form-item"
 							>
-								<Input id="email-claim" placeholder="Email" />
+								<Input id="email-claim" placeholder={translateConsole('Email')} />
 							</Form.Item>
 						</div>
 
 						{/* Name Claim */}
 						<div className="claim-mapping-section__field-group">
 							<label className="claim-mapping-section__label" htmlFor="name-claim">
-								Name Claim
-								<Tooltip title="The claim key that contains the user's display name. Default: 'name'">
+								{translateConsole('Name Claim')}
+								<Tooltip
+									title={
+										<ConsoleText
+											message={
+												"The claim key that contains the user's display name. Default: 'name'"
+											}
+										/>
+									}
+								>
 									<CircleHelp size={14} color={Style.L3_FOREGROUND} cursor="help" />
 								</Tooltip>
 							</label>
@@ -116,15 +138,23 @@ function ClaimMappingSection({
 								name={[...fieldNamePrefix, 'name']}
 								className="claim-mapping-section__form-item"
 							>
-								<Input id="name-claim" placeholder="Name" />
+								<Input id="name-claim" placeholder={translateConsole('Name')} />
 							</Form.Item>
 						</div>
 
 						{/* Groups Claim */}
 						<div className="claim-mapping-section__field-group">
 							<label className="claim-mapping-section__label" htmlFor="groups-claim">
-								Groups Claim
-								<Tooltip title="The claim key that contains the user's group memberships. Used for role mapping. Default: 'groups'">
+								{translateConsole('Groups Claim')}
+								<Tooltip
+									title={
+										<ConsoleText
+											message={
+												"The claim key that contains the user's group memberships. Used for role mapping. Default: 'groups'"
+											}
+										/>
+									}
+								>
 									<CircleHelp size={14} color={Style.L3_FOREGROUND} cursor="help" />
 								</Tooltip>
 							</label>
@@ -132,15 +162,23 @@ function ClaimMappingSection({
 								name={[...fieldNamePrefix, 'groups']}
 								className="claim-mapping-section__form-item"
 							>
-								<Input id="groups-claim" placeholder="Groups" />
+								<Input id="groups-claim" placeholder={translateConsole('Groups')} />
 							</Form.Item>
 						</div>
 
 						{/* Role Claim */}
 						<div className="claim-mapping-section__field-group">
 							<label className="claim-mapping-section__label" htmlFor="role-claim">
-								Role Claim
-								<Tooltip title="The claim key that contains the user's role directly from the IDP. Default: 'role'">
+								{translateConsole('Role Claim')}
+								<Tooltip
+									title={
+										<ConsoleText
+											message={
+												"The claim key that contains the user's role directly from the IDP. Default: 'role'"
+											}
+										/>
+									}
+								>
 									<CircleHelp size={14} color={Style.L3_FOREGROUND} cursor="help" />
 								</Tooltip>
 							</label>
@@ -148,7 +186,7 @@ function ClaimMappingSection({
 								name={[...fieldNamePrefix, 'role']}
 								className="claim-mapping-section__form-item"
 							>
-								<Input id="role-claim" placeholder="Role" />
+								<Input id="role-claim" placeholder={translateConsole('Role')} />
 							</Form.Item>
 						</div>
 					</div>

@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useMutation } from 'react-query';
 // eslint-disable-next-line no-restricted-imports
@@ -107,7 +108,7 @@ export function getColumns(
 												onClick={(): void => handleShowMore(index)}
 												className="remaing-count"
 											>
-												+ {remainingCount} more
+												+ {remainingCount} <ConsoleText message={'more'} />
 											</Typography.Text>
 										)}
 									</div>
@@ -155,7 +156,10 @@ const showPaginationItem = (total: number, range: number[]): JSX.Element => (
 		<Typography.Text className="numbers">
 			{range[0]} &#8212; {range[1]}
 		</Typography.Text>
-		<Typography.Text className="total"> of {total}</Typography.Text>
+		<Typography.Text className="total">
+			{' '}
+			<ConsoleText message={'of'} /> {total}
+		</Typography.Text>
 	</>
 );
 

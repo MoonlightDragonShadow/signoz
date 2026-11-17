@@ -1,5 +1,6 @@
 //@ts-nocheck
 
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useEffect, useMemo, useRef } from 'react';
 // eslint-disable-next-line no-restricted-imports
 import { connect } from 'react-redux';
@@ -64,6 +65,7 @@ export interface graphDataType {
 }
 
 function ServiceMap(props: ServiceMapProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const fgRef = useRef();
 
 	const { getDetailedServiceMapItems, globalTime, serviceMap } = props;
@@ -89,11 +91,13 @@ function ServiceMap(props: ServiceMapProps): JSX.Element {
 
 	const renderBody = (): JSX.Element => {
 		if (serviceMap.loading) {
-			return <Spinner size="large" tip="Loading..." />;
+			return <Spinner size="large" tip={translate('Loading...')} />;
 		}
 
 		if (serviceMap.items.length === 0) {
-			return <Card data-testid="service-map-empty">No Service Found</Card>;
+			return (
+				<Card data-testid="service-map-empty">{translate('No Service Found')}</Card>
+			);
 		}
 
 		return <Map fgRef={fgRef} serviceMap={serviceMap} />;

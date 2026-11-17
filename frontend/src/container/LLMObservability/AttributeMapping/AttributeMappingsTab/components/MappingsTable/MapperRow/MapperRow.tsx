@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { Badge } from '@signozhq/ui/badge';
 import { Switch } from '@signozhq/ui/switch';
 import { Typography } from '@signozhq/ui/typography';
@@ -96,7 +97,7 @@ function MapperRow({
 						))}
 						{remainingSources > 0 && (
 							<span className={cx(styles.sourceMore, styles.muted)}>
-								+{remainingSources} more
+								+{remainingSources} <ConsoleText message={'more'} />
 							</span>
 						)}
 					</div>

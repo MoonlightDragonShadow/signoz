@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import type {
 	SectionEditorProps,
 	SectionKind,
@@ -26,15 +27,16 @@ function LegendSection({
 	onChange,
 	legendSeries,
 }: LegendSectionProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const reset = createFieldResetter(value, savedValue, onChange);
 
 	return (
 		<>
 			{controls.position && (
-				<ConfigField label="Position" {...reset('position')}>
+				<ConfigField label={translate('Position')} {...reset('position')}>
 					<ConfigTiles
 						testId="panel-editor-v2-legend-position"
-						aria-label="Legend position"
+						aria-label={translate('Legend position')}
 						items={POSITION_OPTIONS}
 						value={value?.position ?? defaultValue?.position}
 						onChange={(position): void => onChange({ ...value, position })}
@@ -43,7 +45,7 @@ function LegendSection({
 			)}
 
 			{controls.colors && (
-				<ConfigField label="Series colors" {...reset('customColors')}>
+				<ConfigField label={translate('Series colors')} {...reset('customColors')}>
 					<LegendColors
 						series={legendSeries ?? []}
 						value={value?.customColors}

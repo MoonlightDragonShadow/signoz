@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useState } from 'react';
 import { Input } from '@signozhq/ui/input';
 import { Collapse, Modal } from 'antd';
@@ -18,6 +19,7 @@ interface IEventsTableProps {
 }
 
 function EventsTable(props: IEventsTableProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const { span, startTime, isSearchVisible } = props;
 	const [fieldSearchInput, setFieldSearchInput] = useState<string>('');
 	const [modalContent, setModalContent] = useState<{
@@ -46,7 +48,7 @@ function EventsTable(props: IEventsTableProps): JSX.Element {
 				{isSearchVisible && events.length > 0 && (
 					<Input
 						autoFocus
-						placeholder="Search for events..."
+						placeholder={translateConsole('Search for events...')}
 						value={fieldSearchInput}
 						onChange={(e): void => setFieldSearchInput(e.target.value)}
 					/>
@@ -78,7 +80,7 @@ function EventsTable(props: IEventsTableProps): JSX.Element {
 												<div className={styles.eventDetails}>
 													<div className={styles.attributeContainer} key="timeUnixNano">
 														<Typography.Text className={styles.attributeKey}>
-															Start Time
+															{translateConsole('Start Time')}
 														</Typography.Text>
 														<div className={styles.timestampContainer}>
 															<Typography.Text className={styles.attributeValue}>
@@ -88,7 +90,7 @@ function EventsTable(props: IEventsTableProps): JSX.Element {
 																)}
 															</Typography.Text>
 															<Typography.Text className={styles.timestampText}>
-																since trace start
+																{translateConsole('since trace start')}
 															</Typography.Text>
 														</div>
 														<div className={styles.timestampContainer}>
@@ -99,7 +101,7 @@ function EventsTable(props: IEventsTableProps): JSX.Element {
 																)}
 															</Typography.Text>
 															<Typography.Text className={styles.timestampText}>
-																since span start
+																{translateConsole('since span start')}
 															</Typography.Text>
 														</div>
 													</div>

@@ -1,3 +1,5 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, Card } from 'antd';
@@ -28,6 +30,7 @@ import {
 import './EditRules.styles.scss';
 
 function EditRules(): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
 	const { safeNavigate } = useSafeNavigate();
 	const params = useUrlQuery();
 	const ruleId = params.get(QueryParams.ruleId);
@@ -84,7 +87,7 @@ function EditRules(): JSX.Element {
 					<p className="content">{errorMsg || t('something_went_wrong')}</p>
 					<div className="btn-container">
 						<Button type="default" size="large" onClick={clickHandler}>
-							Return to Alerts Page
+							<ConsoleText message={'Return to Alerts Page'} />
 						</Button>
 					</div>
 				</Card>
@@ -93,7 +96,7 @@ function EditRules(): JSX.Element {
 	}
 
 	if (isLoading || isRefetching || !ruleData) {
-		return <Spinner tip="Loading Rules..." />;
+		return <Spinner tip={translateInterfaceCopy('Loading Rules...')} />;
 	}
 
 	let initialV2AlertValue: PostableAlertRuleV2 | null = null;

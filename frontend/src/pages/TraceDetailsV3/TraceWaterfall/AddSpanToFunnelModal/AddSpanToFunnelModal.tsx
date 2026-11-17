@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { ChangeEvent, useEffect, useMemo, useState } from 'react';
 import { Button } from '@signozhq/ui/button';
 import { Input } from '@signozhq/ui/input';
@@ -91,6 +92,7 @@ function AddSpanToFunnelModal({
 	onClose,
 	span,
 }: AddSpanToFunnelModalProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const [activeView, setActiveView] = useState<ModalView>(ModalView.LIST);
 	const [searchQuery, setSearchQuery] = useState<string>('');
 	const [selectedFunnelId, setSelectedFunnelId] = useState<string | undefined>(
@@ -167,7 +169,7 @@ function AddSpanToFunnelModal({
 				<div className={styles.search}>
 					<Input
 						className={styles.searchInput}
-						placeholder="Search by name, description, or tags..."
+						placeholder={translateConsole('Search by name, description, or tags...')}
 						prefix={<Search size={12} />}
 						value={searchQuery}
 						onChange={handleSearch}
@@ -210,7 +212,7 @@ function AddSpanToFunnelModal({
 				onClick={handleBack}
 				prefix={<ArrowLeft size={14} />}
 			>
-				All funnels
+				{translateConsole('All funnels')}
 			</Button>
 			<div className="traces-funnel-details">
 				<div className="traces-funnel-details__steps-config">
@@ -245,13 +247,13 @@ function AddSpanToFunnelModal({
 			open={isOpen}
 			onCancel={onClose}
 			width={570}
-			title="Add span to funnel"
+			title={translateConsole('Add span to funnel')}
 			className={styles.container}
 			footer={
 				activeView === ModalView.DETAILS
 					? [
 							<Button
-								disabledTooltip="No changes to discard"
+								disabledTooltip={translateConsole('No changes to discard')}
 								size="md"
 								variant="outlined"
 								color="secondary"
@@ -259,10 +261,10 @@ function AddSpanToFunnelModal({
 								onClick={handleDiscard}
 								disabled={!isUnsavedChanges}
 							>
-								Discard
+								{translateConsole('Discard')}
 							</Button>,
 							<Button
-								disabledTooltip="No changes to save"
+								disabledTooltip={translateConsole('No changes to save')}
 								size="md"
 								key="save"
 								testId="add-span-save-btn"
@@ -273,7 +275,7 @@ function AddSpanToFunnelModal({
 								disabled={!isUnsavedChanges}
 								prefix={<Check size={14} />}
 							>
-								Save Funnel
+								{translateConsole('Save Funnel')}
 							</Button>,
 						]
 					: [
@@ -286,7 +288,7 @@ function AddSpanToFunnelModal({
 								onClick={handleCreateNewClick}
 								prefix={<Plus size={14} />}
 							>
-								Create new funnel
+								{translateConsole('Create new funnel')}
 							</Button>,
 						]
 			}

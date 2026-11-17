@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { Typography } from '@signozhq/ui/typography';
 import { useGetTenantLicense } from 'hooks/useGetTenantLicense';
 import { navigate } from 'lib/router/navigation';
@@ -23,12 +24,18 @@ export default function LogsError(): JSX.Element {
 			<div className="logs-error-content">
 				<img src={awwSnapUrl} alt="error-emoji" className="error-state-svg" />
 				<Typography.Text>
-					<span className="aww-snap">Aw snap :/ </span> Something went wrong. Please
-					try again or contact support.
+					<span className="aww-snap">
+						<ConsoleText message={'Aw snap :/'} />{' '}
+					</span>{' '}
+					<ConsoleText
+						message={'Something went wrong. Please try again or contact support.'}
+					/>
 				</Typography.Text>
 
 				<div className="contact-support" onClick={handleContactSupport}>
-					<Typography.Link className="text">Contact Support </Typography.Link>
+					<Typography.Link className="text">
+						<ConsoleText message={'Contact Support'} />{' '}
+					</Typography.Link>
 
 					<ArrowRight size={14} />
 				</div>

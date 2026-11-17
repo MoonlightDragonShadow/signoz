@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useMemo } from 'react';
 import { Color } from '@signozhq/design-tokens';
 import { Switch } from '@signozhq/ui/switch';
@@ -8,6 +9,7 @@ import { useTimezone } from 'providers/Timezone';
 import './TimezoneAdaptation.styles.scss';
 
 function TimezoneAdaptation(): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const {
 		timezone,
 		browserTimezone,
@@ -42,7 +44,9 @@ function TimezoneAdaptation(): JSX.Element {
 	return (
 		<div className="timezone-adaption">
 			<div className="timezone-adaption__header">
-				<h2 className="timezone-adaption__title">Adapt to my timezone</h2>
+				<h2 className="timezone-adaption__title">
+					{translateConsole('Adapt to my timezone')}
+				</h2>
 				<Switch
 					color={isAdaptationEnabled && isTimezoneOverridden ? 'warning' : 'primary'}
 					textPlacement="right"
@@ -53,7 +57,9 @@ function TimezoneAdaptation(): JSX.Element {
 			</div>
 
 			<p className="timezone-adaption__description">
-				Adapt the timestamps shown in the SigNoz console to my active timezone.
+				{translateConsole(
+					'Adapt the timestamps shown in the SigNoz console to my active timezone.',
+				)}
 			</p>
 
 			<div className="timezone-adaption__note">
@@ -62,15 +68,16 @@ function TimezoneAdaptation(): JSX.Element {
 					<span className="timezone-adaption__note-text">
 						{isTimezoneOverridden ? (
 							<>
-								Your current timezone is overridden to
+								{translateConsole('Your current timezone is overridden to')}
 								<span className="timezone-adaption__note-text-overridden">
 									{timezone.offset}
 								</span>
 							</>
 						) : (
 							<>
-								You can override the timezone adaption for any view with the time
-								picker.
+								{translateConsole(
+									'You can override the timezone adaption for any view with the time picker.',
+								)}
 							</>
 						)}
 					</span>
@@ -84,7 +91,7 @@ function TimezoneAdaptation(): JSX.Element {
 						onClick={handleOverrideClear}
 					>
 						<Delete height={12} width={12} color={Color.BG_ROBIN_300} />
-						Clear override
+						{translateConsole('Clear override')}
 					</button>
 				)}
 			</div>

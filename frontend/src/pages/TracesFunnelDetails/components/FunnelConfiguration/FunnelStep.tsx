@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useMemo, useState } from 'react';
 import { Button, Form, Space, Tooltip } from 'antd';
 import { Dropdown, type DropdownItemType } from '@signozhq/ui/dropdown';
@@ -30,6 +31,7 @@ function FunnelStep({
 	index,
 	stepsCount,
 }: FunnelStepProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const { handleStepChange: onStepChange, handleStepRemoval: onStepRemove } =
 		useFunnelContext();
 	const [form] = Form.useForm();
@@ -96,7 +98,9 @@ function FunnelStep({
 							{stepData.name ? (
 								<div className="funnel-step-details__title">{stepData.name}</div>
 							) : (
-								<div className="funnel-step-details__title">Step {index + 1}</div>
+								<div className="funnel-step-details__title">
+									{translateConsole('Step')} {index + 1}
+								</div>
 							)}
 						</div>
 						{!!stepData.description && (
@@ -147,7 +151,7 @@ function FunnelStep({
 							>
 								<Form.Item name={['steps', stepData.id, 'service_name']}>
 									<FilterSelect
-										placeholder="Select Service"
+										placeholder={translateConsole('Select Service')}
 										queryParam={QueryParams.service}
 										filterType="serviceName"
 										shouldSetQueryParams={false}
@@ -166,7 +170,7 @@ function FunnelStep({
 							<div className="span" data-testid={`funnel-step-span-select-${index}`}>
 								<Form.Item name={['steps', stepData.id, 'span_name']}>
 									<FilterSelect
-										placeholder="Select Span name"
+										placeholder={translateConsole('Select Span name')}
 										queryParam={QueryParams.spanName}
 										filterType="name"
 										shouldSetQueryParams={false}
@@ -183,7 +187,7 @@ function FunnelStep({
 							</div>
 						</div>
 						<div className="filters__where-filter">
-							<div className="label">Where</div>
+							<div className="label">{translateConsole('Where')}</div>
 							<Form.Item name={['steps', stepData.id, 'filters']}>
 								<QueryBuilderSearchV2
 									query={query}
@@ -193,7 +197,7 @@ function FunnelStep({
 											: (): void => {}
 									}
 									hasPopupContainer={false}
-									placeholder="Search for filters..."
+									placeholder={translateConsole('Search for filters...')}
 									rootClassName="traces-funnel-where-filter"
 								/>
 							</Form.Item>
@@ -206,17 +210,21 @@ function FunnelStep({
 							color="primary"
 							testId={`funnel-step-errors-switch-${index}`}
 							textPlacement="right"
-							disabledTooltip="You need edit permissions to change this step"
+							disabledTooltip={translateConsole(
+								'You need edit permissions to change this step',
+							)}
 							value={stepData.has_errors}
 							disabled={!hasEditPermission}
 							onChange={(): void =>
 								onStepChange(index, { has_errors: !stepData.has_errors })
 							}
 						/>
-						<div className="error__label">Errors</div>
+						<div className="error__label">{translateConsole('Errors')}</div>
 					</div>
 					<div className="latency-pointer">
-						<div className="latency-pointer__label">Latency pointer</div>
+						<div className="latency-pointer__label">
+							{translateConsole('Latency pointer')}
+						</div>
 						{hasEditPermission ? (
 							<Dropdown
 								items={latencyPointerItems}

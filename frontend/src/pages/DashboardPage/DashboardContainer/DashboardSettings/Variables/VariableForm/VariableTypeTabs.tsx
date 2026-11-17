@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { ReactNode } from 'react';
 import { Color } from '@signozhq/design-tokens';
 import {
@@ -30,6 +31,7 @@ function VariableTypeTabs({
 	onChange,
 	panels,
 }: VariableTypeTabsProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	return (
 		<Tabs
 			variant="secondary"
@@ -41,9 +43,11 @@ function VariableTypeTabs({
 			noTabContentPadding
 			tabBarStartContent={
 				<div className={styles.typeLabelContainer}>
-					<Typography.Text className={styles.label}>Variable Type</Typography.Text>
+					<Typography.Text className={styles.label}>
+						{translate('Variable Type')}
+					</Typography.Text>
 					<TextToolTip
-						text="Learn more about supported variable types"
+						text={translate('Learn more about supported variable types')}
 						url="https://signoz.io/docs/userguide/manage-variables/#supported-variable-types"
 						urlText="here"
 						useFilledIcon={false}
@@ -54,11 +58,11 @@ function VariableTypeTabs({
 			items={[
 				{
 					key: 'DYNAMIC',
-					label: 'Dynamic',
+					label: translate('Dynamic'),
 					prefixIcon: <Pyramid size={14} />,
 					suffixIcon: (
 						<Badge variant="solid" color="primary">
-							Beta
+							{translate('Beta')}
 						</Badge>
 					),
 					testId: 'variable-type-dynamic',
@@ -66,27 +70,27 @@ function VariableTypeTabs({
 				},
 				{
 					key: 'TEXT',
-					label: 'Textbox',
+					label: translate('Textbox'),
 					prefixIcon: <ClipboardType size={14} />,
 					testId: 'variable-type-textbox',
 					children: panels.TEXT,
 				},
 				{
 					key: 'CUSTOM',
-					label: 'Custom',
+					label: translate('Custom'),
 					prefixIcon: <LayoutList size={14} />,
 					testId: 'variable-type-custom',
 					children: panels.CUSTOM,
 				},
 				{
 					key: 'QUERY',
-					label: 'Query',
+					label: translate('Query'),
 					prefixIcon: <DatabaseZap size={14} />,
 					suffixIcon: (
 						<>
 							<span className={styles.notRecommendedBadge}>
 								<Badge variant="solid" color="warning">
-									Not Recommended
+									{translate('Not Recommended')}
 								</Badge>
 							</span>
 							<span
@@ -95,7 +99,9 @@ function VariableTypeTabs({
 								role="presentation"
 							>
 								<TextToolTip
-									text="Query variables can be slow and brittle, so they aren't recommended. Learn why"
+									text={translate(
+										"Query variables can be slow and brittle, so they aren't recommended. Learn why",
+									)}
 									url="https://signoz.io/docs/userguide/manage-variables/#why-avoid-clickhouse-query-variables"
 									urlText="here"
 									useFilledIcon={false}

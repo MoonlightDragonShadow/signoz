@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback } from 'react';
 import { toast } from '@signozhq/ui/sonner';
 import logEvent from 'api/common/logEvent';
@@ -23,6 +24,7 @@ interface UseDownloadPanelImage {
  * delegates to the pure capture util. Failures surface as an error toast.
  */
 export function useDownloadPanelImage(): UseDownloadPanelImage {
+	const translate = useConsoleTranslation();
 	const downloadPanelImage = useCallback(
 		async (
 			panelId: string,
@@ -44,18 +46,20 @@ export function useDownloadPanelImage(): UseDownloadPanelImage {
 					panelId,
 				});
 			} catch {
-				toast.error('Could not download panel.', {
+				toast.error(translate('Could not download panel.'), {
 					action: {
-						label: 'Dismiss',
+						label: translate('Dismiss'),
 						onClick: (): void => {
 							toast.dismiss();
 						},
 					},
-					description: 'Something went wrong while capturing the panel image.',
+					description: translate(
+						'Something went wrong while capturing the panel image.',
+					),
 				});
 			}
 		},
-		[],
+		[translate],
 	);
 
 	return { downloadPanelImage };

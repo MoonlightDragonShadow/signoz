@@ -1,3 +1,5 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { navigate } from 'lib/router/navigation';
 import { Check, ChevronDown, Plus } from '@signozhq/icons';
@@ -19,6 +21,8 @@ import './MembersSettings.styles.scss';
 const PAGE_SIZE = 20;
 
 function MembersSettings(): JSX.Element {
+	const translateRuntimeCopy = useConsoleTranslation();
+	const translate = useConsoleTranslation();
 	const urlQuery = useUrlQuery();
 	const pageParam = parseInt(urlQuery.get('page') ?? '1', 10);
 	const currentPage = Number.isNaN(pageParam) || pageParam < 1 ? 1 : pageParam;
@@ -103,7 +107,9 @@ function MembersSettings(): JSX.Element {
 			value: FilterMode.All,
 			label: (
 				<div className="members-filter-option">
-					<span>All members ⎯ {totalCount}</span>
+					<span>
+						<ConsoleText message={'All members ⎯'} /> {totalCount}
+					</span>
 					{filterMode === FilterMode.All && <Check size={14} />}
 				</div>
 			),
@@ -117,7 +123,9 @@ function MembersSettings(): JSX.Element {
 			value: FilterMode.Invited,
 			label: (
 				<div className="members-filter-option">
-					<span>Pending invites ⎯ {pendingCount}</span>
+					<span>
+						<ConsoleText message={'Pending invites ⎯'} /> {pendingCount}
+					</span>
 					{filterMode === FilterMode.Invited && <Check size={14} />}
 				</div>
 			),
@@ -131,7 +139,9 @@ function MembersSettings(): JSX.Element {
 			value: FilterMode.Deleted,
 			label: (
 				<div className="members-filter-option">
-					<span>Deleted ⎯ {deletedCount}</span>
+					<span>
+						<ConsoleText message={'Deleted ⎯'} /> {deletedCount}
+					</span>
 					{filterMode === FilterMode.Deleted && <Check size={14} />}
 				</div>
 			),
@@ -144,7 +154,7 @@ function MembersSettings(): JSX.Element {
 
 	const filterLabel =
 		filterMode === FilterMode.All
-			? `All members ⎯ ${totalCount}`
+			? translateRuntimeCopy('All members ⎯ {{value1}}', { value1: totalCount })
 			: filterMode === FilterMode.Invited
 				? `Pending invites ⎯ ${pendingCount}`
 				: `Deleted ⎯ ${deletedCount}`;
@@ -169,9 +179,11 @@ function MembersSettings(): JSX.Element {
 		<div className="members-settings-page">
 			<div className="members-settings">
 				<div className="members-settings__header">
-					<h1 className="members-settings__title">Members</h1>
+					<h1 className="members-settings__title">
+						<ConsoleText message={'Members'} />
+					</h1>
 					<p className="members-settings__subtitle">
-						Overview of people added to this workspace.
+						<ConsoleText message={'Overview of people added to this workspace.'} />
 					</p>
 				</div>
 
@@ -193,7 +205,7 @@ function MembersSettings(): JSX.Element {
 					<div className="members-settings__search">
 						<Input
 							type="search"
-							placeholder="Search by name or email..."
+							placeholder={translate('Search by name or email...')}
 							value={searchQuery}
 							onChange={(e): void => {
 								setSearchQuery(e.target.value);
@@ -213,7 +225,7 @@ function MembersSettings(): JSX.Element {
 						prefix={<Plus size={12} />}
 						testId="invite-member-btn"
 					>
-						Invite member
+						<ConsoleText message={'Invite member'} />
 					</Button>
 				</div>
 			</div>

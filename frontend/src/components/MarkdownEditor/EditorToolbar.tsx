@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import type { ReactElement, ReactNode } from 'react';
 import {
 	Bold,
@@ -51,6 +52,7 @@ function EditorToolbar({
 	disabled,
 	extra,
 }: EditorToolbarProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	return (
 		<div className={styles.toolbar} data-testid="markdown-editor-toolbar">
 			<span className={styles.formatChip}>
@@ -62,16 +64,19 @@ function EditorToolbar({
 			<span className={styles.toolbarDivider} />
 			<div className={styles.commands}>
 				{commands.map((command) => (
-					<Tooltip key={command.id} title={disabled ? undefined : command.label}>
+					<Tooltip
+						key={command.id}
+						title={disabled ? undefined : translate(command.label)}
+					>
 						<Button
-							disabledTooltip={READ_ONLY_TOOLTIP}
+							disabledTooltip={translate(READ_ONLY_TOOLTIP)}
 							type="button"
 							variant="ghost"
 							color="secondary"
 							size="sm"
 							icon
 							disabled={disabled}
-							aria-label={command.label}
+							aria-label={translate(command.label)}
 							testId={`markdown-command-${command.id}`}
 							onClick={(): void => onRunCommand(command)}
 						>

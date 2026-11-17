@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import React from 'react';
 import { ArrowUpRight } from '@signozhq/icons';
 
@@ -27,11 +28,12 @@ const footerItems: FooterItem[] = [
 ];
 
 function AuthFooter(): JSX.Element {
+	const translate = useConsoleTranslation();
 	return (
 		<footer className="auth-footer">
 			<div className="auth-footer-content">
 				{footerItems.map((item, index) => (
-					<React.Fragment key={item.text}>
+					<React.Fragment key={translate(item.text)}>
 						<div className="auth-footer-item">
 							{item.statusIndicator && (
 								<div className="auth-footer-status-indicator" />
@@ -53,13 +55,13 @@ function AuthFooter(): JSX.Element {
 									target="_blank"
 									rel="noopener noreferrer"
 								>
-									<span className="auth-footer-text">{item.text}</span>
+									<span className="auth-footer-text">{translate(item.text)}</span>
 									{!item.statusIndicator && (
 										<ArrowUpRight size={12} className="auth-footer-link-icon" />
 									)}
 								</a>
 							) : (
-								<span className="auth-footer-text">{item.text}</span>
+								<span className="auth-footer-text">{translate(item.text)}</span>
 							)}
 						</div>
 						{index < footerItems.length - 1 && (

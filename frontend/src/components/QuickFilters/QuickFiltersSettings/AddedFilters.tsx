@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { useMemo } from 'react';
 import {
 	closestCenter,
@@ -56,7 +57,7 @@ function SortableFilter({
 						onRemove(filter);
 					}}
 				>
-					Remove
+					<ConsoleText message={'Remove'} />
 				</Button>
 			)}
 		</div>
@@ -104,7 +105,9 @@ function AddedFilters({
 
 	return (
 		<div className="qf-filters added-filters">
-			<div className="qf-filters-header">ADDED FILTERS</div>
+			<div className="qf-filters-header">
+				<ConsoleText message={'ADDED FILTERS'} />
+			</div>
 			<div className="qf-added-filters-list">
 				<OverlayScrollbar>
 					<DndContext
@@ -113,7 +116,9 @@ function AddedFilters({
 						onDragEnd={handleDragEnd}
 					>
 						{filteredAddedFilters.length === 0 ? (
-							<div className="no-values-found">No values found</div>
+							<div className="no-values-found">
+								<ConsoleText message={'No values found'} />
+							</div>
 						) : (
 							<SortableContext
 								items={addedFilters.map((f) => f.key as string)}

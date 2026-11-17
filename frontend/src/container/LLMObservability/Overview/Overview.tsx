@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useEffect } from 'react';
 import { Typography } from '@signozhq/ui/typography';
 import logEvent from 'api/common/logEvent';
@@ -8,6 +9,8 @@ import { useSystemDashboard } from './hooks/useSystemDashboard';
 import styles from './Overview.module.scss';
 
 function Overview(): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
+	const translateConsole = useConsoleTranslation();
 	const { dashboard, isLoading, isError, error, refetch } = useSystemDashboard();
 
 	useEffect(() => {
@@ -16,13 +19,15 @@ function Overview(): JSX.Element {
 
 	const renderContent = (): JSX.Element => {
 		if (isLoading) {
-			return <Spinner tip="Loading dashboard..." />;
+			return <Spinner tip={translateInterfaceCopy('Loading dashboard...')} />;
 		}
 
 		if (isError || !dashboard) {
 			return (
 				<div className={styles.errorState}>
-					<Typography.Title>Failed to load dashboard</Typography.Title>
+					<Typography.Title>
+						{translateConsole('Failed to load dashboard')}
+					</Typography.Title>
 					<Typography.Text>
 						{error?.response?.data?.error?.message ?? error?.message}
 					</Typography.Text>

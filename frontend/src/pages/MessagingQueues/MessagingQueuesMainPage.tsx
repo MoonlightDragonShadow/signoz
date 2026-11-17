@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import RouteTab from 'components/RouteTab';
 import { TabRoutes } from 'components/RouteTab/types';
 import ROUTES from 'constants/routes';
@@ -48,7 +49,7 @@ export const Overview: TabRoutes = {
 	Component: CeleryOverview,
 	name: (
 		<div className="tab-item">
-			<Rows3 size={16} /> Overview
+			<Rows3 size={16} /> <ConsoleText message={'Overview'} />
 		</div>
 	),
 	route: ROUTES.MESSAGING_QUEUES_OVERVIEW,

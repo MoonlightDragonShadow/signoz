@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useMutation } from 'react-query';
 import { Check, ChevronsDown, ScrollText, X } from '@signozhq/icons';
@@ -103,7 +104,7 @@ function ChangelogModal({ changelog, onClose }: Props): JSX.Element {
 			title={
 				<div className="changelog-modal-title">
 					<ScrollText size={16} />
-					What’s New ⎯ Changelog : {formattedReleaseDate}
+					<ConsoleText message={'What’s New ⎯ Changelog :'} /> {formattedReleaseDate}
 				</div>
 			}
 			width={820}
@@ -118,13 +119,13 @@ function ChangelogModal({ changelog, onClose }: Props): JSX.Element {
 							<Button type="default" onClick={onClose}>
 								<Flex align="center" gap="4px">
 									<X size="md" />
-									Skip for now
+									<ConsoleText message={'Skip for now'} />
 								</Flex>
 							</Button>
 							<Button type="primary" onClick={onClickUpdateWorkspace}>
 								<Flex align="center" gap="4px">
 									<Check size="md" />
-									Update my workspace
+									<ConsoleText message={'Update my workspace'} />
 								</Flex>
 							</Button>
 						</div>
@@ -138,7 +139,9 @@ function ChangelogModal({ changelog, onClose }: Props): JSX.Element {
 								onClick={onClickScrollForMore}
 							>
 								<ChevronsDown size={14} />
-								<span>Scroll for more</span>
+								<span>
+									<ConsoleText message={'Scroll for more'} />
+								</span>
 							</button>
 						</div>
 					)}

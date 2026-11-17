@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 /* eslint-disable sonarjs/cognitive-complexity */
 import {
 	forwardRef,
@@ -170,7 +171,9 @@ const Uplot = forwardRef<ToggleGraphProps | undefined, UplotProps>(
 				<div className="uplot-no-data not-found">
 					<ChartLine size={48} strokeWidth={0.5} />
 
-					<Typography>No Data</Typography>
+					<Typography>
+						<ConsoleText message={'No Data'} />
+					</Typography>
 				</div>
 			);
 		}
@@ -180,7 +183,9 @@ const Uplot = forwardRef<ToggleGraphProps | undefined, UplotProps>(
 				<div className="uplot-graph-container" ref={targetRef}>
 					{data && data[0] && data[0]?.length === 0 ? (
 						<div className="not-found">
-							<Typography>No Data</Typography>
+							<Typography>
+								<ConsoleText message={'No Data'} />
+							</Typography>
 						</div>
 					) : null}
 				</div>

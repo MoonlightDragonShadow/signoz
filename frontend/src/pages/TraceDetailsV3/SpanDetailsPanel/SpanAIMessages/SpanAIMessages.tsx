@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useMemo, useRef } from 'react';
 import { ArrowDownRight, ArrowUpRight } from '@signozhq/icons';
 
@@ -19,6 +20,7 @@ interface SpanAIMessagesProps {
 
 /** Waterfall spans only carry raw attributes, so they get the JSON view alone. */
 function SpanAIMessages({ span }: SpanAIMessagesProps): JSX.Element | null {
+	const translateConsole = useConsoleTranslation();
 	const data = useMemo(() => getSpanMessages(span), [span]);
 
 	const rootRef = useRef<HTMLDivElement>(null);
@@ -36,7 +38,7 @@ function SpanAIMessages({ span }: SpanAIMessagesProps): JSX.Element | null {
 		<div className={styles.root} ref={rootRef} data-testid="span-ai-messages">
 			<MessagesAccordion
 				icon={<ArrowUpRight size={14} />}
-				title="Input"
+				title={translateConsole('Input')}
 				messages={data.formattedInput}
 				messageType={MessageType.Input}
 				testId="span-ai-messages-input"
@@ -45,7 +47,7 @@ function SpanAIMessages({ span }: SpanAIMessagesProps): JSX.Element | null {
 			/>
 			<MessagesAccordion
 				icon={<ArrowDownRight size={14} />}
-				title="Output"
+				title={translateConsole('Output')}
 				messages={data.formattedOutput}
 				messageType={MessageType.Output}
 				testId="span-ai-messages-output"

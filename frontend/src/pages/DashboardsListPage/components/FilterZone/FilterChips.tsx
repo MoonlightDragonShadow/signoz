@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Checkbox, Select } from 'antd';
 import cx from 'classnames';
 
@@ -46,6 +47,7 @@ function FilterChips({
 	onClearCreatedBy,
 	disabled = false,
 }: Props): JSX.Element {
+	const translate = useConsoleTranslation();
 	const creatorOptionsData = creatorOptions.map((o) => ({
 		value: o.email,
 		label: o.label,
@@ -64,7 +66,7 @@ function FilterChips({
 				showSearch
 				allowClear
 				className={cx(styles.select, styles.selectWide)}
-				placeholder="Created by"
+				placeholder={translate('Created by')}
 				value={createdBy}
 				options={creatorOptionsData}
 				optionFilterProp="label"
@@ -88,7 +90,7 @@ function FilterChips({
 			<Select
 				showSearch
 				className={cx(styles.select, styles.selectNarrow)}
-				placeholder="Updated"
+				placeholder={translate('Updated')}
 				value={updated}
 				options={UPDATED_OPTIONS}
 				optionFilterProp="label"

@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Plus } from '@signozhq/icons';
 import { Button } from '@signozhq/ui/button';
 import { Tooltip } from '@signozhq/ui/tooltip';
@@ -18,15 +19,16 @@ function SectionHeaderQuickAdd({
 	action,
 	onClick,
 }: SectionHeaderQuickAddProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	return (
-		<Tooltip title="Quick Add" side="top">
+		<Tooltip title={translate('Quick Add')} side="top">
 			<Button
 				type="button"
 				variant="ghost"
 				color="secondary"
 				size="sm"
 				icon
-				aria-label={action.label}
+				aria-label={translate(action.label)}
 				// Not `testId`: TooltipTrigger's Slot merge overwrites it with undefined.
 				testId={action.testId}
 				onClick={onClick}

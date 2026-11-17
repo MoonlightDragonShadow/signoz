@@ -1,3 +1,5 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { useMemo } from 'react';
 import { Button, Tooltip } from 'antd';
 import { Typography } from '@signozhq/ui/typography';
@@ -14,6 +16,7 @@ function TraceOperatorSection({
 }: {
 	addTraceOperator?: () => void;
 }): JSX.Element {
+	const translateRuntimeCopy = useConsoleTranslation();
 	const { currentQuery, panelType } = useQueryBuilder();
 
 	const showTraceOperatorWarning = useMemo(() => {
@@ -35,14 +38,17 @@ function TraceOperatorSection({
 			return '';
 		}
 		const firstQuery = currentQuery.builder.queryData[0];
-		return `Currently, you are only seeing results from query ${firstQuery.queryName}. Add a trace operator to combine results of multiple queries.`;
-	}, [currentQuery]);
+		return translateRuntimeCopy(
+			'Currently, you are only seeing results from query {{value1}}. Add a trace operator to combine results of multiple queries.',
+			{ value1: firstQuery.queryName },
+		);
+	}, [currentQuery, translateRuntimeCopy]);
 	return (
 		<div className="qb-trace-operator-button-container">
 			<Tooltip
 				title={
 					<div style={{ textAlign: 'center' }}>
-						Add Trace Matching
+						<ConsoleText message={'Add Trace Matching'} />
 						<Typography.Link
 							href="https://signoz.io/docs/querying/multi-query-analysis/#trace-matching"
 							target="_blank"
@@ -50,7 +56,7 @@ function TraceOperatorSection({
 						>
 							{' '}
 							<br />
-							Learn more
+							<ConsoleText message={'Learn more'} />
 						</Typography.Link>
 					</div>
 				}
@@ -61,7 +67,7 @@ function TraceOperatorSection({
 					onClick={(): void => addTraceOperator?.()}
 				>
 					<div className="qb-trace-operator-button-container-text">
-						Add Trace Matching
+						<ConsoleText message={'Add Trace Matching'} />
 						<BetaTag />
 					</div>
 				</Button>
@@ -104,7 +110,9 @@ export default function QueryFooter({
 						<Tooltip
 							title={
 								addQueryDisabledReason ?? (
-									<div style={{ textAlign: 'center' }}>Add New Query</div>
+									<div style={{ textAlign: 'center' }}>
+										<ConsoleText message={'Add New Query'} />
+									</div>
 								)
 							}
 						>
@@ -125,7 +133,7 @@ export default function QueryFooter({
 							title={
 								addFormulaDisabledReason ?? (
 									<div style={{ textAlign: 'center' }}>
-										Add New Formula
+										<ConsoleText message={'Add New Formula'} />
 										<Typography.Link
 											href="https://signoz.io/docs/querying/multi-query-analysis/#advanced-comparisons"
 											target="_blank"
@@ -133,7 +141,7 @@ export default function QueryFooter({
 										>
 											{' '}
 											<br />
-											Learn more
+											<ConsoleText message={'Learn more'} />
 										</Typography.Link>
 									</div>
 								)
@@ -146,7 +154,7 @@ export default function QueryFooter({
 								onClick={addNewFormula}
 								disabled={isAddFormulaDisabled}
 							>
-								Add Formula
+								<ConsoleText message={'Add Formula'} />
 							</Button>
 						</Tooltip>
 					</div>

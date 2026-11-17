@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Progress } from '@signozhq/ui/progress';
 
 import { ChecklistItem } from '../HomeChecklist/HomeChecklist';
@@ -9,6 +10,7 @@ function StepsProgress({
 }: {
 	checklistItems: ChecklistItem[];
 }): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const completedChecklistItems = checklistItems.filter(
 		(item) => item.completed,
 	);
@@ -21,10 +23,11 @@ function StepsProgress({
 		<div className="steps-progress-container">
 			<div className="steps-progress-title">
 				<div className="steps-progress-title-text">
-					Build your observability base
+					{translateConsole('Build your observability base')}
 				</div>
 				<div className="steps-progress-count">
-					Step {completedChecklistItems.length} / {totalChecklistItems}
+					{translateConsole('Step')} {completedChecklistItems.length} /{' '}
+					{totalChecklistItems}
 				</div>
 			</div>
 

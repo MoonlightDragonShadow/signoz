@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { AlertDialog } from '@signozhq/ui/alert-dialog';
 import { Button } from '@signozhq/ui/button';
 import { Trash2, X } from '@signozhq/icons';
@@ -13,6 +14,7 @@ function DiscardChangesDialog({
 	onConfirm,
 	onCancel,
 }: DiscardChangesDialogProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	return (
 		<AlertDialog
 			open={open}
@@ -22,7 +24,7 @@ function DiscardChangesDialog({
 				}
 			}}
 			width="narrow"
-			title="Discard unsaved changes?"
+			title={translateConsole('Discard unsaved changes?')}
 			titleIcon={<Trash2 size={16} />}
 			footer={
 				<>
@@ -34,7 +36,7 @@ function DiscardChangesDialog({
 						prefix={<X size={12} />}
 						testId="discard-changes-cancel-btn"
 					>
-						Keep editing
+						{translateConsole('Keep editing')}
 					</Button>
 					<Button
 						size="md"
@@ -44,13 +46,14 @@ function DiscardChangesDialog({
 						prefix={<Trash2 size={12} />}
 						testId="discard-changes-confirm-btn"
 					>
-						Discard changes
+						{translateConsole('Discard changes')}
 					</Button>
 				</>
 			}
 		>
-			This reverts every unsaved group and mapping change back to the last saved
-			state. This action cannot be undone.
+			{translateConsole(
+				'This reverts every unsaved group and mapping change back to the last saved state. This action cannot be undone.',
+			)}
 		</AlertDialog>
 	);
 }

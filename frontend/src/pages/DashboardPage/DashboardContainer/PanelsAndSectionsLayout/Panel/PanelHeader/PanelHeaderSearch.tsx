@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useState, type ChangeEvent, type KeyboardEvent } from 'react';
 import { Input } from '@signozhq/ui/input';
 import { Search, X } from '@signozhq/icons';
@@ -23,6 +24,7 @@ function PanelHeaderSearch({
 	value,
 	onChange,
 }: PanelHeaderSearchProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const [expanded, setExpanded] = useState(false);
 
 	const collapseIfEmpty = (): void => {
@@ -43,7 +45,7 @@ function PanelHeaderSearch({
 
 	if (!expanded) {
 		return (
-			<Tooltip title="Search">
+			<Tooltip title={translate('Search')}>
 				<Button
 					type="button"
 					variant="ghost"
@@ -52,7 +54,7 @@ function PanelHeaderSearch({
 					icon
 					onClick={(): void => setExpanded(true)}
 					testId="panel-header-search-trigger"
-					aria-label="Search"
+					aria-label={translate('Search')}
 				>
 					<Search size={14} />
 				</Button>
@@ -65,7 +67,7 @@ function PanelHeaderSearch({
 			autoFocus
 			size={14}
 			value={value}
-			placeholder="Search…"
+			placeholder={translate('Search…')}
 			containerClassName={styles.input}
 			testId="panel-header-search-input"
 			prefix={<Search size={14} />}
@@ -78,7 +80,7 @@ function PanelHeaderSearch({
 					icon
 					onClick={clear}
 					testId="panel-header-search-clear"
-					aria-label="Clear search"
+					aria-label={translate('Clear search')}
 				>
 					<X size={14} />
 				</Button>

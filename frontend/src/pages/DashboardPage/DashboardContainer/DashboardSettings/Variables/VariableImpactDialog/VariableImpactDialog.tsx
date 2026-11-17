@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Check, X } from '@signozhq/icons';
 import { Button } from '@signozhq/ui/button';
 import { DialogWrapper } from '@signozhq/ui/dialog';
@@ -51,6 +52,7 @@ function VariableImpactDialog({
 	onConfirm,
 	onClose,
 }: VariableImpactDialogProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const { rows, setResultingText, toggleIncluded, resolvedUsages } =
 		useVariableImpactState(usages, open);
 
@@ -78,7 +80,7 @@ function VariableImpactDialog({
 				testId="variable-impact-cancel"
 				prefix={<X size={12} />}
 			>
-				Cancel
+				{translate('Cancel')}
 			</Button>
 			<Button
 				size="md"
@@ -144,7 +146,7 @@ function VariableImpactDialog({
 								</div>
 								<div className={styles.field}>
 									<Typography.Text className={styles.fieldLabel}>
-										Current
+										{translate('Current')}
 									</Typography.Text>
 									<AntdInput.TextArea
 										className={styles.textArea}
@@ -155,7 +157,9 @@ function VariableImpactDialog({
 									/>
 								</div>
 								<div className={styles.field}>
-									<Typography.Text className={styles.fieldLabel}>Result</Typography.Text>
+									<Typography.Text className={styles.fieldLabel}>
+										{translate('Result')}
+									</Typography.Text>
 									<AntdInput.TextArea
 										className={cx(styles.textArea, !row.included && styles.disabled)}
 										value={row.resultingText}
@@ -166,7 +170,7 @@ function VariableImpactDialog({
 									/>
 									{stillReferences ? (
 										<Typography.Text size={'small'} color="warning">
-											Still references ${variableName}
+											{translate('Still references')} ${variableName}
 										</Typography.Text>
 									) : null}
 								</div>

@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { memo, ReactNode, useCallback, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CircleAlert, Compass } from '@signozhq/icons';
@@ -227,7 +228,7 @@ function GridTableComponent({
 							<ButtonWrapper className="hover-button">
 								<button type="button" className="open-traces-button">
 									<Compass size={12} />
-									Open Trace
+									<ConsoleText message={'Open Trace'} />
 								</button>
 							</ButtonWrapper>
 						</RelativeWrapper>

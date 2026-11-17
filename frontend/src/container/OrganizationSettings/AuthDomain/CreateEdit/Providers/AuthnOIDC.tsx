@@ -1,3 +1,5 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useState } from 'react';
 import { Style } from '@signozhq/design-tokens';
 import { CircleHelp } from '@signozhq/icons';
@@ -18,6 +20,8 @@ function ConfigureOIDCAuthnProvider({
 }: {
 	isCreate: boolean;
 }): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
+	const translateConsole = useConsoleTranslation();
 	const form = Form.useFormInstance();
 
 	const [expandedSection, setExpandedSection] = useState<ExpandedSection>(null);
@@ -33,18 +37,23 @@ function ConfigureOIDCAuthnProvider({
 	return (
 		<div className="authn-provider">
 			<section className="authn-provider__header">
-				<h3 className="authn-provider__title">Edit OIDC Authentication</h3>
+				<h3 className="authn-provider__title">
+					{translateConsole('Edit OIDC Authentication')}
+				</h3>
 				<p className="authn-provider__description">
-					Configure OpenID Connect Single Sign-On with your Identity Provider. Read
-					the{' '}
+					<ConsoleText
+						message={
+							'Configure OpenID Connect Single Sign-On with your Identity Provider. Read the'
+						}
+					/>{' '}
 					<a
 						href="https://signoz.io/docs/manage/administrator-guide/sso/overview/"
 						target="_blank"
 						rel="noreferrer"
 					>
-						docs
+						{translateConsole('docs')}
 					</a>{' '}
-					for more information.
+					{translateConsole('for more information.')}
 				</p>
 			</section>
 
@@ -53,8 +62,16 @@ function ConfigureOIDCAuthnProvider({
 				<div className="authn-provider__left">
 					<div className="authn-provider__field-group">
 						<label className="authn-provider__label" htmlFor="oidc-domain">
-							Domain
-							<Tooltip title="The email domain for users who should use SSO (e.g., `example.com` for users with `@example.com` emails)">
+							{translateConsole('Domain')}
+							<Tooltip
+								title={
+									<ConsoleText
+										message={
+											'The email domain for users who should use SSO (e.g., `example.com` for users with `@example.com` emails)'
+										}
+									/>
+								}
+							>
 								<CircleHelp size={14} color={Style.L3_FOREGROUND} cursor="help" />
 							</Tooltip>
 						</label>
@@ -62,7 +79,11 @@ function ConfigureOIDCAuthnProvider({
 							name="name"
 							className="authn-provider__form-item"
 							rules={[
-								{ required: true, message: 'Domain is required', whitespace: true },
+								{
+									required: true,
+									message: translateInterfaceCopy('Domain is required'),
+									whitespace: true,
+								},
 							]}
 						>
 							<Input id="oidc-domain" disabled={!isCreate} />
@@ -71,8 +92,12 @@ function ConfigureOIDCAuthnProvider({
 
 					<div className="authn-provider__field-group">
 						<label className="authn-provider__label" htmlFor="oidc-issuer">
-							Issuer URL
-							<Tooltip title='The URL identifier for the OIDC provider. For example: "https://accounts.google.com" or "https://login.salesforce.com".'>
+							{translateConsole('Issuer URL')}
+							<Tooltip
+								title={translateInterfaceCopy(
+									'The URL identifier for the OIDC provider. For example: "https://accounts.google.com" or "https://login.salesforce.com".',
+								)}
+							>
 								<CircleHelp size={14} color={Style.L3_FOREGROUND} cursor="help" />
 							</Tooltip>
 						</label>
@@ -80,7 +105,11 @@ function ConfigureOIDCAuthnProvider({
 							name={['oidcConfig', 'issuer']}
 							className="authn-provider__form-item"
 							rules={[
-								{ required: true, message: 'Issuer URL is required', whitespace: true },
+								{
+									required: true,
+									message: translateInterfaceCopy('Issuer URL is required'),
+									whitespace: true,
+								},
 							]}
 						>
 							<Input id="oidc-issuer" />
@@ -89,8 +118,16 @@ function ConfigureOIDCAuthnProvider({
 
 					<div className="authn-provider__field-group">
 						<label className="authn-provider__label" htmlFor="oidc-issuer-alias">
-							Issuer Alias
-							<Tooltip title="Optional: Override the issuer URL from .well-known/openid-configuration for providers like Azure or Oracle IDCS.">
+							{translateConsole('Issuer Alias')}
+							<Tooltip
+								title={
+									<ConsoleText
+										message={
+											'Optional: Override the issuer URL from .well-known/openid-configuration for providers like Azure or Oracle IDCS.'
+										}
+									/>
+								}
+							>
 								<CircleHelp size={14} color={Style.L3_FOREGROUND} cursor="help" />
 							</Tooltip>
 						</label>
@@ -104,8 +141,14 @@ function ConfigureOIDCAuthnProvider({
 
 					<div className="authn-provider__field-group">
 						<label className="authn-provider__label" htmlFor="oidc-client-id">
-							Client ID
-							<Tooltip title="The application's client ID from your OIDC provider.">
+							{translateConsole('Client ID')}
+							<Tooltip
+								title={
+									<ConsoleText
+										message={"The application's client ID from your OIDC provider."}
+									/>
+								}
+							>
 								<CircleHelp size={14} color={Style.L3_FOREGROUND} cursor="help" />
 							</Tooltip>
 						</label>
@@ -113,7 +156,11 @@ function ConfigureOIDCAuthnProvider({
 							name={['oidcConfig', 'clientId']}
 							className="authn-provider__form-item"
 							rules={[
-								{ required: true, message: 'Client ID is required', whitespace: true },
+								{
+									required: true,
+									message: translateInterfaceCopy('Client ID is required'),
+									whitespace: true,
+								},
 							]}
 						>
 							<Input id="oidc-client-id" />
@@ -122,8 +169,14 @@ function ConfigureOIDCAuthnProvider({
 
 					<div className="authn-provider__field-group">
 						<label className="authn-provider__label" htmlFor="oidc-client-secret">
-							Client Secret
-							<Tooltip title="The application's client secret from your OIDC provider.">
+							{translateConsole('Client Secret')}
+							<Tooltip
+								title={
+									<ConsoleText
+										message={"The application's client secret from your OIDC provider."}
+									/>
+								}
+							>
 								<CircleHelp size={14} color={Style.L3_FOREGROUND} cursor="help" />
 							</Tooltip>
 						</label>
@@ -133,7 +186,7 @@ function ConfigureOIDCAuthnProvider({
 							rules={[
 								{
 									required: true,
-									message: 'Client Secret is required',
+									message: translateInterfaceCopy('Client Secret is required'),
 									whitespace: true,
 								},
 							]}
@@ -158,10 +211,14 @@ function ConfigureOIDCAuthnProvider({
 									);
 								}}
 							>
-								Skip Email Verification
+								{translateConsole('Skip Email Verification')}
 							</Checkbox>
 						</Form.Item>
-						<Tooltip title='Whether to skip email verification. Defaults to "false"'>
+						<Tooltip
+							title={translateInterfaceCopy(
+								'Whether to skip email verification. Defaults to "false"',
+							)}
+						>
 							<CircleHelp size={14} color={Style.L3_FOREGROUND} cursor="help" />
 						</Tooltip>
 					</div>
@@ -179,16 +236,28 @@ function ConfigureOIDCAuthnProvider({
 									form.setFieldValue(['oidcConfig', 'getUserInfo'], checked);
 								}}
 							>
-								Get User Info
+								{translateConsole('Get User Info')}
 							</Checkbox>
 						</Form.Item>
-						<Tooltip title="Use the userinfo endpoint to get additional claims. Useful when providers return thin ID tokens.">
+						<Tooltip
+							title={
+								<ConsoleText
+									message={
+										'Use the userinfo endpoint to get additional claims. Useful when providers return thin ID tokens.'
+									}
+								/>
+							}
+						>
 							<CircleHelp size={14} color={Style.L3_FOREGROUND} cursor="help" />
 						</Tooltip>
 					</div>
 					<div className="authn-provider__callout-wrapper">
 						<Callout type="warning" size="small" showIcon className="callout">
-							OIDC won&apos;t be enabled unless you enter all the attributes above
+							<ConsoleText
+								message={
+									"OIDC won't be enabled unless you enter all the attributes above"
+								}
+							/>
 						</Callout>
 					</div>
 				</div>

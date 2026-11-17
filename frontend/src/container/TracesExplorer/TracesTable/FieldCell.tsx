@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { AppLink } from 'lib/router/AppLink';
 import { buildRoutePath } from 'lib/router/buildRoutePath';
 import { Badge } from '@signozhq/ui/badge';
@@ -69,7 +70,10 @@ function FieldCell({ name, value }: FieldCellProps): JSX.Element {
 
 	if (DURATION_FIELD_NAMES.has(name)) {
 		return (
-			<TanStackTable.Text data-testid={name}>{getMs(text)}ms</TanStackTable.Text>
+			<TanStackTable.Text data-testid={name}>
+				{getMs(text)}
+				<ConsoleText message={'ms'} />
+			</TanStackTable.Text>
 		);
 	}
 

@@ -1,3 +1,5 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useEffect, useMemo, useRef } from 'react';
 import { useMutation, useQueryClient, useQuery } from 'react-query';
 import { TablePaginationConfig, TableProps } from 'antd';
@@ -97,6 +99,7 @@ export const useAlertHistoryQueryParams = (): {
 	};
 };
 export const useRouteTabUtils = (): { routes: TabRoutes[] } => {
+	const translateConsole = useConsoleTranslation();
 	const urlQuery = useUrlQuery();
 
 	const getRouteUrl = (tab: AlertDetailsTab): string => {
@@ -128,7 +131,7 @@ export const useRouteTabUtils = (): { routes: TabRoutes[] } => {
 			name: (
 				<div className="tab-item" data-testid="alert-details-tab-overview">
 					<Table size={14} />
-					Overview
+					{translateConsole('Overview')}
 				</div>
 			),
 			route: getRouteUrl(AlertDetailsTab.OVERVIEW),
@@ -139,7 +142,7 @@ export const useRouteTabUtils = (): { routes: TabRoutes[] } => {
 			name: (
 				<div className="tab-item" data-testid="alert-details-tab-history">
 					<History size={14} />
-					History
+					{translateConsole('History')}
 					<BetaTag />
 				</div>
 			),
@@ -409,7 +412,10 @@ export const useTimelineTable = ({
 				<Typography.Text size="small">
 					{start} &#8212; {end}
 				</Typography.Text>
-				<Typography.Text size="small"> of {total}</Typography.Text>
+				<Typography.Text size="small">
+					{' '}
+					<ConsoleText message={'of'} /> {total}
+				</Typography.Text>
 			</span>
 		),
 		current: page,
@@ -530,6 +536,7 @@ export const useAlertRuleUpdate = ({
 	handleAlertUpdate: () => void;
 	isLoading: boolean;
 } => {
+	const translateConsole = useConsoleTranslation();
 	const { notifications } = useNotifications();
 	const { showErrorModal } = useErrorModal();
 	const queryClient = useQueryClient();
@@ -551,7 +558,9 @@ export const useAlertRuleUpdate = ({
 					});
 				}
 				void invalidateListRules(queryClient);
-				notifications.success({ message: 'Alert renamed successfully' });
+				notifications.success({
+					message: translateConsole('Alert renamed successfully'),
+				});
 			},
 			onError: (error) => {
 				setAlertRuleName(alertDetails.alert);

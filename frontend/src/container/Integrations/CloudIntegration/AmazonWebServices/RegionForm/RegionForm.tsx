@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Form } from 'antd';
 import { RegionFormProps } from 'container/Integrations/HeroSection/types';
 import { regions } from 'utils/regions';
@@ -23,6 +24,7 @@ export function RegionForm({
 	setSelectedRegions,
 	setIncludeAllRegions,
 }: RegionFormProps): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
 	return (
 		<Form
 			form={form}
@@ -32,7 +34,9 @@ export function RegionForm({
 		>
 			{connectionCommand ? (
 				<AgentSetupCommand
-					description="Run this command in AWS CloudShell, or in a terminal where the AWS CLI is signed in to the account you want to monitor. It contains your SigNoz keys, so do not share it."
+					description={translateInterfaceCopy(
+						'Run this command in AWS CloudShell, or in a terminal where the AWS CLI is signed in to the account you want to monitor. It contains your SigNoz keys, so do not share it.',
+					)}
 					command={connectionCommand}
 					testId="aws-agent-command"
 				/>

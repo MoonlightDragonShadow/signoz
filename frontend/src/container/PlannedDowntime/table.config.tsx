@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { Badge } from '@signozhq/ui/badge';
 import { Skeleton } from '@signozhq/ui/skeleton';
 import { AlertmanagertypesMaintenanceStatusDTO } from 'api/generated/services/sigNoz.schemas';
@@ -37,7 +38,8 @@ const COLUMN_WIDTH = { default: 'auto', min: '120px' };
 
 export function getPlannedDowntimeColumns(
 	formatTimezoneAdjustedTimestamp: (date: string, format: string) => string,
-	isAlertsLoading?: boolean,
+	isAlertsLoading: boolean | undefined,
+	translateConsole: (message: string) => string,
 ): TableColumnDef<DowntimeSchedulesTableData>[] {
 	const textCell = (value: string | undefined): JSX.Element => (
 		<TanStackTable.Text title={value || undefined}>
@@ -69,7 +71,7 @@ export function getPlannedDowntimeColumns(
 	return [
 		{
 			id: 'name',
-			header: 'Downtime',
+			header: translateConsole('Downtime'),
 			accessorKey: 'name',
 			width: COLUMN_WIDTH,
 			enableSort: true,
@@ -87,7 +89,7 @@ export function getPlannedDowntimeColumns(
 		},
 		{
 			id: 'status',
-			header: 'Status',
+			header: translateConsole('Status'),
 			accessorKey: 'status',
 			width: COLUMN_WIDTH,
 			enableSort: true,
@@ -97,7 +99,7 @@ export function getPlannedDowntimeColumns(
 				const status = STATUS_BADGE[row.status];
 				return status ? (
 					<Badge textTransform="none" variant="outlined" color={status.color}>
-						{status.label}
+						{translateConsole(status.label)}
 					</Badge>
 				) : (
 					textCell(row.status)
@@ -106,7 +108,7 @@ export function getPlannedDowntimeColumns(
 		},
 		{
 			id: 'window',
-			header: 'Schedule',
+			header: translateConsole('Schedule'),
 			accessorFn: (row) => row.schedule?.startTime,
 			width: COLUMN_WIDTH,
 			enableSort: true,
@@ -116,7 +118,7 @@ export function getPlannedDowntimeColumns(
 		},
 		{
 			id: 'timezone',
-			header: 'Timezone',
+			header: translateConsole('Timezone'),
 			accessorFn: (row) => row.schedule?.timezone,
 			width: COLUMN_WIDTH,
 			enableSort: false,
@@ -126,7 +128,7 @@ export function getPlannedDowntimeColumns(
 		},
 		{
 			id: 'repeats',
-			header: 'Repeats',
+			header: translateConsole('Repeats'),
 			accessorFn: (row) => row.schedule?.recurrence?.repeatType,
 			width: COLUMN_WIDTH,
 			enableSort: false,
@@ -136,7 +138,7 @@ export function getPlannedDowntimeColumns(
 		},
 		{
 			id: 'duration',
-			header: 'Duration',
+			header: translateConsole('Duration'),
 			accessorFn: (row) => row.schedule?.recurrence?.duration,
 			width: COLUMN_WIDTH,
 			enableSort: false,
@@ -147,7 +149,7 @@ export function getPlannedDowntimeColumns(
 		},
 		{
 			id: 'alertsSilenced',
-			header: 'Alerts Silenced',
+			header: translateConsole('Alerts Silenced'),
 			accessorKey: 'alertIds',
 			width: COLUMN_WIDTH,
 			enableSort: false,
@@ -158,7 +160,7 @@ export function getPlannedDowntimeColumns(
 				if (!hasScopedAlerts) {
 					return (
 						<Badge textTransform="none" variant="solid" color="secondary">
-							All alert rules
+							<ConsoleText message={'All alert rules'} />
 						</Badge>
 					);
 				}
@@ -186,7 +188,7 @@ export function getPlannedDowntimeColumns(
 		},
 		{
 			id: 'description',
-			header: 'Description',
+			header: translateConsole('Description'),
 			accessorKey: 'description',
 			width: COLUMN_WIDTH,
 			defaultVisibility: false,
@@ -197,7 +199,7 @@ export function getPlannedDowntimeColumns(
 		},
 		{
 			id: 'createdBy',
-			header: 'Created By',
+			header: translateConsole('Created By'),
 			accessorKey: 'createdBy',
 			width: COLUMN_WIDTH,
 			defaultVisibility: false,
@@ -208,7 +210,7 @@ export function getPlannedDowntimeColumns(
 		},
 		{
 			id: 'createdAt',
-			header: 'Created At',
+			header: translateConsole('Created At'),
 			accessorKey: 'createdAt',
 			width: COLUMN_WIDTH,
 			defaultVisibility: false,
@@ -219,7 +221,7 @@ export function getPlannedDowntimeColumns(
 		},
 		{
 			id: 'updatedBy',
-			header: 'Updated By',
+			header: translateConsole('Updated By'),
 			accessorKey: 'updatedBy',
 			width: COLUMN_WIDTH,
 			defaultVisibility: false,
@@ -230,7 +232,7 @@ export function getPlannedDowntimeColumns(
 		},
 		{
 			id: 'updatedAt',
-			header: 'Updated At',
+			header: translateConsole('Updated At'),
 			accessorKey: 'updatedAt',
 			width: COLUMN_WIDTH,
 			defaultVisibility: false,

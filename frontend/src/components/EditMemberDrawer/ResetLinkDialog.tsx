@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { Check, Copy } from '@signozhq/icons';
 import { Button } from '@signozhq/ui/button';
 import { DialogWrapper } from '@signozhq/ui/dialog';
@@ -61,7 +62,7 @@ function ResetLinkDialog({
 				</div>
 				{expiresAt && (
 					<p className="reset-link-dialog__description">
-						This link expires on {expiresAt}.
+						<ConsoleText message={'This link expires on'} /> {expiresAt}.
 					</p>
 				)}
 			</div>

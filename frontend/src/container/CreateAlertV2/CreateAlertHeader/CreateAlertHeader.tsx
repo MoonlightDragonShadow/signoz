@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useMemo } from 'react';
 import { Button } from '@signozhq/ui/button';
 import { Input } from '@signozhq/ui/input';
@@ -18,6 +19,7 @@ import LabelsInput from './LabelsInput';
 import './styles.scss';
 
 function CreateAlertHeader(): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const { alertState, setAlertState, isEditMode } = useCreateAlertState();
 	const alertRuleContext = useAlertRuleOptional();
 
@@ -60,7 +62,9 @@ function CreateAlertHeader(): JSX.Element {
 		>
 			{!isEditMode && (
 				<div className="alert-header__tab-bar">
-					<div className="alert-header__tab">New Alert Rule</div>
+					<div className="alert-header__tab">
+						{translateConsole('New Alert Rule')}
+					</div>
 					<Button
 						prefix={<RotateCcw size={12} />}
 						onClick={handleSwitchToClassicExperience}
@@ -68,7 +72,7 @@ function CreateAlertHeader(): JSX.Element {
 						color="secondary"
 						size="sm"
 					>
-						Switch to Classic Experience
+						{translateConsole('Switch to Classic Experience')}
 					</Button>
 				</div>
 			)}
@@ -84,7 +88,7 @@ function CreateAlertHeader(): JSX.Element {
 						}
 					}}
 					className="alert-header__input title"
-					placeholder="Enter alert rule name"
+					placeholder={translateConsole('Enter alert rule name')}
 					data-testid="alert-name-input"
 				/>
 				<LabelsInput

@@ -1,3 +1,5 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable sonarjs/cognitive-complexity */
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
@@ -154,6 +156,7 @@ function QueryAggregationSelect({
 	queryData: IBuilderQuery;
 	maxAggregations?: number;
 }): JSX.Element {
+	const translateRuntimeCopy = useConsoleTranslation();
 	const isDarkMode = useIsDarkMode();
 	const { setAggregationOptions } = useQueryBuilderV2Context();
 
@@ -237,9 +240,10 @@ function QueryAggregationSelect({
 		const validateAggregations = (): string | null => {
 			// Check maxAggregations limit
 			if (maxAggregations !== undefined && pairs.length > maxAggregations) {
-				return `Maximum ${maxAggregations} aggregation${
-					maxAggregations === 1 ? '' : 's'
-				} allowed`;
+				return translateRuntimeCopy(
+					'Maximum {{value1}} aggregation{{value2}} allowed',
+					{ value1: maxAggregations, value2: maxAggregations === 1 ? '' : 's' },
+				);
 			}
 
 			// Check for invalid functions
@@ -248,7 +252,10 @@ function QueryAggregationSelect({
 			);
 			if (invalidFuncs.length > 0) {
 				const funcs = invalidFuncs.map((f) => f.func).join(', ');
-				return `Invalid function${invalidFuncs.length === 1 ? '' : 's'}: ${funcs}`;
+				return translateRuntimeCopy('Invalid function{{value1}}: {{value2}}', {
+					value1: invalidFuncs.length === 1 ? '' : 's',
+					value2: funcs,
+				});
 			}
 
 			// Check for incomplete function calls
@@ -264,9 +271,14 @@ function QueryAggregationSelect({
 
 			if (emptyFuncs.length > 0) {
 				const isPlural = emptyFuncs.length > 1;
-				return `Function${isPlural ? 's' : ''} ${emptyFuncs.join(', ')} require${
-					isPlural ? '' : 's'
-				} arguments`;
+				return translateRuntimeCopy(
+					'Function{{value1}} {{value2}} require{{value3}} arguments',
+					{
+						value1: isPlural ? 's' : '',
+						value2: emptyFuncs.join(', '),
+						value3: isPlural ? '' : 's',
+					},
+				);
 			}
 
 			return null;
@@ -637,7 +649,10 @@ function QueryAggregationSelect({
 				]}
 				placeholder={
 					maxAggregations !== undefined
-						? `Type aggregator functions (max ${maxAggregations}) like sum(), count_distinct(...), etc.`
+						? translateRuntimeCopy(
+								'Type aggregator functions (max {{value1}}) like sum(), count_distinct(...), etc.',
+								{ value1: maxAggregations },
+							)
 						: 'Type aggregator functions like sum(), count_distinct(...), etc.'
 				}
 				basicSetup={{
@@ -665,15 +680,21 @@ function QueryAggregationSelect({
 			<Tooltip
 				title={
 					<div>
-						Aggregation functions:
+						<ConsoleText message={'Aggregation functions:'} />
 						<br />
 						<span style={{ fontSize: '12px', lineHeight: '1.4' }}>
-							• <strong>count</strong> - number of occurrences
-							<br />• <strong>sum/avg</strong> - sum/average of values
-							<br />• <strong>min/max</strong> - minimum/maximum value
-							<br />• <strong>p50/p90/p99</strong> - percentiles
-							<br />• <strong>count_distinct</strong> - unique values
-							<br />• <strong>rate</strong> - per-interval rate
+							• <strong>count</strong>{' '}
+							<ConsoleText message={'- number of occurrences'} />
+							<br />• <strong>sum/avg</strong>{' '}
+							<ConsoleText message={'- sum/average of values'} />
+							<br />• <strong>min/max</strong>{' '}
+							<ConsoleText message={'- minimum/maximum value'} />
+							<br />• <strong>p50/p90/p99</strong>{' '}
+							<ConsoleText message={'- percentiles'} />
+							<br />• <strong>count_distinct</strong>{' '}
+							<ConsoleText message={'- unique values'} />
+							<br />• <strong>rate</strong>{' '}
+							<ConsoleText message={'- per-interval rate'} />
 						</span>
 						<br />
 						<a
@@ -682,7 +703,7 @@ function QueryAggregationSelect({
 							rel="noopener noreferrer"
 							style={{ color: '#1890ff', textDecoration: 'underline' }}
 						>
-							View documentation
+							<ConsoleText message={'View documentation'} />
 						</a>
 					</div>
 				}

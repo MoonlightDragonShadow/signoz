@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 // eslint-disable-next-line no-restricted-imports
@@ -35,6 +36,7 @@ function ServiceMetricTable({
 	} = useSelector<AppState, GlobalReducer>((state) => state.globalTime);
 
 	const { notifications } = useNotifications();
+	const translate = useConsoleTranslation();
 	const { t: getText } = useTranslation(['services']);
 
 	const { isFetchingActiveLicense, trialInfo } = useAppContext();
@@ -71,7 +73,10 @@ function ServiceMetricTable({
 	useServicesStripInfo(services.length);
 
 	const { search } = useAppLocation();
-	const tableColumns = useMemo(() => getColumns(search, true), [search]);
+	const tableColumns = useMemo(
+		() => getColumns(search, true, translate),
+		[search, translate],
+	);
 	const [RPS, setRPS] = useState(0);
 
 	useEffect(() => {
@@ -107,7 +112,7 @@ function ServiceMetricTable({
 				<Flex justify="left">
 					<Typography.Title level={5} color="warning" style={{ marginTop: 0 }}>
 						<SolidAlertTriangle size="md" /> {getText('rps_over_100')}
-						<a href="mailto:cloud-support@signoz.io">email</a>
+						<a href="mailto:cloud-support@signoz.io">{translate('email')}</a>
 					</Typography.Title>
 				</Flex>
 			)}

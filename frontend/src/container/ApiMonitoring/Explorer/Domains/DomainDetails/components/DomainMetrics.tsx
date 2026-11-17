@@ -1,3 +1,5 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
+import { localizeRelativeTime } from 'components/LocalizedRelativeTime/localizeRelativeTime';
 import { useMemo } from 'react';
 import { useQueries } from 'react-query';
 import { Color } from '@signozhq/design-tokens';
@@ -27,6 +29,7 @@ function DomainMetrics({
 	timeRange: { startTime: number; endTime: number };
 	domainListFilters: IBuilderQuery['filters'];
 }): JSX.Element {
+	const translate = useConsoleTranslation();
 	const { startTime: minTime, endTime: maxTime } = timeRange;
 
 	const queryPayloads = useMemo(
@@ -90,16 +93,16 @@ function DomainMetrics({
 			<div className="domain-details-grid">
 				<div className="labels-row">
 					<Typography.Text color="muted" className="domain-details-metadata-label">
-						EXTERNAL API
+						{translate('EXTERNAL API')}
 					</Typography.Text>
 					<Typography.Text color="muted" className="domain-details-metadata-label">
-						AVERAGE LATENCY
+						{translate('AVERAGE LATENCY')}
 					</Typography.Text>
 					<Typography.Text color="muted" className="domain-details-metadata-label">
-						ERROR %
+						{translate('ERROR %')}
 					</Typography.Text>
 					<Typography.Text color="muted" className="domain-details-metadata-label">
-						LAST USED
+						{translate('LAST USED')}
 					</Typography.Text>
 				</div>
 
@@ -166,8 +169,16 @@ function DomainMetrics({
 						{isLoading || isRefetching ? (
 							<Skeleton.Button active size="small" />
 						) : (
-							<Tooltip title={formattedDomainMetricsData.lastUsed}>
-								{formattedDomainMetricsData.lastUsed}
+							<Tooltip
+								title={localizeRelativeTime(
+									String(formattedDomainMetricsData.lastUsed),
+									translate,
+								)}
+							>
+								{localizeRelativeTime(
+									String(formattedDomainMetricsData.lastUsed),
+									translate,
+								)}
 							</Tooltip>
 						)}
 					</Typography.Text>

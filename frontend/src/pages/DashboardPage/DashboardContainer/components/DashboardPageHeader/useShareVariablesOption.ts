@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useMemo } from 'react';
 import type { ShareURLExtraOption } from 'components/HeaderRightSection/ShareURLModal';
 
@@ -17,6 +18,7 @@ import { useDashboardStore } from '../../store/useDashboardStore';
  * when there is nothing selected to share.
  */
 export function useShareVariablesOption(): ShareURLExtraOption | undefined {
+	const translate = useConsoleTranslation();
 	const dashboardId = useDashboardStore((s) => s.dashboardId);
 	const selections = useDashboardStore(selectVariableValues(dashboardId ?? ''));
 
@@ -32,10 +34,10 @@ export function useShareVariablesOption(): ShareURLExtraOption | undefined {
 		});
 		const serialized = variablesUrlParser.serialize(urlShape);
 		return {
-			label: 'Include variables',
+			label: translate('Include variables'),
 			apply: (params): void => {
 				params.set('variables', serialized);
 			},
 		};
-	}, [selections]);
+	}, [translate, selections]);
 }

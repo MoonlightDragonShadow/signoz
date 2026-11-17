@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Settings2 } from '@signozhq/icons';
 import { Button } from '@signozhq/ui/button';
 import { Dropdown, type DropdownItemType } from '@signozhq/ui/dropdown';
@@ -25,6 +26,8 @@ function TraceOptionsMenu({
 	endTime,
 	totalSpansCount,
 }: TraceOptionsMenuProps): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
+	const translateConsole = useConsoleTranslation();
 	const colorByField = useTraceStore((s) => s.colorByField);
 	const setColorByField = useTraceStore((s) => s.setColorByField);
 	const availableColorByOptions = useTraceStore(
@@ -56,7 +59,7 @@ function TraceOptionsMenu({
 		{
 			type: 'item',
 			value: 'preview-fields',
-			label: 'Preview fields',
+			label: translateInterfaceCopy('Preview fields'),
 			onClick: onOpenPreviewFields,
 		},
 	];
@@ -66,12 +69,12 @@ function TraceOptionsMenu({
 		items.push({
 			type: 'submenu',
 			value: 'colour-by',
-			label: 'Colour by',
+			label: translateInterfaceCopy('Colour by'),
 			items: [
 				{
 					type: 'group',
 					value: 'colour-by-options',
-					label: 'Colour by',
+					label: translateInterfaceCopy('Colour by'),
 					items: [
 						{
 							type: 'radio-group',
@@ -93,7 +96,7 @@ function TraceOptionsMenu({
 		items.push({
 			type: 'submenu',
 			value: 'download-trace',
-			label: 'Download trace',
+			label: translateInterfaceCopy('Download trace'),
 			testId: 'download-trace-submenu',
 			loading: isDownloading,
 			loadingTooltip: 'Downloading trace',
@@ -127,7 +130,7 @@ function TraceOptionsMenu({
 				size="sm"
 				icon
 				color="secondary"
-				aria-label="Trace options"
+				aria-label={translateConsole('Trace options')}
 				testId="trace-options-button"
 			>
 				<Settings2 size={14} />

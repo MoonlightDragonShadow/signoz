@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { Typography } from '@signozhq/ui/typography';
 import cx from 'classnames';
 import {
@@ -48,11 +49,13 @@ export default function QueryBuilderSearchDropdown(
 				className={cx('content', { 'non-logs-data-source': !isLogsDataSource })}
 			>
 				{!currentFilterItem?.key ? (
-					<div className="suggested-filters">Suggested Filters</div>
+					<div className="suggested-filters">
+						<ConsoleText message={'Suggested Filters'} />
+					</div>
 				) : !currentFilterItem?.op ? (
 					<div className="operator-for">
 						<Typography.Text className="operator-for-text">
-							Operator for{' '}
+							<ConsoleText message={'Operator for'} />{' '}
 						</Typography.Text>
 						<Typography.Text className="operator-for-value">
 							{currentFilterItem?.key?.key}
@@ -61,7 +64,7 @@ export default function QueryBuilderSearchDropdown(
 				) : (
 					<div className="value-for">
 						<Typography.Text className="value-for-text">
-							Value(s) for{' '}
+							<ConsoleText message={'Value(s) for'} />{' '}
 						</Typography.Text>
 						<Typography.Text className="value-for-value">
 							{currentFilterItem?.key?.key} {currentFilterItem?.op}
@@ -71,7 +74,10 @@ export default function QueryBuilderSearchDropdown(
 				{menu}
 				{!searchValue && tags.length === 0 && exampleQueries.length > 0 && (
 					<div className="example-queries">
-						<div className="heading"> Example Queries </div>
+						<div className="heading">
+							{' '}
+							<ConsoleText message={'Example Queries'} />{' '}
+						</div>
 						<div className="query-container">
 							{convertExampleQueriesToOptions(exampleQueries).map((query) => (
 								<ExampleQueriesRendererForLogs
@@ -90,11 +96,15 @@ export default function QueryBuilderSearchDropdown(
 				<section className="navigate">
 					<ArrowDown size={10} className="icons" />
 					<ArrowUp size={10} className="icons" />
-					<span className="keyboard-text">to navigate</span>
+					<span className="keyboard-text">
+						<ConsoleText message={'to navigate'} />
+					</span>
 				</section>
 				<section className="update-query">
 					<CornerDownLeft size={10} className="icons" />
-					<span className="keyboard-text">to update query</span>
+					<span className="keyboard-text">
+						<ConsoleText message={'to update query'} />
+					</span>
 				</section>
 				{!currentFilterItem?.key && options.length > 3 && (
 					<section className="show-all-filter-items">
@@ -105,7 +115,9 @@ export default function QueryBuilderSearchDropdown(
 						)}
 						+
 						<Slash size={14} className="icons" />
-						<span className="keyboard-text">Show all filter items</span>
+						<span className="keyboard-text">
+							<ConsoleText message={'Show all filter items'} />
+						</span>
 					</section>
 				)}
 			</div>

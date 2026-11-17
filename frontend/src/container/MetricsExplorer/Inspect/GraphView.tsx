@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useEffect, useMemo, useRef, useState } from 'react';
 // eslint-disable-next-line no-restricted-imports
 import { useSelector } from 'react-redux';
@@ -36,6 +37,7 @@ function GraphView({
 	metricInspectionAppliedOptions,
 	isInspectMetricsRefetching,
 }: GraphViewProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const isDarkMode = useIsDarkMode();
 	const graphRef = useRef<HTMLDivElement>(null);
 	const dimensions = useResizeObserver(graphRef);
@@ -110,7 +112,7 @@ function GraphView({
 				},
 			],
 			series: [
-				{ label: 'Time' }, // This config is required as a placeholder for x-axis,
+				{ label: translate('Time') }, // This config is required as a placeholder for x-axis,
 				...formattedInspectMetricsTimeSeries.slice(1).map((_, index) => ({
 					drawStyle: 'line',
 					lineInterpolation: 'spline',
@@ -167,6 +169,7 @@ function GraphView({
 			},
 		}),
 		[
+			translate,
 			dimensions.width,
 			isDarkMode,
 			metricUnit,

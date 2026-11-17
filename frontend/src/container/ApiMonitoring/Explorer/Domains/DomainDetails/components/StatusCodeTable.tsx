@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useMemo } from 'react';
 import { UseQueryResult } from 'react-query';
 import { Table } from 'antd';
@@ -17,6 +18,7 @@ function StatusCodeTable({
 }: {
 	endPointStatusCodeDataQuery: UseQueryResult<SuccessResponse<any>, unknown>;
 }): JSX.Element {
+	const translate = useConsoleTranslation();
 	const { isLoading, isRefetching, isError, data, refetch } =
 		endPointStatusCodeDataQuery;
 
@@ -59,7 +61,9 @@ function StatusCodeTable({
 									/>
 
 									<Typography.Text className="no-status-code-data-message">
-										This query had no results. Edit your query and try again!
+										{translate(
+											'This query had no results. Edit your query and try again!',
+										)}
 									</Typography.Text>
 								</div>
 							</div>

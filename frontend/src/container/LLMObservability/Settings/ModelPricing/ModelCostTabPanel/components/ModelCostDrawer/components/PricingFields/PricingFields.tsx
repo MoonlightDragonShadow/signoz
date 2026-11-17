@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Input } from '@signozhq/ui/input';
 import { Lock } from '@signozhq/icons';
 import cx from 'classnames';
@@ -21,23 +22,28 @@ function PricingFields({
 	isReadOnly,
 	onChange,
 }: PricingFieldsProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	return (
 		<div className={cx(styles.drawerSection, styles.drawerSurface)}>
 			<div className={styles.drawerSurfaceHead}>
-				<span className={styles.fieldLabel}>Pricing (per 1M tokens, USD)</span>
+				<span className={styles.fieldLabel}>
+					{translateConsole('Pricing (per 1M tokens, USD)')}
+				</span>
 
 				{isReadOnly && (
 					<span className={styles.managedLabel} data-testid="drawer-readonly-label">
 						<Lock size={12} />
 
-						<Typography.Text color="muted">Read-only</Typography.Text>
+						<Typography.Text color="muted">
+							{translateConsole('Read-only')}
+						</Typography.Text>
 					</span>
 				)}
 			</div>
 			<div className={styles.pricingGrid}>
 				<div className={styles.pricingField}>
 					<label htmlFor="input-cost" className={styles.fieldLabel}>
-						Input Cost{' '}
+						{translateConsole('Input Cost')}{' '}
 						<span className={styles.required} aria-hidden="true">
 							*
 						</span>
@@ -57,7 +63,7 @@ function PricingFields({
 				</div>
 				<div className={styles.pricingField}>
 					<label htmlFor="output-cost" className={styles.fieldLabel}>
-						Output Cost{' '}
+						{translateConsole('Output Cost')}{' '}
 						<span className={styles.required} aria-hidden="true">
 							*
 						</span>

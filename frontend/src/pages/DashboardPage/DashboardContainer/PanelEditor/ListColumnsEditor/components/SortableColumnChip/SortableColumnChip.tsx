@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { Button } from '@signozhq/ui/button';
@@ -18,6 +19,7 @@ function SortableColumnChip({
 	name,
 	onRemove,
 }: SortableColumnChipProps): JSX.Element {
+	const translateRuntimeCopy = useConsoleTranslation();
 	const {
 		attributes,
 		listeners,
@@ -60,7 +62,7 @@ function SortableColumnChip({
 				color="secondary"
 				size="sm"
 				icon
-				aria-label={`Remove ${name}`}
+				aria-label={translateRuntimeCopy('Remove {{value1}}', { value1: name })}
 				testId="list-column-remove"
 				onClick={(): void => onRemove(name)}
 			>

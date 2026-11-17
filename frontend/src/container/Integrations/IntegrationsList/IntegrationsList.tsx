@@ -1,3 +1,5 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useMemo } from 'react';
 import { Color } from '@signozhq/design-tokens';
 import { Badge } from '@signozhq/ui/badge';
@@ -21,6 +23,7 @@ interface IntegrationsListProps {
 }
 
 function IntegrationsList(props: IntegrationsListProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const { searchQuery, setSelectedIntegration } = props;
 
 	const { data, isFetching, isLoading, isRefetching, isError, refetch } =
@@ -56,7 +59,9 @@ function IntegrationsList(props: IntegrationsListProps): JSX.Element {
 				<div className="error-content">
 					<img src={awwSnapIconUrl} alt="error-emoji" className="error-state-svg" />
 					<Typography.Text>
-						Something went wrong :/ Please retry or contact support.
+						{translateConsole(
+							'Something went wrong :/ Please retry or contact support.',
+						)}
 					</Typography.Text>
 					<div className="error-btns">
 						<Button
@@ -65,13 +70,15 @@ function IntegrationsList(props: IntegrationsListProps): JSX.Element {
 							onClick={(): Promise<any> => refetch()}
 							icon={<RotateCw size={14} />}
 						>
-							Retry
+							{translateConsole('Retry')}
 						</Button>
 						<div
 							className="contact-support"
 							onClick={(): void => handleContactSupport(isCloudUserVal)}
 						>
-							<Typography.Link className="text">Contact Support </Typography.Link>
+							<Typography.Link className="text">
+								{translateConsole('Contact Support')}{' '}
+							</Typography.Link>
 
 							<MoveUpRight size={14} color={Color.BG_ROBIN_400} />
 						</div>
@@ -84,7 +91,9 @@ function IntegrationsList(props: IntegrationsListProps): JSX.Element {
 	return (
 		<div className="integrations-list-container">
 			<div className="integrations-list-title-header">
-				<div className="integrations-list-header-title">All Integrations</div>
+				<div className="integrations-list-header-title">
+					{translateConsole('All Integrations')}
+				</div>
 				<div className="integrations-list-header-dotted-double-line">
 					<img
 						src={dottedDoubleLineUrl}
@@ -116,7 +125,8 @@ function IntegrationsList(props: IntegrationsListProps): JSX.Element {
 							className="integrations-not-found-image"
 						/>
 						<div className="integrations-not-found-text">
-							No integrations found for &ldquo;{searchQuery.trim()}&rdquo;
+							<ConsoleText message={'No integrations found for “'} />
+							{searchQuery.trim()}&rdquo;
 						</div>
 					</div>
 				</div>
@@ -125,12 +135,14 @@ function IntegrationsList(props: IntegrationsListProps): JSX.Element {
 			{!loading && integrationsList.length > 0 && (
 				<div className="integrations-list">
 					<div className="integrations-list-header">
-						<div className="integrations-list-header-column title-column">Name</div>
+						<div className="integrations-list-header-column title-column">
+							{translateConsole('Name')}
+						</div>
 						<div className="integrations-list-header-column published-by-column">
-							Published By
+							{translateConsole('Published By')}
 						</div>
 						<div className="integrations-list-header-column installation-status-column">
-							Status
+							{translateConsole('Status')}
 						</div>
 					</div>
 

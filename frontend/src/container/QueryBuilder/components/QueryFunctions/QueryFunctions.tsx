@@ -1,3 +1,5 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { useState } from 'react';
 import { Button, Tooltip } from 'antd';
 import { Typography } from '@signozhq/ui/typography';
@@ -86,6 +88,7 @@ export default function QueryFunctions({
 	onChange,
 	maxFunctions = 3,
 }: QueryFunctionsProps): JSX.Element {
+	const translateRuntimeCopy = useConsoleTranslation();
 	const [functions, setFunctions] = useState<QueryFunction[]>(
 		queryFunctions.map((func) => ({
 			...func,
@@ -208,12 +211,13 @@ export default function QueryFunctions({
 			<Tooltip
 				title={
 					functions && functions.length >= 3 ? (
-						`Functions are in early access. You can add a maximum of ${
-							hasAnomalyFunction ? 2 : 3
-						} function as of now.`
+						translateRuntimeCopy(
+							'Functions are in early access. You can add a maximum of {{value1}} function as of now.',
+							{ value1: hasAnomalyFunction ? 2 : 3 },
+						)
 					) : (
 						<div style={{ textAlign: 'center' }}>
-							Add new function
+							<ConsoleText message={'Add new function'} />
 							<Typography.Link
 								style={{ textDecoration: 'underline' }}
 								href="https://signoz.io/docs/querying/functions-extended-analysis/?utm_source=product&utm_medium=query-builder"
@@ -221,7 +225,7 @@ export default function QueryFunctions({
 							>
 								{' '}
 								<br />
-								Learn more
+								<ConsoleText message={'Learn more'} />
 							</Typography.Link>
 						</div>
 					)

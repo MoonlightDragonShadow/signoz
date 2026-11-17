@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import KeyValueLabel from 'periscope/components/KeyValueLabel';
 import { ILog } from 'types/api/logs/log';
 
@@ -9,9 +10,10 @@ interface LogHighlightsProps {
 }
 
 function LogHighlights({ log }: LogHighlightsProps): JSX.Element | null {
+	const translate = useConsoleTranslation();
 	const fields = LOG_HIGHLIGHTS.map((field) => ({
 		key: field.key,
-		label: field.label,
+		label: translate(field.label),
 		value: field.render(log),
 	})).filter((field) => field.value != null);
 

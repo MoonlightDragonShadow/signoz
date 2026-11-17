@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import React, { useCallback, useState } from 'react';
 import { X } from '@signozhq/icons';
 import { useNotifications } from 'hooks/useNotifications';
@@ -9,6 +10,8 @@ function LabelsInput({
 	onLabelsChange,
 	validateLabelsKey,
 }: LabelsInputProps): JSX.Element {
+	const translateRuntimeCopy = useConsoleTranslation();
+	const translateConsole = useConsoleTranslation();
 	const { notifications } = useNotifications();
 	const [inputState, setInputState] = useState<LabelInputState>({
 		key: '',
@@ -35,7 +38,7 @@ function LabelsInput({
 						if (key.trim() && value.trim()) {
 							if (labels[key.trim()]) {
 								notifications.error({
-									message: 'Label with this key already exists',
+									message: translateConsole('Label with this key already exists'),
 								});
 								return;
 							}
@@ -59,7 +62,7 @@ function LabelsInput({
 					} else if (inputState.key.trim()) {
 						if (labels[inputState.key.trim()]) {
 							notifications.error({
-								message: 'Label with this key already exists',
+								message: translateConsole('Label with this key already exists'),
 							});
 							return;
 						}
@@ -89,7 +92,14 @@ function LabelsInput({
 				setInputState({ key: '', value: '', isKeyInput: true });
 			}
 		},
-		[inputState, labels, notifications, onLabelsChange, validateLabelsKey],
+		[
+			translateConsole,
+			inputState,
+			labels,
+			notifications,
+			onLabelsChange,
+			validateLabelsKey,
+		],
 	);
 
 	const handleInputChange = useCallback(
@@ -133,7 +143,9 @@ function LabelsInput({
 							<button
 								type="button"
 								className="labels-input__remove-button"
-								aria-label={`Remove label ${key}`}
+								aria-label={translateRuntimeCopy('Remove label {{value1}}', {
+									value1: key,
+								})}
 								onClick={(): void => handleRemoveLabel(key)}
 							>
 								<X size="md" />
@@ -150,7 +162,7 @@ function LabelsInput({
 					onClick={handleAddLabelsClick}
 					data-testid="alert-add-label-button"
 				>
-					+ Add labels
+					{translateConsole('+ Add labels')}
 				</button>
 			) : (
 				<div className="labels-input__input-container">

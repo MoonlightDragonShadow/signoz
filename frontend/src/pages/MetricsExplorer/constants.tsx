@@ -5,35 +5,41 @@ import SummaryPage from 'container/MetricsExplorer/Summary';
 import VolumeControlTab from 'container/MetricsExplorer/VolumeControl/components/VolumeControlTab/VolumeControlTab';
 import { BarChart, Compass, Gauge } from '@signozhq/icons';
 
-export const Summary: TabRoutes = {
+export const getSummaryRoute = (
+	translate: (message: string) => string,
+): TabRoutes => ({
 	Component: SummaryPage,
 	name: (
 		<div className="tab-item">
-			<BarChart size={16} /> Summary
+			<BarChart size={16} /> {translate('Summary')}
 		</div>
 	),
 	route: ROUTES.METRICS_EXPLORER,
 	key: ROUTES.METRICS_EXPLORER,
-};
+});
 
-export const Explorer: TabRoutes = {
+export const getExplorerRoute = (
+	translate: (message: string) => string,
+): TabRoutes => ({
 	Component: (): JSX.Element => <ExplorerPage />,
 	name: (
 		<div className="tab-item">
-			<Compass size={16} /> Explorer
+			<Compass size={16} /> {translate('Explorer')}
 		</div>
 	),
 	route: ROUTES.METRICS_EXPLORER_EXPLORER,
 	key: ROUTES.METRICS_EXPLORER_EXPLORER,
-};
+});
 
-export const VolumeControl: TabRoutes = {
+export const getVolumeControlRoute = (
+	translate: (message: string) => string,
+): TabRoutes => ({
 	Component: VolumeControlTab,
 	name: (
 		<div className="tab-item">
-			<Gauge size={16} /> Volume Control
+			<Gauge size={16} /> {translate('Volume Control')}
 		</div>
 	),
 	route: ROUTES.METRICS_EXPLORER_VOLUME_CONTROL,
 	key: ROUTES.METRICS_EXPLORER_VOLUME_CONTROL,
-};
+});

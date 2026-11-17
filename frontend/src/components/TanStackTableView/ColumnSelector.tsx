@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { useMemo } from 'react';
 import { Columns3 } from '@signozhq/icons';
 import { Button } from '@signozhq/ui/button';
@@ -47,11 +48,13 @@ function ColumnSelector<TData>({
 					prefix={<Columns3 size={14} />}
 					testId={testId}
 				>
-					Columns
+					<ConsoleText message={'Columns'} />
 				</Button>
 			</PopoverTrigger>
 			<PopoverContent align="end" className={styles.popoverContent}>
-				<div className={styles.title}>Toggle Columns</div>
+				<div className={styles.title}>
+					<ConsoleText message={'Toggle Columns'} />
+				</div>
 				<div className={styles.columnList}>
 					{selectableColumns.map((col) => {
 						const isVisible = !hiddenColumnIds.includes(col.id);

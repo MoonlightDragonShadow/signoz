@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useState } from 'react';
 import cx from 'classnames';
 import { Button } from '@signozhq/ui/button';
@@ -42,6 +43,7 @@ export default function ClarificationForm({
 	conversationId,
 	clarification,
 }: ClarificationFormProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const submitClarification = useAIAssistantStore((s) => s.submitClarification);
 	const cancelStream = useAIAssistantStore((s) => s.cancelStream);
 	const isStreaming = useAIAssistantStore(
@@ -104,7 +106,9 @@ export default function ClarificationForm({
 		return (
 			<div className={cx(styles.clarification, styles.submitted)}>
 				<Send size={13} className={styles.icon} />
-				<span className={styles.statusText}>Answers submitted — resuming…</span>
+				<span className={styles.statusText}>
+					{translateConsole('Answers submitted — resuming…')}
+				</span>
 			</div>
 		);
 	}
@@ -113,7 +117,9 @@ export default function ClarificationForm({
 		return (
 			<div className={cx(styles.clarification, styles.submitted)}>
 				<X size={13} className={styles.icon} />
-				<span className={styles.statusText}>Request cancelled.</span>
+				<span className={styles.statusText}>
+					{translateConsole('Request cancelled.')}
+				</span>
 			</div>
 		);
 	}
@@ -122,7 +128,9 @@ export default function ClarificationForm({
 		<div className={styles.clarification}>
 			<div className={styles.header}>
 				<CircleHelp size={13} className={styles.headerIcon} />
-				<span className={styles.headerLabel}>A few details needed</span>
+				<span className={styles.headerLabel}>
+					{translateConsole('A few details needed')}
+				</span>
 			</div>
 
 			<p className={styles.message}>{clarification.message}</p>
@@ -152,10 +160,10 @@ export default function ClarificationForm({
 					disabled={isStreaming || !isFormValid}
 					prefix={<Send />}
 				>
-					Submit
+					{translateConsole('Submit')}
 				</Button>
 				<Button
-					disabledTooltip="Wait for the response to finish"
+					disabledTooltip={translateConsole('Wait for the response to finish')}
 					size="md"
 					variant="outlined"
 					color="secondary"
@@ -163,7 +171,7 @@ export default function ClarificationForm({
 					disabled={isStreaming}
 					prefix={<X />}
 				>
-					Cancel request
+					{translateConsole('Cancel request')}
 				</Button>
 			</div>
 		</div>
@@ -233,6 +241,7 @@ interface FieldInputProps {
 }
 
 function FieldInput({ field, value, onChange }: FieldInputProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const { id, type, label, required, options, allowCustom } = field;
 
 	// Local UI state for the synthetic "custom" option on select /
@@ -276,7 +285,7 @@ function FieldInput({ field, value, onChange }: FieldInputProps): JSX.Element {
 				>
 					<SelectTrigger
 						id={id}
-						placeholder="Select…"
+						placeholder={translateConsole('Select…')}
 						aria-required={required || undefined}
 					/>
 					{/* Pin the dropdown width to the trigger via Radix's
@@ -299,7 +308,7 @@ function FieldInput({ field, value, onChange }: FieldInputProps): JSX.Element {
 					<Input
 						type="text"
 						className={styles.input}
-						placeholder="Enter a custom value"
+						placeholder={translateConsole('Enter a custom value')}
 						value={customValue}
 						onChange={(e): void => {
 							setCustomValue(e.target.value);
@@ -408,7 +417,7 @@ function FieldInput({ field, value, onChange }: FieldInputProps): JSX.Element {
 					<Input
 						type="text"
 						className={styles.input}
-						placeholder="Enter a custom value"
+						placeholder={translateConsole('Enter a custom value')}
 						value={customValue}
 						onChange={(e): void => updateCustomValue(e.target.value)}
 					/>

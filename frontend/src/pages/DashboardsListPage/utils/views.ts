@@ -84,44 +84,45 @@ export const noResultsCopy = (
 	activeViewId: string,
 	search: string,
 	hasActiveFilters: boolean,
+	translate: (message: string) => string = (message) => message,
 ): EmptyStateCopy => {
 	const trimmed = search.trim();
 	if (trimmed) {
 		return {
-			title: `No dashboards match "${trimmed}"`,
-			description: 'Try a different search term or clear your filters.',
+			title: `${translate('No dashboards match')} "${trimmed}"`,
+			description: translate('Try a different search term or clear your filters.'),
 		};
 	}
 	switch (activeViewId) {
 		case BuiltinViewId.Pinned:
 			return {
-				title: 'No pinned dashboards yet',
-				description: 'Pin a dashboard to keep it handy here.',
+				title: translate('No pinned dashboards yet'),
+				description: translate('Pin a dashboard to keep it handy here.'),
 			};
 		case BuiltinViewId.Recent:
 			return {
-				title: 'No recently viewed dashboards',
-				description: 'Dashboards you open will appear here.',
+				title: translate('No recently viewed dashboards'),
+				description: translate('Dashboards you open will appear here.'),
 			};
 		case BuiltinViewId.Locked:
 			return {
-				title: 'No locked dashboards',
-				description: 'Dashboards locked for editing will appear here.',
+				title: translate('No locked dashboards'),
+				description: translate('Dashboards locked for editing will appear here.'),
 			};
 		case BuiltinViewId.Mine:
 			return {
-				title: "You haven't created any dashboards",
-				description: 'Dashboards you create will appear here.',
+				title: translate("You haven't created any dashboards"),
+				description: translate('Dashboards you create will appear here.'),
 			};
 		default:
 			return hasActiveFilters
 				? {
-						title: 'No dashboards match your filters',
-						description: 'Try adjusting or clearing your filters.',
+						title: translate('No dashboards match your filters'),
+						description: translate('Try adjusting or clearing your filters.'),
 					}
 				: {
-						title: 'No dashboards found',
-						description: 'Create a dashboard to get started.',
+						title: translate('No dashboards found'),
+						description: translate('Create a dashboard to get started.'),
 					};
 	}
 };

@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useAppParams } from 'lib/router/useAppParams';
 import Spinner from 'components/Spinner';
 import { useGetMetricMeta } from 'hooks/apDex/useGetMetricMeta';
@@ -14,6 +15,7 @@ function ApDexMetricsApplication({
 	thresholdValue,
 	topLevelOperationsRoute,
 }: ApDexDataSwitcherProps): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
 	const { servicename: encodedServiceName } = useAppParams<'servicename'>();
 	const servicename = decodeURIComponent(encodedServiceName || '');
 
@@ -24,7 +26,7 @@ function ApDexMetricsApplication({
 	useErrorNotification(error);
 
 	if (isLoading) {
-		return <Spinner height="40vh" tip="Loading..." />;
+		return <Spinner height="40vh" tip={translateInterfaceCopy('Loading...')} />;
 	}
 
 	return (

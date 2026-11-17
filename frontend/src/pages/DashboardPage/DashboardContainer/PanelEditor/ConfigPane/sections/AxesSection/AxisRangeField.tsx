@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import type { ReactNode } from 'react';
 
 import ConfigInlineField from '../../controls/ConfigInlineField/ConfigInlineField';
@@ -27,9 +28,10 @@ function AxisRangeField({
 	help = RANGE_HELP,
 	helpTestId,
 }: AxisRangeFieldProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	return (
 		<ConfigInlineField
-			label="Range"
+			label={translate('Range')}
 			help={help}
 			helpTestId={helpTestId}
 			error={

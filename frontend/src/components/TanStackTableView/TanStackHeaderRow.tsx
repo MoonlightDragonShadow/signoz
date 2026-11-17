@@ -1,3 +1,5 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import type {
 	CSSProperties,
 	MouseEvent as ReactMouseEvent,
@@ -52,6 +54,7 @@ function TanStackHeaderRow<TData>({
 	onSort,
 	isLastColumn = false,
 }: TanStackHeaderRowProps<TData>): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
 	const columnId = column.id;
 	const isDragColumn = column.enableMove !== false && column.pin == null;
 	const isResizableColumn =
@@ -251,7 +254,7 @@ function TanStackHeaderRow<TData>({
 								}}
 							>
 								<X size="md" className={headerStyles.tanstackRemoveColumnActionIcon} />
-								Remove column
+								<ConsoleText message={'Remove column'} />
 							</button>
 						</PopoverContent>
 					</Popover>
@@ -261,7 +264,7 @@ function TanStackHeaderRow<TData>({
 				<span
 					role="presentation"
 					className={headerStyles.cursorColResize}
-					title="Drag to resize column"
+					title={translateInterfaceCopy('Drag to resize column')}
 					onClick={(event): void => {
 						event.preventDefault();
 						event.stopPropagation();

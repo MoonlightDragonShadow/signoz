@@ -1,3 +1,5 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useEffect, useRef, useState } from 'react';
 import {
 	CircleCheck,
@@ -72,6 +74,7 @@ function openMailto(uri: string): void {
 }
 
 function CancelSubscriptionBanner(): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const [dialogView, setDialogView] = useState<DialogView | null>(null);
 	const [confirmText, setConfirmText] = useState('');
 	const [copied, setCopied] = useState(false);
@@ -147,10 +150,10 @@ function CancelSubscriptionBanner(): JSX.Element {
 				prefix={<Undo2 size={14} />}
 				onClick={handleClose}
 			>
-				Go back
+				{translateConsole('Go back')}
 			</Button>
 			<Button
-				disabledTooltip="Type cancel to confirm"
+				disabledTooltip={translateConsole('Type cancel to confirm')}
 				size="md"
 				variant="solid"
 				color="danger"
@@ -159,14 +162,14 @@ function CancelSubscriptionBanner(): JSX.Element {
 				onClick={handleContactSupport}
 				testId="cancel-subscription-confirm-btn"
 			>
-				Cancel subscription
+				{translateConsole('Cancel subscription')}
 			</Button>
 		</>
 	);
 
 	const fallbackFooter = (
 		<Button size="md" variant="solid" color="secondary" onClick={handleClose}>
-			Close
+			{translateConsole('Close')}
 		</Button>
 	);
 
@@ -176,11 +179,14 @@ function CancelSubscriptionBanner(): JSX.Element {
 				<div className={styles.info}>
 					<div className={styles.titleRow}>
 						<SolidInfoCircle color={Color.BG_SAKURA_500} size={12} />
-						<span className={styles.title}>Cancel your subscription</span>
+						<span className={styles.title}>
+							{translateConsole('Cancel your subscription')}
+						</span>
 					</div>
 					<span className={styles.subtitle}>
-						When you cancel your SigNoz subscription, all your data will be deleted
-						immediately and removed from our servers.
+						{translateConsole(
+							'When you cancel your SigNoz subscription, all your data will be deleted immediately and removed from our servers.',
+						)}
 					</span>
 				</div>
 				<AuthZButton
@@ -192,13 +198,13 @@ function CancelSubscriptionBanner(): JSX.Element {
 					onClick={handleOpenCancelDialog}
 					testId="cancel-subscription-btn"
 				>
-					Cancel Subscription
+					{translateConsole('Cancel Subscription')}
 				</AuthZButton>
 			</div>
 			<DialogWrapper
 				open={dialogView !== null}
 				onOpenChange={handleClose}
-				title="Cancel your subscription?"
+				title={translateConsole('Cancel your subscription?')}
 				width="narrow"
 				showCloseButton={false}
 				footer={dialogView === 'confirm' ? confirmFooter : fallbackFooter}
@@ -206,14 +212,19 @@ function CancelSubscriptionBanner(): JSX.Element {
 				{dialogView === 'confirm' && (
 					<div className={styles.dialogBody}>
 						<p className={styles.dialogDescription}>
-							Cancelling your subscription would stop your data from being ingested to
-							SigNoz. All the data that has been already sent will also be deleted.
+							{translateConsole(
+								'Cancelling your subscription would stop your data from being ingested to SigNoz. All the data that has been already sent will also be deleted.',
+							)}
 						</p>
 						<p className={styles.dialogConfirmLabel}>
-							Type <code>cancel</code> to confirm the cancellation.
+							<ConsoleText message={'Type'} />{' '}
+							<code>
+								<ConsoleText message={'cancel'} />
+							</code>{' '}
+							<ConsoleText message={'to confirm the cancellation.'} />
 						</p>
 						<Input
-							placeholder="Enter the word cancel..."
+							placeholder={translateConsole('Enter the word cancel...')}
 							value={confirmText}
 							onChange={(e): void => setConfirmText(e.target.value)}
 							data-testid="cancel-confirm-input"
@@ -223,8 +234,9 @@ function CancelSubscriptionBanner(): JSX.Element {
 				{dialogView === 'fallback' && (
 					<div className={styles.fallbackBody}>
 						<p className={styles.fallbackHint}>
-							An email draft has been opened. If it did not open, send your
-							cancellation request directly to:
+							{translateConsole(
+								'An email draft has been opened. If it did not open, send your cancellation request directly to:',
+							)}
 						</p>
 						<span className={styles.fallbackEmail}>{SUPPORT_EMAIL}</span>
 						<div className={styles.fallbackActions}>
@@ -254,7 +266,7 @@ function CancelSubscriptionBanner(): JSX.Element {
 									);
 								}}
 							>
-								Reopen email client
+								{translateConsole('Reopen email client')}
 							</Button>
 						</div>
 					</div>

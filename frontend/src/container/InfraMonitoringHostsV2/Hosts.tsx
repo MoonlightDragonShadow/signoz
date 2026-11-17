@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Button, Tooltip } from 'antd';
 import { Typography } from '@signozhq/ui/typography';
@@ -59,6 +60,7 @@ import {
 } from 'container/InfraMonitoringK8sV2/Base/events';
 
 function Hosts(): JSX.Element {
+	const translate = useConsoleTranslation();
 	const [showFilters, setShowFilters] = useState(true);
 
 	const compositeQuery = useGetCompositeQueryParam();
@@ -234,8 +236,8 @@ function Hosts(): JSX.Element {
 							<OverlayScrollbar>
 								<>
 									<div className={styles.quickFiltersContainerHeader}>
-										<Typography.Text>Filters</Typography.Text>
-										<Tooltip title="Collapse Filters">
+										<Typography.Text>{translate('Filters')}</Typography.Text>
+										<Tooltip title={translate('Collapse Filters')}>
 											<ArrowUpToLine
 												style={{ rotate: '270deg', cursor: 'pointer' }}
 												onClick={handleFilterVisibilityChange}

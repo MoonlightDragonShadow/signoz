@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useEffect, useState } from 'react';
 import { convertFiltersToExpression } from 'components/QueryBuilderV2/utils';
 import { matchRoute } from 'lib/router/matchRoute';
@@ -397,6 +398,7 @@ export default function ActionsSection({
 	actions,
 	messageId,
 }: ActionsSectionProps): JSX.Element | null {
+	const translateConsole = useConsoleTranslation();
 	const { pathname } = useAppLocation();
 	const sendMessage = useAIAssistantStore((s) => s.sendMessage);
 	const { threadId, page, mode } = useAIAssistantAnalyticsContext();
@@ -585,7 +587,9 @@ export default function ActionsSection({
 		<div className={styles.section}>
 			<div className={styles.heading}>
 				<Sparkles size={12} className={styles.headingIcon} />
-				<span className={styles.headingText}>Suggested actions</span>
+				<span className={styles.headingText}>
+					{translateConsole('Suggested actions')}
+				</span>
 			</div>
 
 			<div className={styles.list}>
@@ -619,7 +623,7 @@ export default function ActionsSection({
 
 					const chip = (
 						<Button
-							disabledTooltip="This action already ran"
+							disabledTooltip={translateConsole('This action already ran')}
 							variant="outlined"
 							color="secondary"
 							size="sm"

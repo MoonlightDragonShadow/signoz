@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Plus, Route } from '@signozhq/icons';
 import { Button } from '@signozhq/ui/button';
 import { Typography } from '@signozhq/ui/typography';
@@ -15,15 +16,17 @@ function RoutingPoliciesEmptyState({
 	canCreate,
 	onCreate,
 }: RoutingPoliciesEmptyStateProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	return (
 		<div className={styles.emptyState} data-testid="routing-policies-empty-state">
 			<Route className={styles.emptyIcon} size={16} />
 			<Typography.Text className={styles.emptyTitle}>
-				No routing policies yet
+				{translateConsole('No routing policies yet')}
 			</Typography.Text>
 			<Typography.Text className={styles.emptySubtitle}>
-				A routing policy sends alerts matching an expression to the channels you
-				pick, without editing each alert rule.
+				{translateConsole(
+					'A routing policy sends alerts matching an expression to the channels you pick, without editing each alert rule.',
+				)}
 			</Typography.Text>
 			{canCreate && (
 				<Button
@@ -34,7 +37,7 @@ function RoutingPoliciesEmptyState({
 					onClick={onCreate}
 					testId="routing-policies-empty-create"
 				>
-					New routing policy
+					{translateConsole('New routing policy')}
 				</Button>
 			)}
 			<a
@@ -43,7 +46,7 @@ function RoutingPoliciesEmptyState({
 				target="_blank"
 				rel="noopener noreferrer"
 			>
-				Read the routing policy guide
+				{translateConsole('Read the routing policy guide')}
 			</a>
 		</div>
 	);

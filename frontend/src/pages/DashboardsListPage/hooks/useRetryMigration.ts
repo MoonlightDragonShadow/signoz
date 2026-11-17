@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback } from 'react';
 import { useQueryClient } from 'react-query';
 import { toast } from '@signozhq/ui/sonner';
@@ -22,13 +23,14 @@ export interface UseRetryMigrationResult {
 export function useRetryMigration(
 	onMigrated?: () => void,
 ): UseRetryMigrationResult {
+	const translate = useConsoleTranslation();
 	const queryClient = useQueryClient();
 
 	const migrate = useMigrateDashboardV2({
 		mutation: {
 			onSuccess: async (): Promise<void> => {
 				await invalidateListDashboardsForUserV2(queryClient);
-				toast.success('Dashboard migrated to the new experience');
+				toast.success(translate('Dashboard migrated to the new experience'));
 				onMigrated?.();
 			},
 			onError: (error): void => {

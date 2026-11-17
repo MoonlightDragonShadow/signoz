@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { Color } from '@signozhq/design-tokens';
 import { Boxes } from '@signozhq/icons';
 import {
@@ -82,7 +83,7 @@ export const k8sClustersColumnsConfig: ClusterTableColumnConfig[] = [
 		id: 'nodeCountsByReadiness',
 		header: (): React.ReactNode => (
 			<ColumnHeader docPath="/infrastructure-monitoring/kubernetes/clusters#node-readiness">
-				Node Readiness
+				<ConsoleText message={'Node Readiness'} />
 			</ColumnHeader>
 		),
 		accessorFn: (
@@ -122,7 +123,7 @@ export const k8sClustersColumnsConfig: ClusterTableColumnConfig[] = [
 		id: 'podCountsByStatus',
 		header: (): React.ReactNode => (
 			<ColumnHeader docPath="/infrastructure-monitoring/kubernetes/clusters#pod-counts-by-status">
-				Pod Status
+				<ConsoleText message={'Pod Status'} />
 			</ColumnHeader>
 		),
 		accessorFn: (
@@ -149,7 +150,7 @@ export const k8sClustersColumnsConfig: ClusterTableColumnConfig[] = [
 		id: 'cpu',
 		header: (): React.ReactNode => (
 			<ColumnHeader docPath="/infrastructure-monitoring/kubernetes/clusters#cpu-usage-cores">
-				CPU Usage (cores)
+				<ConsoleText message={'CPU Usage (cores)'} />
 			</ColumnHeader>
 		),
 		accessorFn: (row): number => row.clusterCPU,
@@ -173,7 +174,7 @@ export const k8sClustersColumnsConfig: ClusterTableColumnConfig[] = [
 		id: 'cpu_allocatable',
 		header: (): React.ReactNode => (
 			<ColumnHeader docPath="/infrastructure-monitoring/kubernetes/clusters#cpu-alloc-cores">
-				CPU Allocatable (cores)
+				<ConsoleText message={'CPU Allocatable (cores)'} />
 			</ColumnHeader>
 		),
 		accessorFn: (row): number => row.clusterCPUAllocatable,
@@ -197,7 +198,7 @@ export const k8sClustersColumnsConfig: ClusterTableColumnConfig[] = [
 		id: 'memory',
 		header: (): React.ReactNode => (
 			<ColumnHeader docPath="/infrastructure-monitoring/kubernetes/clusters#memory-usage-wss">
-				Memory Usage (WSS)
+				<ConsoleText message={'Memory Usage (WSS)'} />
 			</ColumnHeader>
 		),
 		accessorFn: (row): number => row.clusterMemory,
@@ -221,7 +222,7 @@ export const k8sClustersColumnsConfig: ClusterTableColumnConfig[] = [
 		id: 'memory_allocatable',
 		header: (): React.ReactNode => (
 			<ColumnHeader docPath="/infrastructure-monitoring/kubernetes/clusters#memory-allocatable">
-				Memory Allocatable
+				<ConsoleText message={'Memory Allocatable'} />
 			</ColumnHeader>
 		),
 		accessorFn: (row): number => row.clusterMemoryAllocatable,

@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useState } from 'react';
 import { Tooltip } from '@signozhq/ui/tooltip';
 import { Typography } from '@signozhq/ui/typography';
@@ -22,6 +23,7 @@ export function CheckboxFilterV2Header({
 	onToggleOpen,
 	onClear,
 }: CheckboxFilterHeaderProps): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
 	const [isTitleTruncated, setIsTitleTruncated] = useState(false);
 
 	const measureTitle = (el: HTMLElement | null): void => {
@@ -62,7 +64,7 @@ export function CheckboxFilterV2Header({
 				<section className={styles.rightAction}>
 					<SectionActionButton
 						icon={<Undo2 size={14} />}
-						tooltip="Reset"
+						tooltip={translateInterfaceCopy('Reset')}
 						onClick={onClear}
 						testId="checkbox-filter-clear-all"
 					/>

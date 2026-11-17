@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { ReactNode } from 'react';
 import { Button } from '@signozhq/ui/button';
 import { Typography } from '@signozhq/ui/typography';
@@ -17,15 +18,16 @@ const LEARN_MORE_HREF =
 	'https://signoz.io/docs/userguide/manage-dashboards?utm_source=product&utm_medium=dashboard-list-empty-state';
 
 function EmptyState({ createDropdown }: Props): JSX.Element {
+	const translate = useConsoleTranslation();
 	return (
 		<div className={styles.wrapper}>
 			<img src={dashboardsUrl} alt="dashboards" className={styles.image} />
 			<section className={styles.copy}>
 				<Typography.Text className={styles.noDashboard}>
-					No dashboards yet.{' '}
+					{translate('No dashboards yet.')}{' '}
 				</Typography.Text>
 				<Typography.Text className={styles.info}>
-					Create a dashboard to start visualizing your data
+					{translate('Create a dashboard to start visualizing your data')}
 				</Typography.Text>
 			</section>
 
@@ -42,7 +44,7 @@ function EmptyState({ createDropdown }: Props): JSX.Element {
 							openInNewTab(LEARN_MORE_HREF);
 						}}
 					>
-						Learn more
+						{translate('Learn more')}
 					</Button>
 					<ArrowUpRight size={16} className={styles.learnMoreArrow} />
 				</section>

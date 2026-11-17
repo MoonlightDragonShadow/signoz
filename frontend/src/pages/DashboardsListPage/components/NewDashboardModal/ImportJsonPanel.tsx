@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { buildRoutePath } from 'lib/router/buildRoutePath';
@@ -28,6 +29,7 @@ interface Props {
 }
 
 function ImportJsonPanel({ onClose }: Props): JSX.Element {
+	const translate = useConsoleTranslation();
 	const { safeNavigate } = useSafeNavigate();
 	const { t } = useTranslation(['dashboard', 'common']);
 	const { showErrorModal } = useErrorModal();
@@ -74,7 +76,9 @@ function ImportJsonPanel({ onClose }: Props): JSX.Element {
 					reason: 'invalid-image',
 				});
 				toast.error(
-					'Dashboard "image" must be an /assets/Icons or /assets/Logos path, or a base64 image',
+					translate(
+						'Dashboard "image" must be an /assets/Icons or /assets/Logos path, or a base64 image',
+					),
 				);
 				return;
 			}

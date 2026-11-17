@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useMemo } from 'react';
 import { Input } from '@signozhq/ui/input';
 import { Select } from 'antd';
@@ -11,12 +12,16 @@ import {
 } from '../constants';
 import TimeInput from '../TimeInput';
 import { IEvaluationWindowDetailsProps } from '../types';
-import { getCumulativeWindowTimeframeText } from '../utils';
+import {
+	getCumulativeWindowTimeframeText,
+	getCustomRollingWindowTimeframeText,
+} from '../utils';
 
 function EvaluationWindowDetails({
 	evaluationWindow,
 	setEvaluationWindow,
 }: IEvaluationWindowDetailsProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const currentHourOptions = useMemo(() => {
 		const options = [];
 		for (let i = 0; i < 60; i++) {
@@ -38,17 +43,16 @@ function EvaluationWindowDetails({
 			evaluationWindow.windowType === 'rolling' &&
 			evaluationWindow.timeframe === 'custom'
 		) {
-			return `Last ${evaluationWindow.startingAt.number} ${
-				ADVANCED_OPTIONS_TIME_UNIT_OPTIONS.find(
-					(option) => option.value === evaluationWindow.startingAt.unit,
-				)?.label
-			}`;
+			return getCustomRollingWindowTimeframeText(
+				evaluationWindow,
+				translateConsole,
+			);
 		}
 		if (evaluationWindow.windowType === 'cumulative') {
-			return getCumulativeWindowTimeframeText(evaluationWindow);
+			return getCumulativeWindowTimeframeText(evaluationWindow, translateConsole);
 		}
 		return '';
-	}, [evaluationWindow]);
+	}, [evaluationWindow, translateConsole]);
 
 	if (
 		evaluationWindow.windowType === 'rolling' &&
@@ -123,12 +127,12 @@ function EvaluationWindowDetails({
 				</Typography.Text>
 				<Typography.Text>{displayText}</Typography.Text>
 				<div className="select-group">
-					<Typography.Text>STARTING AT MINUTE</Typography.Text>
+					<Typography.Text>{translateConsole('STARTING AT MINUTE')}</Typography.Text>
 					<Select
 						options={currentHourOptions}
 						value={evaluationWindow.startingAt.number || null}
 						onChange={handleNumberChange}
-						placeholder="Select starting at"
+						placeholder={translateConsole('Select starting at')}
 						data-testid="evaluation-window-details-starting-at-select"
 					/>
 				</div>
@@ -144,19 +148,19 @@ function EvaluationWindowDetails({
 				</Typography.Text>
 				<Typography.Text>{displayText}</Typography.Text>
 				<div className="select-group time-select-group">
-					<Typography.Text>STARTING AT</Typography.Text>
+					<Typography.Text>{translateConsole('STARTING AT')}</Typography.Text>
 					<TimeInput
 						value={evaluationWindow.startingAt.time}
 						onChange={handleTimeChange}
 					/>
 				</div>
 				<div className="select-group">
-					<Typography.Text>SELECT TIMEZONE</Typography.Text>
+					<Typography.Text>{translateConsole('SELECT TIMEZONE')}</Typography.Text>
 					<Select
 						options={TIMEZONE_DATA}
 						value={evaluationWindow.startingAt.timezone || null}
 						onChange={handleTimezoneChange}
-						placeholder="Select timezone"
+						placeholder={translateConsole('Select timezone')}
 						data-testid="evaluation-window-details-timezone-select"
 					/>
 				</div>
@@ -172,29 +176,29 @@ function EvaluationWindowDetails({
 				</Typography.Text>
 				<Typography.Text>{displayText}</Typography.Text>
 				<div className="select-group">
-					<Typography.Text>STARTING ON DAY</Typography.Text>
+					<Typography.Text>{translateConsole('STARTING ON DAY')}</Typography.Text>
 					<Select
 						options={currentMonthOptions}
 						value={evaluationWindow.startingAt.number || null}
 						onChange={handleNumberChange}
-						placeholder="Select starting at"
+						placeholder={translateConsole('Select starting at')}
 						data-testid="evaluation-window-details-starting-at-select"
 					/>
 				</div>
 				<div className="select-group time-select-group">
-					<Typography.Text>STARTING AT</Typography.Text>
+					<Typography.Text>{translateConsole('STARTING AT')}</Typography.Text>
 					<TimeInput
 						value={evaluationWindow.startingAt.time}
 						onChange={handleTimeChange}
 					/>
 				</div>
 				<div className="select-group">
-					<Typography.Text>SELECT TIMEZONE</Typography.Text>
+					<Typography.Text>{translateConsole('SELECT TIMEZONE')}</Typography.Text>
 					<Select
 						options={TIMEZONE_DATA}
 						value={evaluationWindow.startingAt.timezone || null}
 						onChange={handleTimezoneChange}
-						placeholder="Select timezone"
+						placeholder={translateConsole('Select timezone')}
 						data-testid="evaluation-window-details-timezone-select"
 					/>
 				</div>
@@ -207,26 +211,28 @@ function EvaluationWindowDetails({
 			<Typography.Text>
 				{getRollingWindowDescription(evaluationWindow.timeframe)}
 			</Typography.Text>
-			<Typography.Text>Specify custom duration</Typography.Text>
+			<Typography.Text>
+				{translateConsole('Specify custom duration')}
+			</Typography.Text>
 			<Typography.Text>{displayText}</Typography.Text>
 			<div className="select-group">
-				<Typography.Text>VALUE</Typography.Text>
+				<Typography.Text>{translateConsole('VALUE')}</Typography.Text>
 				<Input
 					name="value"
 					type="number"
 					value={evaluationWindow.startingAt.number}
 					onChange={(e): void => handleNumberChange(e.target.value)}
-					placeholder="Enter value"
+					placeholder={translateConsole('Enter value')}
 					data-testid="evaluation-window-details-custom-rolling-window-duration-input"
 				/>
 			</div>
 			<div className="select-group time-select-group">
-				<Typography.Text>UNIT</Typography.Text>
+				<Typography.Text>{translateConsole('UNIT')}</Typography.Text>
 				<Select
 					options={ADVANCED_OPTIONS_TIME_UNIT_OPTIONS}
 					value={evaluationWindow.startingAt.unit || null}
 					onChange={handleUnitChange}
-					placeholder="Select unit"
+					placeholder={translateConsole('Select unit')}
 					data-testid="evaluation-window-details-custom-rolling-window-unit-select"
 				/>
 			</div>

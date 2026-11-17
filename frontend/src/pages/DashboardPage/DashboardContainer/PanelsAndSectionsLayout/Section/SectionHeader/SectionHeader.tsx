@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import type { DraggableAttributes } from '@dnd-kit/core';
 import type { SyntheticListenerMap } from '@dnd-kit/core/dist/hooks/utilities';
 import { ChevronDown, ChevronRight, GripVertical } from '@signozhq/icons';
@@ -46,6 +47,7 @@ function SectionDragHandleButton({
 	dragHandle: SectionDragHandle;
 	sectionId: string;
 }): JSX.Element {
+	const translate = useConsoleTranslation();
 	const { role: _role, ...sortableAttributes } = dragHandle.attributes;
 	return (
 		<span
@@ -59,7 +61,7 @@ function SectionDragHandleButton({
 				color="secondary"
 				size="sm"
 				icon
-				aria-label="Drag to reorder section"
+				aria-label={translate('Drag to reorder section')}
 				testId={`dashboard-section-drag-${sectionId}`}
 				{...sortableAttributes}
 			>
@@ -80,6 +82,7 @@ function SectionHeader({
 	disabledChecks = [],
 	disabledTooltip,
 }: SectionHeaderProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	return (
 		<div className={cx(styles.header, { [styles.headerOpen]: open })}>
 			{dragHandle ? (
@@ -99,7 +102,7 @@ function SectionHeader({
 					<Typography.Text className={styles.title}>{title}</Typography.Text>
 					{repeatVariable ? (
 						<Typography.Text className={styles.repeatBadge}>
-							(repeats per ${repeatVariable})
+							({translate('repeats per')} ${repeatVariable})
 						</Typography.Text>
 					) : null}
 				</Button>

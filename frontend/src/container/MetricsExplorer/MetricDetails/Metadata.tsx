@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useQueryClient } from 'react-query';
 import type { TableColumnsType as ColumnsType } from 'antd';
@@ -44,6 +45,7 @@ function Metadata({
 	isLoadingMetricMetadata,
 	refetchMetricMetadata,
 }: MetadataProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const [isEditing, setIsEditing] = useState(false);
 
 	const [metricMetadataState, setMetricMetadataState] =
@@ -206,7 +208,7 @@ function Metadata({
 	const columns: ColumnsType<DataType> = useMemo(
 		() => [
 			{
-				title: 'Key',
+				title: translate('Key'),
 				dataIndex: 'key',
 				key: 'key',
 				width: 50,
@@ -221,7 +223,7 @@ function Metadata({
 				),
 			},
 			{
-				title: 'Value',
+				title: translate('Value'),
 				dataIndex: 'value',
 				key: 'value',
 				width: 50,
@@ -231,7 +233,7 @@ function Metadata({
 				render: renderColumnValue,
 			},
 		],
-		[renderColumnValue],
+		[translate, renderColumnValue],
 	);
 
 	const handleSave = useCallback(() => {
@@ -301,7 +303,7 @@ function Metadata({
 						data-testid="metadata-cancel-button"
 					>
 						<X size={14} />
-						<Typography.Text>Cancel</Typography.Text>
+						<Typography.Text>{translate('Cancel')}</Typography.Text>
 					</Button>
 					<Button
 						className="action-button"
@@ -314,7 +316,7 @@ function Metadata({
 						data-testid="metadata-save-button"
 					>
 						<Save size={14} />
-						<Typography.Text>Save</Typography.Text>
+						<Typography.Text>{translate('Save')}</Typography.Text>
 					</Button>
 				</div>
 			);
@@ -335,11 +337,12 @@ function Metadata({
 					data-testid="metadata-edit-button"
 				>
 					<PenLine size={14} />
-					<Typography.Text>Edit</Typography.Text>
+					<Typography.Text>{translate('Edit')}</Typography.Text>
 				</Button>
 			</div>
 		);
 	}, [
+		translate,
 		isEditing,
 		isErrorMetricMetadata,
 		isUpdatingMetricsMetadata,
@@ -353,7 +356,7 @@ function Metadata({
 			{
 				label: (
 					<div className="metrics-accordion-header metrics-metadata-header">
-						<Typography.Text>Metadata</Typography.Text>
+						<Typography.Text>{translate('Metadata')}</Typography.Text>
 						{actionButton}
 					</div>
 				),
@@ -383,6 +386,7 @@ function Metadata({
 			},
 		],
 		[
+			translate,
 			actionButton,
 			columns,
 			isLoadingMetricMetadata,

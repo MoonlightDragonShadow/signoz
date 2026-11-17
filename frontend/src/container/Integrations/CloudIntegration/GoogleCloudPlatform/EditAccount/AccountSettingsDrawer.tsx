@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Dispatch, SetStateAction, useMemo } from 'react';
 import { useQueryClient } from 'react-query';
 import { Save } from '@signozhq/icons';
@@ -26,6 +27,8 @@ function AccountSettingsDrawer({
 	account,
 	setActiveAccount,
 }: AccountSettingsDrawerProps): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
+	const translateConsole = useConsoleTranslation();
 	const {
 		form,
 		isLoading,
@@ -50,7 +53,7 @@ function AccountSettingsDrawer({
 	return (
 		<DrawerWrapper
 			open={true}
-			title="Account Settings"
+			title={translateConsole('Account Settings')}
 			direction="right"
 			showCloseButton
 			onOpenChange={(open): void => {
@@ -75,7 +78,7 @@ function AccountSettingsDrawer({
 					/>
 					{!isAgentAccount && (
 						<Button
-							disabledTooltip="Change the project IDs first"
+							disabledTooltip={translateInterfaceCopy('Change the project IDs first')}
 							size="md"
 							variant="solid"
 							color="secondary"
@@ -85,7 +88,7 @@ function AccountSettingsDrawer({
 							prefix={<Save size={14} />}
 							testId="gcp-update-account-btn"
 						>
-							Update Changes
+							{translateConsole('Update Changes')}
 						</Button>
 					)}
 				</div>
@@ -101,10 +104,10 @@ function AccountSettingsDrawer({
 				<div className={styles.body}>
 					<div className={styles.connectedAccountDetails}>
 						<div className={styles.connectedAccountDetailsTitle}>
-							Connected Account details
+							{translateConsole('Connected Account details')}
 						</div>
 						<div className={styles.accountId}>
-							Account Name:{' '}
+							{translateConsole('Account Name:')}{' '}
 							<span className={styles.accountIdValue}>
 								{account?.providerAccountId}
 							</span>
@@ -113,7 +116,9 @@ function AccountSettingsDrawer({
 
 					{gcpConfig?.deployment_project_id && (
 						<div className={styles.regionSelector}>
-							<div className={styles.regionSelectorTitle}>Deployment project ID</div>
+							<div className={styles.regionSelectorTitle}>
+								{translateConsole('Deployment project ID')}
+							</div>
 							<div className={styles.regionSelectorDescription}>
 								{gcpConfig.deployment_project_id}
 							</div>
@@ -122,7 +127,9 @@ function AccountSettingsDrawer({
 
 					{gcpConfig?.deployment_region && (
 						<div className={styles.regionSelector}>
-							<div className={styles.regionSelectorTitle}>Deployment region</div>
+							<div className={styles.regionSelectorTitle}>
+								{translateConsole('Deployment region')}
+							</div>
 							<div className={styles.regionSelectorDescription}>
 								{gcpConfig.deployment_region}
 							</div>
@@ -130,7 +137,9 @@ function AccountSettingsDrawer({
 					)}
 
 					<div className={styles.regionSelector}>
-						<div className={styles.regionSelectorTitle}>Projects to monitor</div>
+						<div className={styles.regionSelectorTitle}>
+							{translateConsole('Projects to monitor')}
+						</div>
 						{isAgentAccount ? (
 							<div
 								className={styles.regionSelectorDescription}
@@ -141,7 +150,9 @@ function AccountSettingsDrawer({
 						) : (
 							<>
 								<div className={styles.regionSelectorDescription}>
-									Update the GCP project IDs that should be monitored.
+									{translateConsole(
+										'Update the GCP project IDs that should be monitored.',
+									)}
 								</div>
 
 								<Form.Item
@@ -151,7 +162,7 @@ function AccountSettingsDrawer({
 											required: true,
 											type: 'array',
 											min: 1,
-											message: 'Please add at least one project ID',
+											message: translateConsole('Please add at least one project ID'),
 										},
 									]}
 								>

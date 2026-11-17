@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Button } from '@signozhq/ui/button';
 import { DialogWrapper } from '@signozhq/ui/dialog';
 import { Typography } from '@signozhq/ui/typography';
@@ -37,6 +38,7 @@ function MapConfirmDialog({
 	onConfirm,
 	onCancel,
 }: MapConfirmDialogProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const extraBuckets = getExtraBuckets(rule);
 
 	const pricingRows = [
@@ -57,11 +59,11 @@ function MapConfirmDialog({
 				color="secondary"
 				onClick={onCancel}
 				disabled={isSaving}
-				disabledTooltip="Wait for the mapping to finish"
+				disabledTooltip={translateConsole('Wait for the mapping to finish')}
 				prefix={<X size={12} />}
 				testId="unpriced-map-cancel-btn"
 			>
-				Cancel
+				{translateConsole('Cancel')}
 			</Button>
 			<Button
 				size="md"
@@ -72,7 +74,7 @@ function MapConfirmDialog({
 				prefix={<Check size={12} />}
 				testId="unpriced-map-confirm-btn"
 			>
-				Map model
+				{translateConsole('Map model')}
 			</Button>
 		</div>
 	);
@@ -86,14 +88,16 @@ function MapConfirmDialog({
 				}
 			}}
 			width="base"
-			title="Map to billing model"
+			title={translateConsole('Map to billing model')}
 			titleIcon={<Link2 size={16} />}
 			footer={footer}
 			testId="unpriced-map-confirm-dialog"
 		>
 			<div className={styles.body}>
 				<Typography.Text as="p" size="small" color="muted">
-					Spans from this model will be priced using the selected billing model.
+					{translateConsole(
+						'Spans from this model will be priced using the selected billing model.',
+					)}
 				</Typography.Text>
 
 				<div className={styles.mapping}>

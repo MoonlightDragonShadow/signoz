@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useState } from 'react';
 import { AppLink } from 'lib/router/AppLink';
 import { buildRoutePath } from 'lib/router/buildRoutePath';
@@ -25,6 +26,7 @@ export function FunnelListItem({
 	shouldRedirectToTracesListOnDeleteSuccess,
 	isSpanDetailsPage,
 }: FunnelListItemProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const [isPopoverOpen, setIsPopoverOpen] = useState<boolean>(false);
 	const funnelDetailsLink = buildRoutePath(ROUTES.TRACES_FUNNELS_DETAIL, {
 		funnelId: funnel.funnel_id,
@@ -43,7 +45,7 @@ export function FunnelListItem({
 						className="funnel-item__open-button"
 						icon={<DecimalsArrowRight size={12} />}
 					>
-						Open funnel
+						{translateConsole('Open funnel')}
 					</Button>
 				) : (
 					<FunnelItemPopover

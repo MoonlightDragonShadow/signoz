@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { Input } from '@signozhq/ui/input';
 import { Select } from 'antd';
@@ -22,11 +23,12 @@ function SelectDropdownRender({
 	handleAddCustomValue,
 	handleKeyDown,
 }: SelectDropdownRenderProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	return (
 		<>
 			{menu}
 			<Input
-				placeholder="Enter custom time (ms)"
+				placeholder={translateConsole('Enter custom time (ms)')}
 				value={inputValue}
 				onChange={handleInputChange}
 				onKeyDown={handleKeyDown}
@@ -42,6 +44,7 @@ function EvaluationTimeSelector({
 }: {
 	setInterval: Dispatch<SetStateAction<string>>;
 }): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const [inputValue, setInputValue] = useState<string>('');
 	const [selectedInterval, setSelectedInterval] = useState<string | null>(
 		'10ms',
@@ -91,11 +94,11 @@ function EvaluationTimeSelector({
 	return (
 		<div className="evaluation-time-selector">
 			<Typography.Text className="eval-title">
-				Evaluation Interval:
+				{translateConsole('Evaluation Interval:')}
 			</Typography.Text>
 			<Select
 				style={{ width: 220 }}
-				placeholder="Select time interval (ms)"
+				placeholder={translateConsole('Select time interval (ms)')}
 				value={selectedInterval}
 				onChange={handleSelectChange}
 				open={dropdownOpen}

@@ -1,6 +1,7 @@
 import { Badge } from '@signozhq/ui/badge';
 import { Typography } from '@signozhq/ui/typography';
 import type { TableColumnDef } from 'components/TanStackTableView';
+import LocalizedRelativeTime from 'components/LocalizedRelativeTime/LocalizedRelativeTime';
 import { startCase } from 'lodash-es';
 
 import styles from './tableConfig.module.scss';
@@ -154,7 +155,7 @@ export function getModelCostsColumns({
 			enableMove: false,
 			cell: ({ row }): JSX.Element => (
 				<Typography.Text className={styles.tableCellStyles}>
-					{getRelativeLastSeen(row)}
+					<LocalizedRelativeTime value={getRelativeLastSeen(row)} />
 				</Typography.Text>
 			),
 		},

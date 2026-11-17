@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Plus } from '@signozhq/icons';
 import { Button } from '@signozhq/ui/button';
 
@@ -8,6 +9,7 @@ import { useDashboardStore } from '../../../store/useDashboardStore';
  * variables exist. Opens the Variables settings tab with the add form primed.
  */
 function AddVariableFull(): JSX.Element {
+	const translate = useConsoleTranslation();
 	const requestSettings = useDashboardStore((s) => s.requestSettings);
 
 	return (
@@ -21,7 +23,7 @@ function AddVariableFull(): JSX.Element {
 				requestSettings({ tab: 'Variables', addVariable: true })
 			}
 		>
-			Add variable
+			{translate('Add variable')}
 		</Button>
 	);
 }

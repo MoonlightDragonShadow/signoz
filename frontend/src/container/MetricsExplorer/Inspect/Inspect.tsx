@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useQueryClient } from 'react-query';
 import * as Sentry from '@sentry/react';
@@ -35,6 +36,7 @@ function Inspect({
 	isOpen,
 	onClose,
 }: InspectProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const isDarkMode = useIsDarkMode();
 	const [currentMetricName, setCurrentMetricName] =
 		useState<string>(defaultMetricName);
@@ -203,7 +205,9 @@ function Inspect({
 		if (isCancelled) {
 			return renderFallback(
 				'inspect-metrics-cancelled',
-				<QueryCancelledPlaceholder subText='Click "Run Query" to see inspect results.' />,
+				<QueryCancelledPlaceholder
+					subText={translate('Click "Run Query" to see inspect results.')}
+				/>,
 			);
 		}
 
@@ -214,14 +218,16 @@ function Inspect({
 		if (isInspectMetricsError) {
 			return renderFallback(
 				'inspect-metrics-error',
-				<Empty description="Error loading inspect metrics." />,
+				<Empty description={translate('Error loading inspect metrics.')} />,
 			);
 		}
 
 		if (inspectMetricsTimeSeries.length === 0) {
 			return renderFallback(
 				'inspect-metrics-empty',
-				<Empty description="No time series found for this metric to inspect." />,
+				<Empty
+					description={translate('No time series found for this metric to inspect.')}
+				/>,
 			);
 		}
 
@@ -245,6 +251,7 @@ function Inspect({
 			/>
 		);
 	}, [
+		translate,
 		isInspectMetricsLoading,
 		isInspectMetricsRefetching,
 		isInspectMetricsError,
@@ -284,14 +291,14 @@ function Inspect({
 				width="100%"
 				title={
 					<div className="inspect-metrics-title">
-						<Typography.Text>Metrics Explorer —</Typography.Text>
+						<Typography.Text>{translate('Metrics Explorer —')}</Typography.Text>
 						<Button
 							className="inspect-metrics-button"
 							size="small"
 							icon={<Compass size={14} />}
 							disabled
 						>
-							Inspect Metric
+							{translate('Inspect Metric')}
 						</Button>
 					</div>
 				}

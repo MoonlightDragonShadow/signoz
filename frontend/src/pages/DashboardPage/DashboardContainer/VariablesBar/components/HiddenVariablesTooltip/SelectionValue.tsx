@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Typography } from '@signozhq/ui/typography';
 
 import type { VariableSelection } from '../../selectionTypes';
@@ -14,12 +15,13 @@ interface SelectionValueProps {
  * doesn't read as one run-on string.
  */
 function SelectionValue({ selection }: SelectionValueProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const display = describeSelection(selection);
 
 	if (display.kind !== 'values') {
 		return (
 			<Typography.Text size="sm" className={styles.value}>
-				{display.kind === 'all' ? 'ALL' : '—'}
+				{display.kind === 'all' ? translate('ALL') : '—'}
 			</Typography.Text>
 		);
 	}

@@ -11,6 +11,7 @@ const toOptions = (values: string[]): OptionData[] =>
 export function dynamicVariableOptions(
 	values: string[],
 	relatedValues: string[],
+	translate: (message: string) => string = (message) => message,
 ): OptionData[] {
 	if (relatedValues.length === 0) {
 		return toOptions(values);
@@ -18,10 +19,14 @@ export function dynamicVariableOptions(
 
 	return [
 		{
-			label: 'Related Values',
+			label: translate('Related Values'),
 			value: 'relatedValues',
 			options: toOptions(relatedValues),
 		},
-		{ label: 'All Values', value: 'allValues', options: toOptions(values) },
+		{
+			label: translate('All Values'),
+			value: 'allValues',
+			options: toOptions(values),
+		},
 	];
 }

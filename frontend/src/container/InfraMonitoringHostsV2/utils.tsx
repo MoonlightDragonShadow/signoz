@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import React from 'react';
 import { Color } from '@signozhq/design-tokens';
 import { Tooltip } from 'antd';
@@ -18,6 +19,7 @@ export function HostnameCell({
 }: {
 	hostName?: string | null;
 }): React.ReactElement {
+	const translate = useConsoleTranslation();
 	const isEmpty = !hostName || !hostName.trim();
 	if (!isEmpty) {
 		return <TanStackTable.Text>{hostName}</TanStackTable.Text>;
@@ -28,7 +30,7 @@ export function HostnameCell({
 			<Tooltip
 				title={
 					<div>
-						Missing host.name metadata.
+						{translate('Missing host.name metadata.')}
 						<br />
 						<a
 							href={HOSTNAME_DOCS_URL}
@@ -36,7 +38,7 @@ export function HostnameCell({
 							rel="noopener noreferrer"
 							onClick={(e): void => e.stopPropagation()}
 						>
-							Learn how to configure →
+							{translate('Learn how to configure →')}
 						</a>
 					</div>
 				}
@@ -46,7 +48,7 @@ export function HostnameCell({
 					className="hostname-cell-warning-icon"
 					tabIndex={0}
 					role="img"
-					aria-label="Missing host.name metadata"
+					aria-label={translate('Missing host.name metadata')}
 					onClick={(e): void => e.stopPropagation()}
 					onKeyDown={(e): void => {
 						if (e.key === 'Enter' || e.key === ' ') {

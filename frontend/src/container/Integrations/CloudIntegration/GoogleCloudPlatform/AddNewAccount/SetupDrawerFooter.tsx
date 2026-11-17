@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { ReactNode } from 'react';
 import { createPortal } from 'react-dom';
 import { Button } from '@signozhq/ui/button';
@@ -22,6 +23,7 @@ function SetupDrawerFooter({
 	onCancel,
 	children,
 }: SetupDrawerFooterProps): JSX.Element | null {
+	const translateConsole = useConsoleTranslation();
 	if (!slot) {
 		return null;
 	}
@@ -49,7 +51,7 @@ function SetupDrawerFooter({
 					onClick={onCancel}
 					testId="gcp-cancel-btn"
 				>
-					Cancel
+					{translateConsole('Cancel')}
 				</Button>
 				{children}
 			</div>

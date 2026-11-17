@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useMemo } from 'react';
 import { CalendarClock } from '@signozhq/icons';
 import { Typography } from '@signozhq/ui/typography';
@@ -21,6 +22,7 @@ import styles from './SavedViewHoverCard.module.scss';
 function SavedViewHoverCardDetails({
 	viewId,
 }: SavedViewHoverCardDetailsProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const { formatTimezoneAdjustedTimestamp } = useTimezone();
 	const { data, isLoading, isError } = useGetSavedView({ id: viewId });
 	const view = data?.data;
@@ -68,7 +70,9 @@ function SavedViewHoverCardDetails({
 			</div>
 			<div className={styles.query} data-testid="saved-view-hover-card-query">
 				{querySummaries.length === 0 ? (
-					<Typography.Text className={styles.noFilters}>No filters</Typography.Text>
+					<Typography.Text className={styles.noFilters}>
+						{translateConsole('No filters')}
+					</Typography.Text>
 				) : (
 					querySummaries.map(({ queryName, expression, metric }) => (
 						<div key={queryName} className={styles.queryItem}>
@@ -91,7 +95,7 @@ function SavedViewHoverCardDetails({
 			</div>
 			<div className={styles.updated}>
 				<Typography.Text className={styles.sectionTitle}>
-					Last updated
+					{translateConsole('Last updated')}
 				</Typography.Text>
 				{view.updatedBy && (
 					<Typography.Text className={styles.metaText}>

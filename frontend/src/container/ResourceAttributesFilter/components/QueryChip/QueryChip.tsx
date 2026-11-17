@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { X } from '@signozhq/icons';
 import {
 	convertMetricKeyToTrace,
@@ -12,6 +13,7 @@ import {
 import { IQueryChipProps } from './types';
 
 function QueryChip({ queryData, onClose }: IQueryChipProps): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
 	const onCloseHandler = (): void => {
 		onClose(queryData.id);
 	};
@@ -27,7 +29,7 @@ function QueryChip({ queryData, onClose }: IQueryChipProps): JSX.Element {
 					isClosable ? (
 						<QueryChipRemoveButton
 							type="button"
-							aria-label="Remove"
+							aria-label={translateInterfaceCopy('Remove')}
 							onClick={(e): void => {
 								e.preventDefault();
 								onCloseHandler();

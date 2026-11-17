@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useEffect, useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { Button } from '@signozhq/ui/button';
@@ -37,6 +38,7 @@ function EditTagsModal({
 	currentTags,
 	onClose,
 }: Props): JSX.Element {
+	const translate = useConsoleTranslation();
 	const [tags, setTags] = useState<string[]>(currentTags);
 	const queryClient = useQueryClient();
 	const { showErrorModal } = useErrorModal();
@@ -64,7 +66,7 @@ function EditTagsModal({
 			return patchDashboardV2({ id: dashboardId }, ops);
 		},
 		onSuccess: async () => {
-			toast.success('Tags updated');
+			toast.success(translate('Tags updated'));
 			void logEvent(DashboardListEvents.RowAction, {
 				action: 'editTags',
 				dashboardId,
@@ -114,7 +116,7 @@ function EditTagsModal({
 						onClick={onClose}
 						testId="edit-tags-cancel"
 					>
-						Cancel
+						{translate('Cancel')}
 					</Button>
 					<Button
 						variant="solid"
@@ -124,7 +126,7 @@ function EditTagsModal({
 						onClick={(): void => runSave()}
 						testId="edit-tags-submit"
 					>
-						Save
+						{translate('Save')}
 					</Button>
 				</div>
 			}
@@ -132,7 +134,7 @@ function EditTagsModal({
 			<TagKeyValueInput
 				tags={tags}
 				onTagsChange={setTags}
-				placeholder="key:value (press Enter)"
+				placeholder={translate('key:value (press Enter)')}
 				testId="edit-dashboard-tags"
 			/>
 		</DialogWrapper>

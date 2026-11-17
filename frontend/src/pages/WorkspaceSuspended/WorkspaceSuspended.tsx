@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useMutation } from 'react-query';
@@ -75,7 +76,7 @@ function WorkspaceSuspended(): JSX.Element {
 						</span>
 						<span className="workspace-suspended__modal__header__actions">
 							<Typography.Text className="workspace-suspended__modal__title">
-								Got Questions?
+								<ConsoleText message={'Got Questions?'} />
 							</Typography.Text>
 							<Button
 								type="default"
@@ -84,7 +85,7 @@ function WorkspaceSuspended(): JSX.Element {
 								href="mailto:cloud-support@signoz.io"
 								role="button"
 							>
-								Contact Us
+								<ConsoleText message={'Contact Us'} />
 							</Button>
 						</span>
 					</div>

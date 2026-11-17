@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import {
 	Dispatch,
 	memo,
@@ -59,6 +60,7 @@ function ListView({
 	setIsLoadingQueries,
 	queryKeyRef,
 }: ListViewProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const {
 		stagedQuery,
 		currentQuery,
@@ -190,7 +192,7 @@ function ListView({
 			<div className="trace-explorer-controls">
 				<div className="order-by-container">
 					<div className="order-by-label">
-						Order by <Minus size={14} /> <ArrowUp10 size={14} />
+						{translateConsole('Order by')} <Minus size={14} /> <ArrowUp10 size={14} />
 					</div>
 
 					<ListViewOrderBy

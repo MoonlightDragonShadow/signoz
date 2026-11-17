@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { FullScreenHandle } from 'react-full-screen';
 import { buildRoutePath } from 'lib/router/buildRoutePath';
@@ -59,6 +60,7 @@ function DashboardActions({
 	onLockToggle,
 	onOpenRename,
 }: DashboardActionsProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const {
 		isEditable,
 		editChecks,
@@ -123,7 +125,7 @@ function DashboardActions({
 		try {
 			setIsCloning(true);
 			const response = await cloneDashboardV2({ id: dashboard.id });
-			toast.success('Dashboard cloned');
+			toast.success(translate('Dashboard cloned'));
 			void logEvent(DashboardDetailEvents.Cloned, {
 				dashboardId: dashboard.id,
 				dashboardName: title,
@@ -137,7 +139,7 @@ function DashboardActions({
 		} finally {
 			setIsCloning(false);
 		}
-	}, [dashboard.id, title, safeNavigate, showErrorModal]);
+	}, [translate, dashboard.id, title, safeNavigate, showErrorModal]);
 
 	const handleOpenSettings = useCallback((): void => {
 		void logEvent(DashboardDetailEvents.SettingsOpened, {
@@ -168,13 +170,13 @@ function DashboardActions({
 			{
 				type: 'group',
 				value: 'group-dashboard',
-				label: 'Dashboard',
+				label: translate('Dashboard'),
 				items: [
 					{
 						type: 'item',
 						value: 'rename',
 						testId: 'dashboard-action-rename',
-						label: 'Rename',
+						label: translate('Rename'),
 						prefix: <PenLine size={14} />,
 						checks: editChecks,
 						...blockedBy(editDisabledTooltip),
@@ -185,18 +187,20 @@ function DashboardActions({
 						type: 'item',
 						value: 'clone',
 						testId: 'dashboard-action-clone',
-						label: 'Clone dashboard',
+						label: translate('Clone dashboard'),
 						prefix: <Copy size={14} />,
 						checks: cloneChecks,
 						loading: isCloning,
-						loadingTooltip: 'Cloning dashboard',
+						loadingTooltip: translate('Cloning dashboard'),
 						onClick: (): void => void handleClone(),
 					},
 					{
 						type: 'item',
 						value: 'lock',
 						testId: 'dashboard-action-lock',
-						label: isDashboardLocked ? 'Unlock dashboard' : 'Lock dashboard',
+						label: translate(
+							isDashboardLocked ? 'Unlock dashboard' : 'Lock dashboard',
+						),
 						prefix: <LockKeyhole size={14} />,
 						checks: editChecks,
 						...blockedBy(lockDisabledTooltip),
@@ -206,7 +210,7 @@ function DashboardActions({
 						type: 'item',
 						value: 'fullscreen',
 						testId: 'dashboard-action-fullscreen',
-						label: 'Full screen',
+						label: translate('Full screen'),
 						prefix: <Fullscreen size={14} />,
 						onClick: handleEnterFullScreen,
 					},
@@ -215,13 +219,13 @@ function DashboardActions({
 			{
 				type: 'group',
 				value: 'group-layout',
-				label: 'Layout',
+				label: translate('Layout'),
 				items: [
 					{
 						type: 'item',
 						value: 'new-section',
 						testId: 'dashboard-action-new-section',
-						label: 'New section',
+						label: translate('New section'),
 						prefix: <SquareStack size={14} />,
 						checks: editChecks,
 						...blockedBy(editDisabledTooltip),
@@ -234,7 +238,7 @@ function DashboardActions({
 				type: 'item',
 				value: 'delete',
 				testId: 'dashboard-action-delete',
-				label: 'Delete dashboard',
+				label: translate('Delete dashboard'),
 				prefix: <Trash2 size={14} />,
 				danger: true,
 				checks: deleteChecks,
@@ -244,6 +248,7 @@ function DashboardActions({
 			},
 		],
 		[
+			translate,
 			editChecks,
 			editDisabledTooltip,
 			deleteChecks,
@@ -270,7 +275,7 @@ function DashboardActions({
 					prefix={<Grid3X3 size="md" />}
 					testId="options"
 				>
-					Actions
+					{translate('Actions')}
 				</Button>
 			</AuthZDropdown>
 			<AuthZTooltip checks={editChecks} disabledTooltip={editDisabledTooltip}>
@@ -284,11 +289,11 @@ function DashboardActions({
 					onClick={handleOpenSettings}
 					size="md"
 				>
-					Configure
+					{translate('Configure')}
 				</Button>
 			</AuthZTooltip>
 			<SettingsDrawer
-				drawerTitle="Dashboard Configuration"
+				drawerTitle={translate('Dashboard Configuration')}
 				isOpen={isSettingsDrawerOpen}
 				destroyOnClose
 				onClose={(): void => {
@@ -319,7 +324,7 @@ function DashboardActions({
 					disabled={!isEditable}
 					size="md"
 				>
-					New Panel
+					{translate('New Panel')}
 				</Button>
 			</AuthZTooltip>
 			<JsonEditorDrawer
@@ -330,8 +335,8 @@ function DashboardActions({
 			{deleteConfirmHolder}
 			<SectionTitleModal
 				open={isNewSectionOpen}
-				heading="New section"
-				okText="Create section"
+				heading={translate('New section')}
+				okText={translate('Create section')}
 				initialValue=""
 				isSaving={isAddingSection}
 				onClose={(): void => setIsNewSectionOpen(false)}

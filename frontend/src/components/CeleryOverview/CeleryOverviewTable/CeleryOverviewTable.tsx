@@ -1,3 +1,5 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useMutation } from 'react-query';
 // eslint-disable-next-line no-restricted-imports
@@ -43,7 +45,10 @@ const showPaginationItem = (total: number, range: number[]): JSX.Element => (
 		<Typography.Text className="numbers">
 			{range[0]} &#8212; {range[1]}
 		</Typography.Text>
-		<Typography.Text className="total"> of {total}</Typography.Text>
+		<Typography.Text className="total">
+			{' '}
+			<ConsoleText message={'of'} /> {total}
+		</Typography.Text>
 	</>
 );
 
@@ -111,7 +116,7 @@ const getColumnSearchProps = (
 				>
 					<Flex align="center" gap={4}>
 						<Search size="md" />
-						Search
+						<ConsoleText message={'Search'} />
 					</Flex>
 				</Button>
 				<Button
@@ -119,7 +124,7 @@ const getColumnSearchProps = (
 					size="small"
 					style={{ width: 90 }}
 				>
-					Reset
+					<ConsoleText message={'Reset'} />
 				</Button>
 				<Button
 					type="link"
@@ -128,7 +133,7 @@ const getColumnSearchProps = (
 						close();
 					}}
 				>
-					close
+					<ConsoleText message={'close'} />
 				</Button>
 			</Space>
 		</div>
@@ -159,7 +164,7 @@ function getColumns(data: RowData[]): TableColumnsType<RowData> {
 
 	return [
 		{
-			title: 'SERVICE NAME',
+			title: <ConsoleText message={'SERVICE NAME'} />,
 			dataIndex: 'service_name',
 			key: 'service_name',
 			ellipsis: {
@@ -172,7 +177,7 @@ function getColumns(data: RowData[]): TableColumnsType<RowData> {
 			fixed: 'left',
 		},
 		{
-			title: 'SPAN NAME',
+			title: <ConsoleText message={'SPAN NAME'} />,
 			dataIndex: 'span_name',
 			key: 'span_name',
 			ellipsis: {
@@ -184,7 +189,7 @@ function getColumns(data: RowData[]): TableColumnsType<RowData> {
 			render: tooltipRender,
 		},
 		{
-			title: 'MESSAGING SYSTEM',
+			title: <ConsoleText message={'MESSAGING SYSTEM'} />,
 			dataIndex: 'messaging_system',
 			key: 'messaging_system',
 			ellipsis: {
@@ -196,7 +201,7 @@ function getColumns(data: RowData[]): TableColumnsType<RowData> {
 			render: tooltipRender,
 		},
 		{
-			title: 'DESTINATION',
+			title: <ConsoleText message={'DESTINATION'} />,
 			dataIndex: 'destination',
 			key: 'destination',
 			ellipsis: {
@@ -208,7 +213,7 @@ function getColumns(data: RowData[]): TableColumnsType<RowData> {
 				String(a.destination).localeCompare(String(b.destination)),
 		},
 		{
-			title: 'KIND',
+			title: <ConsoleText message={'KIND'} />,
 			dataIndex: 'kind_string',
 			key: 'kind_string',
 			ellipsis: {
@@ -220,7 +225,7 @@ function getColumns(data: RowData[]): TableColumnsType<RowData> {
 			render: tooltipRender,
 		},
 		{
-			title: 'ERROR %',
+			title: <ConsoleText message={'ERROR %'} />,
 			dataIndex: 'error_percentage',
 			key: 'error_percentage',
 			ellipsis: {
@@ -235,7 +240,7 @@ function getColumns(data: RowData[]): TableColumnsType<RowData> {
 			render: ProgressRender,
 		},
 		{
-			title: 'LATENCY (P95) in ms',
+			title: <ConsoleText message={'LATENCY (P95) in ms'} />,
 			dataIndex: 'p95_latency',
 			key: 'p95_latency',
 			ellipsis: {
@@ -250,7 +255,7 @@ function getColumns(data: RowData[]): TableColumnsType<RowData> {
 			render: formatNumericValue,
 		},
 		{
-			title: 'THROUGHPUT (ops/s)',
+			title: <ConsoleText message={'THROUGHPUT (ops/s)'} />,
 			dataIndex: 'throughput',
 			key: 'throughput',
 			ellipsis: {
@@ -358,6 +363,7 @@ export default function CeleryOverviewTable({
 }: {
 	onRowClick: (record: RowData) => void;
 }): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
 	const [tableData, setTableData] = useState<RowData[]>([]);
 
 	const { minTime, maxTime } = useSelector<AppState, GlobalReducer>(
@@ -506,7 +512,7 @@ export default function CeleryOverviewTable({
 	return (
 		<div className="celery-overview-table-container">
 			<Input.Search
-				placeholder="Search across all columns"
+				placeholder={translateInterfaceCopy('Search across all columns')}
 				onChange={(e): void => setSearchText(e.target.value)}
 				value={searchText}
 				allowClear
@@ -526,7 +532,11 @@ export default function CeleryOverviewTable({
 					),
 				}}
 				locale={{
-					emptyText: isLoading ? null : <Typography.Text>No data</Typography.Text>,
+					emptyText: isLoading ? null : (
+						<Typography.Text>
+							<ConsoleText message={'No data'} />
+						</Typography.Text>
+					),
 				}}
 				scroll={{ x: 'max-content' }}
 				showSorterTooltip

@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { Color } from '@signozhq/design-tokens';
 import { InframonitoringtypesDeploymentRecordDTO } from 'api/generated/services/sigNoz.schemas';
 import TanStackTable, { TableColumnDef } from 'components/TanStackTableView';
@@ -96,7 +97,7 @@ export const k8sDeploymentsColumnsConfig: TableColumnDef<InframonitoringtypesDep
 			id: 'namespaceName',
 			header: (): React.ReactNode => (
 				<ColumnHeader docPath="/infrastructure-monitoring/kubernetes/deployments#namespace-name">
-					Namespace
+					<ConsoleText message={'Namespace'} />
 				</ColumnHeader>
 			),
 			accessorFn: (row): string =>
@@ -112,7 +113,7 @@ export const k8sDeploymentsColumnsConfig: TableColumnDef<InframonitoringtypesDep
 			id: 'podCountsByStatus',
 			header: (): React.ReactNode => (
 				<ColumnHeader docPath="/infrastructure-monitoring/kubernetes/deployments#pod-counts-by-status">
-					Pod Status
+					<ConsoleText message={'Pod Status'} />
 				</ColumnHeader>
 			),
 			accessorFn: (row): object | undefined => row.podCountsByStatus,
@@ -137,7 +138,7 @@ export const k8sDeploymentsColumnsConfig: TableColumnDef<InframonitoringtypesDep
 			id: 'pod_replicas',
 			header: (): React.ReactNode => (
 				<ColumnHeader docPath="/infrastructure-monitoring/kubernetes/deployments#pod-replicas">
-					Pod Replicas
+					<ConsoleText message={'Pod Replicas'} />
 				</ColumnHeader>
 			),
 			accessorFn: (row): number => row.availablePods,
@@ -169,7 +170,7 @@ export const k8sDeploymentsColumnsConfig: TableColumnDef<InframonitoringtypesDep
 					docPath="/infrastructure-monitoring/kubernetes/deployments#cpu-req-usage-"
 					tooltip={<EntityProgressThresholds type="cpu-request" />}
 				>
-					CPU Request Usage (%)
+					<ConsoleText message={'CPU Request Usage (%)'} />
 				</ColumnHeader>
 			),
 			accessorFn: (row): number => row.deploymentCPURequest,
@@ -198,7 +199,7 @@ export const k8sDeploymentsColumnsConfig: TableColumnDef<InframonitoringtypesDep
 					docPath="/infrastructure-monitoring/kubernetes/deployments#cpu-limit-usage-"
 					tooltip={<EntityProgressThresholds type="cpu-limit" />}
 				>
-					CPU Limit Usage (%)
+					<ConsoleText message={'CPU Limit Usage (%)'} />
 				</ColumnHeader>
 			),
 			accessorFn: (row): number => row.deploymentCPULimit,
@@ -223,7 +224,7 @@ export const k8sDeploymentsColumnsConfig: TableColumnDef<InframonitoringtypesDep
 			id: 'cpu',
 			header: (): React.ReactNode => (
 				<ColumnHeader docPath="/infrastructure-monitoring/kubernetes/deployments#cpu-usage-cores">
-					CPU Usage (cores)
+					<ConsoleText message={'CPU Usage (cores)'} />
 				</ColumnHeader>
 			),
 			accessorFn: (row): number => row.deploymentCPU,
@@ -251,7 +252,7 @@ export const k8sDeploymentsColumnsConfig: TableColumnDef<InframonitoringtypesDep
 					docPath="/infrastructure-monitoring/kubernetes/deployments#mem-req-usage-"
 					tooltip={<EntityProgressThresholds type="memory-request" />}
 				>
-					Memory Request Usage (%)
+					<ConsoleText message={'Memory Request Usage (%)'} />
 				</ColumnHeader>
 			),
 			accessorFn: (row): number => row.deploymentMemoryRequest,
@@ -280,7 +281,7 @@ export const k8sDeploymentsColumnsConfig: TableColumnDef<InframonitoringtypesDep
 					docPath="/infrastructure-monitoring/kubernetes/deployments#mem-limit-usage-"
 					tooltip={<EntityProgressThresholds type="memory-limit" />}
 				>
-					Memory Limit Usage (%)
+					<ConsoleText message={'Memory Limit Usage (%)'} />
 				</ColumnHeader>
 			),
 			accessorFn: (row): number => row.deploymentMemoryLimit,
@@ -305,7 +306,7 @@ export const k8sDeploymentsColumnsConfig: TableColumnDef<InframonitoringtypesDep
 			id: 'memory',
 			header: (): React.ReactNode => (
 				<ColumnHeader docPath="/infrastructure-monitoring/kubernetes/deployments#mem-usage-wss">
-					Memory Usage (WSS)
+					<ConsoleText message={'Memory Usage (WSS)'} />
 				</ColumnHeader>
 			),
 			accessorFn: (row): number => row.deploymentMemory,
@@ -330,7 +331,7 @@ export const k8sDeploymentsColumnsConfig: TableColumnDef<InframonitoringtypesDep
 			id: 'available_pods',
 			header: (): React.ReactNode => (
 				<ColumnHeader docPath="/infrastructure-monitoring/kubernetes/deployments#available">
-					Available Pods
+					<ConsoleText message={'Available Pods'} />
 				</ColumnHeader>
 			),
 			accessorFn: (row): number => row.availablePods,
@@ -355,7 +356,7 @@ export const k8sDeploymentsColumnsConfig: TableColumnDef<InframonitoringtypesDep
 			id: 'desired_pods',
 			header: (): React.ReactNode => (
 				<ColumnHeader docPath="/infrastructure-monitoring/kubernetes/deployments#desired">
-					Desired Pods
+					<ConsoleText message={'Desired Pods'} />
 				</ColumnHeader>
 			),
 			accessorFn: (row): number => row.desiredPods,

@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Dispatch, SetStateAction, useCallback } from 'react';
 import { useQueryClient } from 'react-query';
 import { Button } from '@signozhq/ui/button';
@@ -28,6 +29,7 @@ function AccountSettingsModal({
 	account,
 	setActiveAccount,
 }: AccountSettingsModalProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const {
 		form,
 		isLoading,
@@ -79,10 +81,10 @@ function AccountSettingsModal({
 					<div className="account-settings-modal__body-account-info">
 						<div className="account-settings-modal__body-account-info-connected-account-details">
 							<div className="account-settings-modal__body-account-info-connected-account-details-title">
-								Connected Account details
+								{translateConsole('Connected Account details')}
 							</div>
 							<div className="account-settings-modal__body-account-info-connected-account-details-account-id">
-								AWS Account:{' '}
+								{translateConsole('AWS Account:')}{' '}
 								<span className="account-settings-modal__body-account-info-connected-account-details-account-id-account-id">
 									{account?.providerAccountId}
 								</span>
@@ -92,10 +94,10 @@ function AccountSettingsModal({
 
 					<div className="account-settings-modal__body-region-selector">
 						<div className="account-settings-modal__body-region-selector-title">
-							Which regions do you want to monitor?
+							{translateConsole('Which regions do you want to monitor?')}
 						</div>
 						<div className="account-settings-modal__body-region-selector-description">
-							Choose only the regions you want SigNoz to monitor.
+							{translateConsole('Choose only the regions you want SigNoz to monitor.')}
 						</div>
 
 						<RegionSelector
@@ -108,6 +110,7 @@ function AccountSettingsModal({
 			</Form>
 		);
 	}, [
+		translateConsole,
 		form,
 		selectedRegions,
 		includeAllRegions,
@@ -148,7 +151,7 @@ function AccountSettingsModal({
 				prefix={<Save size={14} />}
 				testId="aws-update-account-btn"
 			>
-				Update Changes
+				{translateConsole('Update Changes')}
 			</Button>
 		</div>
 	);
@@ -157,7 +160,7 @@ function AccountSettingsModal({
 		<DrawerWrapper
 			open={true}
 			className="account-settings-modal"
-			title="Account Settings"
+			title={translateConsole('Account Settings')}
 			direction="right"
 			showCloseButton
 			onOpenChange={handleDrawerOpenChange}

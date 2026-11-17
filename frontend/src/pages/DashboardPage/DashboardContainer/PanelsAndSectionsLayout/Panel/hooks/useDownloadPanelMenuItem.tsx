@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useMemo } from 'react';
 import type { DropdownSubmenuItemType } from '@signozhq/ui/dropdown';
 import type { DashboardtypesPanelDTO } from 'api/generated/services/sigNoz.schemas';
@@ -29,6 +30,7 @@ export function useDownloadPanelMenuItem({
 	data,
 	actions,
 }: UseDownloadPanelMenuItemArgs): DropdownSubmenuItemType | null {
+	const translate = useConsoleTranslation();
 	const panelName = usePanelTitle(panel);
 	const downloadPanelCsv = useDownloadPanelCsv({
 		panel,
@@ -49,7 +51,12 @@ export function useDownloadPanelMenuItem({
 	);
 
 	return useMemo(
-		() => buildDownloadMenuItem({ supported: actions.download, onDownload }),
-		[actions.download, onDownload],
+		() =>
+			buildDownloadMenuItem({
+				supported: actions.download,
+				onDownload,
+				translate,
+			}),
+		[actions.download, onDownload, translate],
 	);
 }

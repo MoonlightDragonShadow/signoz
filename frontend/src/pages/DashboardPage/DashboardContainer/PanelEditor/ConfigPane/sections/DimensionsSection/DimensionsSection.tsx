@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useMemo } from 'react';
 import type {
 	SectionEditorProps,
@@ -38,6 +39,7 @@ function DimensionsSection({
 	tableColumns = [],
 	groupColumns = [],
 }: DimensionsSectionProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const valueItems = useMemo(
 		() =>
 			tableColumns.map((column) => ({
@@ -54,9 +56,17 @@ function DimensionsSection({
 	const colorItems = buildColorKeyItems(groupColumns, colorBy);
 
 	const fields = [
-		{ dimension: 'x', label: 'X axis', unsetLabel: formatAutoOption(autoAxes.x) },
-		{ dimension: 'y', label: 'Y axis', unsetLabel: formatAutoOption(autoAxes.y) },
-		{ dimension: 'sizeBy', label: 'Size by', unsetLabel: 'None' },
+		{
+			dimension: 'x',
+			label: translate('X axis'),
+			unsetLabel: formatAutoOption(autoAxes.x),
+		},
+		{
+			dimension: 'y',
+			label: translate('Y axis'),
+			unsetLabel: formatAutoOption(autoAxes.y),
+		},
+		{ dimension: 'sizeBy', label: translate('Size by'), unsetLabel: 'None' },
 	] as const;
 
 	return (
@@ -83,7 +93,7 @@ function DimensionsSection({
 			<ConfigField
 				label={
 					<LabelWithInfo
-						label="Color by"
+						label={translate('Color by')}
 						info={FIELD_INFO.colorBy}
 						testId="panel-editor-v2-dimension-colorBy-info"
 					/>
@@ -94,15 +104,18 @@ function DimensionsSection({
 					value={colorBy}
 					items={colorItems}
 					placeholder={
-						colorItems.length > 0 ? 'Every group key' : 'No group-by labels'
+						colorItems.length > 0
+							? translate('Every group key')
+							: translate('No group-by labels')
 					}
 					disabled={colorItems.length === 0}
 					onChange={(next): void => onChange({ ...value, colorBy: next })}
 				/>
 			</ConfigField>
 			<p className={styles.description}>
-				Each dot is one group from the query. X and Y place it, Size by scales it,
-				and Color by groups it in the legend.
+				{translate(
+					'Each dot is one group from the query. X and Y place it, Size by scales it, and Color by groups it in the legend.',
+				)}
 			</p>
 		</div>
 	);

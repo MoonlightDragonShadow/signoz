@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import type { KeyboardEvent } from 'react';
 import { X } from '@signozhq/icons';
 import { Button } from '@signozhq/ui/button';
@@ -18,6 +19,7 @@ function NewSectionNameInput({
 	onCancel,
 	onSubmit,
 }: NewSectionNameInputProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>): void => {
 		if (e.key === 'Enter') {
 			onSubmit();
@@ -32,7 +34,7 @@ function NewSectionNameInput({
 		<Input
 			autoFocus
 			value={value}
-			placeholder="New section name"
+			placeholder={translate('New section name')}
 			containerClassName={styles.nameInput}
 			onChange={(e): void => onChange(e.target.value)}
 			onKeyDown={handleKeyDown}
@@ -43,7 +45,7 @@ function NewSectionNameInput({
 					color="secondary"
 					size="sm"
 					icon
-					aria-label="Cancel new section"
+					aria-label={translate('Cancel new section')}
 					onClick={onCancel}
 					testId="panel-section-name-cancel"
 				>

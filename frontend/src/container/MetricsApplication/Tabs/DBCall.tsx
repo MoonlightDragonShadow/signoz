@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 // eslint-disable-next-line no-restricted-imports
 import { useDispatch } from 'react-redux';
@@ -47,6 +48,7 @@ import {
 } from './util';
 
 function DBCall(): JSX.Element {
+	const translate = useConsoleTranslation();
 	const { servicename: encodedServiceName } = useAppParams<'servicename'>();
 
 	const servicename = decodeURIComponent(encodedServiceName || '');
@@ -185,7 +187,7 @@ function DBCall(): JSX.Element {
 						safeNavigate,
 					})}
 				>
-					View Traces
+					{translate('View Traces')}
 				</Button>
 				<Card data-testid="database_call_rps">
 					<GraphContainer>
@@ -222,7 +224,7 @@ function DBCall(): JSX.Element {
 						safeNavigate,
 					})}
 				>
-					View Traces
+					{translate('View Traces')}
 				</Button>
 
 				<Card data-testid="database_call_avg_duration">

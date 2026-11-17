@@ -1,3 +1,5 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useMemo } from 'react';
 import { Badge } from '@signozhq/ui/badge';
 import { IntegrationsProps } from 'types/api/integrations/types';
@@ -15,6 +17,7 @@ interface OneClickIntegrationsProps {
 }
 
 function OneClickIntegrations(props: OneClickIntegrationsProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const { searchQuery, setSelectedIntegration } = props;
 
 	const filteredIntegrations = useMemo(() => {
@@ -38,7 +41,7 @@ function OneClickIntegrations(props: OneClickIntegrationsProps): JSX.Element {
 		<div className="one-click-integrations">
 			<div className="one-click-integrations-header">
 				<div className="one-click-integrations-header-title">
-					One Click Integrations
+					{translateConsole('One Click Integrations')}
 				</div>
 
 				<div className="one-click-integrations-header-dotted-double-line">
@@ -61,7 +64,8 @@ function OneClickIntegrations(props: OneClickIntegrationsProps): JSX.Element {
 								className="integrations-not-found-image"
 							/>
 							<div className="integrations-not-found-text">
-								No integrations found for &ldquo;{searchQuery.trim()}&rdquo;
+								<ConsoleText message={'No integrations found for “'} />
+								{searchQuery.trim()}&rdquo;
 							</div>
 						</div>
 					</div>
@@ -84,7 +88,7 @@ function OneClickIntegrations(props: OneClickIntegrationsProps): JSX.Element {
 									{integration.is_new && (
 										<div className="one-click-integrations-list-item-new-tag">
 											<Badge color="primary" variant="solid">
-												NEW
+												{translateConsole('NEW')}
 											</Badge>
 										</div>
 									)}

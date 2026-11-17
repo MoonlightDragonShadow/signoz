@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCopyToClipboard } from 'react-use';
 import { Copy, KeyRound } from '@signozhq/icons';
 import { Button } from '@signozhq/ui/button';
@@ -8,6 +9,8 @@ import { getMaskedKey } from 'utils/maskedKey';
 import './LicenseKeyRow.styles.scss';
 
 function LicenseKeyRow(): JSX.Element | null {
+	const translateRuntimeCopy = useConsoleTranslation();
+	const translateConsole = useConsoleTranslation();
 	const { licenseKey } = useActiveLicenseKey();
 	const [, copyToClipboard] = useCopyToClipboard();
 
@@ -17,14 +20,16 @@ function LicenseKeyRow(): JSX.Element | null {
 
 	const handleCopyLicenseKey = (text: string): void => {
 		copyToClipboard(text);
-		toast.success('License key copied to clipboard.');
+		toast.success(translateRuntimeCopy('License key copied to clipboard.'));
 	};
 
 	return (
 		<div className="license-key-row">
 			<span className="license-key-row__left">
 				<KeyRound size={14} />
-				<span className="license-key-row__label">SigNoz License Key</span>
+				<span className="license-key-row__label">
+					{translateConsole('SigNoz License Key')}
+				</span>
 			</span>
 			<span className="license-key-row__value">
 				<code className="license-key-row__code">{getMaskedKey(licenseKey)}</code>
@@ -33,7 +38,7 @@ function LicenseKeyRow(): JSX.Element | null {
 					color="secondary"
 					type="button"
 					size="sm"
-					aria-label="Copy license key"
+					aria-label={translateConsole('Copy license key')}
 					testId="license-key-row-copy-btn"
 					onClick={(): void => handleCopyLicenseKey(licenseKey)}
 					icon

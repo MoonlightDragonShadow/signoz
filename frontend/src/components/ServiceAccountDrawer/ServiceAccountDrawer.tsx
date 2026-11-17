@@ -1,3 +1,5 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import React, {
 	useCallback,
 	useEffect,
@@ -76,6 +78,7 @@ function toSaveApiError(err: unknown): APIError {
 function ServiceAccountDrawer({
 	onSuccess,
 }: ServiceAccountDrawerProps): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
 	const [selectedAccountId, setSelectedAccountId] = useQueryState(
 		SA_QUERY_PARAMS.ACCOUNT,
 	);
@@ -326,9 +329,12 @@ function ServiceAccountDrawer({
 			if (errors.length > 0) {
 				setSaveErrors(errors);
 			} else {
-				toast.success('Service account updated successfully', {
-					position: 'top-right',
-				});
+				toast.success(
+					translateInterfaceCopy('Service account updated successfully'),
+					{
+						position: 'top-right',
+					},
+				);
 				onSuccess({ closeDrawer: false });
 			}
 
@@ -338,6 +344,7 @@ function ServiceAccountDrawer({
 			setIsSaving(false);
 		}
 	}, [
+		translateInterfaceCopy,
 		account,
 		isDirty,
 		localName,
@@ -386,7 +393,7 @@ function ServiceAccountDrawer({
 						prefix={<Trash2 size={12} />}
 						testId="sa-delete-btn"
 					>
-						Delete Service Account
+						<ConsoleText message={'Delete Service Account'} />
 					</AuthZButton>
 					<div className="sa-drawer__footer-right">
 						<Button
@@ -396,7 +403,7 @@ function ServiceAccountDrawer({
 							onClick={handleClose}
 							prefix={<X size={14} />}
 						>
-							Cancel
+							<ConsoleText message={'Cancel'} />
 						</Button>
 						<AuthZButton
 							size="md"
@@ -412,7 +419,7 @@ function ServiceAccountDrawer({
 							onClick={handleSave}
 							testId="sa-save-btn"
 						>
-							Save Changes
+							<ConsoleText message={'Save Changes'} />
 						</AuthZButton>
 					</div>
 				</div>
@@ -452,7 +459,7 @@ function ServiceAccountDrawer({
 					items={[
 						{
 							value: ServiceAccountDrawerTab.Overview,
-							label: 'Overview',
+							label: translateInterfaceCopy('Overview'),
 							prefix: <LayoutGrid size={14} />,
 						},
 						{
@@ -483,7 +490,7 @@ function ServiceAccountDrawer({
 						prefix={<Plus size={12} />}
 						testId="sa-add-key-btn"
 					>
-						Add Key
+						<ConsoleText message={'Add Key'} />
 					</AuthZButton>
 				)}
 			</div>
@@ -556,7 +563,7 @@ function ServiceAccountDrawer({
 			direction="right"
 			showCloseButton
 			showOverlay={false}
-			title="Service Account Details"
+			title={translateInterfaceCopy('Service Account Details')}
 			className="sa-drawer"
 			width="wide"
 			footer={footer}

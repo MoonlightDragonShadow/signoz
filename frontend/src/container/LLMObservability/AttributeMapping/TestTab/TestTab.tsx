@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import MEditor from '@monaco-editor/react';
 import { Play, RotateCcw } from '@signozhq/icons';
 import { Button } from '@signozhq/ui/button';
@@ -19,6 +20,7 @@ interface TestTabProps {
 }
 
 function TestTab({ spanTest }: TestTabProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const {
 		input,
 		setInput,
@@ -46,7 +48,9 @@ function TestTab({ spanTest }: TestTabProps): JSX.Element {
 			if (result.length === 0) {
 				return (
 					<div className={styles.resultEmpty} data-testid="test-results-empty">
-						No spans returned. The mappers produced no output for this input.
+						{translateConsole(
+							'No spans returned. The mappers produced no output for this input.',
+						)}
 					</div>
 				);
 			}
@@ -67,9 +71,13 @@ function TestTab({ spanTest }: TestTabProps): JSX.Element {
 		}
 		return (
 			<div className={styles.placeholder} data-testid="test-results-placeholder">
-				<span className={styles.placeholderTitle}>No results yet</span>
+				<span className={styles.placeholderTitle}>
+					{translateConsole('No results yet')}
+				</span>
 				<span>
-					Run the test to see which target attributes your mappers populate.
+					{translateConsole(
+						'Run the test to see which target attributes your mappers populate.',
+					)}
 				</span>
 			</div>
 		);
@@ -79,10 +87,13 @@ function TestTab({ spanTest }: TestTabProps): JSX.Element {
 		<div className={styles.testTab} data-testid="test-tab">
 			<div className={styles.header}>
 				<div className={styles.headerText}>
-					<h3 className={styles.heading}>Test with sample span</h3>
+					<h3 className={styles.heading}>
+						{translateConsole('Test with sample span')}
+					</h3>
 					<p className={styles.description}>
-						Paste a JSON span object to see which target attributes get populated and
-						which source key matched.
+						{translateConsole(
+							'Paste a JSON span object to see which target attributes get populated and which source key matched.',
+						)}
 					</p>
 				</div>
 
@@ -95,9 +106,9 @@ function TestTab({ spanTest }: TestTabProps): JSX.Element {
 						prefix={<RotateCcw size={14} />}
 						onClick={resetToTemplate}
 						disabled={isTemplateInput}
-						disabledTooltip="Already showing the default span"
+						disabledTooltip={translateConsole('Already showing the default span')}
 					>
-						Reset to Default Span
+						{translateConsole('Reset to Default Span')}
 					</Button>
 
 					<Button
@@ -111,7 +122,7 @@ function TestTab({ spanTest }: TestTabProps): JSX.Element {
 						disabled={validationError !== null}
 						disabledTooltip={validationError}
 					>
-						Run Test
+						{translateConsole('Run Test')}
 					</Button>
 				</div>
 			</div>
@@ -120,7 +131,7 @@ function TestTab({ spanTest }: TestTabProps): JSX.Element {
 				<div
 					className={styles.editor}
 					data-testid="test-span-input"
-					aria-label="Sample span JSON"
+					aria-label={translateConsole('Sample span JSON')}
 				>
 					<MEditor
 						language="json"

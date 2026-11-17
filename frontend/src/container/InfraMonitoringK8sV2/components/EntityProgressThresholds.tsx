@@ -1,4 +1,5 @@
 import { Typography } from '@signozhq/ui/typography';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 
 import {
 	EntityProgressBarType,
@@ -15,6 +16,7 @@ export function EntityProgressThresholds({
 	type,
 	note,
 }: EntityProgressThresholdsProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	return (
 		<div
 			className={styles.container}
@@ -22,7 +24,7 @@ export function EntityProgressThresholds({
 		>
 			{note && (
 				<Typography.Text as="p" size="small">
-					{note}
+					{translate(note)}
 				</Typography.Text>
 			)}
 			{THRESHOLDS_BY_TYPE[type].map((threshold) => (
@@ -34,7 +36,7 @@ export function EntityProgressThresholds({
 					<div className={styles.thresholdBody}>
 						<div className={styles.thresholdHeading}>
 							<Typography.Text as="span" size="small" weight="medium">
-								{threshold.label}
+								{translate(threshold.label)}
 							</Typography.Text>
 							<Typography.Text
 								as="span"
@@ -46,7 +48,7 @@ export function EntityProgressThresholds({
 							</Typography.Text>
 						</div>
 						<Typography.Text as="p" size="small" color="muted">
-							{threshold.description}
+							{translate(threshold.description)}
 						</Typography.Text>
 					</div>
 				</div>

@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 // eslint-disable-next-line no-restricted-imports
 import { useDispatch, useSelector } from 'react-redux';
@@ -36,6 +37,7 @@ export default function OverviewRightPanelGraph({
 	groupByFilter?: BaseAutocompleteData;
 	filters?: TagFilterItem[];
 }): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const { pathname } = useAppLocation();
 	const dispatch = useDispatch();
 	const urlQuery = useUrlQuery();
@@ -78,6 +80,14 @@ export default function OverviewRightPanelGraph({
 			celeryOverviewAvgLatencyGraphData(minTime, maxTime, filters, groupByFilter),
 		[minTime, maxTime, filters, groupByFilter],
 	);
+	const localizeWidget = (widget: Widgets): Widgets => ({
+		...widget,
+		title:
+			typeof widget.title === 'string'
+				? translateConsole(widget.title)
+				: widget.title,
+		description: translateConsole(widget.description),
+	});
 	const [selectedTimeStamp, setSelectedTimeStamp] = useState<number>(0);
 
 	const handleSetTimeStamp = useCallback((selectTime: number) => {
@@ -151,10 +161,10 @@ export default function OverviewRightPanelGraph({
 						goToTraces(requestRateWidget);
 					}}
 				>
-					View Traces
+					{translateConsole('View Traces')}
 				</Button>
 				<GridCard
-					widget={requestRateWidget}
+					widget={localizeWidget(requestRateWidget)}
 					headerMenuList={[...ViewMenuAction]}
 					onDragSelect={onDragSelect}
 					onClickHandler={handleGraphClick('Celery_request_rate')}
@@ -171,10 +181,10 @@ export default function OverviewRightPanelGraph({
 					id="Celery_error_rate_button"
 					onClick={(): void => goToTraces(errorRateWidget)}
 				>
-					View Traces
+					{translateConsole('View Traces')}
 				</Button>
 				<GridCard
-					widget={errorRateWidget}
+					widget={localizeWidget(errorRateWidget)}
 					headerMenuList={[...ViewMenuAction]}
 					onDragSelect={onDragSelect}
 					onClickHandler={handleGraphClick('Celery_error_rate')}
@@ -191,10 +201,10 @@ export default function OverviewRightPanelGraph({
 					id="Celery_avg_latency_button"
 					onClick={(): void => goToTraces(avgLatencyWidget)}
 				>
-					View Traces
+					{translateConsole('View Traces')}
 				</Button>
 				<GridCard
-					widget={avgLatencyWidget}
+					widget={localizeWidget(avgLatencyWidget)}
 					headerMenuList={[...ViewMenuAction]}
 					onDragSelect={onDragSelect}
 					onClickHandler={handleGraphClick('Celery_avg_latency')}

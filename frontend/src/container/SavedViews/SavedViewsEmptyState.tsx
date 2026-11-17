@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useState } from 'react';
 import { Plus } from '@signozhq/icons';
 import { Typography } from '@signozhq/ui/typography';
@@ -14,13 +15,14 @@ function SavedViewsEmptyState({
 	isSaving,
 	onSave,
 }: SavedViewsEmptyStateProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const [isModalOpen, setIsModalOpen] = useState(false);
 
 	if (isSearching) {
 		return (
 			<div className={styles.state} data-testid="saved-views-list-no-results">
 				<Typography.Text className={styles.stateText}>
-					No views match your search
+					{translateConsole('No views match your search')}
 				</Typography.Text>
 			</div>
 		);
@@ -28,9 +30,11 @@ function SavedViewsEmptyState({
 
 	return (
 		<div className={styles.state} data-testid="saved-views-list-empty">
-			<Typography.Text className={styles.stateTitle}>No views yet</Typography.Text>
+			<Typography.Text className={styles.stateTitle}>
+				{translateConsole('No views yet')}
+			</Typography.Text>
 			<Typography.Text className={styles.stateText}>
-				Save the current view to open it later.
+				{translateConsole('Save the current view to open it later.')}
 			</Typography.Text>
 			<AuthZButton
 				checks={[SavedViewCreatePermission]}
@@ -41,7 +45,7 @@ function SavedViewsEmptyState({
 				onClick={(): void => setIsModalOpen(true)}
 				testId="saved-views-list-create"
 			>
-				Create view
+				{translateConsole('Create view')}
 			</AuthZButton>
 			{isModalOpen && (
 				<SaveViewModal

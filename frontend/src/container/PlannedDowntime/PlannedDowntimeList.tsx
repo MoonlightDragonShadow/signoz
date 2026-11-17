@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useMemo } from 'react';
 import ErrorEmptyState from 'components/Alerts/ErrorEmptyState';
 import NoResultsEmptyState from 'components/Alerts/NoResultsEmptyState';
@@ -25,6 +26,7 @@ function PlannedDowntimeList({
 	hasSearchTerm,
 	onClearSearch,
 }: PlannedDowntimeListProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const columnsWithActions =
 		useMemo((): TableColumnDef<DowntimeSchedulesTableData>[] => {
 			if (!canEdit) {
@@ -36,7 +38,9 @@ function PlannedDowntimeList({
 				{
 					id: 'actions',
 					header: (): JSX.Element => (
-						<span className={styles.actionsHeader}>Actions</span>
+						<span className={styles.actionsHeader}>
+							{translateConsole('Actions')}
+						</span>
 					),
 					accessorKey: 'id',
 					width: { fixed: '96px', ignoreLastColumnFill: true },
@@ -54,14 +58,14 @@ function PlannedDowntimeList({
 					),
 				},
 			];
-		}, [canEdit, columns, onEdit, onDelete]);
+		}, [translateConsole, canEdit, columns, onEdit, onDelete]);
 
 	const isEmpty = !isFetching && downtimes.length === 0;
 
 	if (isError) {
 		return (
 			<ErrorEmptyState
-				title="Failed to load planned downtime"
+				title={translateConsole('Failed to load planned downtime')}
 				onRefresh={refetch}
 			/>
 		);
@@ -70,8 +74,10 @@ function PlannedDowntimeList({
 	if (isEmpty && hasSearchTerm) {
 		return (
 			<NoResultsEmptyState
-				title="No matching planned downtime"
-				subtitle="No planned downtime matches your search. Try adjusting your search criteria."
+				title={translateConsole('No matching planned downtime')}
+				subtitle={translateConsole(
+					'No planned downtime matches your search. Try adjusting your search criteria.',
+				)}
 				onClear={onClearSearch}
 				clearButtonText="Clear Search"
 			/>

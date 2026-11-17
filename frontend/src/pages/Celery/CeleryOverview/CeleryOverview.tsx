@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useState } from 'react';
 import CeleryOverviewConfigOptions from 'components/CeleryOverview/CeleryOverviewConfigOptions/CeleryOverviewConfigOptions';
 import CeleryOverviewTable, {
@@ -10,6 +11,7 @@ import CeleryOverviewDetails from './CeleryOverviewDetail/CeleryOverviewDetails'
 import './CeleryOverview.styles.scss';
 
 export default function CeleryOverview(): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const [details, setDetails] = useState<RowData | null>(null);
 
 	const onRowClick = (record: RowData): void => {
@@ -21,7 +23,7 @@ export default function CeleryOverview(): JSX.Element {
 			<div className="celery-overview-content">
 				<div className="celery-overview-content-header">
 					<p className="celery-overview-content-header-title">
-						Messaging Queue Overview
+						{translateConsole('Messaging Queue Overview')}
 					</p>
 					<DateTimeSelectionV2 showAutoRefresh hideShareModal={false} />
 				</div>

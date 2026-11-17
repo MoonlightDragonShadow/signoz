@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CircleAlert, CircleX } from '@signozhq/icons';
@@ -25,6 +26,8 @@ function LabelSelect({
 	onSetLabels,
 	initialValues,
 }: LabelSelectProps): JSX.Element | null {
+	const translateRuntimeCopy = useConsoleTranslation();
+	const translateInterfaceCopy = useConsoleTranslation();
 	const { t } = useTranslation('alerts');
 	const isDarkMode = useIsDarkMode();
 
@@ -122,7 +125,7 @@ function LabelSelect({
 
 	const handleClearAll = (): void => {
 		Modal.confirm({
-			title: 'Confirm',
+			title: translateInterfaceCopy('Confirm'),
 			icon: <CircleAlert size="md" />,
 			content: t('remove_label_confirm'),
 			onOk() {
@@ -155,7 +158,9 @@ function LabelSelect({
 							<QueryChipContainer key={query.key}>
 								{isClosable ? (
 									<Pill.Closeable
-										closeAriaLabel={`Remove ${query.key}`}
+										closeAriaLabel={translateRuntimeCopy('Remove {{value1}}', {
+											value1: query.key,
+										})}
 										onClose={(): void => handleClose(query.key)}
 									>
 										{query.key}: {query.value}

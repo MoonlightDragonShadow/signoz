@@ -1,3 +1,5 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback } from 'react';
 import { Button, Tooltip } from 'antd';
 import { Typography } from '@signozhq/ui/typography';
@@ -27,6 +29,7 @@ export default function TraceOperator({
 	isRawQuery?: boolean;
 	fieldsConfig?: QueryBuilderFieldsConfig;
 }): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
 	const { panelType, removeTraceOperator } = useQueryBuilder();
 	const { handleChangeQueryData } = useQueryOperations({
 		index: 0,
@@ -72,7 +75,9 @@ export default function TraceOperator({
 						!isRawQuery && 'qb-trace-operator-arrow',
 					)}
 				>
-					<Typography.Text className="label">Trace Operator</Typography.Text>
+					<Typography.Text className="label">
+						<ConsoleText message={'Trace Operator'} />
+					</Typography.Text>
 					<div className="qb-trace-operator-editor-container">
 						<TraceOperatorEditor
 							value={traceOperator?.expression || ''}
@@ -115,7 +120,10 @@ export default function TraceOperator({
 					</div>
 				)}
 			</div>
-			<Tooltip title="Remove Trace Operator" placement="topLeft">
+			<Tooltip
+				title={translateInterfaceCopy('Remove Trace Operator')}
+				placement="topLeft"
+			>
 				<Button className="periscope-btn ghost" onClick={removeTraceOperator}>
 					<Trash2 size={14} />
 				</Button>

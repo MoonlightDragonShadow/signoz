@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { BookOpenText, CircleX, TriangleAlert } from '@signozhq/icons';
 import { Color } from '@signozhq/design-tokens';
 import { Button } from '@signozhq/ui/button';
@@ -20,6 +21,7 @@ function PanelStatusContent({
 	variant,
 	detail,
 }: PanelStatusContentProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const { code, message, docsUrl, messages } = detail;
 	const { Icon, color } = VARIANT_ICON[variant];
 
@@ -49,7 +51,7 @@ function PanelStatusContent({
 							rel="noreferrer"
 							data-testid="panel-status-docs"
 						>
-							Open Docs
+							{translate('Open Docs')}
 						</a>
 					</Button>
 				)}
@@ -59,7 +61,7 @@ function PanelStatusContent({
 				<div className={styles.messageBadge}>
 					<span className={styles.badge}>
 						<span className={styles.badgeDot} />
-						<span className={styles.badgeText}>MESSAGES</span>
+						<span className={styles.badgeText}>{translate('MESSAGES')}</span>
 						<span className={styles.badgeCount}>{messages.length}</span>
 					</span>
 					<span className={styles.badgeLine} />

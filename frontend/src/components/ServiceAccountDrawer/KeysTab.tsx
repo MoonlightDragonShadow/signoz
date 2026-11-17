@@ -1,3 +1,5 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import React, { useCallback, useMemo } from 'react';
 import { KeyRound, X } from '@signozhq/icons';
 import { Pagination, Skeleton, Table, Tooltip } from 'antd';
@@ -42,11 +44,19 @@ interface BuildColumnsParams {
 
 function formatExpiry(expiresAt: number): JSX.Element {
 	if (expiresAt === 0) {
-		return <span className="keys-tab__expiry--never">Never</span>;
+		return (
+			<span className="keys-tab__expiry--never">
+				<ConsoleText message={'Never'} />
+			</span>
+		);
 	}
 	const expiryDate = dayjs.unix(expiresAt);
 	if (expiryDate.isBefore(dayjs())) {
-		return <span className="keys-tab__expiry--expired">Expired</span>;
+		return (
+			<span className="keys-tab__expiry--expired">
+				<ConsoleText message={'Expired'} />
+			</span>
+		);
 	}
 	return <span>{expiryDate.format(DATE_TIME_FORMATS.MONTH_DATE)}</span>;
 }
@@ -151,6 +161,7 @@ function KeysTab({
 	pageSize,
 	onPageChange,
 }: KeysTabProps): JSX.Element {
+	const translateRuntimeCopy = useConsoleTranslation();
 	const [, setIsAddKeyOpen] = useQueryState(
 		'add-key',
 		parseAsBoolean.withDefault(false),
@@ -203,14 +214,14 @@ function KeysTab({
 			<div className="keys-tab__empty">
 				<KeyRound size={24} className="keys-tab__empty-icon" />
 				<p className="keys-tab__empty-text">
-					No keys. Start by creating one.{' '}
+					<ConsoleText message={'No keys. Start by creating one.'} />{' '}
 					<a
 						href="https://signoz.io/docs/manage/administrator-guide/iam/service-accounts/#step-3-generate-an-api-key"
 						target="_blank"
 						rel="noopener noreferrer"
 						className="keys-tab__learn-more"
 					>
-						Learn more
+						<ConsoleText message={'Learn more'} />
 					</a>
 				</p>
 				<AuthZButton
@@ -224,7 +235,7 @@ function KeysTab({
 					}}
 					disabled={isDisabled}
 				>
-					+ Add your first key
+					<ConsoleText message={'+ Add your first key'} />
 				</AuthZButton>
 			</div>
 		);
@@ -273,7 +284,9 @@ function KeysTab({
 					},
 					role: 'button',
 					tabIndex: 0,
-					'aria-label': `Edit key ${record.name || 'options'}`,
+					'aria-label': translateRuntimeCopy('Edit key {{value1}}', {
+						value1: record.name || 'options',
+					}),
 				})}
 			/>
 
@@ -286,7 +299,10 @@ function KeysTab({
 						<span className="sa-drawer__pagination-range">
 							{range[0]} &#8212; {range[1]}
 						</span>
-						<span className="sa-drawer__pagination-total"> of {total}</span>
+						<span className="sa-drawer__pagination-total">
+							{' '}
+							<ConsoleText message={'of'} /> {total}
+						</span>
 					</>
 				)}
 				showSizeChanger={false}

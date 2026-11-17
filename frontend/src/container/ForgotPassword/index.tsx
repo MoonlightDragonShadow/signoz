@@ -1,3 +1,5 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useEffect, useMemo } from 'react';
 import { ArrowLeft, ArrowRight } from '@signozhq/icons';
 import { Button } from '@signozhq/ui/button';
@@ -35,6 +37,7 @@ function ForgotPassword({
 	orgId,
 	orgs,
 }: ForgotPasswordRouteState): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
 	const [form] = Form.useForm<FormValues>();
 	const {
 		mutate: forgotPasswordMutate,
@@ -132,16 +135,20 @@ function ForgotPassword({
 					<div className="login-form-emoji">
 						<img src={tvUrl} alt="TV" width="32" height="32" />
 					</div>
-					<h4 className="forgot-password-title">Forgot your password?</h4>
+					<h4 className="forgot-password-title">
+						<ConsoleText message={'Forgot your password?'} />
+					</h4>
 					<p className="forgot-password-description">
-						Send a reset link to your inbox and get back to monitoring.
+						<ConsoleText
+							message={'Send a reset link to your inbox and get back to monitoring.'}
+						/>
 					</p>
 				</div>
 
 				<div className="login-form-card">
 					<div className="forgot-password-field">
 						<label className="forgot-password-label" htmlFor="forgotPasswordEmail">
-							Email address
+							<ConsoleText message={'Email address'} />
 						</label>
 						<Form.Item name="email">
 							<Input
@@ -158,17 +165,22 @@ function ForgotPassword({
 					{hasMultipleOrgs && (
 						<div className="forgot-password-field">
 							<label className="forgot-password-label" htmlFor="orgId">
-								Organization Name
+								<ConsoleText message={'Organization Name'} />
 							</label>
 							<Form.Item
 								name="orgId"
-								rules={[{ required: true, message: 'Please select your organization' }]}
+								rules={[
+									{
+										required: true,
+										message: translateInterfaceCopy('Please select your organization'),
+									},
+								]}
 							>
 								<Select
 									id="orgId"
 									data-testid="orgId"
 									className="login-form-input login-form-select-no-border"
-									placeholder="Select your organization"
+									placeholder={translateInterfaceCopy('Select your organization')}
 									options={orgs.map((org) => ({
 										value: org.id,
 										label: org.name || 'default',
@@ -192,7 +204,7 @@ function ForgotPassword({
 						onClick={handleBackToLogin}
 						prefix={<ArrowLeft size={12} />}
 					>
-						Back to login
+						<ConsoleText message={'Back to login'} />
 					</Button>
 
 					<Button

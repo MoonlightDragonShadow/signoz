@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from 'react-query';
@@ -27,6 +28,7 @@ import { DashedContainer, EditorContainer, EventContainer } from './styles';
 import './styles.scss';
 
 function ErrorDetails(props: ErrorDetailsProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const { idPayload } = props;
 	const { t } = useTranslation(['errorDetails', 'common']);
 	const { search, pathname } = useAppLocation();
@@ -65,19 +67,19 @@ function ErrorDetails(props: ErrorDetailsProps): JSX.Element {
 	const columns = useMemo(
 		() => [
 			{
-				title: 'Key',
+				title: translateConsole('Key'),
 				width: 100,
 				dataIndex: 'key',
 				key: 'key',
 			},
 			{
-				title: 'Value',
+				title: translateConsole('Value'),
 				dataIndex: 'value',
 				width: 100,
 				key: 'value',
 			},
 		],
-		[],
+		[translateConsole],
 	);
 
 	const { notifications } = useNotifications();
@@ -89,7 +91,7 @@ function ErrorDetails(props: ErrorDetailsProps): JSX.Element {
 		try {
 			if (id.length === 0) {
 				notifications.error({
-					message: 'Error Id cannot be empty',
+					message: translateConsole('Error Id cannot be empty'),
 				});
 				return;
 			}
@@ -159,7 +161,7 @@ function ErrorDetails(props: ErrorDetailsProps): JSX.Element {
 			<EventContainer>
 				<div>
 					<Typography testId="error-details-event-id">
-						Event {errorDetail.errorId}
+						{translateConsole('Event')} {errorDetail.errorId}
 					</Typography>
 					<Typography>
 						{formatTimezoneAdjustedTimestamp(

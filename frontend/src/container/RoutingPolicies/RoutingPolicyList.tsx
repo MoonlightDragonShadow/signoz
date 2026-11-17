@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useMemo } from 'react';
 import ErrorEmptyState from 'components/Alerts/ErrorEmptyState';
 import NoResultsEmptyState from 'components/Alerts/NoResultsEmptyState';
@@ -25,6 +26,7 @@ function RoutingPolicyList({
 	hasSearchTerm,
 	onClearSearch,
 }: RoutingPolicyListProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const columnsWithActions = useMemo((): TableColumnDef<RoutingPolicy>[] => {
 		if (!canEdit) {
 			return columns;
@@ -35,7 +37,7 @@ function RoutingPolicyList({
 			{
 				id: 'actions',
 				header: (): JSX.Element => (
-					<span className={styles.actionsHeader}>Actions</span>
+					<span className={styles.actionsHeader}>{translateConsole('Actions')}</span>
 				),
 				accessorKey: 'id',
 				width: { fixed: '96px', ignoreLastColumnFill: true },
@@ -53,14 +55,14 @@ function RoutingPolicyList({
 				),
 			},
 		];
-	}, [canEdit, columns, onEdit, onDelete]);
+	}, [translateConsole, canEdit, columns, onEdit, onDelete]);
 
 	const isEmpty = !isFetching && routingPolicies.length === 0;
 
 	if (isError) {
 		return (
 			<ErrorEmptyState
-				title="Failed to load routing policies"
+				title={translateConsole('Failed to load routing policies')}
 				onRefresh={refetch}
 			/>
 		);
@@ -69,8 +71,10 @@ function RoutingPolicyList({
 	if (isEmpty && hasSearchTerm) {
 		return (
 			<NoResultsEmptyState
-				title="No matching routing policies"
-				subtitle="No routing policies match your search. Try adjusting your search criteria."
+				title={translateConsole('No matching routing policies')}
+				subtitle={translateConsole(
+					'No routing policies match your search. Try adjusting your search criteria.',
+				)}
 				onClear={onClearSearch}
 				clearButtonText="Clear Search"
 			/>

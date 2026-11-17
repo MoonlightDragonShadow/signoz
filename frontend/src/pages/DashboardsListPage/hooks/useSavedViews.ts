@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useMemo } from 'react';
 import { useQueryClient } from 'react-query';
 import { toast } from '@signozhq/ui/sonner';
@@ -56,6 +57,7 @@ export interface UseSavedViewsResult {
 export function useSavedViews({
 	enabled = true,
 }: { enabled?: boolean } = {}): UseSavedViewsResult {
+	const translate = useConsoleTranslation();
 	const queryClient = useQueryClient();
 	const { data, isLoading } = useListDashboardViews({ query: { enabled } });
 
@@ -72,7 +74,7 @@ export function useSavedViews({
 		mutation: {
 			onSuccess: invalidate,
 			onError: (): void => {
-				toast.error('Failed to save view.');
+				toast.error(translate('Failed to save view.'));
 			},
 		},
 	});
@@ -98,7 +100,7 @@ export function useSavedViews({
 				});
 			},
 			onError: (): void => {
-				toast.error('Failed to update view.');
+				toast.error(translate('Failed to update view.'));
 			},
 		},
 	});
@@ -106,7 +108,7 @@ export function useSavedViews({
 		mutation: {
 			onSuccess: invalidate,
 			onError: (): void => {
-				toast.error('Failed to delete view.');
+				toast.error(translate('Failed to delete view.'));
 			},
 		},
 	});

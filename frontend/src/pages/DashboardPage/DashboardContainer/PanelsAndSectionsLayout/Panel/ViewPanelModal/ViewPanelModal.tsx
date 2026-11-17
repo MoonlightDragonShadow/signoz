@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import {
 	Dialog,
 	DialogCloseButton,
@@ -31,6 +32,7 @@ function ViewPanelModal({
 	open,
 	onClose,
 }: ViewPanelModalProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	// Render antd popups into the dialog (not document.body) so they stay inside the
 	// modal's interactive, focus-trapped layer instead of being blocked by Radix.
 	const contentRef = useRef<HTMLDivElement>(null);
@@ -55,7 +57,9 @@ function ViewPanelModal({
 						{panel ? (
 							<ViewPanelModalTitle panel={panel} />
 						) : (
-							<Typography.Text className={styles.title}>View mode</Typography.Text>
+							<Typography.Text className={styles.title}>
+								{translate('View mode')}
+							</Typography.Text>
 						)}
 					</DialogTitle>
 				</DialogHeader>

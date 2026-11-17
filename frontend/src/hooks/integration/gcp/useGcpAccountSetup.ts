@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useState } from 'react';
 import { useQueryClient } from 'react-query';
 import { toast } from '@signozhq/ui/sonner';
@@ -51,6 +52,7 @@ interface UseGcpAccountSetup {
 export function useGcpAccountSetup({
 	onClose,
 }: UseGcpAccountSetupProps): UseGcpAccountSetup {
+	const translateRuntimeCopy = useConsoleTranslation();
 	const queryClient = useQueryClient();
 	const [isLoading, setIsLoading] = useState(false);
 	const [submitError, setSubmitError] = useState<string | null>(null);
@@ -133,7 +135,7 @@ export function useGcpAccountSetup({
 				cloudIntegrationId,
 				providerAccountId,
 			});
-			toast.success('GCP account connected successfully', {
+			toast.success(translateRuntimeCopy('GCP account connected successfully'), {
 				position: 'bottom-right',
 			});
 			void invalidateListAccounts(queryClient, {
@@ -141,7 +143,7 @@ export function useGcpAccountSetup({
 			});
 			onClose();
 		},
-		[onClose, queryClient],
+		[onClose, queryClient, translateRuntimeCopy],
 	);
 
 	return {

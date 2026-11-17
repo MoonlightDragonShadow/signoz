@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useMemo, useRef, useState } from 'react';
 import { useCopyToClipboard } from 'react-use';
 import type { TableColumnsType as ColumnsType } from 'antd';
@@ -37,6 +38,7 @@ function AllAttributes({
 	minTime,
 	maxTime,
 }: AllAttributesProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const [searchString, setSearchString] = useState('');
 	const [activeKey, setActiveKey] = useState<string[]>([ALL_ATTRIBUTES_KEY]);
 	const [keyPopoverOpen, setKeyPopoverOpen] = useState<string | null>(null);
@@ -176,7 +178,7 @@ function AllAttributes({
 	const columns: ColumnsType<DataType> = useMemo(
 		() => [
 			{
-				title: 'Key',
+				title: translate('Key'),
 				dataIndex: 'key',
 				key: 'key',
 				width: 50,
@@ -192,12 +194,12 @@ function AllAttributes({
 										items={[
 											{
 												icon: <SquareArrowOutUpRight size={14} />,
-												label: 'Open in Metric Explorer',
+												label: translate('Open in Metric Explorer'),
 												key: 'open-in-explorer',
 											},
 											{
 												icon: <Copy size={14} />,
-												label: 'Copy Key',
+												label: translate('Copy Key'),
 												key: 'copy-key',
 											},
 										]}
@@ -235,7 +237,7 @@ function AllAttributes({
 				},
 			},
 			{
-				title: 'Value',
+				title: translate('Value'),
 				dataIndex: 'value',
 				key: 'value',
 				width: 50,
@@ -254,6 +256,7 @@ function AllAttributes({
 			},
 		],
 		[
+			translate,
 			goToMetricsExploreWithAppliedAttribute,
 			handleKeyMenuItemClick,
 			keyPopoverOpen,
@@ -267,15 +270,17 @@ function AllAttributes({
 				label: (
 					<div className="metrics-accordion-header">
 						<div className="all-attributes-header-title">
-							<Typography.Text>All Attributes</Typography.Text>
-							<Tooltip title="Showing attributes for the selected time range">
+							<Typography.Text>{translate('All Attributes')}</Typography.Text>
+							<Tooltip
+								title={translate('Showing attributes for the selected time range')}
+							>
 								<Info size={14} />
 							</Tooltip>
 						</div>
 						<Input
 							data-testid="all-attributes-search"
 							className="all-attributes-search-input"
-							placeholder="Search"
+							placeholder={translate('Search')}
 							value={searchString}
 							size="small"
 							suffix={<Search size={12} />}
@@ -316,6 +321,7 @@ function AllAttributes({
 			},
 		],
 		[
+			translate,
 			searchString,
 			isLoadingAttributes,
 			isErrorAttributes,

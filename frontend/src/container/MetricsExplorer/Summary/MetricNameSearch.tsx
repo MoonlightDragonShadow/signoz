@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
 	Button,
@@ -28,6 +29,7 @@ function MetricNameSearch({
 	queryFilterExpression: Filter;
 	onFilterChange: (value: string) => void;
 }): JSX.Element {
+	const translate = useConsoleTranslation();
 	const [isPopoverOpen, setIsPopoverOpen] = useState<boolean>(false);
 	const [searchString, setSearchString] = useState<string>('');
 	const [debouncedSearchString, setDebouncedSearchString] = useState<string>('');
@@ -158,9 +160,9 @@ function MetricNameSearch({
 		if (isLoadingMetricNameFilterValues) {
 			items.push(<Spin />);
 		} else if (isErrorMetricNameFilterValues) {
-			items.push(<Empty description="Error fetching metric names" />);
+			items.push(<Empty description={translate('Error fetching metric names')} />);
 		} else if (metricNameFilterValues?.length === 0) {
-			items.push(<Empty description="No metric names found" />);
+			items.push(<Empty description={translate('No metric names found')} />);
 		} else {
 			items.push(
 				...metricNameFilterValues.map((filterValue, index) => (
@@ -176,6 +178,7 @@ function MetricNameSearch({
 		}
 		return items;
 	}, [
+		translate,
 		handleSelect,
 		highlightedIndex,
 		isErrorMetricNameFilterValues,
@@ -203,7 +206,7 @@ function MetricNameSearch({
 				<Input
 					ref={inputRef}
 					onKeyDown={handleKeyDown}
-					placeholder="Search..."
+					placeholder={translate('Search...')}
 					data-testid="metric-name-search-input"
 					value={searchString}
 					onChange={handleInputChange}
@@ -214,7 +217,7 @@ function MetricNameSearch({
 				</Menu>
 			</div>
 		),
-		[handleKeyDown, searchString, handleInputChange, popoverItems],
+		[translate, handleKeyDown, searchString, handleInputChange, popoverItems],
 	);
 
 	useEffect(() => {
@@ -235,7 +238,7 @@ function MetricNameSearch({
 				type="text"
 				shape="circle"
 				data-testid="metric-name-search-button"
-				aria-label="Search metric name"
+				aria-label={translate('Search metric name')}
 				onClick={(e): void => {
 					e.stopPropagation();
 				}}

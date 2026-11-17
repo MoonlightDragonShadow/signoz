@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { HTMLAttributes, useCallback, useMemo } from 'react';
 import { Button, Skeleton, Table } from 'antd';
 import { ChevronLeft, ChevronRight } from '@signozhq/icons';
@@ -31,6 +32,7 @@ import './Table.styles.scss';
 export const ALERT_HISTORY_EXPRESSION_KEY = 'alertHistoryExpression';
 
 function TimelineTableContent(): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const expression = useExpression();
 	const inputExpression = useInputExpression();
 	const querySearchOnChange = useQuerySearchOnChange();
@@ -169,6 +171,7 @@ function TimelineTableContent(): JSX.Element {
 				rowKey={(row): string => `${row.fingerprint}-${row.value}-${row.unixMilli}`}
 				columns={timelineTableColumns({
 					formatTimezoneAdjustedTimestamp,
+					translateConsole,
 				})}
 				onRow={handleRowClick}
 				dataSource={timelineData}

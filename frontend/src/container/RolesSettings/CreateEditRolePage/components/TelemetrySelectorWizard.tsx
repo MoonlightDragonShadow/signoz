@@ -1,3 +1,5 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { Wand } from '@signozhq/icons';
 import { Button } from '@signozhq/ui/button';
 import { Checkbox } from '@signozhq/ui/checkbox';
@@ -34,6 +36,7 @@ function TelemetrySelectorWizard({
 	resource,
 	testId,
 }: TelemetrySelectorWizardProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const {
 		open,
 		queryType,
@@ -63,7 +66,7 @@ function TelemetrySelectorWizard({
 			testId={`telemetry-wizard-trigger-${testId}`}
 			prefix={<Wand size={14} />}
 		>
-			Wizard
+			<ConsoleText message={'Wizard'} />
 		</Button>
 	);
 
@@ -75,7 +78,7 @@ function TelemetrySelectorWizard({
 				color="secondary"
 				onClick={(): void => handleOpenChange(false)}
 			>
-				Cancel
+				<ConsoleText message={'Cancel'} />
 			</Button>
 			<Button
 				size="md"
@@ -86,7 +89,7 @@ function TelemetrySelectorWizard({
 				disabledTooltip={validation.message}
 				testId={`wizard-add-btn-${testId}`}
 			>
-				Add Selector
+				<ConsoleText message={'Add Selector'} />
 			</Button>
 		</>
 	);
@@ -95,7 +98,7 @@ function TelemetrySelectorWizard({
 		<DialogWrapper
 			open={open}
 			onOpenChange={handleOpenChange}
-			title="Selector Wizard"
+			title={translate('Selector Wizard')}
 			width="wide"
 			testId={`telemetry-wizard-dialog-${testId}`}
 			trigger={trigger}
@@ -105,7 +108,7 @@ function TelemetrySelectorWizard({
 			<div className={styles.wizardBody}>
 				<div className={styles.wizardField}>
 					<Typography as="label" weight="medium">
-						Query Type
+						<ConsoleText message={'Query Type'} />
 					</Typography>
 					<Select value={queryType} onChange={handleQueryTypeChange}>
 						<SelectTrigger data-testid={`wizard-query-type-select-${testId}`}>
@@ -130,7 +133,7 @@ function TelemetrySelectorWizard({
 				{supportsKeyScoping && (
 					<div className={styles.wizardField}>
 						<Typography as="label" weight="medium">
-							Key
+							<ConsoleText message={'Key'} />
 						</Typography>
 						<Select value={grantKey} onChange={handleKeyChange}>
 							<SelectTrigger data-testid={`wizard-key-select-${testId}`}>
@@ -153,7 +156,7 @@ function TelemetrySelectorWizard({
 
 				<div className={styles.wizardField}>
 					<Typography as="label" weight="medium">
-						Value
+						<ConsoleText message={'Value'} />
 					</Typography>
 					<div className={styles.wizardValueRow}>
 						<Input
@@ -174,18 +177,20 @@ function TelemetrySelectorWizard({
 							id={`wizard-any-resource-${testId}`}
 							value={isAnyResource}
 							disabled={!supportsKeyScoping}
-							disabledTooltip="This query type does not support key scoping"
+							disabledTooltip={translate(
+								'This query type does not support key scoping',
+							)}
 							onChange={(checked): void => handleAnyResourceChange(checked === true)}
 							testId={`wizard-any-resource-checkbox-${testId}`}
 						>
-							Any value
+							<ConsoleText message={'Any value'} />
 						</Checkbox>
 					</div>
 				</div>
 
 				<div className={styles.wizardField}>
 					<Typography as="label" weight="medium">
-						Selector
+						<ConsoleText message={'Selector'} />
 					</Typography>
 					<Input
 						value={selector}

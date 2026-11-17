@@ -1,3 +1,5 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import React, { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { QueryKey } from 'react-query';
 // eslint-disable-next-line no-restricted-imports
@@ -57,9 +59,11 @@ const EmptyState = memo(
 						alt="empty-alert-icon"
 						className="empty-state-icon"
 					/>
-					<div className="empty-title">You are not sending traces yet.</div>
+					<div className="empty-title">
+						<ConsoleText message={'You are not sending traces yet.'} />
+					</div>
 					<div className="empty-description">
-						Start sending traces to see your services.
+						<ConsoleText message={'Start sending traces to see your services.'} />
 					</div>
 				</div>
 
@@ -83,7 +87,7 @@ const EmptyState = memo(
 								}
 							}}
 						>
-							Get Started &nbsp; <ArrowRight size={16} />
+							<ConsoleText message={'Get Started  '} /> <ArrowRight size={16} />
 						</Button>
 
 						<Button
@@ -99,7 +103,7 @@ const EmptyState = memo(
 								);
 							}}
 						>
-							Learn more <ArrowUpRight size={12} />
+							<ConsoleText message={'Learn more'} /> <ArrowUpRight size={12} />
 						</Button>
 					</div>
 				)}
@@ -142,6 +146,7 @@ function ServiceMetrics({
 	onUpdateChecklistDoneItem: (itemKey: string) => void;
 	loadingUserPreferences: boolean;
 }): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const { selectedTime: globalSelectedInterval } = useSelector<
 		AppState,
 		GlobalReducer
@@ -320,7 +325,7 @@ function ServiceMetrics({
 						data-testid="home-section-services"
 					>
 						{' '}
-						Services
+						{translateConsole('Services')}
 						<div className="services-header-actions">
 							<Select
 								value={timeRange.selectedInterval}
@@ -351,7 +356,7 @@ function ServiceMetrics({
 									logEvent('Homepage: All Services clicked', {});
 								}}
 							>
-								All Services <ArrowRight size={12} />
+								{translateConsole('All Services')} <ArrowRight size={12} />
 							</Button>
 						</AppLink>
 					</div>

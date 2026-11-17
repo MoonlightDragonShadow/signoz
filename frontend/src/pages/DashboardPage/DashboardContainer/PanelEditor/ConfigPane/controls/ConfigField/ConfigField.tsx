@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import type { ReactNode } from 'react';
 import cx from 'classnames';
 
@@ -27,6 +28,7 @@ function ConfigField({
 	className,
 	children,
 }: ConfigFieldProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	return (
 		<div className={cx(styles.field, className)}>
 			<div className={styles.header}>
@@ -39,7 +41,7 @@ function ConfigField({
 						data-testid="config-field-reset"
 						onClick={onReset}
 					>
-						Reset
+						{translate('Reset')}
 					</button>
 				)}
 			</div>

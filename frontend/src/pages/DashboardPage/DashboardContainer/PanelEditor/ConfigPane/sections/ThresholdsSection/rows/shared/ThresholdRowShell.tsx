@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import type { ReactNode } from 'react';
 import { Pencil, Trash2 } from '@signozhq/icons';
 import { Button } from '@signozhq/ui/button';
@@ -41,6 +42,8 @@ function ThresholdRowShell({
 	onDiscard,
 	onRemove,
 }: ThresholdRowShellProps): JSX.Element {
+	const translateRuntimeCopy = useConsoleTranslation();
+	const translate = useConsoleTranslation();
 	if (!isEditing) {
 		return (
 			<div className={styles.viewRow}>
@@ -67,7 +70,9 @@ function ThresholdRowShell({
 					color="danger"
 					size="sm"
 					icon
-					aria-label={`Remove threshold ${index + 1}`}
+					aria-label={translateRuntimeCopy('Remove threshold {{value1}}', {
+						value1: index + 1,
+					})}
 					testId={`${testIdPrefix}-remove-${index}`}
 					onClick={onRemove}
 				>
@@ -80,7 +85,7 @@ function ThresholdRowShell({
 	return (
 		<div className={styles.editRow}>
 			<Typography.Text className={styles.editTitle}>
-				{isNew ? 'New threshold' : 'Edit threshold'}
+				{isNew ? translate('New threshold') : translate('Edit threshold')}
 			</Typography.Text>
 			{children}
 
@@ -93,7 +98,7 @@ function ThresholdRowShell({
 					testId={`${testIdPrefix}-discard-${index}`}
 					onClick={onDiscard}
 				>
-					Cancel
+					{translate('Cancel')}
 				</Button>
 				<Button
 					size="md"
@@ -103,7 +108,7 @@ function ThresholdRowShell({
 					testId={`${testIdPrefix}-save-${index}`}
 					onClick={onSave}
 				>
-					Save
+					{translate('Save')}
 				</Button>
 			</div>
 		</div>

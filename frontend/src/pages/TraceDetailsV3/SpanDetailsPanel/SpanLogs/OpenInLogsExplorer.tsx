@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Button } from '@signozhq/ui/button';
 import { Compass } from '@signozhq/icons';
 
@@ -8,6 +9,7 @@ interface OpenInLogsExplorerProps {
 // Opens the full Logs Explorer (new tab) filtered to this span's trace.
 // Placement/alignment is the caller's responsibility.
 function OpenInLogsExplorer({ onClick }: OpenInLogsExplorerProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	return (
 		<Button
 			variant="solid"
@@ -17,7 +19,7 @@ function OpenInLogsExplorer({ onClick }: OpenInLogsExplorerProps): JSX.Element {
 			prefix={<Compass size={16} />}
 			testId="open-in-explorer-button"
 		>
-			Open in Logs Explorer
+			{translateConsole('Open in Logs Explorer')}
 		</Button>
 	);
 }

@@ -1,3 +1,5 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { useCallback, useMemo, useState } from 'react';
 import { toast } from '@signozhq/ui/sonner';
 import { Button } from '@signozhq/ui/button';
@@ -61,6 +63,7 @@ function FieldsSelectorContent({
 	height,
 	defaultPosition,
 }: FieldsSelectorContentProps): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
 	const resolvedHeight =
 		height ?? window.innerHeight - DEFAULT_PANEL_HEIGHT_OFFSET;
 	const resolvedPosition = defaultPosition ?? {
@@ -102,11 +105,11 @@ function FieldsSelectorContent({
 
 	const handleSave = useCallback((): void => {
 		onFieldsChange(draftFields);
-		toast.success('Saved successfully', {
+		toast.success(translateInterfaceCopy('Saved successfully'), {
 			position: 'top-right',
 		});
 		onClose();
-	}, [draftFields, onFieldsChange, onClose]);
+	}, [translateInterfaceCopy, draftFields, onFieldsChange, onClose]);
 
 	const handleDiscard = useCallback((): void => {
 		setDraftFields(fields);
@@ -145,7 +148,7 @@ function FieldsSelectorContent({
 						className={styles.searchInput}
 						type="text"
 						value={inputValue}
-						placeholder="Search for a field..."
+						placeholder={translateInterfaceCopy('Search for a field...')}
 						onChange={handleInputChange}
 					/>
 				</section>
@@ -179,7 +182,7 @@ function FieldsSelectorContent({
 							onClick={handleDiscard}
 							prefix={<X width={14} height={14} />}
 						>
-							Discard
+							<ConsoleText message={'Discard'} />
 						</Button>
 						<Button
 							size="md"
@@ -188,7 +191,7 @@ function FieldsSelectorContent({
 							onClick={handleSave}
 							prefix={<Check width={14} height={14} />}
 						>
-							Save changes
+							<ConsoleText message={'Save changes'} />
 						</Button>
 					</div>
 				)}

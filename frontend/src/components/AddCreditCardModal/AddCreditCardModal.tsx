@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { useMutation } from 'react-query';
 import { Button, Modal } from 'antd';
 import { Typography } from '@signozhq/ui/typography';
@@ -57,7 +58,11 @@ function AddCreditCardModal({
 	return (
 		<Modal
 			className="add-credit-card-modal"
-			title={<span className="title">Add Credit Card for Chat Support</span>}
+			title={
+				<span className="title">
+					<ConsoleText message={'Add Credit Card for Chat Support'} />
+				</span>
+			}
 			open={open}
 			closable
 			onCancel={onClose}
@@ -69,7 +74,7 @@ function AddCreditCardModal({
 					className="cancel-btn"
 					icon={<X size={16} />}
 				>
-					Cancel
+					<ConsoleText message={'Cancel'} />
 				</Button>,
 				<AuthZTooltip
 					key="submit"
@@ -85,14 +90,21 @@ function AddCreditCardModal({
 						onClick={handleAddCreditCard}
 						className="add-credit-card-btn"
 					>
-						Add Credit Card
+						<ConsoleText message={'Add Credit Card'} />
 					</Button>
 				</AuthZTooltip>,
 			]}
 		>
 			<Typography.Text className="add-credit-card-text">
-				You&apos;re currently on <span className="highlight-text">Trial plan</span>.
-				Add a credit card to access SigNoz chat support to your workspace.
+				<ConsoleText message={"You're currently on"} />{' '}
+				<span className="highlight-text">
+					<ConsoleText message={'Trial plan'} />
+				</span>
+				<ConsoleText
+					message={
+						'. Add a credit card to access SigNoz chat support to your workspace.'
+					}
+				/>
 			</Typography.Text>
 		</Modal>
 	);

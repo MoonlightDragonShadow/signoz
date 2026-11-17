@@ -1,3 +1,5 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Button as SignozButton } from '@signozhq/ui/button';
 import { Input } from '@signozhq/ui/input';
 import { Button } from 'antd';
@@ -22,6 +24,7 @@ function QuickFiltersSettings({
 	customFilters: TelemetryFieldKey[];
 	refetchCustomFilters: () => void;
 }): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
 	const {
 		handleSettingsClose,
 		handleDiscardChanges,
@@ -45,14 +48,14 @@ function QuickFiltersSettings({
 			<div className="qf-header">
 				<div className="qf-title">
 					<TableColumnsSplit size={16} />
-					Edit quick filters
+					<ConsoleText message={'Edit quick filters'} />
 				</div>
 				<SignozButton
 					variant="ghost"
 					color="secondary"
 					size="sm"
 					icon
-					aria-label="Close"
+					aria-label={translateInterfaceCopy('Close')}
 					onClick={handleSettingsClose}
 					testId="quick-filters-settings-close"
 				>
@@ -63,7 +66,7 @@ function QuickFiltersSettings({
 				<Input
 					type="text"
 					value={inputValue}
-					placeholder="Search for a filter..."
+					placeholder={translateInterfaceCopy('Search for a filter...')}
 					onChange={handleInputChange}
 				/>
 			</section>
@@ -85,7 +88,7 @@ function QuickFiltersSettings({
 						onClick={handleDiscardChanges}
 						icon={<X size={16} />}
 					>
-						Discard
+						<ConsoleText message={'Discard'} />
 					</Button>
 					<Button
 						type="primary"
@@ -93,7 +96,7 @@ function QuickFiltersSettings({
 						icon={<Check size={16} />}
 						loading={isUpdatingCustomFilters}
 					>
-						Save changes
+						<ConsoleText message={'Save changes'} />
 					</Button>
 				</div>
 			)}

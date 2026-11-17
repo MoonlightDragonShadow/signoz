@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Button } from 'antd';
 import { Typography } from '@signozhq/ui/typography';
 import { AuthtypesAuthNProviderDTO } from 'api/generated/services/sigNoz.schemas';
@@ -51,16 +52,18 @@ function AuthnProviderSelector({
 	>;
 	samlEnabled: boolean;
 }): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const authnProviders = getAuthNProviders(samlEnabled);
 	return (
 		<div className="authn-provider-selector">
 			<section className="header">
 				<Typography.Title level={4}>
-					Configure Authentication Method
+					{translateConsole('Configure Authentication Method')}
 				</Typography.Title>
 				<Typography.Text italic>
-					SigNoz supports the following single sign-on services (SSO). Get started
-					with setting your project’s SSO below
+					{translateConsole(
+						'SigNoz supports the following single sign-on services (SSO). Get started with setting your project’s SSO below',
+					)}
 				</Typography.Text>
 			</section>
 			<section className="selector">
@@ -70,9 +73,11 @@ function AuthnProviderSelector({
 							<section key={provider.key} className="provider">
 								<span className="icon">{provider.icon}</span>
 								<div className="title-description">
-									<Typography.Text className="title">{provider.title}</Typography.Text>
+									<Typography.Text className="title">
+										{translateConsole(provider.title)}
+									</Typography.Text>
 									<Typography.Text className="description">
-										{provider.description}
+										{translateConsole(provider.description)}
 									</Typography.Text>
 								</div>
 								<Button
@@ -80,7 +85,7 @@ function AuthnProviderSelector({
 									type="primary"
 									data-testid={`authn-provider-configure-${provider.key}`}
 								>
-									Configure
+									{translateConsole('Configure')}
 								</Button>
 							</section>
 						);

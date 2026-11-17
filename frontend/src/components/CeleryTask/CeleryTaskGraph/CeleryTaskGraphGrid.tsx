@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { useMemo, useState } from 'react';
 // eslint-disable-next-line no-restricted-imports
 import { useSelector } from 'react-redux';
@@ -114,7 +115,7 @@ export default function CeleryTaskGraphGrid({
 					<div className="row-panel">
 						<div className="row-panel-section">
 							<Typography.Text className="section-title">
-								Flower Metrics
+								<ConsoleText message={'Flower Metrics'} />
 							</Typography.Text>
 							{collapsedSections.metricBasedGraphs ? (
 								<ChevronDown
@@ -147,7 +148,7 @@ export default function CeleryTaskGraphGrid({
 						<Card className="celery-task-graph-worker-count">
 							<div className="worker-count-header">
 								<Typography.Text className="worker-count-header-text">
-									Worker Online
+									<ConsoleText message={'Worker Online'} />
 								</Typography.Text>
 							</div>
 							<div className="worker-count-text-container">
@@ -165,7 +166,7 @@ export default function CeleryTaskGraphGrid({
 						<div className="row-panel">
 							<div className="row-panel-section">
 								<Typography.Text className="section-title">
-									Span Based Stats
+									<ConsoleText message={'Span Based Stats'} />
 								</Typography.Text>
 								{collapsedSections.traceBasedGraphs ? (
 									<ChevronDown
@@ -186,7 +187,9 @@ export default function CeleryTaskGraphGrid({
 					<div className="configure-option-Info">
 						{configureOptionComponent}
 						<Typography.Text className="configure-option-Info-text">
-							Click on a graph co-ordinate to see more details
+							<ConsoleText
+								message={'Click on a graph co-ordinate to see more details'}
+							/>
 						</Typography.Text>
 					</div>
 				</div>

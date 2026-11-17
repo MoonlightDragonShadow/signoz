@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Input } from '@signozhq/ui/input';
 import { CloudintegrationtypesGCPConnectionMethodDTO } from 'api/generated/services/sigNoz.schemas';
 import cx from 'classnames';
@@ -24,6 +25,8 @@ function DeploymentProjectIdField({
 	control,
 	connectionMethod,
 }: DeploymentProjectIdFieldProps): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
+	const translateConsole = useConsoleTranslation();
 	return (
 		<Controller
 			name="deploymentProjectId"
@@ -32,7 +35,7 @@ function DeploymentProjectIdField({
 			render={({ field, fieldState }): JSX.Element => (
 				<FormField
 					htmlFor="gcp-deployment-project-id-input"
-					label="Deployment Project ID"
+					label={translateConsole('Deployment Project ID')}
 					tooltip={TOOLTIPS[connectionMethod]}
 					required
 					error={fieldState.error}
@@ -40,7 +43,7 @@ function DeploymentProjectIdField({
 					<Input
 						id="gcp-deployment-project-id-input"
 						className={cx(styles.fullWidth, styles.mono)}
-						placeholder="e.g. my-deployment-project-123"
+						placeholder={translateInterfaceCopy('e.g. my-deployment-project-123')}
 						value={field.value}
 						onChange={(e): void => field.onChange(e.target.value)}
 						testId="gcp-deployment-project-id-input"

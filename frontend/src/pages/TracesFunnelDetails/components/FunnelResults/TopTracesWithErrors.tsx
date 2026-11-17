@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useFunnelErrorTraces } from 'hooks/TracesFunnels/useFunnels';
 import { FunnelStepData } from 'types/api/traceFunnels';
 
@@ -11,12 +12,13 @@ interface TopTracesWithErrorsProps {
 }
 
 function TopTracesWithErrors(props: TopTracesWithErrorsProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	return (
 		<FunnelTopTracesTable
 			{...props}
-			title="Traces with errors"
+			title={translateConsole('Traces with errors')}
 			testId="funnel-error-traces"
-			tooltip="A list of the traces with errors in the funnel"
+			tooltip={translateConsole('A list of the traces with errors in the funnel')}
 			useQueryHook={useFunnelErrorTraces}
 		/>
 	);

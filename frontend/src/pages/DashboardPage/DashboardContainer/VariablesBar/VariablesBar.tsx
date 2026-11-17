@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { ChevronLeft } from '@signozhq/icons';
 import { Button } from '@signozhq/ui/button';
 import { Tooltip } from '@signozhq/ui/tooltip';
@@ -31,6 +32,7 @@ interface VariablesBarProps {
  * either way so auto-selection and option fetching keep driving the panels.
  */
 function VariablesBar({ dashboard }: VariablesBarProps): JSX.Element | null {
+	const translate = useConsoleTranslation();
 	const dashboardId = dashboard.id ?? '';
 	const { isEditable, editChecks, editDisabledTooltip } =
 		useDashboardEditContext();
@@ -67,7 +69,7 @@ function VariablesBar({ dashboard }: VariablesBarProps): JSX.Element | null {
 			testId="dashboard-variables-more"
 			onClick={(): void => setVariablesExpanded(dashboardId, !expanded)}
 		>
-			{expanded ? 'Less' : `+${overflowCount}`}
+			{expanded ? translate('Less') : `+${overflowCount}`}
 		</Button>
 	);
 

@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { CircleAlert, RefreshCw } from '@signozhq/icons';
 import { Select } from 'antd';
 import { Checkbox } from '@signozhq/ui/checkbox';
@@ -49,6 +50,7 @@ function ErrorContent({
 	error?: APIError;
 	onRefetch?: () => void;
 }): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
 	const errorMessage = error?.message || 'Failed to load roles';
 
 	return (
@@ -65,7 +67,7 @@ function ErrorContent({
 						onRefetch();
 					}}
 					className="roles-select-error__retry-btn"
-					title="Retry"
+					title={translateInterfaceCopy('Retry')}
 				>
 					<RefreshCw size={12} />
 				</button>

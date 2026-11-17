@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from 'react-query';
@@ -18,6 +19,7 @@ import { urlKey } from './utils';
 
 // eslint-disable-next-line sonarjs/cognitive-complexity
 function ErrorDetails(): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
 	const { t } = useTranslation(['common']);
 	const { maxTime, minTime } = useSelector<AppState, GlobalReducer>(
 		(state) => state.globalTime,
@@ -66,7 +68,7 @@ function ErrorDetails(): JSX.Element {
 
 	// when the api is in loading state
 	if (status === 'loading' || IdStatus === 'loading') {
-		return <Spinner tip="Loading.." />;
+		return <Spinner tip={translateInterfaceCopy('Loading..')} />;
 	}
 
 	// if any error occurred while loading

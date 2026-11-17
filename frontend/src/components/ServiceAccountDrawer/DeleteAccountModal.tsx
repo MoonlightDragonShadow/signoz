@@ -1,3 +1,5 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { useQueryClient } from 'react-query';
 import { Trash2, X } from '@signozhq/icons';
 import { Button } from '@signozhq/ui/button';
@@ -22,6 +24,8 @@ import { useErrorModal } from 'providers/ErrorModalProvider';
 import APIError from 'types/api/error';
 
 function DeleteAccountModal(): JSX.Element {
+	const translateRuntimeCopy = useConsoleTranslation();
+	const translateToast = useConsoleTranslation();
 	const queryClient = useQueryClient();
 	const { showErrorModal, isErrorModalVisible } = useErrorModal();
 	const [accountId, setAccountId] = useQueryState(SA_QUERY_PARAMS.ACCOUNT);
@@ -42,7 +46,7 @@ function DeleteAccountModal(): JSX.Element {
 		useDeleteServiceAccount({
 			mutation: {
 				onSuccess: async () => {
-					toast.success('Service account deleted');
+					toast.success(translateToast('Service account deleted'));
 					await setIsDeleteOpen(null);
 					await setAccountId(null);
 					await invalidateListServiceAccounts(queryClient);
@@ -72,9 +76,13 @@ function DeleteAccountModal(): JSX.Element {
 
 	const content = (
 		<p className="sa-delete-dialog__body">
-			Are you sure you want to delete <strong>{accountName}</strong>? This action
-			cannot be undone. All keys associated with this service account will be
-			permanently removed.
+			<ConsoleText message={'Are you sure you want to delete'} />{' '}
+			<strong>{accountName}</strong>
+			<ConsoleText
+				message={
+					'? This action cannot be undone. All keys associated with this service account will be permanently removed.'
+				}
+			/>
 		</p>
 	);
 
@@ -87,7 +95,7 @@ function DeleteAccountModal(): JSX.Element {
 				onClick={handleCancel}
 				prefix={<X size={12} />}
 			>
-				Cancel
+				<ConsoleText message={'Cancel'} />
 			</Button>
 			<AuthZButton
 				size="md"
@@ -100,7 +108,7 @@ function DeleteAccountModal(): JSX.Element {
 				data-testid="confirm-delete-btn"
 				prefix={<Trash2 size={12} />}
 			>
-				Delete
+				<ConsoleText message={'Delete'} />
 			</AuthZButton>
 		</div>
 	);
@@ -113,7 +121,9 @@ function DeleteAccountModal(): JSX.Element {
 					handleCancel();
 				}
 			}}
-			title={`Delete service account ${accountName ?? ''}?`}
+			title={translateRuntimeCopy('Delete service account {{value1}}?', {
+				value1: accountName ?? '',
+			})}
 			width="narrow"
 			className="alert-dialog sa-delete-dialog"
 			showCloseButton={false}

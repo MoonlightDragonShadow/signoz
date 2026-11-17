@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { AlignLeft, Copy, Download, RotateCcw } from '@signozhq/icons';
 import { Button } from '@signozhq/ui/button';
 
@@ -23,6 +24,7 @@ function JsonEditorToolbar({
 	onDownload,
 	onReset,
 }: JsonEditorToolbarProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	return (
 		<div className={styles.toolbar}>
 			<Button
@@ -35,7 +37,7 @@ function JsonEditorToolbar({
 				disabled={readOnly}
 				onClick={onFormat}
 			>
-				Format
+				{translate('Format')}
 			</Button>
 			<Button
 				variant="ghost"
@@ -45,7 +47,7 @@ function JsonEditorToolbar({
 				testId="json-editor-copy"
 				onClick={onCopy}
 			>
-				Copy
+				{translate('Copy')}
 			</Button>
 			<Button
 				variant="ghost"
@@ -55,11 +57,13 @@ function JsonEditorToolbar({
 				testId="json-editor-download"
 				onClick={onDownload}
 			>
-				Download
+				{translate('Download')}
 			</Button>
 			<div className={styles.spacer} />
 			<Button
-				disabledTooltip={readOnly ? READ_ONLY_REASON : 'No changes to reset'}
+				disabledTooltip={
+					readOnly ? READ_ONLY_REASON : translate('No changes to reset')
+				}
 				variant="ghost"
 				color="secondary"
 				size="sm"
@@ -68,7 +72,7 @@ function JsonEditorToolbar({
 				disabled={readOnly || !isDirty}
 				onClick={onReset}
 			>
-				Reset
+				{translate('Reset')}
 			</Button>
 		</div>
 	);

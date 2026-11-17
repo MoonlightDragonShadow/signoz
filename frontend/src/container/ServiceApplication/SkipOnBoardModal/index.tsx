@@ -1,16 +1,19 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Button } from 'antd';
 import { Typography } from '@signozhq/ui/typography';
 import Modal from 'components/Modal';
 
 function SkipOnBoardingModal({ onContinueClick }: Props): JSX.Element {
+	const translate = useConsoleTranslation();
 	return (
 		<Modal
-			title="Setup instrumentation"
+			title={translate('Setup instrumentation')}
 			isModalVisible
 			closable={false}
 			footer={[
 				<Button key="submit" type="primary" onClick={onContinueClick}>
-					Continue without instrumentation
+					{translate('Continue without instrumentation')}
 				</Button>,
 			]}
 		>
@@ -25,7 +28,7 @@ function SkipOnBoardingModal({ onContinueClick }: Props): JSX.Element {
 					title="youtube_video"
 				/>
 				<div>
-					<Typography>No instrumentation data.</Typography>
+					<Typography>{translate('No instrumentation data.')}</Typography>
 					<Typography>
 						Please instrument your application as mentioned&nbsp;
 						<a
@@ -33,7 +36,7 @@ function SkipOnBoardingModal({ onContinueClick }: Props): JSX.Element {
 							target="_blank"
 							rel="noreferrer"
 						>
-							here
+							<ConsoleText message={'here'} />
 						</a>
 					</Typography>
 				</div>

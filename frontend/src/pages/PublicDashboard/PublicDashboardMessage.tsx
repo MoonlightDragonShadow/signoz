@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { ReactNode } from 'react';
 import { Typography } from '@signozhq/ui/typography';
 
@@ -21,6 +22,7 @@ function PublicDashboardMessage({
 	description,
 	testId,
 }: PublicDashboardMessageProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	return (
 		<div className="public-dashboard-error-container" data-testid={testId}>
 			<div className="perilin-bg" />
@@ -36,7 +38,9 @@ function PublicDashboardMessage({
 
 				<div className="brand-tagline">
 					<Typography.Text>
-						OpenTelemetry-Native Logs, Metrics and Traces in a single pane
+						{translate(
+							'OpenTelemetry-Native Logs, Metrics and Traces in a single pane',
+						)}
 					</Typography.Text>
 				</div>
 			</div>

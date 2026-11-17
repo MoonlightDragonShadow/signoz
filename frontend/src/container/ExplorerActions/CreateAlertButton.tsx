@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { ConciergeBell } from '@signozhq/icons';
 import { Button } from '@signozhq/ui/button';
 import { Tooltip } from '@signozhq/ui/tooltip';
@@ -22,6 +23,7 @@ function CreateAlertButton({
 	sourcepage: DataSource;
 	isOneChartPerQuery?: boolean;
 }): JSX.Element {
+	const translate = useConsoleTranslation();
 	const navigate = useAppNavigate();
 	const { panelType } = useQueryBuilder();
 
@@ -37,16 +39,16 @@ function CreateAlertButton({
 	};
 
 	return isOneChartPerQuery ? (
-		<Tooltip title="Create an alert">
+		<Tooltip title={translate('Create an alert')}>
 			<Button
 				variant="ghost"
 				color="secondary"
 				size="sm"
 				icon
 				disabled={!query}
-				disabledTooltip="Run a query first"
+				disabledTooltip={translate('Run a query first')}
 				onClick={createAlert}
-				aria-label="Create an alert"
+				aria-label={translate('Create an alert')}
 				testId="explorer-create-alert"
 			>
 				<ConciergeBell size={16} />
@@ -58,12 +60,12 @@ function CreateAlertButton({
 			color="secondary"
 			size="md"
 			disabled={!query}
-			disabledTooltip="Run a query first"
+			disabledTooltip={translate('Run a query first')}
 			onClick={createAlert}
 			prefix={<ConciergeBell size={16} />}
 			testId="explorer-create-alert"
 		>
-			Create an alert
+			{translate('Create an alert')}
 		</Button>
 	);
 }

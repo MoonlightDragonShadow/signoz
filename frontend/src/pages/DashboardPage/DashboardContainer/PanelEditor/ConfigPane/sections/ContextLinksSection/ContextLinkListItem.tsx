@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Pencil, Trash2 } from '@signozhq/icons';
 import { Button } from '@signozhq/ui/button';
 import { Typography } from '@signozhq/ui/typography';
@@ -19,6 +20,7 @@ function ContextLinkListItem({
 	onEdit,
 	onRemove,
 }: ContextLinkListItemProps): JSX.Element {
+	const translateRuntimeCopy = useConsoleTranslation();
 	const label = link.name?.trim() || link.url || 'Untitled link';
 
 	return (
@@ -50,7 +52,9 @@ function ContextLinkListItem({
 					color="danger"
 					size="sm"
 					icon
-					aria-label={`Remove link ${index + 1}`}
+					aria-label={translateRuntimeCopy('Remove link {{value1}}', {
+						value1: index + 1,
+					})}
 					testId={`context-link-remove-${index}`}
 					onClick={onRemove}
 				>

@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback } from 'react';
 import { useAppLocation } from 'lib/router/useAppLocation';
 import { Button } from '@signozhq/ui/button';
@@ -14,6 +15,7 @@ import { openAIAssistant } from 'container/AIAssistant/store/useAIAssistantStore
 import { useIsAIAssistantEnabled } from 'hooks/useIsAIAssistantEnabled';
 
 export default function NozButton(): JSX.Element | null {
+	const translateConsole = useConsoleTranslation();
 	const { pathname } = useAppLocation();
 	const isAIAssistantEnabled = useIsAIAssistantEnabled();
 
@@ -37,7 +39,7 @@ export default function NozButton(): JSX.Element | null {
 					size="sm"
 					icon
 					color="secondary"
-					aria-label="Open Noz"
+					aria-label={translateConsole('Open Noz')}
 					onClick={handleOpenNoz}
 				>
 					<Noz size={16} />

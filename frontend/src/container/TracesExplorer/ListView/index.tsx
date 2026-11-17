@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import {
 	Dispatch,
 	memo,
@@ -230,7 +231,8 @@ function ListView({
 				{headerActions}
 				<div className="order-by-container">
 					<div className="order-by-label">
-						Order by <Minus size={14} /> <ArrowUp10 size={14} />
+						<ConsoleText message={'Order by'} /> <Minus size={14} />{' '}
+						<ArrowUp10 size={14} />
 					</div>
 
 					<ListViewOrderBy

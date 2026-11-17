@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { useCallback, useMemo, useState } from 'react';
 import { ChevronDown, ChevronRight } from '@signozhq/icons';
 import type { AuthZResource, AuthZVerb } from 'lib/authz/hooks/useAuthZ/types';
@@ -110,7 +111,7 @@ function ResourceCard({
 				</div>
 				<div className={styles.resourceCardHeaderRight}>
 					<Typography as="span" size="base" color="muted">
-						{grantedCount} / {totalCount} granted
+						{grantedCount} / {totalCount} <ConsoleText message={'granted'} />
 					</Typography>
 				</div>
 			</button>

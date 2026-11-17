@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Badge } from '@signozhq/ui/badge';
 import TanStackTable from 'components/TanStackTableView';
 import { DATE_TIME_FORMATS } from 'constants/dateTimeFormats';
@@ -22,6 +23,7 @@ type FieldCellProps = {
 };
 
 function FieldCell({ name, value }: FieldCellProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const { formatTimezoneAdjustedTimestamp } = useTimezone();
 
 	if (TIMESTAMP_FIELD_NAMES.has(name)) {
@@ -73,7 +75,10 @@ function FieldCell({ name, value }: FieldCellProps): JSX.Element {
 
 	if (DURATION_FIELD_NAMES.has(name)) {
 		return (
-			<TanStackTable.Text data-testid={name}>{getMs(text)}ms</TanStackTable.Text>
+			<TanStackTable.Text data-testid={name}>
+				{getMs(text)}
+				{translateConsole('ms')}
+			</TanStackTable.Text>
 		);
 	}
 

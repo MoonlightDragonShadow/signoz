@@ -1,3 +1,5 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { useCallback, useEffect, useMemo } from 'react';
 import cx from 'classnames';
 import { useAppNavigate } from 'lib/router/useAppNavigate';
@@ -28,6 +30,7 @@ interface RolesListContentProps {
 }
 
 function RolesListContent({ searchQuery }: RolesListContentProps): JSX.Element {
+	const translateSettings = useConsoleTranslation();
 	const { isRolesEnabled } = useRolesFeatureGate();
 
 	const { data, isLoading, isError, error } = useListRoles();
@@ -76,13 +79,13 @@ function RolesListContent({ searchQuery }: RolesListContentProps): JSX.Element {
 		const result: DisplayItem[] = [];
 
 		if (managedRoles.length > 0) {
-			result.push({ type: 'section', label: 'Managed roles' });
+			result.push({ type: 'section', label: translateSettings('Managed roles') });
 			managedRoles.forEach((role) => result.push({ type: 'role', role }));
 		}
 		if (customRoles.length > 0) {
 			result.push({
 				type: 'section',
-				label: 'Custom roles',
+				label: translateSettings('Custom roles'),
 				count: customRoles.length,
 			});
 			customRoles.forEach((role) => result.push({ type: 'role', role }));
@@ -141,7 +144,11 @@ function RolesListContent({ searchQuery }: RolesListContentProps): JSX.Element {
 			<span className="numbers">
 				{range[0]} &#8212; {range[1]}
 			</span>
-			<span className="total"> of {total}</span>
+			<span className="total">
+				{' '}
+				<ConsoleText message={'of'} />
+				{total}
+			</span>
 		</>
 	);
 
@@ -227,22 +234,24 @@ function RolesListContent({ searchQuery }: RolesListContentProps): JSX.Element {
 			<div className={styles.scrollContainer}>
 				<div className={styles.tableInner}>
 					<div className={styles.tableHeader}>
-						<div className={cx(styles.headerCell, styles.headerCellName)}>Name</div>
+						<div className={cx(styles.headerCell, styles.headerCellName)}>
+							<ConsoleText message={'Name'} />
+						</div>
 						<div className={cx(styles.headerCell, styles.headerCellDescription)}>
-							Description
+							<ConsoleText message={'Description'} />
 						</div>
 						<div className={cx(styles.headerCell, styles.headerCellUpdatedAt)}>
-							Updated At
+							<ConsoleText message={'Updated At'} />
 						</div>
 						<div className={cx(styles.headerCell, styles.headerCellCreatedAt)}>
-							Created At
+							<ConsoleText message={'Created At'} />
 						</div>
 					</div>
 
 					{paginatedItems.map((item) =>
 						item.type === 'section' ? (
 							<h3 key={`section-${item.label}`} className={styles.sectionHeader}>
-								{item.label}
+								{translateSettings(item.label)}
 								{item.count !== undefined && (
 									<span className={styles.sectionHeaderCount}>{item.count}</span>
 								)}

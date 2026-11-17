@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Fragment, useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { UseQueryResult } from 'react-query';
@@ -57,6 +58,7 @@ function GeneralSettings({
 	tracesTtlValuesRefetch,
 	logsTtlValuesRefetch,
 }: GeneralSettingsProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const { t } = useTranslation(['generalSettings']);
 	const [modalMetrics, setModalMetrics] = useState<boolean>(false);
 	const [modalTraces, setModalTraces] = useState<boolean>(false);
@@ -688,9 +690,11 @@ function GeneralSettings({
 	return (
 		<div className="general-settings-page">
 			<div className="general-settings-header">
-				<span className="general-settings-title">Workspace</span>
+				<span className="general-settings-title">
+					{translateConsole('Workspace')}
+				</span>
 				<span className="general-settings-subtitle">
-					Manage your workspace settings.
+					{translateConsole('Manage your workspace settings.')}
 				</span>
 			</div>
 
@@ -715,7 +719,9 @@ function GeneralSettings({
 
 			<div className="retention-controls-container">
 				<div className="retention-controls-header">
-					<span className="retention-controls-header-label">Retention Controls</span>
+					<span className="retention-controls-header-label">
+						{translateConsole('Retention Controls')}
+					</span>
 				</div>
 				{renderConfig}
 			</div>

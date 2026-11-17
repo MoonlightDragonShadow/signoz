@@ -1,3 +1,5 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { useEffect, useState } from 'react';
 import { Button } from '@signozhq/ui/button';
 import { Slider } from '@signozhq/ui/slider';
@@ -88,6 +90,7 @@ function OptimiseSignozNeeds({
 	onWillDoLater,
 	isNextDisabled,
 }: OptimiseSignozNeedsProps): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
 	const [logsPerDay, setLogsPerDay] = useState<number>(
 		optimiseSignozDetails?.logsPerDay || 0,
 	);
@@ -188,21 +191,23 @@ function OptimiseSignozNeeds({
 	return (
 		<div className="questions-container">
 			<OnboardingQuestionHeader
-				title="Set up your workspace"
-				subtitle="Tailor SigNoz to suit your observability needs."
+				title={translateInterfaceCopy('Set up your workspace')}
+				subtitle={translateInterfaceCopy(
+					'Tailor SigNoz to suit your observability needs.',
+				)}
 			/>
 
 			<div className="questions-form-container">
 				<div className="questions-form">
 					<div className="form-group">
 						<Typography.Text className="question">
-							What does your scale approximately look like?
+							<ConsoleText message={'What does your scale approximately look like?'} />
 						</Typography.Text>
 					</div>
 
 					<div className="form-group">
 						<label className="question-slider" htmlFor="organisationName">
-							Logs / Day
+							<ConsoleText message={'Logs / Day'} />
 						</label>
 						<div className="slider-container">
 							<div>
@@ -229,7 +234,8 @@ function OptimiseSignozNeeds({
 
 					<div className="form-group">
 						<label className="question-slider" htmlFor="organisationName">
-							Metrics <Minus size={14} /> Number of Hosts
+							<ConsoleText message={'Metrics'} /> <Minus size={14} />{' '}
+							<ConsoleText message={'Number of Hosts'} />
 						</label>
 						<div className="slider-container">
 							<div>
@@ -256,7 +262,7 @@ function OptimiseSignozNeeds({
 
 					<div className="form-group">
 						<label className="question-slider" htmlFor="organisationName">
-							Number of services
+							<ConsoleText message={'Number of services'} />
 						</label>
 						<div className="slider-container">
 							<div>
@@ -291,10 +297,12 @@ function OptimiseSignozNeeds({
 						onClick={handleOnNext}
 						loading={isUpdatingProfile}
 						disabled={isNextDisabled}
-						disabledTooltip="Set at least one of the values above"
+						disabledTooltip={translateInterfaceCopy(
+							'Set at least one of the values above',
+						)}
 						suffix={<ArrowRight size={12} />}
 					>
-						Next
+						<ConsoleText message={'Next'} />
 					</Button>
 					<Button
 						size="md"
@@ -304,7 +312,7 @@ function OptimiseSignozNeeds({
 						onClick={handleWillDoLater}
 						loading={isUpdatingProfile}
 					>
-						I&apos;ll do this later
+						<ConsoleText message={"I'll do this later"} />
 					</Button>
 				</div>
 			</div>

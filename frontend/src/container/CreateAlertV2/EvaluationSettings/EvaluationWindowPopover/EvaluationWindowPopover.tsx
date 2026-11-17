@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Button } from 'antd';
 import { Typography } from '@signozhq/ui/typography';
 import classNames from 'classnames';
@@ -22,6 +23,7 @@ function EvaluationWindowPopover({
 	setEvaluationWindow,
 	rollingOnly = false,
 }: IEvaluationWindowPopoverProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const windowTypeOptions = rollingOnly
 		? EVALUATION_WINDOW_TYPE.filter((option) => option.value === 'rolling')
 		: EVALUATION_WINDOW_TYPE;
@@ -81,7 +83,7 @@ function EvaluationWindowPopover({
 						}}
 						ref={index === 0 ? firstItemRef : undefined}
 					>
-						<Typography.Text>{option.label}</Typography.Text>
+						<Typography.Text>{translateConsole(option.label)}</Typography.Text>
 						{currentValue === option.value && <Check size={12} />}
 					</div>
 				))}
@@ -104,7 +106,7 @@ function EvaluationWindowPopover({
 					<Typography.Text>
 						{getRollingWindowDescription(evaluationWindow.timeframe)}
 					</Typography.Text>
-					<Button type="link">Read the docs</Button>
+					<Button type="link">{translateConsole('Read the docs')}</Button>
 				</div>
 			);
 		}
@@ -118,7 +120,7 @@ function EvaluationWindowPopover({
 					<Typography.Text>
 						{getCumulativeWindowDescription(evaluationWindow.timeframe)}
 					</Typography.Text>
-					<Button type="link">Read the docs</Button>
+					<Button type="link">{translateConsole('Read the docs')}</Button>
 				</div>
 			);
 		}
@@ -136,7 +138,7 @@ function EvaluationWindowPopover({
 			className="evaluation-window-popover"
 			ref={containerRef}
 			role="menu"
-			aria-label="Evaluation window options"
+			aria-label={translateConsole('Evaluation window options')}
 		>
 			<div className="evaluation-window-content">
 				{renderEvaluationWindowContent(

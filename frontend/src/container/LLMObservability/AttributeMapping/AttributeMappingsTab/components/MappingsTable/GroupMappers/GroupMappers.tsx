@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useEffect } from 'react';
 import { Button } from '@signozhq/ui/button';
 import { Typography } from '@signozhq/ui/typography';
@@ -39,6 +40,7 @@ function GroupMappers({
 	onAddMapper,
 	onEditMapper,
 }: GroupMappersProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const { hydrateGroupMappers, removeMapper, toggleMapper } = editor;
 	const canManage = useCanManageAttributeMapping();
 
@@ -84,7 +86,7 @@ function GroupMappers({
 				<span className={styles.stateContent}>
 					<TriangleAlert size={14} color="var(--danger-background)" />
 					<Typography.Text as="span" size="base">
-						Failed to load mappings. Please try again.
+						{translateConsole('Failed to load mappings. Please try again.')}
 					</Typography.Text>
 				</span>
 			</td>
@@ -105,7 +107,7 @@ function GroupMappers({
 				<span className={styles.stateContent}>
 					<ArrowLeftRight size={14} />
 					<Typography.Text as="span" size="base" color="muted">
-						No mappings in this group yet.
+						{translateConsole('No mappings in this group yet.')}
 					</Typography.Text>
 				</span>
 			</td>
@@ -127,7 +129,7 @@ function GroupMappers({
 					onClick={(): void => onAddMapper(group.localId)}
 					testId={`add-mapper-${group.localId}`}
 				>
-					Add mapping
+					{translateConsole('Add mapping')}
 				</Button>
 			</td>
 		</motion.tr>

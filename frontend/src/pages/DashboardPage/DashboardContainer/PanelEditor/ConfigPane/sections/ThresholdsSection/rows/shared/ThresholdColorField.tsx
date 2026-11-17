@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Typography } from '@signozhq/ui/typography';
 
 import ColorSwatches from '../../../../controls/ColorSwatches/ColorSwatches';
@@ -24,16 +25,19 @@ function ThresholdColorField({
 	value,
 	onChange,
 }: ThresholdColorFieldProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const preset = OPTIONS.find(
 		(option) => option.value.toLowerCase() === value?.toLowerCase(),
 	);
 
 	return (
 		<div className={styles.field}>
-			<Typography.Text className={styles.fieldLabel}>Color</Typography.Text>
+			<Typography.Text className={styles.fieldLabel}>
+				{translate('Color')}
+			</Typography.Text>
 			<ColorSwatches
 				testId={testId}
-				label="Color"
+				label={translate('Color')}
 				value={preset?.value}
 				options={OPTIONS}
 				onChange={onChange}

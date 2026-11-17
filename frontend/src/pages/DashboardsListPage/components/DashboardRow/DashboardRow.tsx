@@ -1,3 +1,5 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
+import { localizeRelativeTime } from 'components/LocalizedRelativeTime/localizeRelativeTime';
 import { useState } from 'react';
 import { Badge } from '@signozhq/ui/badge';
 import { Button } from '@signozhq/ui/button';
@@ -38,6 +40,7 @@ function DashboardRow({
 	showUpdatedAt,
 	showUpdatedBy,
 }: Props): JSX.Element {
+	const translate = useConsoleTranslation();
 	const { safeNavigate } = useSafeNavigate();
 	const { formatTimezoneAdjustedTimestamp } = useTimezone();
 
@@ -134,7 +137,7 @@ function DashboardRow({
 								testId={`dashboard-legacy-${index}`}
 								textTransform="none"
 							>
-								Legacy
+								{translate('Legacy')}
 							</Badge>
 						)}
 					</div>
@@ -142,7 +145,7 @@ function DashboardRow({
 					<DashboardRowTags tags={tags} />
 
 					{isLocked && (
-						<Tooltip title="This dashboard is locked" side="top">
+						<Tooltip title={translate('This dashboard is locked')} side="top">
 							<span
 								className={styles.lockIcon}
 								data-testid={`dashboard-lock-${index}`}
@@ -214,14 +217,16 @@ function DashboardRow({
 					{showUpdatedAt && (
 						<div className={styles.createdAt}>
 							<CalendarClock size={14} />
-							<Typography.Text>{lastUpdatedLabel(updatedAt)}</Typography.Text>
+							<Typography.Text>
+								{localizeRelativeTime(lastUpdatedLabel(updatedAt), translate)}
+							</Typography.Text>
 						</div>
 					)}
 
 					{updatedBy && showUpdatedBy && (
 						<div className={styles.updatedBy}>
 							<Typography.Text className={styles.byLabel}>
-								Last Updated By -
+								{translate('Last Updated By -')}
 							</Typography.Text>
 							<div className={styles.avatar}>
 								<Typography.Text className={styles.avatarText}>

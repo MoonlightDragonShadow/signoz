@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useEffect, useMemo } from 'react';
 import { Form, Tabs, TabsProps } from 'antd';
 import logEvent from 'api/common/logEvent';
@@ -25,6 +26,7 @@ import SelectAlertType from './SelectAlertType';
 import './CreateAlertRule.styles.scss';
 
 function CreateRules(): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const [formInstance] = Form.useForm();
 	const compositeQuery = useGetCompositeQueryParam();
 	const queryParams = useUrlQuery();
@@ -125,7 +127,7 @@ function CreateRules(): JSX.Element {
 			label: (
 				<div className="periscope-tab top-level-tab">
 					<GalleryVerticalEnd size={14} />
-					Triggered Alerts
+					{translateConsole('Triggered Alerts')}
 				</div>
 			),
 			key: AlertListTabs.TRIGGERED_ALERTS,
@@ -135,7 +137,7 @@ function CreateRules(): JSX.Element {
 			label: (
 				<div className="periscope-tab top-level-tab">
 					<Pyramid size={14} />
-					Alert Rules
+					{translateConsole('Alert Rules')}
 				</div>
 			),
 			key: AlertListTabs.ALERT_RULES,
@@ -147,17 +149,20 @@ function CreateRules(): JSX.Element {
 							isTypeSelectionMode
 								? [
 										{
-											title: 'Alert Rules',
+											title: translateConsole('Alert Rules'),
 											route: `${ROUTES.LIST_ALL_ALERT}?tab=${AlertListTabs.ALERT_RULES}`,
 										},
-										{ title: 'Select Alert Type', isLast: true },
+										{ title: translateConsole('Select Alert Type'), isLast: true },
 									]
 								: [
 										{
-											title: 'Alert Rules',
+											title: translateConsole('Alert Rules'),
 											route: `${ROUTES.LIST_ALL_ALERT}?tab=${AlertListTabs.ALERT_RULES}`,
 										},
-										{ title: 'Select Alert Type', route: ROUTES.ALERTS_NEW },
+										{
+											title: translateConsole('Select Alert Type'),
+											route: ROUTES.ALERTS_NEW,
+										},
 										{
 											title: ALERT_TYPE_BREADCRUMB_TITLE[alertType],
 											isLast: true,
@@ -173,7 +178,7 @@ function CreateRules(): JSX.Element {
 			label: (
 				<div className="periscope-tab top-level-tab">
 					<ConfigureIcon width={14} height={14} />
-					Configuration
+					{translateConsole('Configuration')}
 				</div>
 			),
 			key: AlertListTabs.CONFIGURATION,

@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { type ReactNode, useCallback } from 'react';
 import { useQueryClient } from 'react-query';
 import { toast } from '@signozhq/ui/sonner';
@@ -39,6 +40,7 @@ export function useDeleteDashboardAction({
 	dashboardName,
 	panelCount,
 }: UseDeleteDashboardActionArgs): UseDeleteDashboardAction {
+	const translate = useConsoleTranslation();
 	const queryClient = useQueryClient();
 	const { showErrorModal } = useErrorModal();
 	const { contextHolder, confirmDelete } = useDeleteConfirm();
@@ -52,7 +54,7 @@ export function useDeleteDashboardAction({
 				void logEvent(DashboardDetailEvents.Deleted, { dashboardId, panelCount });
 				removePreferences(dashboardId);
 				await invalidateListDashboardsForUserV2(queryClient);
-				toast.success('Dashboard deleted successfully');
+				toast.success(translate('Dashboard deleted successfully'));
 				navigate(ROUTES.ALL_DASHBOARD, { replace: true });
 			},
 			onError: (error: unknown): void => {
@@ -65,15 +67,15 @@ export function useDeleteDashboardAction({
 		confirmDelete({
 			title: (
 				<Typography.Title level={5}>
-					Are you sure you want to delete the
+					{translate('Are you sure you want to delete the')}
 					<Typography.Text className={styles.deleteName}>
 						{' '}
 						{dashboardName}{' '}
 					</Typography.Text>
-					dashboard?
+					{translate('dashboard?')}
 				</Typography.Title>
 			),
-			content: 'This action cannot be undone.',
+			content: translate('This action cannot be undone.'),
 			// Keeps the Delete button loading until the mutation settles, then closes.
 			onConfirm: () =>
 				new Promise<void>((resolve) => {
@@ -83,7 +85,7 @@ export function useDeleteDashboardAction({
 					);
 				}),
 		});
-	}, [confirmDelete, dashboardName, deleteDashboard, dashboardId]);
+	}, [confirmDelete, dashboardName, deleteDashboard, dashboardId, translate]);
 
 	return { contextHolder, confirmDeleteDashboard };
 }

@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useState } from 'react';
 import { Color } from '@signozhq/design-tokens';
 import { ChevronDown, ChevronUp, CircleAlert, RotateCw } from '@signozhq/icons';
@@ -16,6 +17,7 @@ function SaveErrorItem({
 	apiError,
 	onRetry,
 }: SaveErrorItemProps): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
 	const [expanded, setExpanded] = useState(false);
 	const [isRetrying, setIsRetrying] = useState(false);
 
@@ -43,7 +45,7 @@ function SaveErrorItem({
 						size="md"
 						variant="link"
 						color="secondary"
-						aria-label="Retry"
+						aria-label={translateInterfaceCopy('Retry')}
 						onClick={async (e): Promise<void> => {
 							e.stopPropagation();
 							setIsRetrying(true);

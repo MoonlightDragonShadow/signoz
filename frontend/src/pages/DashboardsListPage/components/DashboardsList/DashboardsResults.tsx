@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import {
 	DashboardtypesListOrderDTO,
 	DashboardtypesListSortDTO,
@@ -58,6 +59,7 @@ function DashboardsResults({
 	showUpdatedBy,
 	loading,
 }: Props): JSX.Element {
+	const translate = useConsoleTranslation();
 	if (isLoading) {
 		return <LoadingState />;
 	}
@@ -72,7 +74,7 @@ function DashboardsResults({
 		);
 	}
 	if (dashboards.length === 0) {
-		const copy = noResultsCopy(activeViewId, searchValue, hasFilters);
+		const copy = noResultsCopy(activeViewId, searchValue, hasFilters, translate);
 		return <NoResultsState title={copy.title} description={copy.description} />;
 	}
 	return (

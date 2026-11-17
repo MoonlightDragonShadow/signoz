@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { Typography } from '@signozhq/ui/typography';
 
 import noDataUrl from '@/assets/Icons/no-data.svg';
@@ -15,7 +16,8 @@ function NoData(props: INoDataProps): JSX.Element {
 		<div className={styles.noData}>
 			<img src={noDataUrl} alt="no-data" className={styles.noDataImg} />
 			<Typography.Text className={styles.noDataText}>
-				No {name} found for selected span
+				<ConsoleText message={'No'} /> {name}{' '}
+				<ConsoleText message={'found for selected span'} />
 			</Typography.Text>
 		</div>
 	);

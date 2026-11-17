@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useState } from 'react';
 import { ArrowRightLeft, Undo2 } from '@signozhq/icons';
 import { Button } from '@signozhq/ui/button';
@@ -38,6 +39,7 @@ function PanelTypeSwitcher({
 	originalPanelKind,
 	onChange,
 }: PanelTypeSwitcherProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const [isOpen, setIsOpen] = useState(false);
 	const { displayName, icon: Icon } = getPanelDefinition(panelKind);
 
@@ -47,7 +49,7 @@ function PanelTypeSwitcher({
 				kind,
 				queryType,
 				signal,
-				label: getPanelDefinition(kind).displayName,
+				label: translate(getPanelDefinition(kind).displayName),
 			}),
 		[queryType, signal],
 	);
@@ -65,7 +67,7 @@ function PanelTypeSwitcher({
 	};
 
 	return (
-		<ConfigField label="Panel type" className={styles.field}>
+		<ConfigField label={translate('Panel type')} className={styles.field}>
 			<div className={styles.trigger}>
 				<Button
 					variant="outlined"
@@ -79,7 +81,7 @@ function PanelTypeSwitcher({
 					<span className={styles.triggerName}>{displayName}</span>
 					<span className={styles.triggerAction}>
 						<ArrowRightLeft size={14} />
-						Change
+						{translate('Change')}
 					</span>
 				</Button>
 			</div>
@@ -94,14 +96,15 @@ function PanelTypeSwitcher({
 					onClick={(): void => onChange(originalPanelKind)}
 					testId="panel-editor-v2-type-revert"
 				>
-					Revert to {getPanelDefinition(originalPanelKind).displayName}
+					{translate('Revert to')}{' '}
+					{translate(getPanelDefinition(originalPanelKind).displayName)}
 				</Button>
 			)}
 			<DrawerWrapper
 				open={isOpen}
 				onOpenChange={setIsOpen}
-				title="Change panel type"
-				subTitle="Pick a visualization for this panel."
+				title={translate('Change panel type')}
+				subTitle={translate('Pick a visualization for this panel.')}
 				direction="right"
 				width="wide"
 				testId="panel-type-switcher-drawer"

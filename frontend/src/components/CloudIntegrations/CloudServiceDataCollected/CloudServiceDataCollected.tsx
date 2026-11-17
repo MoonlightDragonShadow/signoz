@@ -1,3 +1,5 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { Table } from 'antd';
 import {
 	CloudintegrationtypesCollectedLogAttributeDTO,
@@ -17,6 +19,7 @@ function CloudServiceDataCollected({
 	metricsData: CloudintegrationtypesCollectedMetricDTO[] | null | undefined;
 	metricsInfoTooltip?: string;
 }): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
 	const logsColumns = [
 		{
 			title: 'NAME',
@@ -46,13 +49,13 @@ function CloudServiceDataCollected({
 			width: '40%',
 		},
 		{
-			title: 'UNIT',
+			title: translateInterfaceCopy('UNIT'),
 			dataIndex: 'unit',
 			key: 'unit',
 			width: '30%',
 		},
 		{
-			title: 'TYPE',
+			title: translateInterfaceCopy('TYPE'),
 			dataIndex: 'type',
 			key: 'type',
 			width: '30%',
@@ -72,7 +75,7 @@ function CloudServiceDataCollected({
 				<div className="cloud-service-data-collected-table">
 					<div className="cloud-service-data-collected-table-heading">
 						<ScrollText size={14} />
-						Logs
+						<ConsoleText message={'Logs'} />
 					</div>
 					<Table
 						columns={logsColumns}
@@ -86,12 +89,12 @@ function CloudServiceDataCollected({
 				<div className="cloud-service-data-collected-table">
 					<div className="cloud-service-data-collected-table-heading">
 						<BarChart size={14} />
-						Metrics
+						<ConsoleText message={'Metrics'} />
 						{metricsInfoTooltip && (
 							<Tooltip title={metricsInfoTooltip} side="top">
 								<span
 									className="cloud-service-data-collected-table-heading-info"
-									aria-label="About the metrics listed below"
+									aria-label={translateInterfaceCopy('About the metrics listed below')}
 									data-testid="data-collected-metrics-info"
 								>
 									<Info size={12} />

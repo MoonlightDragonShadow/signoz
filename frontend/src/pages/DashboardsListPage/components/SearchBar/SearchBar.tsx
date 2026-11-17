@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { type MouseEvent, useCallback, useMemo, useRef } from 'react';
 import {
 	autocompletion,
@@ -78,11 +79,12 @@ function SearchBar({
 	value,
 	onChange,
 	onSubmit,
-	placeholder = "Filter with DSL (e.g. name CONTAINS 'foo')",
+	placeholder,
 	source = EMPTY_SOURCE,
 	dirty = false,
 	disabled = false,
 }: Props): JSX.Element {
+	const translate = useConsoleTranslation();
 	const isMac = getUserOperatingSystem() === UserOperatingSystem.MACOS;
 	const editorRef = useRef<ReactCodeMirrorRef>(null);
 
@@ -163,7 +165,9 @@ function SearchBar({
 					ref={editorRef}
 					className={styles.editor}
 					value={value}
-					placeholder={placeholder}
+					placeholder={
+						placeholder ?? translate("Filter with DSL (e.g. name CONTAINS 'foo')")
+					}
 					extensions={extensions}
 					basicSetup={BASIC_SETUP}
 					indentWithTab={false}
@@ -180,7 +184,7 @@ function SearchBar({
 						variant="outlined"
 						color="secondary"
 						size="sm"
-						aria-label="Run search"
+						aria-label={translate('Run search')}
 						disabled={disabled}
 						testId="dashboards-list-search-submit"
 						onClick={handleSubmit}
@@ -199,7 +203,7 @@ function SearchBar({
 							</span>
 						}
 					>
-						Run query
+						{translate('Run query')}
 					</Button>
 				</span>
 			</div>

@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback } from 'react';
 import { Button } from '@signozhq/ui/button';
 import { DrawerWrapper } from '@signozhq/ui/drawer';
@@ -17,6 +18,7 @@ import './CloudAccountSetupModal.style.scss';
 function CloudAccountSetupModal({
 	onClose,
 }: IntegrationModalProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const {
 		form,
 		modalState,
@@ -85,11 +87,11 @@ function CloudAccountSetupModal({
 				onClick={requestClose}
 				testId="aws-cancel-btn"
 			>
-				Cancel
+				{translateConsole('Cancel')}
 			</Button>
 			{!connectionCommand && (
 				<Button
-					disabledTooltip="Select at least one region"
+					disabledTooltip={translateConsole('Select at least one region')}
 					size="md"
 					variant="solid"
 					color="primary"
@@ -98,7 +100,7 @@ function CloudAccountSetupModal({
 					loading={isLoading || isGeneratingCommand}
 					testId="aws-generate-command-btn"
 				>
-					Generate Command
+					{translateConsole('Generate Command')}
 				</Button>
 			)}
 			{modalState === ModalStateEnum.ERROR && connectionCommand && (
@@ -109,7 +111,7 @@ function CloudAccountSetupModal({
 					onClick={checkConnectionAgain}
 					testId="aws-check-connection-btn"
 				>
-					Check Again
+					{translateConsole('Check Again')}
 				</Button>
 			)}
 		</div>
@@ -123,15 +125,15 @@ function CloudAccountSetupModal({
 	const getModalConfig = useCallback(() => {
 		const viewConfigs = {
 			[ActiveViewEnum.FORM]: {
-				title: 'Add AWS Account',
-				okText: 'Generate Command',
+				title: translateConsole('Add AWS Account'),
+				okText: translateConsole('Generate Command'),
 				onOk: handleSubmit,
 				disabled:
 					isLoading || isGeneratingCommand || modalState === ModalStateEnum.WAITING,
 				cancelButtonProps: { style: { display: 'none' } },
 			},
 			[ActiveViewEnum.SELECT_REGIONS]: {
-				title: 'Which regions do you want to monitor?',
+				title: translateConsole('Which regions do you want to monitor?'),
 				okText: `Confirm Selection (${getSelectedRegionsCount()})`,
 				onOk: (): void => setActiveView(ActiveViewEnum.FORM),
 				isLoading: isLoading || isGeneratingCommand,
@@ -142,6 +144,7 @@ function CloudAccountSetupModal({
 
 		return viewConfigs[activeView];
 	}, [
+		translateConsole,
 		modalState,
 		handleSubmit,
 		getSelectedRegionsCount,

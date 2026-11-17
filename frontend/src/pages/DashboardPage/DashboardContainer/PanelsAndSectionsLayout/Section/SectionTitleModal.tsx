@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useEffect, useState } from 'react';
 import { Button } from '@signozhq/ui/button';
 import { DialogWrapper } from '@signozhq/ui/dialog';
@@ -30,6 +31,7 @@ function SectionTitleModal({
 	onClose,
 	onSubmit,
 }: SectionTitleModalProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const [value, setValue] = useState<string>(initialValue);
 
 	// Reseed the field each time the modal opens.
@@ -69,10 +71,10 @@ function SectionTitleModal({
 						onClick={onClose}
 						testId="section-title-cancel"
 					>
-						Cancel
+						{translate('Cancel')}
 					</Button>
 					<Button
-						disabledTooltip="Enter a section name first"
+						disabledTooltip={translate('Enter a section name first')}
 						variant="solid"
 						color="primary"
 						size="md"

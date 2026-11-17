@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import ConfigField from '../../controls/ConfigField/ConfigField';
 import ConfigTiles, {
 	type ConfigTileItem,
@@ -21,8 +22,9 @@ function AxisScaleField<T extends string>({
 	help,
 	onChange,
 }: AxisScaleFieldProps<T>): JSX.Element {
+	const translate = useConsoleTranslation();
 	return (
-		<ConfigField label="Scale" help={help[value]}>
+		<ConfigField label={translate('Scale')} help={help[value]}>
 			<ConfigTiles
 				testId={testId}
 				aria-label={ariaLabel}

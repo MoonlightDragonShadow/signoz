@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useCopyToClipboard } from 'react-use';
 import MEditor from '@monaco-editor/react';
@@ -26,6 +27,8 @@ function ChannelJsonDialog({
 	channelName,
 	onClose,
 }: ChannelJsonDialogProps): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
+	const translateConsole = useConsoleTranslation();
 	const [copyState, copyToClipboard] = useCopyToClipboard();
 	const [copied, setCopied] = useState(false);
 	const [showSecrets, setShowSecrets] = useState(false);
@@ -78,9 +81,12 @@ function ChannelJsonDialog({
 			testId="channel-json-dialog"
 		>
 			{isLoading ? (
-				<Spinner tip="Loading channel..." />
+				<Spinner tip={translateInterfaceCopy('Loading channel...')} />
 			) : !channel ? (
-				<ErrorEmptyState title="Failed to load channel" onRefresh={handleRefetch} />
+				<ErrorEmptyState
+					title={translateConsole('Failed to load channel')}
+					onRefresh={handleRefetch}
+				/>
 			) : (
 				<div className={styles.body}>
 					<ChannelJsonToolbar

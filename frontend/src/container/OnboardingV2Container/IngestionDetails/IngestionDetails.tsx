@@ -1,3 +1,5 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { useEffect, useState } from 'react';
 import { useCopyToClipboard } from 'react-use';
 import { Button, Skeleton, Tooltip } from 'antd';
@@ -38,6 +40,7 @@ const ONBOARDING_V3_ANALYTICS_EVENTS_MAP = {
 };
 
 export default function OnboardingIngestionDetails(): JSX.Element {
+	const translateSettings = useConsoleTranslation();
 	const { notifications } = useNotifications();
 	const [, handleCopyToClipboard] = useCopyToClipboard();
 
@@ -66,7 +69,7 @@ export default function OnboardingIngestionDetails(): JSX.Element {
 	const handleCopyKey = (text: string): void => {
 		handleCopyToClipboard(text);
 		notifications.success({
-			message: 'Copied to clipboard',
+			message: translateSettings('Copied to clipboard'),
 		});
 	};
 
@@ -92,14 +95,18 @@ export default function OnboardingIngestionDetails(): JSX.Element {
 						<Info size={14} />
 
 						<span>
-							Find your ingestion URL and learn more about sending data to SigNoz{' '}
+							<ConsoleText
+								message={
+									'Find your ingestion URL and learn more about sending data to SigNoz'
+								}
+							/>{' '}
 							<a
 								href={`${DOCS_BASE_URL}/docs/ingestion/signoz-cloud/overview/`}
 								target="_blank"
 								className="learn-more"
 								rel="noreferrer"
 							>
-								here <ArrowUpRight size={14} />
+								<ConsoleText message={'here'} /> <ArrowUpRight size={14} />
 							</a>
 						</span>
 					</div>
@@ -110,7 +117,9 @@ export default function OnboardingIngestionDetails(): JSX.Element {
 				<>
 					<div className="ingestion-key-details-section">
 						<Typography.Text className="ingestion-key-details-section-text">
-							You can use this key to send your telemetry data to SigNoz.
+							<ConsoleText
+								message={'You can use this key to send your telemetry data to SigNoz.'}
+							/>
 						</Typography.Text>
 
 						<div className="ingestion-key-details-section-key">
@@ -126,7 +135,7 @@ export default function OnboardingIngestionDetails(): JSX.Element {
 									{!isLoadingGlobalConfig && (
 										<div className="ingestion-region-container">
 											<Typography.Text className="ingestion-region-label">
-												Ingestion URL
+												<ConsoleText message={'Ingestion URL'} />
 											</Typography.Text>
 
 											{!isErrorGlobalConfig && (
@@ -177,7 +186,7 @@ export default function OnboardingIngestionDetails(): JSX.Element {
 
 									<div className="ingestion-key-container">
 										<Typography.Text className="ingestion-key-label">
-											<Key size={14} /> Ingestion Key
+											<Key size={14} /> <ConsoleText message={'Ingestion Key'} />
 										</Typography.Text>
 
 										<Typography.Text className="ingestion-key-value-copy">
@@ -207,23 +216,23 @@ export default function OnboardingIngestionDetails(): JSX.Element {
 						<Info size={14} />
 
 						<span>
-							We support{' '}
+							<ConsoleText message={'We support'} />{' '}
 							<a
 								href={`${DOCS_BASE_URL}/docs/ingestion/signoz-cloud/keys/`}
 								target="_blank"
 								className="learn-more"
 								rel="noreferrer"
 							>
-								multiple ingestions keys
+								<ConsoleText message={'multiple ingestions keys'} />
 							</a>
-							. To create a new one,{' '}
+							<ConsoleText message={'. To create a new one,'} />{' '}
 							<a
 								href={withBasePath('/settings/ingestion-settings')}
 								target="_blank"
 								className="learn-more"
 								rel="noreferrer"
 							>
-								click here <ArrowUpRight size={14} />
+								<ConsoleText message={'click here'} /> <ArrowUpRight size={14} />
 							</a>
 						</span>
 					</div>

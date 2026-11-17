@@ -1,3 +1,5 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useState } from 'react';
 import { Color, Style } from '@signozhq/design-tokens';
 import {
@@ -25,6 +27,8 @@ function ConfigureGoogleAuthAuthnProvider({
 }: {
 	isCreate: boolean;
 }): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
+	const translateConsole = useConsoleTranslation();
 	const form = Form.useFormInstance();
 	const fetchGroups = Form.useWatch(['googleAuthConfig', 'fetchGroups'], form);
 
@@ -59,18 +63,21 @@ function ConfigureGoogleAuthAuthnProvider({
 	return (
 		<div className="authn-provider">
 			<section className="authn-provider__header">
-				<h3 className="authn-provider__title">Edit Google Authentication</h3>
+				<h3 className="authn-provider__title">
+					{translateConsole('Edit Google Authentication')}
+				</h3>
 				<p className="authn-provider__description">
-					Enter OAuth 2.0 credentials obtained from the Google API Console below.
-					Read the{' '}
+					{translateConsole(
+						'Enter OAuth 2.0 credentials obtained from the Google API Console below. Read the',
+					)}{' '}
 					<a
 						href="https://signoz.io/docs/manage/administrator-guide/sso/overview/"
 						target="_blank"
 						rel="noreferrer"
 					>
-						docs
+						{translateConsole('docs')}
 					</a>{' '}
-					for more information.
+					{translateConsole('for more information.')}
 				</p>
 			</section>
 
@@ -79,8 +86,16 @@ function ConfigureGoogleAuthAuthnProvider({
 				<div className="authn-provider__left">
 					<div className="authn-provider__field-group">
 						<label className="authn-provider__label" htmlFor="google-domain">
-							Domain
-							<Tooltip title="The email domain for users who should use SSO (e.g., `example.com` for users with `@example.com` emails)">
+							{translateConsole('Domain')}
+							<Tooltip
+								title={
+									<ConsoleText
+										message={
+											'The email domain for users who should use SSO (e.g., `example.com` for users with `@example.com` emails)'
+										}
+									/>
+								}
+							>
 								<CircleHelp size={14} color={Style.L3_FOREGROUND} cursor="help" />
 							</Tooltip>
 						</label>
@@ -88,7 +103,11 @@ function ConfigureGoogleAuthAuthnProvider({
 							name="name"
 							className="authn-provider__form-item"
 							rules={[
-								{ required: true, message: 'Domain is required', whitespace: true },
+								{
+									required: true,
+									message: translateInterfaceCopy('Domain is required'),
+									whitespace: true,
+								},
 							]}
 						>
 							<Input
@@ -101,8 +120,16 @@ function ConfigureGoogleAuthAuthnProvider({
 
 					<div className="authn-provider__field-group">
 						<label className="authn-provider__label" htmlFor="google-client-id">
-							Client ID
-							<Tooltip title="ClientID is the application's ID. For example, 292085223830.apps.googleusercontent.com.">
+							{translateConsole('Client ID')}
+							<Tooltip
+								title={
+									<ConsoleText
+										message={
+											"ClientID is the application's ID. For example, 292085223830.apps.googleusercontent.com."
+										}
+									/>
+								}
+							>
 								<CircleHelp size={14} color={Style.L3_FOREGROUND} cursor="help" />
 							</Tooltip>
 						</label>
@@ -110,7 +137,11 @@ function ConfigureGoogleAuthAuthnProvider({
 							name={['googleAuthConfig', 'clientId']}
 							className="authn-provider__form-item"
 							rules={[
-								{ required: true, message: 'Client ID is required', whitespace: true },
+								{
+									required: true,
+									message: translateInterfaceCopy('Client ID is required'),
+									whitespace: true,
+								},
 							]}
 						>
 							<Input id="google-client-id" testId="google-auth-client-id" />
@@ -119,8 +150,8 @@ function ConfigureGoogleAuthAuthnProvider({
 
 					<div className="authn-provider__field-group">
 						<label className="authn-provider__label" htmlFor="google-client-secret">
-							Client Secret
-							<Tooltip title="It is the application's secret.">
+							{translateConsole('Client Secret')}
+							<Tooltip title={translateConsole("It is the application's secret.")}>
 								<CircleHelp size={14} color={Style.L3_FOREGROUND} cursor="help" />
 							</Tooltip>
 						</label>
@@ -130,7 +161,7 @@ function ConfigureGoogleAuthAuthnProvider({
 							rules={[
 								{
 									required: true,
-									message: 'Client Secret is required',
+									message: translateInterfaceCopy('Client Secret is required'),
 									whitespace: true,
 								},
 							]}
@@ -156,18 +187,25 @@ function ConfigureGoogleAuthAuthnProvider({
 									);
 								}}
 							>
-								Skip Email Verification
+								{translateConsole('Skip Email Verification')}
 							</Checkbox>
 						</Form.Item>
-						<Tooltip title='Whether to skip email verification. Defaults to "false"'>
+						<Tooltip
+							title={translateInterfaceCopy(
+								'Whether to skip email verification. Defaults to "false"',
+							)}
+						>
 							<CircleHelp size={14} color={Style.L3_FOREGROUND} cursor="help" />
 						</Tooltip>
 					</div>
 
 					<div className="authn-provider__callout-wrapper">
 						<Callout type="warning" size="small" showIcon className="callout">
-							Google OAuth2 won&apos;t be enabled unless you enter all the attributes
-							above
+							<ConsoleText
+								message={
+									"Google OAuth2 won't be enabled unless you enter all the attributes above"
+								}
+							/>
 						</Callout>
 					</div>
 				</div>
@@ -197,11 +235,14 @@ function ConfigureGoogleAuthAuthnProvider({
 									)}
 									<div className="authn-provider__collapse-header-text">
 										<h4 className="authn-provider__section-title">
-											Google Workspace Groups (Advanced)
+											{translateConsole('Google Workspace Groups (Advanced)')}
 										</h4>
 										<p className="authn-provider__section-description">
-											Enable group fetching to retrieve user groups from Google Workspace.
-											Requires a Service Account with domain-wide delegation.
+											<ConsoleText
+												message={
+													'Enable group fetching to retrieve user groups from Google Workspace. Requires a Service Account with domain-wide delegation.'
+												}
+											/>
 										</p>
 									</div>
 									{expandedSection !== 'workspace-groups' &&
@@ -236,10 +277,18 @@ function ConfigureGoogleAuthAuthnProvider({
 												form.setFieldValue(['googleAuthConfig', 'fetchGroups'], checked);
 											}}
 										>
-											Fetch Groups
+											{translateConsole('Fetch Groups')}
 										</Checkbox>
 									</Form.Item>
-									<Tooltip title="Enable fetching Google Workspace groups for the user. Requires service account configuration.">
+									<Tooltip
+										title={
+											<ConsoleText
+												message={
+													'Enable fetching Google Workspace groups for the user. Requires service account configuration.'
+												}
+											/>
+										}
+									>
 										<CircleHelp size={14} color={Style.L3_FOREGROUND} cursor="help" />
 									</Tooltip>
 								</div>
@@ -251,8 +300,16 @@ function ConfigureGoogleAuthAuthnProvider({
 												className="authn-provider__label"
 												htmlFor="google-service-account-json"
 											>
-												Service Account JSON
-												<Tooltip title="The JSON content of the Google Service Account credentials file. Required for group fetching.">
+												{translateConsole('Service Account JSON')}
+												<Tooltip
+													title={
+														<ConsoleText
+															message={
+																'The JSON content of the Google Service Account credentials file. Required for group fetching.'
+															}
+														/>
+													}
+												>
 													<CircleHelp size={14} color={Style.L3_FOREGROUND} cursor="help" />
 												</Tooltip>
 											</label>
@@ -264,7 +321,7 @@ function ConfigureGoogleAuthAuthnProvider({
 													id="google-service-account-json"
 													data-testid="google-auth-service-account-json"
 													rows={3}
-													placeholder="Paste service account JSON"
+													placeholder={translateConsole('Paste service account JSON')}
 													className="authn-provider__textarea"
 												/>
 											</Form.Item>
@@ -291,10 +348,18 @@ function ConfigureGoogleAuthAuthnProvider({
 														);
 													}}
 												>
-													Fetch Transitive Group Membership
+													{translateConsole('Fetch Transitive Group Membership')}
 												</Checkbox>
 											</Form.Item>
-											<Tooltip title="If enabled, recursively fetch groups that contain other groups (transitive membership).">
+											<Tooltip
+												title={
+													<ConsoleText
+														message={
+															'If enabled, recursively fetch groups that contain other groups (transitive membership).'
+														}
+													/>
+												}
+											>
 												<CircleHelp size={14} color={Style.L3_FOREGROUND} cursor="help" />
 											</Tooltip>
 										</div>
@@ -304,8 +369,16 @@ function ConfigureGoogleAuthAuthnProvider({
 												className="authn-provider__label"
 												htmlFor="google-allowed-groups"
 											>
-												Allowed Groups
-												<Tooltip title="Optional list of allowed groups. If configured, only users belonging to one of these groups will be allowed to login.">
+												{translateConsole('Allowed Groups')}
+												<Tooltip
+													title={
+														<ConsoleText
+															message={
+																'Optional list of allowed groups. If configured, only users belonging to one of these groups will be allowed to login.'
+															}
+														/>
+													}
+												>
 													<CircleHelp size={14} color={Style.L3_FOREGROUND} cursor="help" />
 												</Tooltip>
 											</label>
@@ -314,7 +387,9 @@ function ConfigureGoogleAuthAuthnProvider({
 												className="authn-provider__form-item"
 											>
 												<EmailTagInput
-													placeholder="Type a group email and press Enter"
+													placeholder={translateConsole(
+														'Type a group email and press Enter',
+													)}
 													testId="google-auth-allowed-groups"
 												/>
 											</Form.Item>

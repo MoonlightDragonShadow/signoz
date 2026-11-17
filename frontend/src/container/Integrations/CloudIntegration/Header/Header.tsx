@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { AppLink } from 'lib/router/AppLink';
 import { Button } from '@signozhq/ui/button';
 import Breadcrumb from 'antd/es/breadcrumb';
@@ -8,6 +9,7 @@ import { Blocks, LifeBuoy } from '@signozhq/icons';
 import './Header.styles.scss';
 
 function Header({ type }: { type: IntegrationType }): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	return (
 		<div className="cloud-header">
 			<div className="cloud-header__navigation">
@@ -20,7 +22,9 @@ function Header({ type }: { type: IntegrationType }): JSX.Element {
 								<AppLink to={ROUTES.INTEGRATIONS}>
 									<span className="cloud-header__breadcrumb-link">
 										<Blocks size={16} color="var(--l2-foreground)" />
-										<span className="cloud-header__breadcrumb-title">Integrations</span>
+										<span className="cloud-header__breadcrumb-title">
+											{translateConsole('Integrations')}
+										</span>
 									</span>
 								</AppLink>
 							),
@@ -46,7 +50,7 @@ function Header({ type }: { type: IntegrationType }): JSX.Element {
 						}}
 						prefix={<LifeBuoy size={12} />}
 					>
-						Get Help
+						{translateConsole('Get Help')}
 					</Button>
 				</div>
 			)}

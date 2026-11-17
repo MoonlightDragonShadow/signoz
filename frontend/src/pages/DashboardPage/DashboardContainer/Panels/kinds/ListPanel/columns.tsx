@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import type { ReactNode } from 'react';
 import type { TableProps } from 'antd';
 import { Badge } from '@signozhq/ui/badge';
@@ -118,7 +119,8 @@ function makeTraceRenderer(name: string) {
 		if (DURATION_FIELDS.has(name)) {
 			return (
 				<Typography.Text data-testid={name}>
-					{getMs(coerceToString(value))}ms
+					{getMs(coerceToString(value))}
+					<ConsoleText message={'ms'} />
 				</Typography.Text>
 			);
 		}

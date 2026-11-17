@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { MouseEvent, useCallback, useEffect, useMemo, useState } from 'react';
 // eslint-disable-next-line no-restricted-imports
 import { useSelector } from 'react-redux';
@@ -17,6 +18,7 @@ import { HIGHLIGHTED_DELAY } from './configs';
 import { UseCopyLogLink } from './types';
 
 export const useCopyLogLink = (logId?: string): UseCopyLogLink => {
+	const translateRuntimeCopy = useConsoleTranslation();
 	const urlQuery = useUrlQuery();
 	const { pathname, search } = useAppLocation();
 	const [, setCopy] = useCopyToClipboard();
@@ -60,9 +62,11 @@ export const useCopyLogLink = (logId?: string): UseCopyLogLink => {
 
 			setCopy(link);
 
-			toast.success('Copied to clipboard', { position: 'bottom-right' });
+			toast.success(translateRuntimeCopy('Copied to clipboard'), {
+				position: 'bottom-right',
+			});
 		},
-		[logId, urlQuery, minTime, maxTime, pathname, setCopy],
+		[logId, urlQuery, minTime, maxTime, pathname, setCopy, translateRuntimeCopy],
 	);
 
 	const onClearActiveLog = useCallback(() => {

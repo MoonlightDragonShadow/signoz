@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { Tooltip } from 'antd';
 
 import { TagContainer, TagLabel, TagValue } from './style';
@@ -22,11 +23,15 @@ function OptionRenderer({
 						<div className="option-value">{value}</div>
 						<div className="option-meta-data-container">
 							<TagContainer>
-								<TagLabel>Type: </TagLabel>
+								<TagLabel>
+									<ConsoleText message={'Type:'} />{' '}
+								</TagLabel>
 								<TagValue>{type}</TagValue>
 							</TagContainer>
 							<TagContainer>
-								<TagLabel>Data type: </TagLabel>
+								<TagLabel>
+									<ConsoleText message={'Data type:'} />{' '}
+								</TagLabel>
 								<TagValue>{dataType}</TagValue>
 							</TagContainer>
 						</div>

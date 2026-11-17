@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useEffect, useRef } from 'react';
 import { useAppParams } from 'lib/router/useAppParams';
 import { Typography } from '@signozhq/ui/typography';
@@ -16,6 +17,7 @@ import { useDashboardFetch } from './DashboardContainer/hooks/useDashboardFetch'
 import styles from './DashboardPage.module.scss';
 
 function DashboardPage(): JSX.Element {
+	const translate = useConsoleTranslation();
 	const { dashboardId } = useAppParams<'dashboardId'>();
 
 	const { dashboard, isLoading, isError, error, refetch } = useDashboardFetch(
@@ -40,13 +42,13 @@ function DashboardPage(): JSX.Element {
 	}, [dashboard]);
 
 	if (isLoading) {
-		return <Spinner tip="Loading dashboard..." />;
+		return <Spinner tip={translate('Loading dashboard...')} />;
 	}
 
 	if (isError || !dashboard) {
 		return (
 			<div className={styles.errorState}>
-				<Typography.Title>Failed to load dashboard</Typography.Title>
+				<Typography.Title>{translate('Failed to load dashboard')}</Typography.Title>
 				<Typography.Text>{(error as Error)?.message}</Typography.Text>
 			</div>
 		);

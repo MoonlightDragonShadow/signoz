@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useMemo } from 'react';
 import { useAppParams } from 'lib/router/useAppParams';
 import { Tabs } from '@signozhq/ui/tabs';
@@ -36,6 +37,7 @@ function AnalyticsPanel({
 	onClose,
 	onTabChange,
 }: AnalyticsPanelProps): JSX.Element | null {
+	const translateConsole = useConsoleTranslation();
 	const { id: traceId } = useAppParams<'id'>();
 	const colorByField = useTraceStore((s) => s.colorByField);
 	const colorByFieldName = colorByField.name;
@@ -137,7 +139,7 @@ function AnalyticsPanel({
 			}}
 		>
 			<DetailsHeader
-				title="Analytics"
+				title={translateConsole('Analytics')}
 				onClose={onClose}
 				className="floating-panel__drag-handle"
 			/>
@@ -154,7 +156,7 @@ function AnalyticsPanel({
 					items={[
 						{
 							key: 'exec-time',
-							label: '% exec time',
+							label: translateConsole('% exec time'),
 							children: (
 								<div className={styles.tabsScroll}>
 									<AnalyticsTabContent
@@ -169,7 +171,7 @@ function AnalyticsPanel({
 						},
 						{
 							key: 'spans',
-							label: 'Spans',
+							label: translateConsole('Spans'),
 							children: (
 								<div className={styles.tabsScroll}>
 									<AnalyticsTabContent

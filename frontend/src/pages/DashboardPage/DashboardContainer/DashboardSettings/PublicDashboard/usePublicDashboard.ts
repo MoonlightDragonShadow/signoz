@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useQueryClient } from 'react-query';
 import { useCopyToClipboard } from 'react-use';
@@ -50,6 +51,7 @@ export interface UsePublicDashboardReturn {
 export function usePublicDashboard(
 	dashboardId: string,
 ): UsePublicDashboardReturn {
+	const translate = useConsoleTranslation();
 	const queryClient = useQueryClient();
 	const { showErrorModal } = useErrorModal();
 	// The backend gates the public-config writes on dashboard:update, not on the
@@ -179,12 +181,12 @@ export function usePublicDashboard(
 			return;
 		}
 		copyToClipboard(publicUrl);
-		toast.success('Copied public dashboard URL successfully');
+		toast.success(translate('Copied public dashboard URL successfully'));
 		void logEvent(DashboardDetailEvents.PublicDashboardAction, {
 			action: 'copyUrl',
 			dashboardId,
 		});
-	}, [copyToClipboard, publicUrl, dashboardId]);
+	}, [translate, copyToClipboard, publicUrl, dashboardId]);
 
 	const onOpenUrl = useCallback((): void => {
 		if (publicUrl) {

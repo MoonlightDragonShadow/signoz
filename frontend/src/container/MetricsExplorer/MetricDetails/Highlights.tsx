@@ -1,3 +1,5 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
+import { localizeRelativeTime } from 'components/LocalizedRelativeTime/localizeRelativeTime';
 import { Color } from '@signozhq/design-tokens';
 import { Button, Spin } from 'antd';
 import { Tooltip } from '@signozhq/ui/tooltip';
@@ -15,6 +17,8 @@ import {
 } from './utils';
 
 function Highlights({ metricName }: HighlightsProps): JSX.Element {
+	const translateRuntimeCopy = useConsoleTranslation();
+	const translate = useConsoleTranslation();
 	const {
 		data: metricHighlightsData,
 		isLoading: isLoadingMetricHighlights,
@@ -44,11 +48,13 @@ function Highlights({ metricName }: HighlightsProps): JSX.Element {
 	);
 	const { formatTimezoneAdjustedTimestamp } = useTimezone();
 	const lastReceivedTooltipText = metricHighlights?.lastReceived
-		? `Last received on ${formatTimezoneAdjustedTimestamp(
-				metricHighlights.lastReceived,
-				DATE_TIME_FORMATS.DASH_DATETIME_UTC,
-			)}`
-		: 'No data received yet';
+		? translateRuntimeCopy('Last received on {{value1}}', {
+				value1: formatTimezoneAdjustedTimestamp(
+					metricHighlights.lastReceived,
+					DATE_TIME_FORMATS.DASH_DATETIME_UTC,
+				),
+			})
+		: translate('No data received yet');
 
 	if (isErrorMetricHighlights) {
 		return (
@@ -59,7 +65,7 @@ function Highlights({ metricName }: HighlightsProps): JSX.Element {
 				>
 					<Info size={16} color={Color.BG_CHERRY_500} />
 					<Typography.Text>
-						Something went wrong while fetching metric highlights
+						{translate('Something went wrong while fetching metric highlights')}
 					</Typography.Text>
 					<Button
 						type="link"
@@ -68,7 +74,7 @@ function Highlights({ metricName }: HighlightsProps): JSX.Element {
 							refetchMetricHighlights();
 						}}
 					>
-						Retry ?
+						{translate('Retry ?')}
 					</Button>
 				</div>
 			</div>
@@ -79,20 +85,22 @@ function Highlights({ metricName }: HighlightsProps): JSX.Element {
 		<div className="metric-details-content-grid">
 			<div className="labels-row">
 				<Typography.Text color="muted" className="metric-details-grid-label">
-					SAMPLES
+					{translate('SAMPLES')}
 				</Typography.Text>
 				<Typography.Text color="muted" className="metric-details-grid-label">
-					TIME SERIES
+					{translate('TIME SERIES')}
 				</Typography.Text>
 				<Typography.Text color="muted" className="metric-details-grid-label">
-					LAST RECEIVED
+					{translate('LAST RECEIVED')}
 				</Typography.Text>
 			</div>
 			<div className="values-row">
 				{isLoadingMetricHighlights ? (
 					<div className="metric-highlights-loading-inline">
 						<Spin size="small" />
-						<Typography.Text color="muted">Loading metric stats</Typography.Text>
+						<Typography.Text color="muted">
+							{translate('Loading metric stats')}
+						</Typography.Text>
 					</div>
 				) : (
 					<>
@@ -113,10 +121,17 @@ function Highlights({ metricName }: HighlightsProps): JSX.Element {
 							data-testid="metric-highlights-time-series-total"
 						>
 							<Tooltip
-								title="Active time series are those that have received data points in the last 1 hour."
+								title={translate(
+									'Active time series are those that have received data points in the last 1 hour.',
+								)}
 								side="top"
 							>
-								<span>{`${timeSeriesTotal} total ⎯ ${timeSeriesActive} active`}</span>
+								<span>
+									{translate('{{value1}} total ⎯ {{value2}} active', {
+										value1: timeSeriesTotal,
+										value2: timeSeriesActive,
+									})}
+								</span>
 							</Tooltip>
 						</Typography.Text>
 						<Typography.Text
@@ -124,7 +139,7 @@ function Highlights({ metricName }: HighlightsProps): JSX.Element {
 							data-testid="metric-highlights-last-received"
 						>
 							<Tooltip title={lastReceivedTooltipText}>
-								<span>{lastReceivedText}</span>
+								<span>{localizeRelativeTime(lastReceivedText, translate)}</span>
 							</Tooltip>
 						</Typography.Text>
 					</>

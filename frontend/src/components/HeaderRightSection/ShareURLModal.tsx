@@ -1,3 +1,5 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useMemo, useState } from 'react';
 // eslint-disable-next-line no-restricted-imports
 import { useSelector } from 'react-redux';
@@ -41,6 +43,7 @@ interface ShareURLModalProps {
 }
 
 function ShareURLModal({ extraOption }: ShareURLModalProps): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
 	const urlQuery = useUrlQuery();
 	const location = useAppLocation();
 	const { selectedTime } = useSelector<AppState, GlobalReducer>(
@@ -142,7 +145,7 @@ function ShareURLModal({ extraOption }: ShareURLModalProps): JSX.Element {
 				<>
 					<div className="absolute-relative-time-toggler-container">
 						<Typography.Text className="absolute-relative-time-toggler-label">
-							Enable absolute time
+							<ConsoleText message={'Enable absolute time'} />
 						</Typography.Text>
 
 						<div className="absolute-relative-time-toggler">
@@ -152,7 +155,9 @@ function ShareURLModal({ extraOption }: ShareURLModalProps): JSX.Element {
 							<Switch
 								color="primary"
 								textPlacement="right"
-								disabledTooltip="Please select / enter valid relative time to toggle."
+								disabledTooltip={translateInterfaceCopy(
+									'Please select / enter valid relative time to toggle.',
+								)}
 								value={enableAbsoluteTime}
 								disabled={!isValidateRelativeTime}
 								onChange={(): void => {
@@ -164,7 +169,9 @@ function ShareURLModal({ extraOption }: ShareURLModalProps): JSX.Element {
 
 					{!isValidateRelativeTime && (
 						<div className="absolute-relative-time-error">
-							Please select / enter valid relative time to toggle.
+							<ConsoleText
+								message={'Please select / enter valid relative time to toggle.'}
+							/>
 						</div>
 					)}
 				</>
@@ -190,10 +197,12 @@ function ShareURLModal({ extraOption }: ShareURLModalProps): JSX.Element {
 				<div className="url-share-container">
 					<div className="url-share-container-header">
 						<Typography.Text className="url-share-title">
-							Share page link
+							<ConsoleText message={'Share page link'} />
 						</Typography.Text>
 						<Typography.Text className="url-share-sub-title">
-							Share the current page link with your team member
+							<ConsoleText
+								message={'Share the current page link with your team member'}
+							/>
 						</Typography.Text>
 					</div>
 
@@ -202,7 +211,7 @@ function ShareURLModal({ extraOption }: ShareURLModalProps): JSX.Element {
 						onClick={handleCopyURL}
 						icon={isURLCopied ? <Check size={14} /> : <Link2 size={14} />}
 					>
-						Copy page link
+						<ConsoleText message={'Copy page link'} />
 					</Button>
 				</div>
 			</div>

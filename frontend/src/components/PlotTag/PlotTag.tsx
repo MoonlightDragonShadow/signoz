@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { PANEL_TYPES } from 'constants/queryBuilder';
 import { Spline } from '@signozhq/icons';
 import { EQueryType } from 'types/common/dashboard';
@@ -17,7 +18,8 @@ function PlotTag({ queryType, panelType }: IPlotTagProps): JSX.Element | null {
 	return (
 		<div className="plot-tag">
 			<Spline size={14} />
-			Plotted with <QueryTypeTag queryType={queryType} />
+			<ConsoleText message={'Plotted with'} />{' '}
+			<QueryTypeTag queryType={queryType} />
 		</div>
 	);
 }

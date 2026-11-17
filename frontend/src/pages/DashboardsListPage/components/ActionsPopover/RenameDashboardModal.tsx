@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useEffect, useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { Button } from '@signozhq/ui/button';
@@ -32,6 +33,7 @@ function RenameDashboardModal({
 	currentName,
 	onClose,
 }: Props): JSX.Element {
+	const translate = useConsoleTranslation();
 	const [name, setName] = useState(currentName);
 	const queryClient = useQueryClient();
 	const { showErrorModal } = useErrorModal();
@@ -55,7 +57,7 @@ function RenameDashboardModal({
 			return patchDashboardV2({ id: dashboardId }, ops);
 		},
 		onSuccess: async () => {
-			toast.success('Dashboard renamed');
+			toast.success(translate('Dashboard renamed'));
 			void logEvent(DashboardListEvents.RowAction, {
 				action: 'rename',
 				dashboardId,
@@ -73,7 +75,7 @@ function RenameDashboardModal({
 
 	return (
 		<DialogWrapper
-			title="Rename dashboard"
+			title={translate('Rename dashboard')}
 			open={open}
 			width="narrow"
 			onOpenChange={(next): void => {
@@ -90,13 +92,13 @@ function RenameDashboardModal({
 						onClick={onClose}
 						testId="rename-dashboard-cancel"
 					>
-						Cancel
+						{translate('Cancel')}
 					</Button>
 					<Button
 						disabledTooltip={
 							trimmed.length === 0
-								? 'Enter a dashboard name first'
-								: 'Change the name first'
+								? translate('Enter a dashboard name first')
+								: translate('Change the name first')
 						}
 						variant="solid"
 						color="primary"
@@ -106,7 +108,7 @@ function RenameDashboardModal({
 						onClick={(): void => runRename()}
 						testId="rename-dashboard-submit"
 					>
-						Save
+						{translate('Save')}
 					</Button>
 				</div>
 			}
@@ -115,7 +117,7 @@ function RenameDashboardModal({
 				value={name}
 				autoFocus
 				maxLength={DASHBOARD_NAME_MAX_LENGTH}
-				placeholder="Dashboard name"
+				placeholder={translate('Dashboard name')}
 				testId="rename-dashboard-input"
 				onChange={(e): void => setName(e.target.value)}
 				onKeyDown={(e): void => {

@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { AppLink } from 'lib/router/AppLink';
 import { Info, Search } from '@signozhq/icons';
 import { Popconfirm, PopconfirmProps } from 'antd';
@@ -16,16 +17,22 @@ const MAX_TOP_LEVEL_OPERATIONS = 2500;
 
 const highTopLevelOperationsPopoverDesc = (metrics: string): JSX.Element => (
 	<div className="popover-description">
-		The service `{metrics}` has too many top level operations. It makes the
-		dashboard slow to load.
+		<ConsoleText message={'The service `'} />
+		{metrics}
+		<ConsoleText
+			message={
+				'` has too many top level operations. It makes the dashboard slow to load.'
+			}
+		/>
 	</div>
 );
 
 export const getColumnSearchProps = (
 	dataIndex: keyof ServicesList,
 	search: string,
+	translate: (message: string) => string = (message) => message,
 ): ColumnType<ServicesList> => ({
-	filterDropdown,
+	filterDropdown: (props) => filterDropdown(props, translate),
 	filterIcon: <Search size="md" />,
 	onFilter: (
 		value: string | number | boolean,
@@ -63,14 +70,14 @@ export const getColumnSearchProps = (
 			<div className={`serviceName ${hasHighTopLevelOperations ? 'error' : ''} `}>
 				{hasHighTopLevelOperations && (
 					<Popconfirm
-						title="Too Many Top Level Operations"
+						title={translate('Too Many Top Level Operations')}
 						description={highTopLevelOperationsPopoverDesc(metrics)}
 						placement="right"
 						overlayClassName="service-high-top-level-operations"
 						onConfirm={handleShowTopLevelOperations}
 						trigger={['hover']}
 						showCancel={false}
-						okText="Show Top Level Operations"
+						okText={translate('Show Top Level Operations')}
 					>
 						<Info size={14} />
 					</Popconfirm>

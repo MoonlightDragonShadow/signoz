@@ -1,4 +1,5 @@
 /* eslint-disable no-nested-ternary */
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 // eslint-disable-next-line no-restricted-imports
 import { useSelector } from 'react-redux'; // old code, TODO: fix this correctly
@@ -57,6 +58,7 @@ const DEFAULT_ORDER_BY: Querybuildertypesv5OrderByDTO = {
 };
 
 function Summary(): JSX.Element {
+	const translate = useConsoleTranslation();
 	const { pageSize, setPageSize } = usePageSize('metricsExplorer');
 	const [currentPage, setCurrentPage] = useState(1);
 	const [orderBy, setOrderBy] =
@@ -394,10 +396,10 @@ function Summary(): JSX.Element {
 						<div className="no-logs-container-content">
 							<img className="eyes-emoji" src={eyesEmojiUrl} alt="eyes emoji" />
 							<Typography className="no-logs-text">
-								Query cancelled.
+								{translate('Query cancelled.')}
 								<span className="sub-text">
 									{' '}
-									Click &quot;Run Query&quot; to load metrics.
+									{translate('Click "Run Query" to load metrics.')}
 								</span>
 							</Typography>
 						</div>

@@ -1,3 +1,5 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useMemo } from 'react';
 import { Button, Flex, Form, Input, Modal, Select } from 'antd';
 import { Typography } from '@signozhq/ui/typography';
@@ -25,6 +27,7 @@ function RoutingPolicyDetails({
 	isPolicyDetailsModalActionLoading,
 	refreshChannels,
 }: RoutingPolicyDetailsProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const [form] = Form.useForm();
 	const { user } = useAppContext();
 
@@ -61,10 +64,10 @@ function RoutingPolicyDetails({
 	const notificationChannelsNotFoundContent = (
 		<Flex justify="space-between">
 			<Flex gap={4} align="center">
-				<Typography.Text>No channels yet.</Typography.Text>
+				<Typography.Text>{translateConsole('No channels yet.')}</Typography.Text>
 				{user?.role === USER_ROLES.ADMIN ? (
 					<Typography.Text>
-						Create one
+						{translateConsole('Create one')}
 						<Button
 							style={{ padding: '0 4px' }}
 							type="link"
@@ -72,15 +75,17 @@ function RoutingPolicyDetails({
 								openInNewTab(ROUTES.CHANNELS_NEW);
 							}}
 						>
-							here.
+							<ConsoleText message={'here.'} />
 						</Button>
 					</Typography.Text>
 				) : (
-					<Typography.Text>Please ask your admin to create one.</Typography.Text>
+					<Typography.Text>
+						{translateConsole('Please ask your admin to create one.')}
+					</Typography.Text>
 				)}
 			</Flex>
 			<Button type="text" onClick={refreshChannels}>
-				Refresh
+				{translateConsole('Refresh')}
 			</Button>
 		</Flex>
 	);
@@ -103,21 +108,25 @@ function RoutingPolicyDetails({
 			>
 				<div className="create-policy-container">
 					<div className="input-group">
-						<Typography.Text>Routing Policy Name</Typography.Text>
+						<Typography.Text>
+							{translateConsole('Routing Policy Name')}
+						</Typography.Text>
 						<Form.Item
 							name="name"
 							rules={[
 								{
 									required: true,
-									message: 'Please provide a name for the routing policy',
+									message: translateConsole(
+										'Please provide a name for the routing policy',
+									),
 								},
 							]}
 						>
-							<Input placeholder="e.g. Base routing policy..." />
+							<Input placeholder={translateConsole('e.g. Base routing policy...')} />
 						</Form.Item>
 					</div>
 					<div className="input-group">
-						<Typography.Text>Description</Typography.Text>
+						<Typography.Text>{translateConsole('Description')}</Typography.Text>
 						<Form.Item
 							name="description"
 							rules={[
@@ -127,20 +136,22 @@ function RoutingPolicyDetails({
 							]}
 						>
 							<Input.TextArea
-								placeholder="e.g. This is a routing policy that..."
+								placeholder={translateConsole('e.g. This is a routing policy that...')}
 								autoSize={{ minRows: 1, maxRows: 6 }}
 								style={{ resize: 'none' }}
 							/>
 						</Form.Item>
 					</div>
 					<div className="input-group">
-						<Typography.Text>Expression</Typography.Text>
+						<Typography.Text>{translateConsole('Expression')}</Typography.Text>
 						<Form.Item
 							name="expression"
 							rules={[
 								{
 									required: true,
-									message: 'Please provide an expression for the routing policy',
+									message: translateConsole(
+										'Please provide an expression for the routing policy',
+									),
 								},
 							]}
 						>
@@ -152,13 +163,17 @@ function RoutingPolicyDetails({
 						</Form.Item>
 					</div>
 					<div className="input-group">
-						<Typography.Text>Notification Channels</Typography.Text>
+						<Typography.Text>
+							{translateConsole('Notification Channels')}
+						</Typography.Text>
 						<Form.Item
 							name="channels"
 							rules={[
 								{
 									required: true,
-									message: 'Please select at least one notification channel',
+									message: translateConsole(
+										'Please select at least one notification channel',
+									),
 								},
 							]}
 						>
@@ -168,7 +183,7 @@ function RoutingPolicyDetails({
 									label: channel.name,
 								}))}
 								mode="multiple"
-								placeholder="Select notification channels"
+								placeholder={translateConsole('Select notification channels')}
 								showSearch
 								maxTagCount={3}
 								maxTagPlaceholder={(omittedValues): string =>
@@ -191,7 +206,7 @@ function RoutingPolicyDetails({
 						onClick={closeModal}
 						disabled={isPolicyDetailsModalActionLoading}
 					>
-						Cancel
+						{translateConsole('Cancel')}
 					</Button>
 					<Button
 						icon={saveButtonIcon}
@@ -200,7 +215,7 @@ function RoutingPolicyDetails({
 						loading={isPolicyDetailsModalActionLoading}
 						disabled={isPolicyDetailsModalActionLoading}
 					>
-						Save Routing Policy
+						{translateConsole('Save Routing Policy')}
 					</Button>
 				</Flex>
 			</Form>

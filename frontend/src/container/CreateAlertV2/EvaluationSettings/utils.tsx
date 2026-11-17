@@ -28,14 +28,26 @@ export const getEvaluationWindowTypeText = (
 
 export const getCumulativeWindowTimeframeText = (
 	evaluationWindow: EvaluationWindowState,
+	translate: (message: string) => string = (message) => message,
 ): string => {
+	const { number, time, timezone } = evaluationWindow.startingAt;
+
 	switch (evaluationWindow.timeframe) {
 		case CumulativeWindowTimeframes.CURRENT_HOUR:
-			return `Current hour, starting at minute ${evaluationWindow.startingAt.number} (${evaluationWindow.startingAt.timezone})`;
+			return translate('Current hour, starting at minute {minute} ({timezone})')
+				.replace('{minute}', () => number)
+				.replace('{timezone}', () => timezone);
 		case CumulativeWindowTimeframes.CURRENT_DAY:
-			return `Current day, starting from ${evaluationWindow.startingAt.time} (${evaluationWindow.startingAt.timezone})`;
+			return translate('Current day, starting from {time} ({timezone})')
+				.replace('{time}', () => time)
+				.replace('{timezone}', () => timezone);
 		case CumulativeWindowTimeframes.CURRENT_MONTH:
-			return `Current month, starting from day ${evaluationWindow.startingAt.number} at ${evaluationWindow.startingAt.time} (${evaluationWindow.startingAt.timezone})`;
+			return translate(
+				'Current month, starting from day {day} at {time} ({timezone})',
+			)
+				.replace('{day}', () => number)
+				.replace('{time}', () => time)
+				.replace('{timezone}', () => timezone);
 		default:
 			return '';
 	}
@@ -66,25 +78,31 @@ export const getRollingWindowTimeframeText = (
 
 export const getCustomRollingWindowTimeframeText = (
 	evaluationWindow: EvaluationWindowState,
-): string =>
-	`Last ${evaluationWindow.startingAt.number} ${
-		ADVANCED_OPTIONS_TIME_UNIT_OPTIONS.find(
-			(option) => option.value === evaluationWindow.startingAt.unit,
-		)?.label
-	}`;
+	translate: (message: string) => string = (message) => message,
+): string => {
+	const unit = ADVANCED_OPTIONS_TIME_UNIT_OPTIONS.find(
+		(option) => option.value === evaluationWindow.startingAt.unit,
+	)?.label;
+	return translate('Last {number} {unit}')
+		.replace('{number}', () => evaluationWindow.startingAt.number)
+		.replace('{unit}', () => (unit ? translate(unit) : String(unit)));
+};
 
 export const getTimeframeText = (
 	evaluationWindow: EvaluationWindowState,
+	translate: (message: string) => string = (message) => message,
 ): string => {
 	if (evaluationWindow.windowType === 'rolling') {
 		if (evaluationWindow.timeframe === 'custom') {
-			return getCustomRollingWindowTimeframeText(evaluationWindow);
+			return getCustomRollingWindowTimeframeText(evaluationWindow, translate);
 		}
-		return getRollingWindowTimeframeText(
-			evaluationWindow.timeframe as RollingWindowTimeframes,
+		return translate(
+			getRollingWindowTimeframeText(
+				evaluationWindow.timeframe as RollingWindowTimeframes,
+			),
 		);
 	}
-	return getCumulativeWindowTimeframeText(evaluationWindow);
+	return getCumulativeWindowTimeframeText(evaluationWindow, translate);
 };
 
 export function buildAlertScheduleFromRRule(

@@ -1,3 +1,5 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Check, Copy } from '@signozhq/icons';
 import { Badge } from '@signozhq/ui/badge';
 import { Button } from '@signozhq/ui/button';
@@ -17,10 +19,13 @@ function KeyCreatedPhase({
 	expiryLabel,
 	onCopy,
 }: KeyCreatedPhaseProps): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
 	return (
 		<div className="add-key-modal__form">
 			<div className="add-key-modal__field">
-				<span className="add-key-modal__label">Key</span>
+				<span className="add-key-modal__label">
+					<ConsoleText message={'Key'} />
+				</span>
 				<div className="add-key-modal__key-display">
 					<span className="add-key-modal__key-text" data-testid="created-key-value">
 						{createdKey.key}
@@ -39,7 +44,9 @@ function KeyCreatedPhase({
 			</div>
 
 			<div className="add-key-modal__expiry-meta">
-				<span className="add-key-modal__expiry-label">Expiration</span>
+				<span className="add-key-modal__expiry-label">
+					<ConsoleText message={'Expiration'} />
+				</span>
 				<Badge textTransform="none" variant="solid" color="secondary">
 					{expiryLabel}
 				</Badge>
@@ -49,7 +56,9 @@ function KeyCreatedPhase({
 				<Callout
 					type="info"
 					showIcon
-					title="Store the key securely. This is the only time it will be displayed."
+					title={translateInterfaceCopy(
+						'Store the key securely. This is the only time it will be displayed.',
+					)}
 				/>
 			</div>
 		</div>

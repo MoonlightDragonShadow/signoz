@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useEffect, useState } from 'react';
 import { DialogWrapper } from '@signozhq/ui/dialog';
 import { Tabs } from '@signozhq/ui/tabs';
@@ -14,6 +15,7 @@ interface Props {
 }
 
 function NewDashboardModal({ open, onClose }: Props): JSX.Element {
+	const translate = useConsoleTranslation();
 	const [tab, setTab] = useState('blank');
 
 	useEffect(() => {
@@ -29,7 +31,7 @@ function NewDashboardModal({ open, onClose }: Props): JSX.Element {
 
 	return (
 		<DialogWrapper
-			title="New dashboard"
+			title={translate('New dashboard')}
 			open={open}
 			width="wide"
 			onOpenChange={(next): void => {
@@ -47,17 +49,17 @@ function NewDashboardModal({ open, onClose }: Props): JSX.Element {
 				items={[
 					{
 						key: 'blank',
-						label: 'Blank',
+						label: translate('Blank'),
 						children: <BlankDashboardPanel onClose={onClose} />,
 					},
 					{
 						key: 'template',
-						label: 'From a template',
+						label: translate('From a template'),
 						children: <TemplatesPanel />,
 					},
 					{
 						key: 'import',
-						label: 'Import JSON',
+						label: translate('Import JSON'),
 						children: <ImportJsonPanel onClose={onClose} />,
 					},
 				]}

@@ -1,3 +1,5 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { MessagePart as MessagePartType } from './types';
 import JsonBlock from './JsonBlock';
 import ThinkingPart from './parts/ThinkingPart';
@@ -15,7 +17,7 @@ import styles from './AIThreadMessage.module.scss';
 
 const EMPTY_PART = (
 	<span className={styles.empty} data-testid="ai-message-empty-part">
-		No content
+		<ConsoleText message={'No content'} />
 	</span>
 );
 
@@ -30,6 +32,7 @@ function MessagePart({
 	canLinkToToolCall,
 	onToolLinkClick,
 }: MessagePartProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	if (isEmptyPart(part)) {
 		return EMPTY_PART;
 	}
@@ -41,7 +44,7 @@ function MessagePart({
 		case 'compaction':
 			return (
 				<ThinkingPart
-					label="Compaction"
+					label={translateConsole('Compaction')}
 					content={part.content ?? undefined}
 					testId="ai-message-compaction-toggle"
 				/>

@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Dispatch, SetStateAction } from 'react';
 import { Checkbox } from '@signozhq/ui/checkbox';
 import { useRegionSelection } from 'hooks/integration/aws/useRegionSelection';
@@ -14,6 +15,7 @@ export function RegionSelector({
 	setSelectedRegions: Dispatch<SetStateAction<string[]>>;
 	setIncludeAllRegions: Dispatch<SetStateAction<boolean>>;
 }): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const { allRegionIds, handleSelectAll, handleRegionSelect } =
 		useRegionSelection({
 			selectedRegions,
@@ -36,7 +38,7 @@ export function RegionSelector({
 					value={allSelected ? true : someSelected ? 'indeterminate' : false}
 					onChange={(checked): void => handleSelectAll(checked === true)}
 				>
-					Select All Regions
+					{translateConsole('Select All Regions')}
 				</Checkbox>
 			</div>
 

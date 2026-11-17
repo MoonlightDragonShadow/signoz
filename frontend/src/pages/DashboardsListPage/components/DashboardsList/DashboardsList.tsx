@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import logEvent from 'api/common/logEvent';
 import { useListDashboardsForUserV2 } from 'api/generated/services/dashboard';
@@ -47,6 +48,7 @@ const PAGE_SIZE = 20;
 const CLIENT_VIEW_LIMIT = 200;
 
 function DashboardsList(): JSX.Element {
+	const translate = useConsoleTranslation();
 	const { isCloudUser } = useGetTenantLicense();
 
 	const { user } = useAppContext();
@@ -265,8 +267,9 @@ function DashboardsList(): JSX.Element {
 
 	const activeLabel =
 		customViews.find((v) => v.id === activeViewId)?.name ??
-		builtinViews.find((v) => v.id === activeViewId)?.label ??
-		'Dashboards';
+		translate(
+			builtinViews.find((v) => v.id === activeViewId)?.label ?? 'Dashboards',
+		);
 
 	// The workspace-empty CTA ("create your first dashboard") belongs only to the
 	// unfiltered All view; every other view's zero result is a no-results state.
@@ -284,7 +287,10 @@ function DashboardsList(): JSX.Element {
 		<div className={styles.layout}>
 			<ViewsRail
 				activeViewId={activeViewId}
-				builtinViews={builtinViews}
+				builtinViews={builtinViews.map((view) => ({
+					...view,
+					label: translate(view.label),
+				}))}
 				customViews={customViews}
 				customViewsLoading={customViewsLoading}
 				isCustomActive={isCustomActive}

@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useMemo, useState } from 'react';
 import { QueryFunctionContext, useQueries, useQuery } from 'react-query';
 import { Spin, Table, Tooltip } from 'antd';
@@ -43,6 +44,7 @@ function TopErrors({
 	};
 	initialFilters: IBuilderQuery['filters'];
 }): JSX.Element {
+	const translate = useConsoleTranslation();
 	const { startTime: minTime, endTime: maxTime } = timeRange;
 
 	const [endPointName, setSelectedEndPointName] = useState<string>('');
@@ -179,9 +181,13 @@ function TopErrors({
 						testId="top-errors-status-message-toggle"
 					/>
 					<span style={{ color: 'white', fontSize: '14px' }}>
-						Status Message Exists
+						{translate('Status Message Exists')}
 					</span>
-					<Tooltip title="When enabled, shows errors that have a status message. When disabled, shows all errors regardless of status message">
+					<Tooltip
+						title={translate(
+							'When enabled, shows errors that have a status message. When disabled, shows all errors regardless of status message',
+						)}
+					>
 						<Info size={16} color="white" />
 					</Tooltip>
 				</div>

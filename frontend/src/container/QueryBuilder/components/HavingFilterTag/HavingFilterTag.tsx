@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { X } from '@signozhq/icons';
 
 import { HavingFilterTagProps } from './HavingFilterTag.interfaces';
@@ -9,6 +10,7 @@ export function HavingFilterTag({
 	onClose,
 	onUpdate,
 }: HavingFilterTagProps): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
 	const handleClick = (): void => {
 		onUpdate(value);
 	};
@@ -19,7 +21,7 @@ export function HavingFilterTag({
 				closable ? (
 					<button
 						type="button"
-						aria-label="Remove"
+						aria-label={translateInterfaceCopy('Remove')}
 						onClick={(e): void => {
 							e.preventDefault();
 							onClose();

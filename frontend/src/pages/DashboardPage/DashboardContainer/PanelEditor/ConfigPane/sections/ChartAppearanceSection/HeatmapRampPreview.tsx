@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useMemo } from 'react';
 import {
 	DashboardtypesHeatmapColorModeDTO,
@@ -33,6 +34,7 @@ interface HeatmapRampPreviewProps {
  * known once the data arrives.
  */
 function HeatmapRampPreview({ colors }: HeatmapRampPreviewProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const isDarkMode = useIsDarkMode();
 
 	const options = useMemo(
@@ -63,7 +65,7 @@ function HeatmapRampPreview({ colors }: HeatmapRampPreviewProps): JSX.Element {
 
 	return (
 		<div data-testid="panel-editor-v2-heatmap-preview">
-			<ConfigField label="Preview" aside={summary}>
+			<ConfigField label={translate('Preview')} aside={summary}>
 				<div className={styles.preview}>
 					<div
 						className={styles.previewRamp}

@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { useQueryClient } from 'react-query';
 import { Typography } from '@signozhq/ui/typography';
 import {
@@ -32,12 +33,12 @@ export function useChannelDelete(onDeleted?: () => void): ChannelDeleteState {
 		confirmDelete({
 			title: (
 				<Typography.Title level={5}>
-					Are you sure you want to delete the
+					<ConsoleText message={'Are you sure you want to delete the'} />
 					<Typography.Text className={styles.name}>
 						{' '}
 						{channel.displayName}{' '}
 					</Typography.Text>
-					channel?
+					<ConsoleText message={'channel?'} />
 				</Typography.Title>
 			),
 			// Returning the promise keeps Delete loading until the request settles.

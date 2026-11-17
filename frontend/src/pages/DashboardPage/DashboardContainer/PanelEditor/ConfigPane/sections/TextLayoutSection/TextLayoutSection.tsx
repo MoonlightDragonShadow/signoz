@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import {
 	DashboardtypesTextAlignDTO,
 	DashboardtypesVerticalAlignDTO,
@@ -37,16 +38,20 @@ function TextLayoutSection({
 	savedValue,
 	onChange,
 }: SectionEditorProps<SectionKind.TextLayout>): JSX.Element {
+	const translate = useConsoleTranslation();
 	const theme = useIsDarkMode() ? PanelTheme.Dark : PanelTheme.Light;
 	const background = resolveTextBackground(value?.background, theme);
 	const reset = createFieldResetter(value, savedValue, onChange);
 
 	return (
 		<>
-			<ConfigField label="Text position" {...reset('textAlign', 'verticalAlign')}>
+			<ConfigField
+				label={translate('Text position')}
+				{...reset('textAlign', 'verticalAlign')}
+			>
 				<AlignmentGrid
 					testId="text-layout-align"
-					description="Where the text sits inside the panel."
+					description={translate('Where the text sits inside the panel.')}
 					value={{
 						textAlign: value?.textAlign ?? DashboardtypesTextAlignDTO.left,
 						verticalAlign: value?.verticalAlign ?? DashboardtypesVerticalAlignDTO.top,
@@ -54,10 +59,10 @@ function TextLayoutSection({
 					onChange={(alignment): void => onChange({ ...value, ...alignment })}
 				/>
 			</ConfigField>
-			<ConfigField label="Background" {...reset('background')}>
+			<ConfigField label={translate('Background')} {...reset('background')}>
 				<ColorSwatches
 					testId="text-layout-background"
-					label="Panel background"
+					label={translate('Panel background')}
 					value={selectionFromResolved(background)}
 					options={backgroundOptions(theme)}
 					dividerAfter={1}

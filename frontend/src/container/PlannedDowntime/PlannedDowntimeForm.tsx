@@ -1,3 +1,5 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Check, Info } from '@signozhq/icons';
 import {
@@ -103,6 +105,7 @@ interface PlannedDowntimeFormProps {
 export function PlannedDowntimeForm(
 	props: PlannedDowntimeFormProps,
 ): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const {
 		initialValues,
 		alertOptions,
@@ -146,7 +149,9 @@ export function PlannedDowntimeForm(
 
 	const datePickerFooter = (mode: any): any =>
 		mode === 'time' ? (
-			<span style={{ color: 'gray' }}>Please select the time</span>
+			<span style={{ color: 'gray' }}>
+				{translateConsole('Please select the time')}
+			</span>
 		) : null;
 
 	const saveHandler = useCallback(
@@ -182,7 +187,7 @@ export function PlannedDowntimeForm(
 				}
 				setIsOpen(false);
 				notifications.success({
-					message: 'Success',
+					message: translateConsole('Success'),
 					description: isEditMode
 						? 'Schedule updated successfully'
 						: 'Schedule created successfully',
@@ -196,6 +201,7 @@ export function PlannedDowntimeForm(
 			setSaveLoading(false);
 		},
 		[
+			translateConsole,
 			initialValues.id,
 			isEditMode,
 			notifications,
@@ -367,11 +373,15 @@ export function PlannedDowntimeForm(
 				}}
 				autoComplete="off"
 			>
-				<Form.Item label="Name" name="name" rules={requiredFieldRule}>
-					<Input placeholder="e.g. Upgrade downtime" />
+				<Form.Item
+					label={translateConsole('Name')}
+					name="name"
+					rules={requiredFieldRule}
+				>
+					<Input placeholder={translateConsole('e.g. Upgrade downtime')} />
 				</Form.Item>
 				<Form.Item
-					label="Starts from"
+					label={translateConsole('Starts from')}
 					name="startTime"
 					rules={requiredFieldRule}
 					className={!isEmpty(startTimeText) ? 'formItemWithBullet' : ''}
@@ -388,23 +398,23 @@ export function PlannedDowntimeForm(
 					<div className="scheduleTimeInfoText">{startTimeText}</div>
 				)}
 				<Form.Item
-					label="Repeats every"
+					label={translateConsole('Repeats every')}
 					name={['recurrence', 'repeatType']}
 					rules={requiredFieldRule}
 				>
 					<Select
-						placeholder="Select option..."
+						placeholder={translateConsole('Select option...')}
 						options={recurrenceOptionWithSubmenu}
 					/>
 				</Form.Item>
 				{recurrenceType === recurrenceOptions.weekly.value && (
 					<Form.Item
-						label="Weekly occurernce"
+						label={translateConsole('Weekly occurernce')}
 						name={['recurrence', 'repeatOn']}
 						rules={requiredFieldRule}
 					>
 						<Select
-							placeholder="Select option..."
+							placeholder={translateConsole('Select option...')}
 							mode="multiple"
 							options={Object.values(recurrenceWeeklyOptions)}
 						/>
@@ -413,7 +423,7 @@ export function PlannedDowntimeForm(
 				{recurrenceType &&
 					recurrenceType !== recurrenceOptions.doesNotRepeat.value && (
 						<Form.Item
-							label="Duration"
+							label={translateConsole('Duration')}
 							name={['recurrence', 'duration']}
 							rules={requiredFieldRule}
 						>
@@ -424,23 +434,31 @@ export function PlannedDowntimeForm(
 										value={durationUnit}
 										onChange={(value): void => setDurationUnit(value)}
 									>
-										<Select.Option value="m">Mins</Select.Option>
-										<Select.Option value="h">Hours</Select.Option>
+										<Select.Option value="m">{translateConsole('Mins')}</Select.Option>
+										<Select.Option value="h">{translateConsole('Hours')}</Select.Option>
 									</Select>
 								}
 								className="duration-input"
 								type="number"
-								placeholder="Enter duration"
+								placeholder={translateConsole('Enter duration')}
 								min={1}
 								onWheel={(e): void => e.currentTarget.blur()}
 							/>
 						</Form.Item>
 					)}
-				<Form.Item label="Timezone" name="timezone" rules={requiredFieldRule}>
-					<Select options={TZ_OPTIONS} placeholder="Select timezone" showSearch />
+				<Form.Item
+					label={translateConsole('Timezone')}
+					name="timezone"
+					rules={requiredFieldRule}
+				>
+					<Select
+						options={TZ_OPTIONS}
+						placeholder={translateConsole('Select timezone')}
+						showSearch
+					/>
 				</Form.Item>
 				<Form.Item
-					label="Ends on"
+					label={translateConsole('Ends on')}
 					name="endTime"
 					required={recurrenceType === recurrenceOptions.doesNotRepeat.value}
 					rules={[
@@ -462,7 +480,7 @@ export function PlannedDowntimeForm(
 					<div className="scheduleTimeInfoText">{endTimeText}</div>
 				)}
 				<div>
-					<Typography>Silence Alerts</Typography>
+					<Typography>{translateConsole('Silence Alerts')}</Typography>
 					<Form.Item
 						name="alertRuleScope"
 						initialValue="specific"
@@ -471,8 +489,8 @@ export function PlannedDowntimeForm(
 						<RadioGroup
 							color="primary"
 							items={[
-								{ value: 'all', label: 'All alert rules' },
-								{ value: 'specific', label: 'Specific alert rules' },
+								{ value: 'all', label: translateConsole('All alert rules') },
+								{ value: 'specific', label: translateConsole('Specific alert rules') },
 							]}
 						/>
 					</Form.Item>
@@ -503,7 +521,7 @@ export function PlannedDowntimeForm(
 								]}
 							>
 								<Select
-									placeholder="Search for alert rules or groups..."
+									placeholder={translateConsole('Search for alert rules or groups...')}
 									mode="multiple"
 									status={isError ? 'error' : undefined}
 									loading={isLoading}
@@ -519,10 +537,10 @@ export function PlannedDowntimeForm(
 									notFoundContent={
 										isLoading ? (
 											<span>
-												<Spin size="small" /> Loading...
+												<Spin size="small" /> {translateConsole('Loading...')}
 											</span>
 										) : (
-											<span>No alert available.</span>
+											<span>{translateConsole('No alert available.')}</span>
 										)
 									}
 								>
@@ -539,18 +557,18 @@ export function PlannedDowntimeForm(
 				<Form.Item
 					label={
 						<span>
-							Scope&nbsp;
+							<ConsoleText message={'Scope '} />
 							<Tooltip
 								mouseLeaveDelay={0.3}
 								title={
 									<span>
-										Scope the planned downtime by alert labels.{' '}
+										{translateConsole('Scope the planned downtime by alert labels.')}{' '}
 										<a
 											href="https://signoz.io/docs/alerts-management/planned-maintenance/#scoping-with-label-expressions"
 											target="_blank"
 											rel="noopener noreferrer"
 										>
-											Learn more
+											{translateConsole('Learn more')}
 										</a>
 									</span>
 								}

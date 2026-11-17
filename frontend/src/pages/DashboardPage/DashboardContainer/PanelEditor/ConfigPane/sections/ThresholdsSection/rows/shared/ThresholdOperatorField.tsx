@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Typography } from '@signozhq/ui/typography';
 import { DashboardtypesComparisonOperatorDTO } from 'api/generated/services/sigNoz.schemas';
 
@@ -17,10 +18,11 @@ function ThresholdOperatorField({
 	value,
 	onChange,
 }: ThresholdOperatorFieldProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	return (
 		<div className={styles.field}>
 			<Typography.Text className={styles.fieldLabel}>
-				When the value is{' '}
+				{translate('When the value is')}{' '}
 				{value && (
 					<strong className={styles.emphasis}>{OPERATOR_PHRASE[value]}</strong>
 				)}
@@ -28,7 +30,7 @@ function ThresholdOperatorField({
 			<ConfigTiles
 				compact
 				testId={testId}
-				aria-label="Condition"
+				aria-label={translate('Condition')}
 				value={value}
 				items={OPERATOR_TILES}
 				onChange={onChange}

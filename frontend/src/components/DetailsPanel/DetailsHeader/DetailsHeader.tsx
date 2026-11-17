@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { ReactNode } from 'react';
 import { Button } from '@signozhq/ui/button';
 import { X } from '@signozhq/icons';
@@ -24,6 +25,7 @@ function DetailsHeader({
 	closePosition = 'right',
 	className,
 }: DetailsHeaderProps): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
 	const closeButton = (
 		<Button
 			variant="ghost"
@@ -31,7 +33,7 @@ function DetailsHeader({
 			icon
 			color="secondary"
 			onClick={onClose}
-			aria-label="Close"
+			aria-label={translateInterfaceCopy('Close')}
 		>
 			<X size={14} />
 		</Button>

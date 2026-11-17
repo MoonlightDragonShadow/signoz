@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Callout } from '@signozhq/ui/callout';
 import type { DashboardtypesHeatmapColorsDTO } from 'api/generated/services/sigNoz.schemas';
 
@@ -24,17 +25,18 @@ function HeatmapCountRangeField({
 	changed,
 	onReset,
 }: HeatmapCountRangeFieldProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const { minCount, maxCount } = value;
 
 	return (
 		<ConfigField
-			label="Count range"
+			label={translate('Count range')}
 			changed={changed}
 			onReset={onReset}
 			help={
 				isRangeInverted(minCount, maxCount) ? (
 					<Callout type="error" size="small" showIcon>
-						Min count can&apos;t be greater than max count.
+						{translate("Min count can't be greater than max count.")}
 					</Callout>
 				) : (
 					'Leave empty to read the range from the data.'

@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 // eslint-disable-next-line no-restricted-imports
@@ -91,6 +92,7 @@ function ChartPreview({
 	isCancelled = false,
 	onFetchingStateChange,
 }: ChartPreviewProps): JSX.Element | null {
+	const translateInterfaceCopy = useConsoleTranslation();
 	const { t } = useTranslation('alerts');
 	const dispatch = useDispatch();
 	const thresholds: Threshold[] = useMemo(
@@ -310,7 +312,11 @@ function ChartPreview({
 
 				<div className="threshold-alert-uplot-chart-container">
 					{queryResponse.isLoading && (
-						<Spinner size="large" tip="Loading..." height="100%" />
+						<Spinner
+							size="large"
+							tip={translateInterfaceCopy('Loading...')}
+							height="100%"
+						/>
 					)}
 					{(queryResponse?.isError || queryResponse?.error) && !isCancelled && (
 						<ErrorInPlace error={queryResponse.error as APIError} />

@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useState } from 'react';
 import {
 	Combobox,
@@ -48,6 +49,7 @@ function MapToBillingModelSelect({
 	onSelect,
 	onCreateNew,
 }: MapToBillingModelSelectProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const [open, setOpen] = useState(false);
 	const { searchText, setSearchText, rules, rulesById, isFetching } =
 		useMapToBillingModelSearch(open);
@@ -72,7 +74,7 @@ function MapToBillingModelSelect({
 				<ComboboxTrigger
 					className={styles.mapToSelect}
 					disabled={disabled}
-					placeholder="Select / Create a pricing model"
+					placeholder={translateConsole('Select / Create a pricing model')}
 					value={selectedLabel}
 					testId={`map-to-select-${modelName}`}
 				/>
@@ -81,7 +83,7 @@ function MapToBillingModelSelect({
 						<ComboboxInput
 							value={searchText}
 							onValueChange={setSearchText}
-							placeholder="Search billing models"
+							placeholder={translateConsole('Search billing models')}
 							testId={`map-to-search-${modelName}`}
 						/>
 						<ComboboxList>
@@ -112,7 +114,9 @@ function MapToBillingModelSelect({
 								</div>
 							)}
 							{!isFetching && rules.length === 0 && (
-								<ComboboxEmpty>No billing models found</ComboboxEmpty>
+								<ComboboxEmpty>
+									{translateConsole('No billing models found')}
+								</ComboboxEmpty>
 							)}
 						</ComboboxList>
 						{/* Kept outside ComboboxList so it stays pinned as a footer while the
@@ -128,7 +132,7 @@ function MapToBillingModelSelect({
 								onSelect={handleCreateNew}
 								testId={`map-to-create-${modelName}`}
 							>
-								Create a new pricing model
+								{translateConsole('Create a new pricing model')}
 							</ComboboxCreateItem>
 						</div>
 					</ComboboxCommand>

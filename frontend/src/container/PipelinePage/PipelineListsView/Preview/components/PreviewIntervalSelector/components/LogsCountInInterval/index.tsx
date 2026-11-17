@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { useMemo } from 'react';
 import { DEFAULT_ENTITY_VERSION } from 'constants/app';
 import {
@@ -46,7 +47,7 @@ function LogsCountInInterval({
 			?.values?.[0]?.value;
 	return (
 		<div className="logs-filter-preview-matched-logs-count">
-			{count} matches in
+			{count} <ConsoleText message={'matches in'} />
 		</div>
 	);
 }

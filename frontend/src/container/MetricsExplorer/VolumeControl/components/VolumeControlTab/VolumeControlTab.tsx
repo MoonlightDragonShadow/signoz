@@ -1,3 +1,5 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Button } from '@signozhq/ui/button';
 import { Typography } from '@signozhq/ui/typography';
 import { Table } from 'antd';
@@ -44,6 +46,7 @@ const DEFAULT_PARAMS: VolumeControlTableParams = {
 };
 
 function VolumeControlTab(): JSX.Element {
+	const translate = useConsoleTranslation();
 	const { isVolumeControlEnabled, canManageVolumeControl } =
 		useVolumeControlFeatureGate();
 	const [selectedRule, setSelectedRule] =
@@ -97,7 +100,7 @@ function VolumeControlTab(): JSX.Element {
 		useMemo(
 			() => [
 				{
-					title: 'METRIC',
+					title: translate('METRIC'),
 					dataIndex: 'metricName',
 					key: OrderBy.metric,
 					sorter: true,
@@ -109,7 +112,7 @@ function VolumeControlTab(): JSX.Element {
 					),
 				},
 				{
-					title: 'STATUS',
+					title: translate('STATUS'),
 					key: 'status',
 					width: 130,
 					render: (
@@ -118,7 +121,7 @@ function VolumeControlTab(): JSX.Element {
 					): JSX.Element => <VolumeControlBadge rule={rule} />,
 				},
 				{
-					title: 'MODE',
+					title: translate('MODE'),
 					key: 'mode',
 					width: 110,
 					render: (
@@ -131,7 +134,7 @@ function VolumeControlTab(): JSX.Element {
 					),
 				},
 				{
-					title: 'ATTRIBUTES',
+					title: translate('ATTRIBUTES'),
 					key: 'attributes',
 					render: (
 						_value: unknown,
@@ -149,7 +152,7 @@ function VolumeControlTab(): JSX.Element {
 				{
 					title: (
 						<>
-							INGESTED{' '}
+							{translate('INGESTED')}{' '}
 							<Typography.Text size="small" color="muted">
 								(1h)
 							</Typography.Text>
@@ -167,11 +170,12 @@ function VolumeControlTab(): JSX.Element {
 							<Typography.Text size="small">
 								{formatCompact(rule.ingestedSeries)}{' '}
 								<Typography.Text size="small" color="muted">
-									series
+									<ConsoleText message={'series'} />
 								</Typography.Text>
 							</Typography.Text>
 							<Typography.Text size="small" color="muted">
-								{formatCompact(rule.ingestedSamples)} samples
+								{formatCompact(rule.ingestedSamples)}{' '}
+								<ConsoleText message={'samples'} />
 							</Typography.Text>
 						</div>
 					),
@@ -179,7 +183,7 @@ function VolumeControlTab(): JSX.Element {
 				{
 					title: (
 						<>
-							RETAINED{' '}
+							{translate('RETAINED')}{' '}
 							<Typography.Text size="small" color="muted">
 								(1h)
 							</Typography.Text>
@@ -197,17 +201,18 @@ function VolumeControlTab(): JSX.Element {
 							<Typography.Text size="small">
 								{formatCompact(rule.retainedSeries)}{' '}
 								<Typography.Text size="small" color="muted">
-									series
+									<ConsoleText message={'series'} />
 								</Typography.Text>
 							</Typography.Text>
 							<Typography.Text size="small" color="muted">
-								{formatCompact(rule.retainedSamples)} samples
+								{formatCompact(rule.retainedSamples)}{' '}
+								<ConsoleText message={'samples'} />
 							</Typography.Text>
 						</div>
 					),
 				},
 				{
-					title: 'CHANGE',
+					title: translate('CHANGE'),
 					width: 140,
 					render: (
 						_value: unknown,
@@ -233,19 +238,19 @@ function VolumeControlTab(): JSX.Element {
 								<Typography.Text size="small" weight="semibold" color="success">
 									{seriesReduction > 0 ? `−${Math.round(seriesReduction)}%` : '0%'}{' '}
 									<Typography.Text size="small" color="muted">
-										series
+										<ConsoleText message={'series'} />
 									</Typography.Text>
 								</Typography.Text>
 								<Typography.Text size="small" color="muted">
 									{samplesReduction > 0 ? `−${Math.round(samplesReduction)}%` : '0%'}{' '}
-									samples
+									<ConsoleText message={'samples'} />
 								</Typography.Text>
 							</div>
 						);
 					},
 				},
 				{
-					title: 'LAST CONFIGURED',
+					title: translate('LAST CONFIGURED'),
 					key: OrderBy.last_updated,
 					width: 240,
 					sorter: true,
@@ -277,14 +282,14 @@ function VolumeControlTab(): JSX.Element {
 										onClick={(): void => setSelectedRule(rule)}
 										testId={`volume-control-manage-${rule.metricName}`}
 									>
-										Manage
+										{translate('Manage')}
 									</Button>
 								),
 							},
 						] as TableColumnsType<MetricreductionruletypesGettableReductionRuleDTO>)
 					: []),
 			],
-			[canManageVolumeControl, sortOrderFor],
+			[translate, canManageVolumeControl, sortOrderFor],
 		);
 
 	const handleTableChange: TableProps<MetricreductionruletypesGettableReductionRuleDTO>['onChange'] =
@@ -308,7 +313,7 @@ function VolumeControlTab(): JSX.Element {
 		return (
 			<div className={styles.unavailable} data-testid="volume-control-unavailable">
 				<Typography.Text color="muted">
-					Volume control is available on enterprise and cloud plans.
+					{translate('Volume control is available on enterprise and cloud plans.')}
 				</Typography.Text>
 			</div>
 		);
@@ -349,14 +354,15 @@ function VolumeControlTab(): JSX.Element {
 					emptyText: isListError ? (
 						<div className={styles.empty} data-testid="volume-control-tab-error">
 							<Typography.Text color="danger">
-								Failed to load volume control rules. Please try again.
+								{translate('Failed to load volume control rules. Please try again.')}
 							</Typography.Text>
 						</div>
 					) : (
 						<div className={styles.empty} data-testid="volume-control-tab-empty">
 							<Typography.Text color="muted">
-								No volume control rules yet. Open a metric and set one up to start
-								reducing its series volume.
+								{translate(
+									'No volume control rules yet. Open a metric and set one up to start reducing its series volume.',
+								)}
 							</Typography.Text>
 						</div>
 					),

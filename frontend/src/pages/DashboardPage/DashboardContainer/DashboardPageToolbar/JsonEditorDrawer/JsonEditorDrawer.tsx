@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { KeyboardEvent, useCallback } from 'react';
 import MEditor from '@monaco-editor/react';
 import { TriangleAlert } from '@signozhq/icons';
@@ -33,6 +34,7 @@ function JsonEditorDrawer({
 	isOpen,
 	onClose,
 }: JsonEditorDrawerProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const {
 		isEditable,
 		editDisabledTooltip: readOnlyTooltip,
@@ -58,12 +60,12 @@ function JsonEditorDrawer({
 
 	const onCopy = useCallback((): void => {
 		copyToClipboard(draft);
-		toast.success('JSON copied to clipboard');
+		toast.success(translate('JSON copied to clipboard'));
 		void logEvent(DashboardDetailEvents.JsonEditorAction, {
 			action: 'copy',
 			dashboardId: dashboard.id,
 		});
-	}, [copyToClipboard, draft, dashboard.id]);
+	}, [translate, copyToClipboard, draft, dashboard.id]);
 
 	const onDownload = useCallback((): void => {
 		void logEvent(DashboardDetailEvents.JsonEditorAction, {
@@ -126,7 +128,7 @@ function JsonEditorDrawer({
 
 	return (
 		<Drawer
-			title="Dashboard JSON"
+			title={translate('Dashboard JSON')}
 			placement="right"
 			width={660}
 			onClose={onClose}
@@ -179,7 +181,7 @@ function JsonEditorDrawer({
 							testId="json-editor-cancel"
 							onClick={onClose}
 						>
-							Cancel
+							{translate('Cancel')}
 						</Button>
 						<AuthZTooltip
 							checks={readOnlyChecks}
@@ -195,7 +197,7 @@ function JsonEditorDrawer({
 								loading={isSaving}
 								onClick={readOnly ? undefined : (): void => void apply()}
 							>
-								Apply changes
+								{translate('Apply changes')}
 							</Button>
 						</AuthZTooltip>
 					</div>

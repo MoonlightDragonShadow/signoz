@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useMemo, useState } from 'react';
 import { useQuery } from 'react-query';
 import { Input } from '@signozhq/ui/input';
@@ -34,6 +35,7 @@ function BreakoutOptions({
 	queryData,
 	onColumnClick,
 }: BreakoutOptionsProps): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
 	const { groupBy = [] } = queryData;
 	const [searchText, setSearchText] = useState<string>('');
 	const debouncedSearchText = useDebounce(searchText, 400);
@@ -99,7 +101,7 @@ function BreakoutOptions({
 				<Input
 					type="text"
 					value={searchText}
-					placeholder="Search breakout options..."
+					placeholder={translateInterfaceCopy('Search breakout options...')}
 					onChange={handleInputChange}
 				/>
 			</section>

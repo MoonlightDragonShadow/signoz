@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Button } from '@signozhq/ui/button';
 import { DrawerWrapper } from '@signozhq/ui/drawer';
 import { Input } from '@signozhq/ui/input';
@@ -25,6 +26,8 @@ function GroupFormDrawer({
 	onClose,
 	onSave,
 }: GroupFormDrawerProps): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
+	const translateConsole = useConsoleTranslation();
 	const isEdit = mode === 'edit';
 	const isValid = isGroupDraftValid(draft);
 
@@ -37,7 +40,7 @@ function GroupFormDrawer({
 				}
 			}}
 			title={isEdit ? 'Edit group' : 'New group'}
-			subTitle="A group gates which spans its mappings run on"
+			subTitle={translateConsole('A group gates which spans its mappings run on')}
 			width="wide"
 			testId="group-form-drawer"
 			footer={
@@ -49,7 +52,7 @@ function GroupFormDrawer({
 						onClick={onClose}
 						testId="group-form-cancel"
 					>
-						Cancel
+						{translateConsole('Cancel')}
 					</Button>
 					<Button
 						size="md"
@@ -57,7 +60,7 @@ function GroupFormDrawer({
 						color="primary"
 						onClick={onSave}
 						disabled={!isValid}
-						disabledTooltip="Enter a group name first"
+						disabledTooltip={translateConsole('Enter a group name first')}
 						testId="group-form-save"
 					>
 						{isEdit ? 'Save group' : 'Create group'}
@@ -67,9 +70,11 @@ function GroupFormDrawer({
 		>
 			<div className={styles.groupForm}>
 				<div className={styles.groupFormField}>
-					<span className={styles.groupFormLabel}>Group Name</span>
+					<span className={styles.groupFormLabel}>
+						{translateConsole('Group Name')}
+					</span>
 					<Input
-						placeholder="e.g. OpenAI gateway"
+						placeholder={translateInterfaceCopy('e.g. OpenAI gateway')}
 						value={draft.name}
 						onChange={(event): void =>
 							setDraft({ ...draft, name: event.target.value })
@@ -79,7 +84,9 @@ function GroupFormDrawer({
 				</div>
 
 				<div className={`${styles.groupFormField} ${styles.groupFormFieldRow}`}>
-					<span className={styles.groupFormLabel}>Enabled</span>
+					<span className={styles.groupFormLabel}>
+						{translateConsole('Enabled')}
+					</span>
 					<Switch
 						color="primary"
 						textPlacement="right"
@@ -90,10 +97,10 @@ function GroupFormDrawer({
 				</div>
 
 				<ConditionKeyList
-					label="Condition · span attribute keys"
+					label={translateConsole('Condition · span attribute keys')}
 					labelHint="·Runs when a span attribute key contains any of these"
 					keys={draft.attributes}
-					placeholder="e.g. gen_ai."
+					placeholder={translateInterfaceCopy('e.g. gen_ai.')}
 					addLabel="Add attribute key"
 					testIdPrefix="group-form-attribute"
 					fieldContext={FieldContext.attribute}
@@ -101,10 +108,10 @@ function GroupFormDrawer({
 				/>
 
 				<ConditionKeyList
-					label="Condition · resource keys"
+					label={translateConsole('Condition · resource keys')}
 					labelHint="·Or when a resource key contains any of these"
 					keys={draft.resource}
-					placeholder="e.g. service.name"
+					placeholder={translateInterfaceCopy('e.g. service.name')}
 					addLabel="Add resource key"
 					testIdPrefix="group-form-resource"
 					fieldContext={FieldContext.resource}
@@ -112,7 +119,7 @@ function GroupFormDrawer({
 				/>
 
 				<span className={styles.groupFormHint}>
-					Leave both empty to run this group on every span.
+					{translateConsole('Leave both empty to run this group on every span.')}
 				</span>
 			</div>
 		</DrawerWrapper>

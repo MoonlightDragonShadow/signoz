@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { type ReactNode, useCallback, useRef, useState } from 'react';
 import type { DashboardtypesPanelSpecDTO } from 'api/generated/services/sigNoz.schemas';
 import {
@@ -77,6 +78,7 @@ function SectionSlot({
 	stepInterval,
 	metricUnit,
 }: SectionSlotProps): JSX.Element | null {
+	const translate = useConsoleTranslation();
 	const editor = resolveSectionEditor(config.kind);
 	// Controlled so the header slot can expand on click; list sections open when populated.
 	const [open, setOpen] = useState(() => {
@@ -169,7 +171,7 @@ function SectionSlot({
 
 	return (
 		<SettingsSection
-			title={title}
+			title={translate(title)}
 			changed={isDifferent(value, savedValue)}
 			open={open}
 			onOpenChange={setOpen}

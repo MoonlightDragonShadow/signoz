@@ -1,3 +1,5 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { Trash2 } from '@signozhq/icons';
 import { ConfirmDialog } from '@signozhq/ui/dialog';
 import { Typography } from '@signozhq/ui/typography';
@@ -21,6 +23,8 @@ function DeleteRoleModal({
 	onCancel,
 	onConfirm,
 }: DeleteRoleModalProps): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
+	const translate = useConsoleTranslation();
 	return (
 		<ConfirmDialog
 			open={isOpen}
@@ -29,23 +33,24 @@ function DeleteRoleModal({
 					onCancel();
 				}
 			}}
-			title="Delete Role"
+			title={translate('Delete Role')}
 			titleIcon={<Trash2 size={14} />}
 			confirmText="Delete Role"
 			confirmColor="danger"
-			cancelText="Cancel"
+			cancelText={translateInterfaceCopy('Cancel')}
 			onConfirm={onConfirm}
 			onCancel={onCancel}
 			disableOutsideClick
 			testId="delete-role-modal"
 		>
 			<Typography>
-				Are you sure you want to delete the role <strong>{roleName}</strong>? This
-				action cannot be undone.
+				<ConsoleText message={'Are you sure you want to delete the role'} />{' '}
+				<strong>{roleName}</strong>
+				<ConsoleText message={'? This action cannot be undone.'} />
 			</Typography>
 			{error && (
 				<Callout
-					title="Failed to delete role"
+					title={translate('Failed to delete role')}
 					color="cherry"
 					className={styles.errorCallout}
 				>

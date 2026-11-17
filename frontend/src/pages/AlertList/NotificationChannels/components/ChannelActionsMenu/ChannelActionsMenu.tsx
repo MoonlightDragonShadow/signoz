@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useMemo, useState } from 'react';
 import { useCopyToClipboard } from 'react-use';
 import {
@@ -33,6 +34,8 @@ function ChannelActionsMenu({
 	onDelete,
 	onViewJson,
 }: ChannelActionsMenuProps): JSX.Element {
+	const translateRuntimeCopy = useConsoleTranslation();
+	const translateConsole = useConsoleTranslation();
 	const [, setCopy] = useCopyToClipboard();
 
 	// A list of N channels would otherwise check its verbs per row on mount, for
@@ -47,21 +50,21 @@ function ChannelActionsMenu({
 			{
 				type: 'item',
 				value: 'open',
-				label: 'View',
+				label: translateConsole('View'),
 				prefix: <Expand size={14} />,
 				onClick: (): void => onOpen(channel),
 			},
 			{
 				type: 'item',
 				value: 'open-new-tab',
-				label: 'Open in New Tab',
+				label: translateConsole('Open in New Tab'),
 				prefix: <SquareArrowOutUpRight size={14} />,
 				onClick: (): void => onOpen(channel, { newTab: true }),
 			},
 			{
 				type: 'item',
 				value: 'copy-link',
-				label: 'Copy Link',
+				label: translateConsole('Copy Link'),
 				prefix: <Link2 size={14} />,
 				onClick: (): void => {
 					setCopy(
@@ -69,13 +72,13 @@ function ChannelActionsMenu({
 							buildRoutePath(ROUTES.CHANNELS_EDIT, { channelId: channel.id }),
 						),
 					);
-					toast.success('Link copied to clipboard');
+					toast.success(translateConsole('Link copied to clipboard'));
 				},
 			},
 			{
 				type: 'item',
 				value: 'view-json',
-				label: 'View JSON',
+				label: translateConsole('View JSON'),
 				prefix: <Braces size={14} />,
 				onClick: (): void => onViewJson(channel),
 			},
@@ -83,14 +86,22 @@ function ChannelActionsMenu({
 			{
 				type: 'item',
 				value: 'delete',
-				label: 'Delete',
+				label: translateConsole('Delete'),
 				prefix: <Trash2 size={14} />,
 				checks: [deletePermission],
 				danger: true,
 				onClick: (): void => onDelete(channel),
 			},
 		],
-		[deletePermission, channel, onOpen, onDelete, onViewJson, setCopy],
+		[
+			translateConsole,
+			deletePermission,
+			channel,
+			onOpen,
+			onDelete,
+			onViewJson,
+			setCopy,
+		],
 	);
 
 	const handleOpenChange = useCallback((open: boolean): void => {
@@ -119,7 +130,9 @@ function ChannelActionsMenu({
 					size="sm"
 					icon
 					testId={`channel-actions-${channel.id}`}
-					aria-label={`Actions for ${channel.displayName}`}
+					aria-label={translateRuntimeCopy('Actions for {{value1}}', {
+						value1: channel.displayName,
+					})}
 				>
 					<Ellipsis size={16} />
 				</Button>

@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useQueryClient } from 'react-query';
 import { useAppSearchParams } from 'lib/router/useAppSearchParams';
@@ -44,6 +45,7 @@ import './Explorer.styles.scss';
 const ONE_CHART_PER_QUERY_ENABLED_KEY = 'isOneChartPerQueryEnabled';
 
 function Explorer(): JSX.Element {
+	const translate = useConsoleTranslation();
 	const {
 		handleRunQuery,
 		stagedQuery,
@@ -301,13 +303,13 @@ function Explorer(): JSX.Element {
 					<div className="explore-header">
 						<div className="explore-header-left-actions">
 							{!showSidebar && (
-								<Tooltip title="Show Views">
+								<Tooltip title={translate('Show Views')}>
 									<Button
 										variant="outlined"
 										color="secondary"
 										size="sm"
 										icon
-										aria-label="Show Views"
+										aria-label={translate('Show Views')}
 										onClick={(): void => setShowSidebar(true)}
 										testId="metrics-explorer-show-sidebar"
 									>
@@ -315,7 +317,7 @@ function Explorer(): JSX.Element {
 									</Button>
 								</Tooltip>
 							)}
-							<span>1 chart/query</span>
+							<span>{translate('1 chart/query')}</span>
 							<Switch
 								testId="metrics-explorer-one-chart-per-query"
 								color="primary"

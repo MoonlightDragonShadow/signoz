@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useEffect, useMemo } from 'react';
 import { Callout } from '@signozhq/ui/callout';
 import { Typography } from '@signozhq/ui/typography';
@@ -17,6 +18,7 @@ import { useUnpricedModelMapping } from './hooks/useUnpricedModelMapping';
 import { usePendingMappingStore } from './usePendingMappingStore';
 
 function UnpricedModelsTab(): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const { data, isLoading, isError } = useListUnmappedLLMModels();
 
 	const { user } = useAppContext();
@@ -81,14 +83,15 @@ function UnpricedModelsTab(): JSX.Element {
 	return (
 		<div className={styles.unpricedModelsTab}>
 			<Callout type="warning" size="small" showIcon className={styles.banner}>
-				Models detected in traces without pricing. Map each to a billing model or
-				create pricing so estimated cost can be computed.
+				{translateConsole(
+					'Models detected in traces without pricing. Map each to a billing model or create pricing so estimated cost can be computed.',
+				)}
 			</Callout>
 
 			{isError && (
 				<div className={styles.error}>
 					<Typography.Text as="p" size="small" color="danger" role="alert">
-						Failed to load unpriced models. Please try again.
+						{translateConsole('Failed to load unpriced models. Please try again.')}
 					</Typography.Text>
 				</div>
 			)}

@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useMemo } from 'react';
 import { CircleMinus, CirclePlus, Layers, RefreshCw } from '@signozhq/icons';
 import { convertFiltersToExpression } from 'components/QueryBuilderV2/utils';
@@ -53,6 +54,7 @@ export function useLogAttributeActions({
 	isListViewPanel = false,
 	onApplyLogFilter,
 }: UseLogAttributeActionsParams): UseLogAttributeActionsResult {
+	const translateRemainingCopy = useConsoleTranslation();
 	const { stagedQuery, updateQueriesData } = useQueryBuilder();
 	const { featureFlags } = useAppContext();
 
@@ -194,7 +196,7 @@ export function useLogAttributeActions({
 		return [
 			{
 				key: LogDetailsAction.FILTER_IN,
-				label: 'Filter for value',
+				label: translateRemainingCopy('Filter for value'),
 				icon: <CirclePlus size={12} />,
 				onClick: (context): void => filterFor(context, true),
 				shouldHide: (_key, fieldKeyPath): boolean =>
@@ -202,7 +204,7 @@ export function useLogAttributeActions({
 			},
 			{
 				key: LogDetailsAction.FILTER_OUT,
-				label: 'Filter out value',
+				label: translateRemainingCopy('Filter out value'),
 				icon: <CircleMinus size={12} />,
 				onClick: (context): void => filterFor(context, false),
 				shouldHide: (_key, fieldKeyPath): boolean =>
@@ -210,7 +212,7 @@ export function useLogAttributeActions({
 			},
 			{
 				key: LogDetailsAction.GROUP_BY,
-				label: 'Group by field',
+				label: translateRemainingCopy('Group by field'),
 				icon: <Layers size={12} />,
 				onClick: groupBy,
 				shouldHide: (_key, fieldKeyPath): boolean =>
@@ -220,7 +222,7 @@ export function useLogAttributeActions({
 			},
 			{
 				key: LogDetailsAction.REPLACE_FILTER,
-				label: 'Replace filters with this value',
+				label: translateRemainingCopy('Replace filters with this value'),
 				icon: <RefreshCw size={12} />,
 				onClick: replaceFilter,
 				shouldHide: (_key, fieldKeyPath): boolean =>
@@ -234,6 +236,7 @@ export function useLogAttributeActions({
 		isBodyJsonQueryEnabled,
 		handleChangeSelectedView,
 		onApplyLogFilter,
+		translateRemainingCopy,
 	]);
 
 	const visibleActions = useMemo<VisibleActionsConfig>(

@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { useCallback } from 'react';
 import { Button } from '@signozhq/ui/button';
 import { Tooltip } from '@signozhq/ui/tooltip';
@@ -81,7 +82,7 @@ function AskNoz(): JSX.Element | null {
 								: 'Ask Noz'
 						}
 					>
-						Ask Noz
+						<ConsoleText message={'Ask Noz'} />
 					</Button>
 				</Tooltip>
 			</span>

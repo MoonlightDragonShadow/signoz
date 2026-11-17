@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Fragment, useMemo } from 'react';
 import { Info, Loader } from '@signozhq/icons';
 import { Typography } from '@signozhq/ui/typography';
@@ -66,6 +67,7 @@ type PanelHeaderProps = QueryPanelHeaderProps | StaticPanelHeaderProps;
 
 /** Panel chrome: drag handle, title, refetch + status indicators, actions. */
 function PanelHeader(props: PanelHeaderProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const { panelId, panel, panelActions, hideActions } = props;
 	const query = props.mode === 'query' ? props : null;
 
@@ -94,9 +96,10 @@ function PanelHeader(props: PanelHeaderProps): JSX.Element {
 				? (getQueryPanelDefinition(panel.spec.plugin.kind)?.getDataWarning?.(
 						panel,
 						queryData,
+						translate,
 					) ?? null)
 				: null,
-		[queryData, panel],
+		[queryData, panel, translate],
 	);
 
 	/**
@@ -148,7 +151,7 @@ function PanelHeader(props: PanelHeaderProps): JSX.Element {
 					/>
 				)}
 				{query?.timeLabel && (
-					<Tooltip title={query.timeLabel.full}>
+					<Tooltip title={translate(query.timeLabel.full)}>
 						<span className={styles.timePill} data-testid="panel-time-preference">
 							{query.timeLabel.short}
 						</span>

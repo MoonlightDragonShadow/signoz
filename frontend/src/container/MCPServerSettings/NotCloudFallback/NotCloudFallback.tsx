@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { useCallback } from 'react';
 import logEvent from 'api/common/logEvent';
 import LearnMore from 'components/LearnMore/LearnMore';
@@ -16,11 +17,14 @@ function NotCloudFallback(): JSX.Element {
 		<div className="not-cloud-fallback">
 			<div className="not-cloud-fallback__content">
 				<h2 className="not-cloud-fallback__title">
-					MCP Server is available on SigNoz
+					<ConsoleText message={'MCP Server is available on SigNoz'} />
 				</h2>
 				<p className="not-cloud-fallback__body">
-					Users can follow the docs to setup the MCP server against their SigNoz
-					instance.
+					<ConsoleText
+						message={
+							'Users can follow the docs to setup the MCP server against their SigNoz instance.'
+						}
+					/>
 				</p>
 				<LearnMore
 					text="View MCP Server docs"

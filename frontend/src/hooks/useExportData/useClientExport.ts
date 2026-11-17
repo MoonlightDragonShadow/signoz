@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { message } from 'antd';
 import { REQUEST_TYPES } from 'api/v5/queryRange/constants';
 import {
@@ -78,6 +79,7 @@ export function useClientExport({
 	yAxisUnit,
 	fileName = 'export',
 }: UseClientExportProps): UseClientExportReturn {
+	const translateRuntimeCopy = useConsoleTranslation();
 	const [isExporting, setIsExporting] = useState<boolean>(false);
 
 	const handleExport = useCallback(
@@ -94,12 +96,14 @@ export function useClientExport({
 				const { mime, extension } = FORMAT_META[format];
 				downloadFile(content, getTimestampedFileName(fileName, extension), mime);
 			} catch {
-				message.error('Failed to export data. Please try again.');
+				message.error(
+					translateRuntimeCopy('Failed to export data. Please try again.'),
+				);
 			} finally {
 				setIsExporting(false);
 			}
 		},
-		[data, query, yAxisUnit, fileName],
+		[data, query, yAxisUnit, fileName, translateRuntimeCopy],
 	);
 
 	return { isExporting, handleExport };

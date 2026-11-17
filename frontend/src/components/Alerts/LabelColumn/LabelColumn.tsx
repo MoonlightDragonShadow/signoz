@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Copy } from '@signozhq/icons';
 import { Badge, type BadgeColorType } from '@signozhq/ui/badge';
 import { toast } from '@signozhq/ui/sonner';
@@ -22,6 +23,7 @@ function LabelColumn({
 	value,
 	color = 'primary',
 }: LabelColumnProps): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
 	const containerRef = useRef<HTMLDivElement>(null);
 	const [visibleCount, setVisibleCount] = useState(labels.length);
 	const [, copyToClipboard] = useCopyToClipboard();
@@ -93,9 +95,11 @@ function LabelColumn({
 										.map((label) => (value?.[label] ? `${label} ${value[label]}` : label))
 										.join(' ');
 									copyToClipboard(searchFormat);
-									toast.success('Copied! Use in search to filter alerts.');
+									toast.success(
+										translateInterfaceCopy('Copied! Use in search to filter alerts.'),
+									);
 								}}
-								aria-label="Copy to clipboard"
+								aria-label={translateInterfaceCopy('Copy to clipboard')}
 							>
 								<Copy size={12} />
 							</button>

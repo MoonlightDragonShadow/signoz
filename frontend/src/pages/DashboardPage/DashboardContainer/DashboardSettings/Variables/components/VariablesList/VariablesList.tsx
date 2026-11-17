@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import type { DragEndEvent } from '@dnd-kit/core';
 import {
 	DndContext,
@@ -42,6 +43,7 @@ function VariablesList({
 	onApplyToAll,
 	appliedToAllNames,
 }: VariablesListProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const sensors = useSensors(
 		useSensor(PointerSensor, { activationConstraint: { distance: 1 } }),
 	);
@@ -60,8 +62,8 @@ function VariablesList({
 	return (
 		<div className={styles.table} data-testid="variables-list">
 			<div className={styles.headerRow}>
-				<span className={styles.headerCell}>Variable</span>
-				<span className={styles.headerCell}>Description</span>
+				<span className={styles.headerCell}>{translate('Variable')}</span>
+				<span className={styles.headerCell}>{translate('Description')}</span>
 			</div>
 			<DndContext
 				sensors={sensors}

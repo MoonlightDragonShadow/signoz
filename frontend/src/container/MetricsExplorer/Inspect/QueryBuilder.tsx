@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback } from 'react';
 import { Button, Card } from 'antd';
 import RunQueryBtn from 'container/QueryBuilder/components/RunQueryBtn/RunQueryBtn';
@@ -24,6 +25,7 @@ function QueryBuilder({
 	handleCancelQuery,
 	onRunQuery,
 }: QueryBuilderProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const applyInspectionOptions = useCallback(() => {
 		onRunQuery?.();
 		setAppliedMetricName(currentMetricName ?? '');
@@ -46,7 +48,7 @@ function QueryBuilder({
 					icon={<Atom size={14} />}
 					disabled
 				>
-					Query Builder
+					{translate('Query Builder')}
 				</Button>
 				<RunQueryBtn
 					onStageRunQuery={applyInspectionOptions}

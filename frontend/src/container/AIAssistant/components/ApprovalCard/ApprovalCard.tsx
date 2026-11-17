@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useEffect, useRef, useState } from 'react';
 import { useCopyToClipboard } from 'react-use';
 import cx from 'classnames';
@@ -45,6 +46,7 @@ export default function ApprovalCard({
 	conversationId,
 	approval,
 }: ApprovalCardProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const approveAction = useAIAssistantStore((s) => s.approveAction);
 	const rejectAction = useAIAssistantStore((s) => s.rejectAction);
 	const isStreaming = useAIAssistantStore(
@@ -71,7 +73,9 @@ export default function ApprovalCard({
 		return (
 			<div className={cx(styles.card, styles.decided)}>
 				<Check size={13} className={cx(styles.statusIcon, styles.ok)} />
-				<span className={styles.statusText}>Approved — resuming…</span>
+				<span className={styles.statusText}>
+					{translateConsole('Approved — resuming…')}
+				</span>
 			</div>
 		);
 	}
@@ -80,7 +84,7 @@ export default function ApprovalCard({
 		return (
 			<div className={cx(styles.card, styles.decided)}>
 				<X size={13} className={cx(styles.statusIcon, styles.no)} />
-				<span className={styles.statusText}>Rejected.</span>
+				<span className={styles.statusText}>{translateConsole('Rejected.')}</span>
 			</div>
 		);
 	}
@@ -89,7 +93,9 @@ export default function ApprovalCard({
 		<div className={styles.card}>
 			<div className={styles.header}>
 				<Shield size={13} className={styles.shieldIcon} />
-				<span className={styles.headerLabel}>Action requires approval</span>
+				<span className={styles.headerLabel}>
+					{translateConsole('Action requires approval')}
+				</span>
 				<span className={styles.resourceBadge}>
 					{approval.actionType} · {approval.resourceType}
 				</span>
@@ -100,15 +106,15 @@ export default function ApprovalCard({
 			{approval.diff && (
 				<div className={styles.diffSection}>
 					<div className={styles.diffHeader}>
-						<span className={styles.diffHeaderLabel}>Diff</span>
-						<Tooltip title="Expand diff">
+						<span className={styles.diffHeaderLabel}>{translateConsole('Diff')}</span>
+						<Tooltip title={translateConsole('Expand diff')}>
 							<Button
 								variant="link"
 								size="sm"
 								color="secondary"
 								icon
 								onClick={(): void => setDiffExpanded(true)}
-								aria-label="Expand diff"
+								aria-label={translateConsole('Expand diff')}
 							>
 								<Maximize2 size={12} />
 							</Button>
@@ -126,7 +132,7 @@ export default function ApprovalCard({
 					onOpenAutoFocus={(e): void => e.preventDefault()}
 				>
 					<DialogHeader>
-						<DialogTitle>Approval diff</DialogTitle>
+						<DialogTitle>{translateConsole('Approval diff')}</DialogTitle>
 						<DialogSubtitle>
 							{approval.actionType} · {approval.resourceType}
 						</DialogSubtitle>
@@ -191,7 +197,7 @@ export default function ApprovalCard({
 
 			<div className={styles.actions}>
 				<Button
-					disabledTooltip="Wait for the response to finish"
+					disabledTooltip={translateConsole('Wait for the response to finish')}
 					color="primary"
 					variant="solid"
 					size="sm"
@@ -199,10 +205,10 @@ export default function ApprovalCard({
 					disabled={isStreaming}
 					prefix={<Check />}
 				>
-					Approve
+					{translateConsole('Approve')}
 				</Button>
 				<Button
-					disabledTooltip="Wait for the response to finish"
+					disabledTooltip={translateConsole('Wait for the response to finish')}
 					variant="outlined"
 					size="sm"
 					color="secondary"
@@ -210,7 +216,7 @@ export default function ApprovalCard({
 					disabled={isStreaming}
 					prefix={<X />}
 				>
-					Reject
+					{translateConsole('Reject')}
 				</Button>
 			</div>
 		</div>
@@ -234,6 +240,8 @@ function DiffView({
 	wrapText = false,
 	viewMode = 'split',
 }: DiffViewProps): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
+	const translateConsole = useConsoleTranslation();
 	const beforeText =
 		diff.before !== undefined ? JSON.stringify(diff.before, null, 2) : '';
 	const afterText =
@@ -248,7 +256,7 @@ function DiffView({
 				{diff.before !== undefined && (
 					<div className={cx(styles.diffBlock, styles.before)}>
 						<div className={styles.diffBlockHeader}>
-							<span className={styles.diffLabel}>Before</span>
+							<span className={styles.diffLabel}>{translateConsole('Before')}</span>
 						</div>
 						<pre className={jsonClass}>{beforeText}</pre>
 					</div>
@@ -256,7 +264,7 @@ function DiffView({
 				{diff.after !== undefined && (
 					<div className={cx(styles.diffBlock, styles.after)}>
 						<div className={styles.diffBlockHeader}>
-							<span className={styles.diffLabel}>After</span>
+							<span className={styles.diffLabel}>{translateConsole('After')}</span>
 						</div>
 						<pre className={jsonClass}>{afterText}</pre>
 					</div>
@@ -276,9 +284,9 @@ function DiffView({
 		return (
 			<div className={cx(styles.diff, styles.expanded, styles.unified)}>
 				<div className={styles.diffBlockHeader}>
-					<span className={styles.diffLabel}>Diff</span>
+					<span className={styles.diffLabel}>{translateConsole('Diff')}</span>
 					<div className={styles.diffHeaderActions}>
-						<CopyButton text={unifiedText} label="diff" />
+						<CopyButton text={unifiedText} label={translateInterfaceCopy('diff')} />
 					</div>
 				</div>
 				<div className={cx(styles.diffPane, { [styles.wrapped]: wrapText })}>
@@ -305,8 +313,8 @@ function DiffView({
 		<div className={cx(styles.diff, styles.expanded)}>
 			<div className={cx(styles.diffBlock, styles.before)}>
 				<div className={styles.diffBlockHeader}>
-					<span className={styles.diffLabel}>Before</span>
-					<CopyButton text={beforeText} label="before" />
+					<span className={styles.diffLabel}>{translateConsole('Before')}</span>
+					<CopyButton text={beforeText} label={translateInterfaceCopy('before')} />
 				</div>
 				<div className={cx(styles.diffPane, { [styles.wrapped]: wrapText })}>
 					{lines.map((line, idx) => {
@@ -319,8 +327,8 @@ function DiffView({
 			</div>
 			<div className={cx(styles.diffBlock, styles.after)}>
 				<div className={styles.diffBlockHeader}>
-					<span className={styles.diffLabel}>After</span>
-					<CopyButton text={afterText} label="after" />
+					<span className={styles.diffLabel}>{translateConsole('After')}</span>
+					<CopyButton text={afterText} label={translateInterfaceCopy('after')} />
 				</div>
 				<div className={cx(styles.diffPane, { [styles.wrapped]: wrapText })}>
 					{lines.map((line, idx) => {
@@ -449,6 +457,7 @@ interface CopyButtonProps {
 }
 
 function CopyButton({ text, label }: CopyButtonProps): JSX.Element {
+	const translateRuntimeCopy = useConsoleTranslation();
 	const [copied, setCopied] = useState(false);
 	const [, copyToClipboard] = useCopyToClipboard();
 	// Track the timeout so an unmount mid-flight doesn't try to setState on
@@ -474,13 +483,23 @@ function CopyButton({ text, label }: CopyButtonProps): JSX.Element {
 	};
 
 	return (
-		<Tooltip title={copied ? `Copied ${label}` : `Copy ${label}`}>
+		<Tooltip
+			title={
+				copied
+					? translateRuntimeCopy('Copied {{value1}}', { value1: label })
+					: translateRuntimeCopy('Copy {{value1}}', { value1: label })
+			}
+		>
 			<Button
 				variant="ghost"
 				size="sm"
 				color="secondary"
 				onClick={handleCopy}
-				aria-label={copied ? `Copied ${label}` : `Copy ${label}`}
+				aria-label={
+					copied
+						? translateRuntimeCopy('Copied {{value1}}', { value1: label })
+						: translateRuntimeCopy('Copy {{value1}}', { value1: label })
+				}
 				icon
 			>
 				{copied ? <Check size={12} /> : <Copy size={12} />}

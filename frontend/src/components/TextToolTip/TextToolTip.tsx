@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { ReactNode, useMemo } from 'react';
 import { blue, grey } from '@ant-design/colors';
 import { CircleHelp } from '@signozhq/icons';
@@ -17,6 +18,7 @@ function TextToolTip({
 	filledIcon,
 	outlinedIcon,
 }: TextToolTipProps): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
 	const isDarkMode = useIsDarkMode();
 
 	const onClickHandler = (
@@ -62,12 +64,17 @@ function TextToolTip({
 	);
 	// Use provided icons or fallback to default icons
 	const defaultFilledIcon = (
-		<CircleHelp role="img" aria-label="Help" size="lg" style={iconStyle} />
+		<CircleHelp
+			role="img"
+			aria-label={translateInterfaceCopy('Help')}
+			size="lg"
+			style={iconStyle}
+		/>
 	);
 	const defaultOutlinedIcon = (
 		<CircleHelp
 			role="img"
-			aria-label="Help"
+			aria-label={translateInterfaceCopy('Help')}
 			size="lg"
 			style={iconOutlinedStyle}
 		/>

@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import React, {
 	ChangeEvent,
 	useCallback,
@@ -50,6 +51,7 @@ const COLUMNS_STORAGE_KEY = 'planned-downtime-columns';
 dayjs.locale('en');
 
 export function PlannedDowntime(): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const {
 		data: alertsData,
 		isError,
@@ -144,8 +146,12 @@ export function PlannedDowntime(): JSX.Element {
 	const isAlertsLoading = isLoading || (!alertsData && isFetchingAlerts);
 	const columns = React.useMemo(
 		() =>
-			getPlannedDowntimeColumns(formatTimezoneAdjustedTimestamp, isAlertsLoading),
-		[formatTimezoneAdjustedTimestamp, isAlertsLoading],
+			getPlannedDowntimeColumns(
+				formatTimezoneAdjustedTimestamp,
+				isAlertsLoading,
+				translateConsole,
+			),
+		[formatTimezoneAdjustedTimestamp, isAlertsLoading, translateConsole],
 	);
 
 	const handleCreate = useCallback((): void => {
@@ -220,7 +226,7 @@ export function PlannedDowntime(): JSX.Element {
 				<div className={styles.commandHeader}>
 					<div className={styles.headingBlock}>
 						<Typography.Title className={styles.title}>
-							All planned downtimes
+							{translateConsole('All planned downtimes')}
 						</Typography.Title>
 						<span className={styles.countPill}>{totalDowntimes}</span>
 					</div>
@@ -239,10 +245,12 @@ export function PlannedDowntime(): JSX.Element {
 						prefix={<Plus size={14} />}
 						onClick={handleCreate}
 						disabled={!canEdit}
-						disabledTooltip="You need edit permissions to create a planned downtime"
+						disabledTooltip={translateConsole(
+							'You need edit permissions to create a planned downtime',
+						)}
 						testId="planned-downtime-create"
 					>
-						New Downtime
+						{translateConsole('New Downtime')}
 					</Button>
 					<TextToolTip
 						text="More details on how to schedule planned downtime"
@@ -254,7 +262,7 @@ export function PlannedDowntime(): JSX.Element {
 				<div className={styles.filtersRow}>
 					<Input
 						containerClassName={styles.searchInput}
-						placeholder="Search by name"
+						placeholder={translateConsole('Search by name')}
 						value={searchValue}
 						onChange={handleSearch}
 						suffix={<Search size={14} className={styles.searchIcon} />}

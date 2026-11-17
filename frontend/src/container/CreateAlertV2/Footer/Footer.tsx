@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useMemo } from 'react';
 import { Button } from '@signozhq/ui/button';
 import { toast } from '@signozhq/ui/sonner';
@@ -23,6 +24,7 @@ import {
 import { useQueryClient } from 'react-query';
 
 function Footer(): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const {
 		alertType,
 		alertState: basicAlertState,
@@ -96,11 +98,13 @@ function Footer(): JSX.Element {
 				onSuccess: (response) => {
 					if (response.data?.alertCount === 0) {
 						toast.error(
-							'No alerts found during the evaluation. This happens when rule condition is unsatisfied. You may adjust the rule threshold and retry.',
+							translateConsole(
+								'No alerts found during the evaluation. This happens when rule condition is unsatisfied. You may adjust the rule threshold and retry.',
+							),
 						);
 						return;
 					}
-					toast.success('Test notification sent successfully');
+					toast.success(translateConsole('Test notification sent successfully'));
 				},
 				onError: handleApiError,
 			},
@@ -115,6 +119,7 @@ function Footer(): JSX.Element {
 		currentQuery,
 		testAlertRule,
 		handleApiError,
+		translateConsole,
 	]);
 
 	const queryClient = useQueryClient();
@@ -139,7 +144,7 @@ function Footer(): JSX.Element {
 						void invalidateGetRuleByID(queryClient, { id: ruleId });
 						void invalidateListRules(queryClient);
 
-						toast.success('Alert rule updated successfully');
+						toast.success(translateConsole('Alert rule updated successfully'));
 						safeNavigate('/alerts');
 					},
 					onError: handleApiError,
@@ -150,7 +155,7 @@ function Footer(): JSX.Element {
 				{ data: toPostableRuleDTO(payload) },
 				{
 					onSuccess: () => {
-						toast.success('Alert rule created successfully');
+						toast.success(translateConsole('Alert rule created successfully'));
 						safeNavigate('/alerts');
 					},
 					onError: handleApiError,
@@ -192,10 +197,11 @@ function Footer(): JSX.Element {
 				prefix={<Check data-testid="save-alert-rule-check-icon" size={14} />}
 				testId="save-alert-rule-button"
 			>
-				Save Alert Rule
+				{translateConsole('Save Alert Rule')}
 			</Button>
 		),
 		[
+			translateConsole,
 			alertValidationMessage,
 			handleSaveAlert,
 			isSavingAlertRule,
@@ -218,10 +224,11 @@ function Footer(): JSX.Element {
 				prefix={<Send data-testid="test-notification-send-icon" size={14} />}
 				testId="test-notification-button"
 			>
-				Test Notification
+				{translateConsole('Test Notification')}
 			</Button>
 		),
 		[
+			translateConsole,
 			alertValidationMessage,
 			handleTestNotification,
 			isSavingAlertRule,
@@ -245,7 +252,7 @@ function Footer(): JSX.Element {
 				testId="discard-alert-rule-button"
 				prefix={<X size={14} />}
 			>
-				Discard
+				{translateConsole('Discard')}
 			</Button>
 			<div className="button-group">
 				{testAlertButton}

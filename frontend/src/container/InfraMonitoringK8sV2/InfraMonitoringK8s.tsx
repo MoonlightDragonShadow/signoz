@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import * as Sentry from '@sentry/react';
 import { Button } from '@signozhq/ui/button';
@@ -57,6 +58,7 @@ import {
 } from 'container/InfraMonitoringK8sV2/Base/events';
 
 export default function InfraMonitoringK8s(): JSX.Element {
+	const translate = useConsoleTranslation();
 	const [showFilters, setShowFilters] = useState(true);
 
 	const [selectedCategory, setSelectedCategory] = useInfraMonitoringCategory();
@@ -250,9 +252,9 @@ export default function InfraMonitoringK8s(): JSX.Element {
 			<>
 				{!showFilters && (
 					<div className={styles.k8SOpenQuickFilters}>
-						<Tooltip title="Open Filters" side="left">
+						<Tooltip title={translate('Open Filters')} side="left">
 							<Button
-								aria-label="Action"
+								aria-label={translate('Action')}
 								variant="ghost"
 								size="sm"
 								icon
@@ -267,7 +269,7 @@ export default function InfraMonitoringK8s(): JSX.Element {
 				)}
 			</>
 		);
-	}, [handleFilterVisibilityChange, showFilters]);
+	}, [translate, handleFilterVisibilityChange, showFilters]);
 
 	return (
 		<Sentry.ErrorBoundary fallback={<ErrorBoundaryFallback />}>
@@ -280,10 +282,10 @@ export default function InfraMonitoringK8s(): JSX.Element {
 									<div className={styles.categorySelectorSection}>
 										<div className={styles.sectionHeader} data-type="resource">
 											<Typography.Text className={styles.sectionLabel}>
-												Viewing · Resource
+												{translate('Viewing · Resource')}
 											</Typography.Text>
 											<div className={styles.sectionLine} />
-											<Tooltip title="Collapse Filters">
+											<Tooltip title={translate('Collapse Filters')}>
 												<ArrowUpToLine
 													style={{ transform: 'rotate(270deg)' }}
 													onClick={handleFilterVisibilityChange}
@@ -307,7 +309,7 @@ export default function InfraMonitoringK8s(): JSX.Element {
 														data-testid={`category-${category.key}`}
 													>
 														{category.icon}
-														<Typography.Text>{category.label}</Typography.Text>
+														<Typography.Text>{translate(category.label)}</Typography.Text>
 													</button>
 												))}
 											</div>
@@ -317,7 +319,7 @@ export default function InfraMonitoringK8s(): JSX.Element {
 									<div className={styles.quickFiltersSection}>
 										<div className={styles.sectionHeader} data-type="filter">
 											<Typography.Text className={styles.sectionLabel}>
-												Filter by
+												{translate('Filter by')}
 											</Typography.Text>
 											<div className={styles.sectionLine} />
 										</div>

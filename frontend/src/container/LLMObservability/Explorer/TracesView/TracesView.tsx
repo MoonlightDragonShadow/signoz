@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import {
 	Dispatch,
 	memo,
@@ -57,6 +58,7 @@ function TracesView({
 	setIsLoadingQueries,
 	queryKeyRef,
 }: TracesViewProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const { stagedQuery, currentQuery, redirectWithQueryBuilderData, panelType } =
 		useQueryBuilder();
 
@@ -198,7 +200,8 @@ function TracesView({
 				<div className="trace-explorer-controls">
 					<div className={styles.orderByContainer}>
 						<div className={styles.orderByLabel}>
-							Order by <Minus size={14} /> <ArrowUp10 size={14} />
+							{translateConsole('Order by')} <Minus size={14} />{' '}
+							<ArrowUp10 size={14} />
 						</div>
 
 						<ListViewOrderBy

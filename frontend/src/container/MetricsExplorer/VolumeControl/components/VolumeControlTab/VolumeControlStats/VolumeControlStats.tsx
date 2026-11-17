@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Info } from '@signozhq/icons';
 import { Typography } from '@signozhq/ui/typography';
 import { Skeleton, Tooltip } from 'antd';
@@ -37,6 +38,7 @@ function VolumeControlStats({
 	isLoading = false,
 	isError = false,
 }: VolumeControlStatsProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const overallReduction =
 		ingestedSeries > 0
 			? Math.round((1 - retainedSeries / ingestedSeries) * 100)
@@ -49,51 +51,58 @@ function VolumeControlStats({
 
 	const items: StatItem[] = [
 		{
-			label: 'Configured rules',
+			label: translate('Configured rules'),
 			value: String(activeRules),
-			tooltip: 'Volume-control rules currently configured for this workspace.',
+			tooltip: translate(
+				'Volume-control rules currently configured for this workspace.',
+			),
 		},
 		{
-			label: 'Ingested series',
+			label: translate('Ingested series'),
 			value: formatCompact(ingestedSeries),
-			tooltip:
+			tooltip: translate(
 				'Distinct time series across all metrics in the last 1 hour, before any reduction.',
+			),
 		},
 		{
-			label: 'Retained series',
+			label: translate('Retained series'),
 			value: formatCompact(retainedSeries),
 			delta: overallReduction > 0 ? `−${overallReduction}%` : undefined,
-			tooltip:
+			tooltip: translate(
 				'Distinct time series kept across all metrics in the last 1 hour; everything except what the rules reduce away. Lower than ingested means more reduction.',
+			),
 		},
 		{
-			label: 'Ingested samples',
+			label: translate('Ingested samples'),
 			value: formatCompact(ingestedSamples),
-			tooltip:
+			tooltip: translate(
 				'Sample data points across all metrics in the last 1 hour, before any reduction.',
+			),
 		},
 		{
-			label: 'Retained samples',
+			label: translate('Retained samples'),
 			value: formatCompact(retainedSamples),
 			delta: sampleReduction > 0 ? `−${sampleReduction}%` : undefined,
-			tooltip:
+			tooltip: translate(
 				'Sample data points kept across all metrics in the last 1 hour; everything except what the rules reduce. Samples reduce more than series because series do not all carry the same sample volume.',
+			),
 		},
 		{
-			label: 'Est. monthly savings',
+			label: translate('Est. monthly savings'),
 			value: formatUsd(estimatedMonthlySavingsUsd),
 			unit: '/mo',
 			highlighted: true,
 			valueGood: true,
-			tooltip:
+			tooltip: translate(
 				'Rough monthly estimate: the samples the rules reduced in the last 1 hour, scaled to a month at 1-month standard retention. It is extrapolated from a single rolling hour.',
+			),
 		},
 	];
 
 	return (
 		<div className={styles.statsSection}>
 			<Typography.Text size="small" color="muted">
-				Last 1 hour
+				{translate('Last 1 hour')}
 			</Typography.Text>
 			<div className={styles.stats} data-testid="volume-control-stats">
 				{items.map((item) => (
@@ -125,7 +134,7 @@ function VolumeControlStats({
 								color="danger"
 								className={styles.statCardValue}
 							>
-								Failed to load
+								{translate('Failed to load')}
 							</Typography.Text>
 						)}
 						{!isLoading && !isError && (

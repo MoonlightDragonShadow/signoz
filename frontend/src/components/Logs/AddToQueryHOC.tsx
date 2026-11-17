@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { memo, MouseEvent, ReactNode, useMemo } from 'react';
 import { Popover } from 'antd';
 import cx from 'classnames';
@@ -21,7 +22,11 @@ function AddToQueryHOC({
 	};
 
 	const popOverContent = useMemo(
-		() => <span>Add to query: {fieldKey}</span>,
+		() => (
+			<span>
+				<ConsoleText message={'Add to query:'} /> {fieldKey}
+			</span>
+		),
 		[fieldKey],
 	);
 

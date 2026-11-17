@@ -10,6 +10,7 @@ import {
 import { Input } from 'antd';
 import { Slider } from '@signozhq/ui/slider';
 import { getMs } from 'utils/timeUtils';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import useDebouncedFn from 'hooks/useDebouncedFunction';
 
 import { traceFilterKeys } from 'constants/traceFilterKeys';
@@ -22,6 +23,8 @@ interface DurationProps {
 }
 
 export function DurationSection(props: DurationProps): JSX.Element {
+	const translate = useConsoleTranslation();
+	const durationUnit = translate('ms');
 	const { setSelectedFilters, selectedFilters } = props;
 
 	const getDuration = useMemo(() => {
@@ -96,8 +99,8 @@ export function DurationSection(props: DurationProps): JSX.Element {
 	};
 
 	const TipComponent = useCallback(
-		(value: number) => <div>{`${value.toString()}ms`}</div>,
-		[],
+		(value: number) => <div>{`${value.toString()}${durationUnit}`}</div>,
+		[durationUnit],
 	);
 
 	return (
@@ -105,23 +108,25 @@ export function DurationSection(props: DurationProps): JSX.Element {
 			<div className="duration-inputs">
 				<Input
 					type="number"
-					addonBefore="MIN"
+					addonBefore={translate('MIN')}
+					aria-label={translate('MIN')}
 					placeholder="0"
 					className="min-max-input"
 					onChange={onChangeMinHandler}
 					value={preMin}
 					data-testid="min-input"
-					addonAfter="ms"
+					addonAfter={durationUnit}
 				/>
 				<Input
 					type="number"
-					addonBefore="MAX"
+					addonBefore={translate('MAX')}
+					aria-label={translate('MAX')}
 					placeholder="100000000"
 					className="min-max-input"
 					onChange={onChangeMaxHandler}
 					value={preMax}
 					data-testid="max-input"
-					addonAfter="ms"
+					addonAfter={durationUnit}
 				/>
 			</div>
 			<div className="duration-input-slider">

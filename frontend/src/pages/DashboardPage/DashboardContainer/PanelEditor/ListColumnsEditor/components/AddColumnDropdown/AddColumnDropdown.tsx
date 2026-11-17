@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useState } from 'react';
 import { Button } from '@signozhq/ui/button';
 import {
@@ -38,6 +39,7 @@ function AddColumnDropdown({
 	selectedNames,
 	onToggle,
 }: AddColumnDropdownProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const [open, setOpen] = useState(false);
 	const { searchText, setSearchText, suggestions, isFetching } =
 		useListColumnSuggestions(signal);
@@ -55,7 +57,7 @@ function AddColumnDropdown({
 					color="secondary"
 					size="sm"
 					icon
-					aria-label="Add column"
+					aria-label={translate('Add column')}
 					// `data-testid` (not the `testId` prop) survives the trigger's
 					// `asChild` Slot merge, which otherwise resets it to undefined.
 					testId="list-columns-add"
@@ -68,7 +70,7 @@ function AddColumnDropdown({
 					<ComboboxInput
 						value={searchText}
 						onValueChange={setSearchText}
-						placeholder="Search fields"
+						placeholder={translate('Search fields')}
 						testId="list-columns-search"
 					/>
 					<ComboboxList>
@@ -78,7 +80,7 @@ function AddColumnDropdown({
 								onSelect={(): void => onToggle({ name: trimmed })}
 								data-testid="list-columns-add-custom"
 							>
-								Add &quot;{trimmed}&quot;
+								{translate('Add')} &quot;{trimmed}&quot;
 							</ComboboxItem>
 						)}
 						{suggestions.map((field) => (
@@ -92,9 +94,9 @@ function AddColumnDropdown({
 								{field.name}
 							</ComboboxItem>
 						))}
-						{isFetching && <ComboboxLoading>Loading…</ComboboxLoading>}
+						{isFetching && <ComboboxLoading>{translate('Loading…')}</ComboboxLoading>}
 						{!isFetching && !showCustomAdd && suggestions.length === 0 && (
-							<ComboboxEmpty>No fields found</ComboboxEmpty>
+							<ComboboxEmpty>{translate('No fields found')}</ComboboxEmpty>
 						)}
 					</ComboboxList>
 				</ComboboxCommand>

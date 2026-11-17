@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useEffect, useMemo, useState } from 'react';
 import { Info } from '@signozhq/icons';
 import { Typography } from '@signozhq/ui/typography';
@@ -39,6 +40,7 @@ function DynamicVariableFields({
 	onPreview,
 	attributeError,
 }: DynamicVariableFieldsProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const [search, setSearch] = useState('');
 	const debouncedSearch = useDebounce(search, 500);
 	const apiSignal = signalForApi(signal);
@@ -89,7 +91,7 @@ function DynamicVariableFields({
 					className={styles.dynamicFieldSelect}
 					showSearch
 					value={attribute || undefined}
-					placeholder="Select a field"
+					placeholder={translate('Select a field')}
 					loading={isLoading}
 					options={options}
 					onSearch={setSearch}
@@ -102,9 +104,13 @@ function DynamicVariableFields({
 					showRetryButton={error ? isRetryableError(error) : true}
 					data-testid="variable-field-select"
 				/>
-				<Typography.Text className={styles.fromText}>from</Typography.Text>
+				<Typography.Text className={styles.fromText}>
+					{translate('from')}
+				</Typography.Text>
 				<TextToolTip
-					text="By default, this searches across logs, traces, and metrics, which can be slow. Selecting a single source improves performance. Many fields share the same values across different signals (for example, `k8s.pod.name` is identical in logs, traces and metrics) making one source enough. Only use `All telemetry` when you need fields that have different values in different signal types."
+					text={translate(
+						'By default, this searches across logs, traces, and metrics, which can be slow. Selecting a single source improves performance. Many fields share the same values across different signals (for example, `k8s.pod.name` is identical in logs, traces and metrics) making one source enough. Only use `All telemetry` when you need fields that have different values in different signal types.',
+					)}
 					useFilledIcon={false}
 					outlinedIcon={<Info size={14} />}
 				/>

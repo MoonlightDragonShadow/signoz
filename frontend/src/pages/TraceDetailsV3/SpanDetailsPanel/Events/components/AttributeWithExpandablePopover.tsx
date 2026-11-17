@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Button } from '@signozhq/ui/button';
 import { Popover, Tooltip } from 'antd';
 import { Typography } from '@signozhq/ui/typography';
@@ -18,6 +19,7 @@ function AttributeWithExpandablePopover({
 	attributeValue,
 	onExpand,
 }: AttributeWithExpandablePopoverProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const popoverContent = (
 		<div className={popoverStyles.popover}>
 			<pre className={popoverStyles.preview}>{attributeValue}</pre>
@@ -28,7 +30,7 @@ function AttributeWithExpandablePopover({
 				size="sm"
 				prefix={<Fullscreen size={14} />}
 			>
-				Expand
+				{translateConsole('Expand')}
 			</Button>
 		</div>
 	);

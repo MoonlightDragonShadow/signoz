@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Check, ChevronDown, RefreshCw } from '@signozhq/icons';
 import { Checkbox } from '@signozhq/ui/checkbox';
 import { Typography } from '@signozhq/ui/typography';
@@ -32,13 +33,14 @@ function PublicAutoRefresh({
 	onIntervalChange,
 	onRefresh,
 }: PublicAutoRefreshProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	return (
 		<div className={styles.refreshActions}>
 			<div className={styles.refreshButton}>
 				<Button
 					icon={<RefreshCw size={16} />}
 					onClick={onRefresh}
-					title="Refresh"
+					title={translate('Refresh')}
 					data-testid="public-dashboard-refresh"
 				/>
 			</div>
@@ -57,11 +59,11 @@ function PublicAutoRefresh({
 								value={enabled}
 								disabled={disabled}
 							>
-								Auto Refresh
+								{translate('Auto Refresh')}
 							</Checkbox>
 						</div>
 						<Typography.Text disabled={disabled} className="refresh-interval-text">
-							Refresh Interval
+							{translate('Refresh Interval')}
 						</Typography.Text>
 						{refreshIntervalOptions
 							.filter((option) => option.label !== 'off')
@@ -80,7 +82,7 @@ function PublicAutoRefresh({
 				}
 			>
 				<Button
-					title="Set auto refresh"
+					title={translate('Set auto refresh')}
 					data-testid="public-dashboard-auto-refresh"
 				>
 					<ChevronDown size={14} />

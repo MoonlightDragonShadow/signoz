@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useEffect, useState } from 'react';
 import { Button, Skeleton } from 'antd';
 import { Badge } from '@signozhq/ui/badge';
@@ -27,6 +28,7 @@ export default function AlertRules({
 	onUpdateChecklistDoneItem: (itemKey: string) => void;
 	loadingUserPreferences: boolean;
 }): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const { user } = useAppContext();
 	const [rulesExist, setRulesExist] = useState(false);
 
@@ -78,11 +80,13 @@ export default function AlertRules({
 				<div className="empty-state-content">
 					<img src={beaconUrl} alt="empty-alert-icon" className="empty-state-icon" />
 
-					<div className="empty-title">No Alert rules yet.</div>
+					<div className="empty-title">
+						{translateConsole('No Alert rules yet.')}
+					</div>
 
 					{user?.role !== USER_ROLES.VIEWER && (
 						<div className="empty-description">
-							Create an Alert Rule to get started
+							{translateConsole('Create an Alert Rule to get started')}
 						</div>
 					)}
 				</div>
@@ -98,7 +102,7 @@ export default function AlertRules({
 									logEvent('Homepage: Create alert rule clicked', {});
 								}}
 							>
-								Create Alert Rule
+								{translateConsole('Create Alert Rule')}
 							</Button>
 						</AppLink>
 
@@ -117,7 +121,7 @@ export default function AlertRules({
 								);
 							}}
 						>
-							Learn more <ArrowUpRight size={12} />
+							{translateConsole('Learn more')} <ArrowUpRight size={12} />
 						</Button>
 					</div>
 				)}
@@ -223,7 +227,7 @@ export default function AlertRules({
 						className="alert-rules-header home-data-card-header"
 						data-testid="home-section-alerts"
 					>
-						Alerts
+						{translateConsole('Alerts')}
 					</div>
 				</Card.Header>
 			)}
@@ -242,7 +246,7 @@ export default function AlertRules({
 									logEvent('Homepage: All alert rules clicked', {});
 								}}
 							>
-								All Alert Rules <ArrowRight size={12} />
+								{translateConsole('All Alert Rules')} <ArrowRight size={12} />
 							</Button>
 						</AppLink>
 					</div>

@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { useCallback } from 'react';
 import { LifeBuoy, RefreshCw, TriangleAlert } from '@signozhq/icons';
 import { Button } from '@signozhq/ui/button';
@@ -41,7 +42,7 @@ function ErrorEmptyState({
 					onClick={onContactSupport}
 					testId="error-contact-support-button"
 				>
-					Contact Support
+					<ConsoleText message={'Contact Support'} />
 				</Button>
 				{onRefresh && (
 					<Button
@@ -52,7 +53,7 @@ function ErrorEmptyState({
 						onClick={onRefresh}
 						testId="error-refresh-button"
 					>
-						Refresh
+						<ConsoleText message={'Refresh'} />
 					</Button>
 				)}
 			</div>

@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useEffect, useMemo } from 'react';
 import { useQuery } from 'react-query';
 import { ArrowLeft, X } from '@signozhq/icons';
@@ -83,6 +84,8 @@ export default function K8sBaseDetails<T>({
 	tabsConfig,
 	customTabs,
 }: K8sBaseDetailsProps<T>): JSX.Element {
+	const translateRuntimeCopy = useConsoleTranslation();
+	const translate = useConsoleTranslation();
 	const selectedTime = useGlobalTimeStore((s) => s.selectedTime);
 	const getMinMaxTime = useGlobalTimeStore((s) => s.getMinMaxTime);
 	const getAutoRefreshQueryKey = useGlobalTimeStore(
@@ -236,7 +239,9 @@ export default function K8sBaseDetails<T>({
 
 	// Names the resource it returns to, so a drill several levels deep stays clear
 	const backTarget = previousEntry
-		? `Back to ${K8S_CATEGORY_SINGULAR_LABELS[previousEntry.category]}`
+		? translateRuntimeCopy('Back to {{value1}}', {
+				value1: K8S_CATEGORY_SINGULAR_LABELS[previousEntry.category],
+			})
 		: '';
 	const backLabel = previousEntry ? `${backTarget}: ${previousEntry.label}` : '';
 
@@ -265,7 +270,7 @@ export default function K8sBaseDetails<T>({
 					size="sm"
 					color="secondary"
 					icon
-					aria-label="Close"
+					aria-label={translate('Close')}
 					onClick={handleClose}
 					testId="close-drawer-button"
 				>
@@ -285,7 +290,9 @@ export default function K8sBaseDetails<T>({
 			</Typography.Text>
 			<CopyButton
 				value={entityName || selectedItem || ''}
-				ariaLabel={`Copy ${K8S_CATEGORY_SINGULAR_LABELS[category]} name`}
+				ariaLabel={translateRuntimeCopy('Copy {{value1}} name', {
+					value1: K8S_CATEGORY_SINGULAR_LABELS[category],
+				})}
 				testId="copy-id-button"
 				onCopy={handleCopyId}
 			/>

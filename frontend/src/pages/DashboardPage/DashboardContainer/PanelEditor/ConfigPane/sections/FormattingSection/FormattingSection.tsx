@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import YAxisUnitSelector from 'components/YAxisUnitSelector';
 import { YAxisSource } from 'components/YAxisUnitSelector/types';
 import type {
@@ -29,13 +30,14 @@ function FormattingSection({
 	tableColumns = [],
 	metricUnit,
 }: FormattingSectionProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const reset = createFieldResetter(value, savedValue, onChange);
 
 	return (
 		<>
 			{controls.unit && (
 				<ConfigField
-					label="Unit"
+					label={translate('Unit')}
 					help="Formats values, axis ticks and tooltips. With milliseconds, 1500 shows as 1.5 s."
 					{...reset('unit')}
 				>
@@ -62,7 +64,7 @@ function FormattingSection({
 			)}
 
 			{controls.columnUnits && (
-				<ConfigField label="Column units" {...reset('columnUnits')}>
+				<ConfigField label={translate('Column units')} {...reset('columnUnits')}>
 					<ColumnUnits
 						columns={tableColumns}
 						value={value?.columnUnits ?? {}}

@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Button } from '@signozhq/ui/button';
@@ -32,6 +33,7 @@ import styles from './AIAssistantModal.module.scss';
  */
 // eslint-disable-next-line sonarjs/cognitive-complexity
 export default function AIAssistantModal(): JSX.Element | null {
+	const translateConsole = useConsoleTranslation();
 	const { pathname } = useAppLocation();
 	const [showHistory, setShowHistory] = useState(false);
 
@@ -166,62 +168,62 @@ export default function AIAssistantModal(): JSX.Element | null {
 									icon
 									color="secondary"
 									onClick={(): void => setShowHistory((v) => !v)}
-									aria-label="Toggle conversations"
+									aria-label={translateConsole('Toggle conversations')}
 									aria-pressed={showHistory}
 								>
 									<History size={14} />
 								</Button>
 							</Tooltip>
 
-							<Tooltip title="New conversation">
+							<Tooltip title={translateConsole('New conversation')}>
 								<Button
 									variant="ghost"
 									size="sm"
 									icon
 									color="secondary"
 									onClick={handleNew}
-									aria-label="New conversation"
+									aria-label={translateConsole('New conversation')}
 								>
 									<Plus size={14} />
 								</Button>
 							</Tooltip>
 
-							<Tooltip title="Open full screen">
+							<Tooltip title={translateConsole('Open full screen')}>
 								<Button
-									disabledTooltip="Start a conversation first"
+									disabledTooltip={translateConsole('Start a conversation first')}
 									variant="ghost"
 									size="sm"
 									icon
 									color="secondary"
 									onClick={handleExpand}
 									disabled={!activeConversationId}
-									aria-label="Open full screen"
+									aria-label={translateConsole('Open full screen')}
 								>
 									<Maximize2 size={14} />
 								</Button>
 							</Tooltip>
 
-							<Tooltip title="Minimize to side panel">
+							<Tooltip title={translateConsole('Minimize to side panel')}>
 								<Button
 									variant="ghost"
 									size="sm"
 									icon
 									color="secondary"
 									onClick={handleMinimize}
-									aria-label="Minimize to side panel"
+									aria-label={translateConsole('Minimize to side panel')}
 								>
 									<Minus size={14} />
 								</Button>
 							</Tooltip>
 
-							<Tooltip title="Close">
+							<Tooltip title={translateConsole('Close')}>
 								<Button
 									variant="ghost"
 									size="sm"
 									icon
 									color="secondary"
 									onClick={closeModal}
-									aria-label="Close"
+									aria-label={translateConsole('Close')}
 								>
 									<X size={14} />
 								</Button>

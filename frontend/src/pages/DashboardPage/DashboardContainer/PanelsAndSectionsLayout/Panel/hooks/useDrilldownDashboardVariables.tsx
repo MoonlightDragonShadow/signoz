@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useMemo } from 'react';
 import { toast } from '@signozhq/ui/sonner';
 import logEvent from 'api/common/logEvent';
@@ -59,6 +60,7 @@ export function useDrilldownDashboardVariables({
 	signal,
 	onClose,
 }: UseDrilldownDashboardVariablesArgs): UseDrilldownDashboardVariablesApi {
+	const translate = useConsoleTranslation();
 	const dashboardId = useDashboardStore((state) => state.dashboardId);
 	const { variables } = useDashboardFetchRequired();
 
@@ -120,11 +122,12 @@ export function useDrilldownDashboardVariables({
 				setSelection(fieldName, { value: [fieldValue], allSelected: false });
 				toast.success(`Created variable "${fieldName}"`);
 			} catch {
-				toast.error('Failed to create variable');
+				toast.error(translate('Failed to create variable'));
 			}
 			onClose();
 		},
 		[
+			translate,
 			existingNames,
 			signal,
 			variables,

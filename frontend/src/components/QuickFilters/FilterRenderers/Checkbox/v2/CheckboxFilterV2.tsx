@@ -1,3 +1,5 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Input } from '@signozhq/ui/input';
 import { Skeleton } from 'antd';
@@ -42,6 +44,8 @@ interface CheckboxFilterV2Props {
 export default function CheckboxFilterV2(
 	props: CheckboxFilterV2Props,
 ): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
+	const translate = useConsoleTranslation();
 	const {
 		quickFilterSource,
 		filter,
@@ -189,7 +193,7 @@ export default function CheckboxFilterV2(
 			data-filter-key={filter.attributeKey.key}
 		>
 			<CheckboxFilterV2Header
-				title={filter.title}
+				title={translate(filter.title)}
 				isOpen={isOpen}
 				canReset={isSomeFilterPresentForCurrentAttribute}
 				onToggleOpen={handleToggleOpen}
@@ -205,7 +209,7 @@ export default function CheckboxFilterV2(
 					{isSearchShown && (
 						<section className={styles.search}>
 							<Input
-								placeholder="Filter values"
+								placeholder={translateInterfaceCopy('Filter values')}
 								onChange={(e): void => setSearchTextDebounced(e.target.value)}
 								disabled={isFilterDisabled}
 								data-testid="checkbox-filter-search"
@@ -250,7 +254,7 @@ export default function CheckboxFilterV2(
 									: 'checkbox-filter-empty'
 							}
 						>
-							<Typography.Text>No values found</Typography.Text>
+							<Typography.Text>{translate('No values found')}</Typography.Text>
 						</section>
 					)}
 
@@ -262,7 +266,7 @@ export default function CheckboxFilterV2(
 									onClick={onShowMore}
 									data-testid="checkbox-filter-show-more"
 								>
-									Show More...
+									<ConsoleText message={'Show More...'} />
 								</Typography.Text>
 							</section>
 						)}

@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useMemo } from 'react';
 import { Button } from '@signozhq/ui/button';
 import { Input } from '@signozhq/ui/input';
@@ -36,6 +37,7 @@ import styles from './ModelCostTabPanel.module.scss';
 // reload-safe) and are owned by TanStackTable via enableQueryParams — this tab
 // reads them back through the same useTableParams hook so the two stay in lockstep.
 function ModelCostTabPanel(): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const { page, limit, setPage } = useTableParams(
 		{ page: PAGE_KEY, limit: LIMIT_KEY },
 		{ page: 1, limit: PAGE_SIZE },
@@ -104,7 +106,7 @@ function ModelCostTabPanel(): JSX.Element {
 				<div className={styles.filtersBarLeft}>
 					<Input
 						className={styles.filtersBarSearch}
-						placeholder="Search by model or provider"
+						placeholder={translateConsole('Search by model or provider')}
 						value={search}
 						onChange={handleSearchChange}
 						prefix={<Search size={14} />}
@@ -116,7 +118,7 @@ function ModelCostTabPanel(): JSX.Element {
 									size="sm"
 									icon
 									onClick={clearSearch}
-									aria-label="Clear search"
+									aria-label={translateConsole('Clear search')}
 									testId="model-cost-search-clear"
 								>
 									<X size={14} />
@@ -142,14 +144,14 @@ function ModelCostTabPanel(): JSX.Element {
 						onClick={(): void => drawer.openForAdd()}
 						testId="add-model-cost-btn"
 					>
-						Add model cost
+						{translateConsole('Add model cost')}
 					</Button>
 				)}
 			</div>
 
 			{isError && (
 				<div className={styles.pageError} role="alert">
-					Failed to load pricing rules. Please try again.
+					{translateConsole('Failed to load pricing rules. Please try again.')}
 				</div>
 			)}
 

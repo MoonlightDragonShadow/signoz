@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { ExternalLink, SolidInfoCircle } from '@signozhq/icons';
 import { Tooltip } from '@signozhq/ui/tooltip';
 import { Typography } from '@signozhq/ui/typography';
@@ -22,6 +23,7 @@ interface CrossPanelSyncProps {
 }
 
 function CrossPanelSync({ dashboardId }: CrossPanelSyncProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const [cursorSyncMode, setCursorSyncMode] =
 		useDashboardCursorSyncMode(dashboardId);
 	const [syncTooltipFilterMode, setSyncTooltipFilterMode] =
@@ -47,7 +49,7 @@ function CrossPanelSync({ dashboardId }: CrossPanelSyncProps): JSX.Element {
 		<div className={cx(settingsStyles.settingsCard, styles.crossPanelSyncGroup)}>
 			<div className={styles.crossPanelSyncSectionHeader}>
 				<Typography.Text className={styles.crossPanelsSyncSectionTitle}>
-					Cross-Panel Sync
+					{translate('Cross-Panel Sync')}
 				</Typography.Text>
 
 				<Tooltip
@@ -55,10 +57,12 @@ function CrossPanelSync({ dashboardId }: CrossPanelSyncProps): JSX.Element {
 					title={
 						<div className={styles.crossPanelSyncTooltipContent}>
 							<strong className={styles.crossPanelSyncTooltipTitle}>
-								Cross-Panel Sync
+								{translate('Cross-Panel Sync')}
 							</strong>
 							<span className={styles.crossPanelSyncTooltipDescription}>
-								Sync crosshair and tooltip across all the dashboard panels
+								{translate(
+									'Sync crosshair and tooltip across all the dashboard panels',
+								)}
 							</span>
 							<Typography.Link
 								href="https://signoz.io/docs/dashboards/interactivity/#cross-panel-sync"
@@ -66,7 +70,7 @@ function CrossPanelSync({ dashboardId }: CrossPanelSyncProps): JSX.Element {
 								rel="noopener noreferrer"
 								className={styles.crossPanelSyncTooltipDocLink}
 							>
-								Learn more
+								{translate('Learn more')}
 								<ExternalLink size={12} />
 							</Typography.Link>
 						</div>
@@ -79,10 +83,10 @@ function CrossPanelSync({ dashboardId }: CrossPanelSyncProps): JSX.Element {
 			<div className={styles.crossPanelSyncRow}>
 				<div className={styles.crossPanelSyncInfo}>
 					<Typography.Text className={styles.crossPanelSyncTitle}>
-						Sync Mode
+						{translate('Sync Mode')}
 					</Typography.Text>
 					<Typography.Text className={styles.crossPanelSyncDescription}>
-						Sync crosshair and tooltip across all the dashboard panels
+						{translate('Sync crosshair and tooltip across all the dashboard panels')}
 					</Typography.Text>
 				</div>
 				<SegmentedControl
@@ -90,9 +94,9 @@ function CrossPanelSync({ dashboardId }: CrossPanelSyncProps): JSX.Element {
 					value={cursorSyncMode}
 					onChange={handleCursorSyncChange}
 					options={[
-						{ label: 'No Sync', value: DashboardCursorSync.None },
-						{ label: 'Crosshair', value: DashboardCursorSync.Crosshair },
-						{ label: 'Tooltip', value: DashboardCursorSync.Tooltip },
+						{ label: translate('No Sync'), value: DashboardCursorSync.None },
+						{ label: translate('Crosshair'), value: DashboardCursorSync.Crosshair },
+						{ label: translate('Tooltip'), value: DashboardCursorSync.Tooltip },
 					]}
 				/>
 			</div>
@@ -101,11 +105,12 @@ function CrossPanelSync({ dashboardId }: CrossPanelSyncProps): JSX.Element {
 				<div className={styles.crossPanelSyncRow}>
 					<div className={styles.crossPanelSyncInfo}>
 						<Typography.Text className={styles.crossPanelSyncTitle}>
-							Synced Tooltip Series
+							{translate('Synced Tooltip Series')}
 						</Typography.Text>
 						<Typography.Text className={styles.crossPanelSyncDescription}>
-							Show only series that intersect on group-by, or every series with the
-							matching ones highlighted
+							{translate(
+								'Show only series that intersect on group-by, or every series with the matching ones highlighted',
+							)}
 						</Typography.Text>
 					</div>
 
@@ -114,8 +119,8 @@ function CrossPanelSync({ dashboardId }: CrossPanelSyncProps): JSX.Element {
 						value={syncTooltipFilterMode}
 						onChange={handleTooltipFilterModeChange}
 						options={[
-							{ label: 'All', value: SyncTooltipFilterMode.All },
-							{ label: 'Filtered', value: SyncTooltipFilterMode.Filtered },
+							{ label: translate('All'), value: SyncTooltipFilterMode.All },
+							{ label: translate('Filtered'), value: SyncTooltipFilterMode.Filtered },
 						]}
 					/>
 				</div>

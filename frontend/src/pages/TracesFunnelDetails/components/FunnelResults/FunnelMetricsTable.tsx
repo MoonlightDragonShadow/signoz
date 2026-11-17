@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Empty } from 'antd';
 import Spinner from 'components/Spinner';
 
@@ -31,6 +32,7 @@ function FunnelMetricsContentRenderer({
 	isError?: boolean;
 	emptyState?: JSX.Element;
 }): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	if (isLoading) {
 		return (
 			<div className="funnel-metrics--loading-state">
@@ -44,7 +46,11 @@ function FunnelMetricsContentRenderer({
 
 	if (isError) {
 		return (
-			<Empty description="Error fetching data. If the problem persists, please contact support." />
+			<Empty
+				description={translateConsole(
+					'Error fetching data. If the problem persists, please contact support.',
+				)}
+			/>
 		);
 	}
 

@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { memo, useCallback } from 'react';
 import { Button, Steps, Tooltip } from 'antd';
 import logEvent from 'api/common/logEvent';
@@ -20,6 +21,7 @@ function StepsContent({
 	isTraceDetailsPage?: boolean;
 	span?: SpanV3;
 }): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const { steps, handleAddStep, handleReplaceStep } = useFunnelContext();
 	const { hasEditPermission } = useAppContext();
 
@@ -69,7 +71,7 @@ function StepsContent({
 													handleReplaceStep(index, span['service.name'], span.name)
 												}
 											>
-												Replace
+												{translateConsole('Replace')}
 											</Button>
 										</Tooltip>
 									)}

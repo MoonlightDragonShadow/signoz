@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useLayoutEffect, useMemo, useRef, useState } from 'react';
 import type { KeyboardEvent } from 'react';
 import { Input } from '@signozhq/ui/input';
@@ -25,6 +26,7 @@ function PanelTitleInput({
 	value,
 	onChange,
 }: PanelTitleInputProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const variableNames = useDashboardVariableNames();
 	const inputRef = useRef<HTMLInputElement>(null);
 	const pendingCursor = useRef<number | null>(null);
@@ -93,7 +95,7 @@ function PanelTitleInput({
 			<Input
 				ref={inputRef}
 				testId="panel-editor-v2-title"
-				placeholder="Panel title"
+				placeholder={translate('Panel title')}
 				onKeyDown={handleKeyDown}
 				onKeyUp={syncCursor}
 				onClick={syncCursor}

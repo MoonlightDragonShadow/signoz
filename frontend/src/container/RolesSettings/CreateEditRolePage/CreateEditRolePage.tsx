@@ -1,3 +1,5 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { useCallback, useState } from 'react';
 import { ArrowLeft, SolidAlertTriangle } from '@signozhq/icons';
 import { useAppLocation } from 'lib/router/useAppLocation';
@@ -45,6 +47,8 @@ function authzCheckFn(
 }
 
 function CreateEditRolePageContent(): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
+	const translate = useConsoleTranslation();
 	const navigate = useAppNavigate();
 	const { pathname } = useAppLocation();
 	const urlQuery = useUrlQuery();
@@ -116,7 +120,7 @@ function CreateEditRolePageContent(): JSX.Element {
 							onClick={handleCancel}
 							testId="cancel-button"
 							icon
-							aria-label="Back"
+							aria-label={translate('Back')}
 						>
 							<ArrowLeft size={16} />
 						</Button>
@@ -179,10 +183,10 @@ function CreateEditRolePageContent(): JSX.Element {
 						color="secondary"
 						onClick={handleCancel}
 						disabled={isSaving}
-						disabledTooltip="Wait for the save to finish"
+						disabledTooltip={translate('Wait for the save to finish')}
 						testId="cancel-button"
 						icon
-						aria-label="Back"
+						aria-label={translate('Back')}
 					>
 						<ArrowLeft size={16} />
 					</Button>
@@ -194,7 +198,7 @@ function CreateEditRolePageContent(): JSX.Element {
 						<div className={styles.unsavedIndicator}>
 							<span className={styles.unsavedDot} />
 							<Typography as="span" size="base" className={styles.unsavedText}>
-								Unsaved changes
+								<ConsoleText message={'Unsaved changes'} />
 							</Typography>
 						</div>
 					)}
@@ -257,7 +261,7 @@ function CreateEditRolePageContent(): JSX.Element {
 								{isCreateMode ? (
 									<div className={styles.formField}>
 										<label htmlFor="role-name" className={styles.formLabel}>
-											Name
+											<ConsoleText message={'Name'} />
 										</label>
 										<Input
 											id="role-name"
@@ -270,7 +274,7 @@ function CreateEditRolePageContent(): JSX.Element {
 								) : null}
 								<div className={styles.formField}>
 									<label htmlFor="role-description" className={styles.formLabel}>
-										Description
+										<ConsoleText message={'Description'} />
 									</label>
 									<Input
 										id="role-description"
@@ -278,7 +282,7 @@ function CreateEditRolePageContent(): JSX.Element {
 										onChange={(e): void =>
 											handleFormChange('description', e.target.value)
 										}
-										placeholder="Custom role for the support team"
+										placeholder={translate('Custom role for the support team')}
 										data-testid="role-description-input"
 									/>
 								</div>
@@ -307,11 +311,11 @@ function CreateEditRolePageContent(): JSX.Element {
 						cancelNavigation();
 					}
 				}}
-				title="Discard unsaved changes?"
+				title={translate('Discard unsaved changes?')}
 				titleIcon={<SolidAlertTriangle size={14} color="#fdd600" />}
 				confirmText="Discard"
 				confirmColor="danger"
-				cancelText="Keep editing"
+				cancelText={translateInterfaceCopy('Keep editing')}
 				onConfirm={confirmNavigation}
 				onCancel={cancelNavigation}
 				testId="discard-changes-dialog"

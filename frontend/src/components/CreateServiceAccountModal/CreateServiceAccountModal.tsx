@@ -1,3 +1,5 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { Controller, useForm } from 'react-hook-form';
 import { useQueryClient } from 'react-query';
 import { X } from '@signozhq/icons';
@@ -28,6 +30,7 @@ interface FormValues {
 }
 
 function CreateServiceAccountModal(): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
 	const queryClient = useQueryClient();
 	const [isOpen, setIsOpen] = useQueryState(
 		SA_QUERY_PARAMS.CREATE_SA,
@@ -53,7 +56,9 @@ function CreateServiceAccountModal(): JSX.Element {
 		useCreateServiceAccount({
 			mutation: {
 				onSuccess: async (response) => {
-					toast.success('Service account created successfully');
+					toast.success(
+						translateInterfaceCopy('Service account created successfully'),
+					);
 					reset();
 					await setIsOpen(null);
 					await invalidateListServiceAccounts(queryClient);
@@ -83,7 +88,7 @@ function CreateServiceAccountModal(): JSX.Element {
 
 	return (
 		<DialogWrapper
-			title="New Service Account"
+			title={translateInterfaceCopy('New Service Account')}
 			open={isOpen}
 			onOpenChange={(open): void => {
 				if (!open) {
@@ -107,7 +112,9 @@ function CreateServiceAccountModal(): JSX.Element {
 						onSubmit={handleSubmit(handleCreate)}
 					>
 						<div className="create-sa-form__item">
-							<label htmlFor="sa-name">Name</label>
+							<label htmlFor="sa-name">
+								<ConsoleText message={'Name'} />
+							</label>
 							<Controller
 								name="name"
 								control={control}
@@ -115,7 +122,7 @@ function CreateServiceAccountModal(): JSX.Element {
 								render={({ field }): JSX.Element => (
 									<Input
 										id="sa-name"
-										placeholder="Enter a name"
+										placeholder={translateInterfaceCopy('Enter a name')}
 										className="create-sa-form__input"
 										value={field.value}
 										onChange={field.onChange}
@@ -142,7 +149,7 @@ function CreateServiceAccountModal(): JSX.Element {
 					testId="create-sa-cancel-btn"
 					prefix={<X size={12} />}
 				>
-					Cancel
+					<ConsoleText message={'Cancel'} />
 				</Button>
 
 				<AuthZButton
@@ -156,7 +163,7 @@ function CreateServiceAccountModal(): JSX.Element {
 					disabled={!isValid}
 					testId="create-sa-submit-btn"
 				>
-					Create Service Account
+					<ConsoleText message={'Create Service Account'} />
 				</AuthZButton>
 			</DialogFooter>
 		</DialogWrapper>

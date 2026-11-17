@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Button } from '@signozhq/ui/button';
 import { DrawerWrapper } from '@signozhq/ui/drawer';
 import { Typography } from '@signozhq/ui/typography';
@@ -23,6 +24,7 @@ function VolumeControlConfigDrawer({
 	open,
 	onClose,
 }: VolumeControlConfigDrawerProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const {
 		mode,
 		setMode,
@@ -43,7 +45,7 @@ function VolumeControlConfigDrawer({
 	const footer = (
 		<div className={styles.footer}>
 			<Typography.Text size="small" color="muted">
-				Changes take effect about 5 minutes after saving.
+				{translate('Changes take effect about 5 minutes after saving.')}
 			</Typography.Text>
 			<div className={styles.footerSpacer} />
 			<Button
@@ -53,7 +55,7 @@ function VolumeControlConfigDrawer({
 				onClick={onClose}
 				testId="volume-control-cancel"
 			>
-				Cancel
+				{translate('Cancel')}
 			</Button>
 			{hasExistingRule && (
 				<Button
@@ -64,7 +66,7 @@ function VolumeControlConfigDrawer({
 					loading={isRemoving}
 					testId="volume-control-remove"
 				>
-					Remove rule
+					{translate('Remove rule')}
 				</Button>
 			)}
 			<Button
@@ -73,11 +75,11 @@ function VolumeControlConfigDrawer({
 				color="primary"
 				onClick={save}
 				disabled={isSaveDisabled}
-				disabledTooltip="Select at least one attribute"
+				disabledTooltip={translate('Select at least one attribute')}
 				loading={isSaving}
 				testId="volume-control-save"
 			>
-				Save rule
+				{translate('Save rule')}
 			</Button>
 		</div>
 	);
@@ -107,7 +109,7 @@ function VolumeControlConfigDrawer({
 						color="warning"
 						className={styles.adminOnlyTag}
 					>
-						Admin only
+						{translate('Admin only')}
 					</Typography.Text>
 				</div>
 				<ModeSelector mode={mode} onChange={setMode} />

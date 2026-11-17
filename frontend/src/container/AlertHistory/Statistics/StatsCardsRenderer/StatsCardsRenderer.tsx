@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useEffect, useMemo } from 'react';
 import { useGetAlertRuleDetailsStats } from 'pages/AlertDetails/hooks';
 import DataStateRenderer from 'periscope/components/DataStateRenderer/DataStateRenderer';
@@ -38,6 +39,7 @@ type AdaptedStatsData = {
 function StatsCardsRenderer({
 	setTotalCurrentTriggers,
 }: StatsCardsRendererProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const { isLoading, isRefetching, isError, data, isValidRuleId, ruleId } =
 		useGetAlertRuleDetailsStats();
 
@@ -100,9 +102,9 @@ function StatsCardsRenderer({
 							/>
 						) : (
 							<StatsCard
-								title="Total Triggered"
+								title={translateConsole('Total Triggered')}
 								isEmpty
-								emptyMessage="None Triggered."
+								emptyMessage={translateConsole('None Triggered.')}
 							/>
 						)}
 
@@ -117,9 +119,9 @@ function StatsCardsRenderer({
 							/>
 						) : (
 							<StatsCard
-								title="Avg. Resolution Time"
+								title={translateConsole('Avg. Resolution Time')}
 								isEmpty
-								emptyMessage="No Resolutions."
+								emptyMessage={translateConsole('No Resolutions.')}
 							/>
 						)}
 					</>

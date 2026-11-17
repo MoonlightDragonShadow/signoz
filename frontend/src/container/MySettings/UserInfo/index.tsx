@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useState } from 'react';
 import { Button, Input, Modal } from 'antd';
 import { Typography } from '@signozhq/ui/typography';
@@ -19,6 +20,9 @@ import '../MySettings.styles.scss';
 import './UserInfo.styles.scss';
 
 function UserInfo(): JSX.Element {
+	const translateRuntimeCopy = useConsoleTranslation();
+	const translateInterfaceCopy = useConsoleTranslation();
+	const translateConsole = useConsoleTranslation();
 	const { user, org, updateUser } = useAppContext();
 
 	const { showErrorModal } = useErrorModal();
@@ -61,7 +65,7 @@ function UserInfo(): JSX.Element {
 				newPassword: updatePassword,
 				oldPassword: currentPassword,
 			});
-			toast.success('Password updated successfully');
+			toast.success(translateRuntimeCopy('Password updated successfully'));
 			hideResetPasswordModal();
 			setIsLoading(false);
 		} catch (error) {
@@ -100,7 +104,7 @@ function UserInfo(): JSX.Element {
 			setIsLoading(true);
 			await updateMyUser({ data: { displayName: changedName } });
 
-			toast.success('Name updated successfully');
+			toast.success(translateRuntimeCopy('Name updated successfully'));
 			updateUser({
 				...user,
 				displayName: changedName,
@@ -147,7 +151,7 @@ function UserInfo(): JSX.Element {
 					onClick={(): void => setIsUpdateNameModalOpen(true)}
 					data-testid="update-name-open-btn"
 				>
-					Update name
+					{translateConsole('Update name')}
 				</Button>
 
 				<Button
@@ -157,13 +161,13 @@ function UserInfo(): JSX.Element {
 					onClick={(): void => setIsResetPasswordModalOpen(true)}
 					data-testid="reset-password-open-btn"
 				>
-					Reset password
+					{translateConsole('Reset password')}
 				</Button>
 			</div>
 
 			<Modal
 				className="update-name-modal"
-				title={<span className="title">Update name</span>}
+				title={<span className="title">{translateConsole('Update name')}</span>}
 				open={isUpdateNameModalOpen}
 				closable
 				onCancel={hideUpdateNameModal}
@@ -176,14 +180,14 @@ function UserInfo(): JSX.Element {
 						loading={isLoading}
 						data-testid="update-name-btn"
 					>
-						Update name
+						{translateConsole('Update name')}
 					</Button>,
 				]}
 			>
-				<Typography.Text>Name</Typography.Text>
+				<Typography.Text>{translateConsole('Name')}</Typography.Text>
 				<div className="update-name-input">
 					<Input
-						placeholder="e.g. John Doe"
+						placeholder={translateInterfaceCopy('e.g. John Doe')}
 						data-testid="update-name-input"
 						value={changedName}
 						disabled={isLoading}
@@ -197,7 +201,7 @@ function UserInfo(): JSX.Element {
 
 			<Modal
 				className="reset-password-modal"
-				title={<span className="title">Reset password</span>}
+				title={<span className="title">{translateConsole('Reset password')}</span>}
 				open={isResetPasswordModalOpen}
 				closable
 				destroyOnClose
@@ -214,13 +218,13 @@ function UserInfo(): JSX.Element {
 						disabled={isResetPasswordDisabled}
 						data-testid="reset-password-btn"
 					>
-						Reset password
+						{translateConsole('Reset password')}
 					</Button>,
 				]}
 			>
 				<div className="reset-password-container">
 					<div className="current-password-input">
-						<Typography.Text>Current password</Typography.Text>
+						<Typography.Text>{translateConsole('Current password')}</Typography.Text>
 						<Input.Password
 							data-testid="current-password-textbox"
 							disabled={isLoading}
@@ -241,7 +245,7 @@ function UserInfo(): JSX.Element {
 					</div>
 
 					<div className="new-password-input">
-						<Typography.Text>New password</Typography.Text>
+						<Typography.Text>{translateConsole('New password')}</Typography.Text>
 						<Input.Password
 							data-testid="new-password-textbox"
 							disabled={isLoading}
@@ -263,7 +267,9 @@ function UserInfo(): JSX.Element {
 						/>
 						{passwordsMatch && (
 							<span className="password-error-text">
-								New password must be different from current password
+								{translateConsole(
+									'New password must be different from current password',
+								)}
 							</span>
 						)}
 					</div>

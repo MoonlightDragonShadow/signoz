@@ -1,3 +1,5 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { ArrowLeft, Plus, Settings, X } from '@signozhq/icons';
 import OverlayScrollbar from 'components/OverlayScrollbar/OverlayScrollbar';
 import {
@@ -29,6 +31,7 @@ function DrilldownDashboardVariablesMenu({
 	actions,
 	onBack,
 }: DrilldownDashboardVariablesMenuProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	return (
 		<>
 			<ContextMenu.Header>
@@ -39,7 +42,7 @@ function DrilldownDashboardVariablesMenu({
 						onClick={onBack}
 						data-testid="drilldown-var-back"
 					/>
-					<span>Dashboard Variables</span>
+					<span>{translate('Dashboard Variables')}</span>
 				</div>
 			</ContextMenu.Header>
 			<OverlayScrollbar
@@ -55,17 +58,19 @@ function DrilldownDashboardVariablesMenu({
 						>
 							{kind === DrilldownVariableActionKind.Unset && (
 								<span data-testid="drilldown-var-unset">
-									Unset <strong>${fieldName}</strong>
+									{translate('Unset')} <strong>${fieldName}</strong>
 								</span>
 							)}
 							{kind === DrilldownVariableActionKind.Set && (
 								<span data-testid="drilldown-var-set">
-									Set <strong>${fieldName}</strong> to <strong>{fieldValue}</strong>
+									{translate('Set')} <strong>${fieldName}</strong>{' '}
+									<ConsoleText message={'to'} /> <strong>{fieldValue}</strong>
 								</span>
 							)}
 							{kind === DrilldownVariableActionKind.Create && (
 								<span data-testid="drilldown-var-create">
-									Create var <strong>${fieldName}</strong>:<strong>{fieldValue}</strong>
+									{translate('Create var')} <strong>${fieldName}</strong>:
+									<strong>{fieldValue}</strong>
 								</span>
 							)}
 						</ContextMenu.Item>

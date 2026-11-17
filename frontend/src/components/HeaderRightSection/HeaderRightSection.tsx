@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useState } from 'react';
 import { useAppLocation } from 'lib/router/useAppLocation';
 import { Dot, Globe, Inbox, SquarePen } from '@signozhq/icons';
@@ -38,6 +39,8 @@ function HeaderRightSection({
 	enableFeedback,
 	shareModalExtraOption,
 }: HeaderRightSectionProps): JSX.Element | null {
+	const translateRuntimeCopy = useConsoleTranslation();
+	const translateInterfaceCopy = useConsoleTranslation();
 	const location = useAppLocation();
 
 	const [openFeedbackModal, setOpenFeedbackModal] = useState(false);
@@ -123,7 +126,10 @@ function HeaderRightSection({
 									showHeaderPendingBadge
 										? pendingUserInputCount === 1
 											? 'Open Noz, 1 action needs your response'
-											: `Open Noz, ${pendingUserInputCount} actions need your response`
+											: translateRuntimeCopy(
+													'Open Noz, {{value1}} actions need your response',
+													{ value1: pendingUserInputCount },
+												)
 										: 'Open Noz'
 								}
 								prefix={<Noz size={20} />}
@@ -152,7 +158,7 @@ function HeaderRightSection({
 						variant="link"
 						size="md"
 						icon
-						aria-label="Feedback"
+						aria-label={translateInterfaceCopy('Feedback')}
 						onClick={handleOpenFeedbackModal}
 					>
 						<SquarePen size={14} />
@@ -177,7 +183,7 @@ function HeaderRightSection({
 						variant="link"
 						size="md"
 						icon
-						aria-label="Announcements"
+						aria-label={translateInterfaceCopy('Announcements')}
 						onClick={(): void => {
 							logEvent('Announcements: Clicked', {
 								page: location.pathname,
@@ -206,7 +212,7 @@ function HeaderRightSection({
 						variant="link"
 						size="md"
 						icon
-						aria-label="Share"
+						aria-label={translateInterfaceCopy('Share')}
 						onClick={handleOpenShareURLModal}
 					>
 						<Globe size={14} />

@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useMemo, useState } from 'react';
 import { useCopyToClipboard } from 'react-use';
 import { Check, Copy } from '@signozhq/icons';
@@ -28,6 +29,7 @@ function CodeBlock({
 	showCopyButton = true,
 	onCopy,
 }: CodeBlockProps): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
 	const [isCopied, setIsCopied] = useState(false);
 	const [, copyToClipboard] = useCopyToClipboard();
 	const normalizedCode = useMemo(() => code?.replace(/\n$/, '') ?? '', [code]);
@@ -61,7 +63,7 @@ function CodeBlock({
 							size="sm"
 							icon
 							onClick={handleCopy}
-							aria-label="Copy code"
+							aria-label={translateInterfaceCopy('Copy code')}
 						>
 							{isCopied ? <Check size={14} /> : <Copy size={14} />}
 						</Button>

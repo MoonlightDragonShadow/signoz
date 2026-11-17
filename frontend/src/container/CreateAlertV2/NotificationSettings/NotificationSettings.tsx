@@ -1,3 +1,5 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Input } from '@signozhq/ui/input';
 import { Select } from 'antd';
 import { Typography } from '@signozhq/ui/typography';
@@ -15,15 +17,16 @@ import NotificationMessage from './NotificationMessage';
 import './styles.scss';
 
 function NotificationSettings(): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const { notificationSettings, setNotificationSettings } =
 		useCreateAlertState();
 
 	const repeatNotificationsInput = (
 		<div className="repeat-notifications-input">
-			<Typography.Text>Every</Typography.Text>
+			<Typography.Text>{translateConsole('Every')}</Typography.Text>
 			<Input
 				value={notificationSettings.reNotification.value}
-				placeholder="Enter time interval..."
+				placeholder={translateConsole('Enter time interval...')}
 				disabled={!notificationSettings.reNotification.enabled}
 				type="number"
 				onChange={(e): void => {
@@ -41,7 +44,7 @@ function NotificationSettings(): JSX.Element {
 			/>
 			<Select
 				value={notificationSettings.reNotification.unit || null}
-				placeholder="Select unit"
+				placeholder={translateConsole('Select unit')}
 				disabled={!notificationSettings.reNotification.enabled}
 				options={RE_NOTIFICATION_TIME_UNIT_OPTIONS}
 				onChange={(value): void => {
@@ -57,11 +60,13 @@ function NotificationSettings(): JSX.Element {
 				}}
 				data-testid="repeat-notifications-unit-select"
 			/>
-			<Typography.Text>while</Typography.Text>
+			<Typography.Text>
+				<ConsoleText message={'while'} />
+			</Typography.Text>
 			<Select
 				mode="multiple"
 				value={notificationSettings.reNotification.conditions || null}
-				placeholder="Select conditions"
+				placeholder={translateConsole('Select conditions')}
 				disabled={!notificationSettings.reNotification.enabled}
 				options={RE_NOTIFICATION_CONDITION_OPTIONS}
 				onChange={(value): void => {
@@ -82,13 +87,15 @@ function NotificationSettings(): JSX.Element {
 
 	return (
 		<div className="notification-settings-container">
-			<Stepper stepNumber={3} label="Notification settings" />
+			<Stepper stepNumber={3} label={translateConsole('Notification settings')} />
 			<NotificationMessage />
 			<div className="notification-settings-content">
 				<MultipleNotifications />
 				<AdvancedOptionItem
-					title="Repeat notifications"
-					description="Send periodic notifications while the alert condition remains active."
+					title={translateConsole('Repeat notifications')}
+					description={translateConsole(
+						'Send periodic notifications while the alert condition remains active.',
+					)}
 					tooltipText="Continue sending periodic notifications while the alert condition persists. Useful for ensuring critical alerts aren't missed during long-running incidents. Configure how often to repeat and under what conditions."
 					input={repeatNotificationsInput}
 					onToggle={(): void => {

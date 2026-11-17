@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { ColorPicker } from 'antd';
 import { Button } from '@signozhq/ui/button';
 
@@ -25,6 +26,7 @@ function LegendColorRow({
 	onChange,
 	onReset,
 }: LegendColorRowProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	return (
 		<div className={styles.row}>
 			<ColorPicker
@@ -53,7 +55,7 @@ function LegendColorRow({
 					onClick={onReset}
 					testId={`legend-color-reset-${label}`}
 				>
-					Reset
+					{translate('Reset')}
 				</Button>
 			)}
 		</div>

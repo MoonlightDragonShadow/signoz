@@ -15,12 +15,13 @@ const STATE_CONFIG: Record<string, { color: BadgeColorType; label: string }> = {
 };
 
 export function getAlertRuleColumns(
+	translateConsole: (message: string) => string,
 	formatTimezoneAdjustedTimestamp: (date: string, format: string) => string,
 ): TableColumnDef<AlertRule>[] {
 	return [
 		{
 			id: 'state',
-			header: 'Status',
+			header: translateConsole('Status'),
 			accessorKey: 'state',
 			width: { fixed: '130px' },
 			enableSort: true,
@@ -39,14 +40,14 @@ export function getAlertRuleColumns(
 						testId={`alert-row-${row.id ?? ''}-state`}
 						width="min-content"
 					>
-						{config.label}
+						{translateConsole(config.label)}
 					</Badge>
 				);
 			},
 		},
 		{
 			id: 'name',
-			header: 'Alert Name',
+			header: translateConsole('Alert Name'),
 			accessorKey: 'alert',
 			width: { default: '100%' },
 			enableSort: true,
@@ -63,7 +64,7 @@ export function getAlertRuleColumns(
 		},
 		{
 			id: 'severity',
-			header: 'Severity',
+			header: translateConsole('Severity'),
 			accessorFn: (row) => row.labels?.severity ?? '',
 			width: { fixed: '120px' },
 			enableSort: true,
@@ -91,7 +92,7 @@ export function getAlertRuleColumns(
 		},
 		{
 			id: 'labels',
-			header: 'Labels',
+			header: translateConsole('Labels'),
 			accessorKey: 'labels',
 			width: { default: '100%' },
 			enableSort: false,
@@ -114,7 +115,7 @@ export function getAlertRuleColumns(
 		},
 		{
 			id: 'createdAt',
-			header: 'Created At',
+			header: translateConsole('Created At'),
 			accessorKey: 'createdAt',
 			width: { default: '100%' },
 			enableSort: true,
@@ -130,7 +131,7 @@ export function getAlertRuleColumns(
 		},
 		{
 			id: 'createdBy',
-			header: 'Created By',
+			header: translateConsole('Created By'),
 			accessorKey: 'createdBy',
 			width: { default: '100%' },
 			enableSort: false,
@@ -142,7 +143,7 @@ export function getAlertRuleColumns(
 		},
 		{
 			id: 'updatedAt',
-			header: 'Updated At',
+			header: translateConsole('Updated At'),
 			accessorKey: 'updatedAt',
 			width: { default: '100%' },
 			enableSort: true,
@@ -158,7 +159,7 @@ export function getAlertRuleColumns(
 		},
 		{
 			id: 'updatedBy',
-			header: 'Updated By',
+			header: translateConsole('Updated By'),
 			accessorKey: 'updatedBy',
 			width: { default: '100%' },
 			enableSort: false,

@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { MouseEvent, useMemo } from 'react';
 import { LayoutGrid } from '@signozhq/icons';
 import getSessionStorageApi from 'api/browser/sessionstorage/get';
@@ -25,6 +26,7 @@ function DashboardPageBreadcrumbs({
 	title,
 	image,
 }: DashboardPageBreadcrumbsProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const { safeNavigate } = useSafeNavigate();
 
 	const dashboardPageLink = useMemo(() => {
@@ -56,7 +58,7 @@ function DashboardPageBreadcrumbs({
 						href={dashboardPageLink}
 						onClick={onDashboardLinkClick}
 					>
-						Dashboard
+						{translate('Dashboard')}
 					</BreadcrumbLink>
 				</BreadcrumbItem>
 				<BreadcrumbSeparator>/</BreadcrumbSeparator>

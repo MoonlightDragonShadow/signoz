@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useState } from 'react';
 import { useAppParams } from 'lib/router/useAppParams';
 import { navigate } from 'lib/router/navigation';
@@ -33,6 +34,7 @@ const cloudIntegrationTypeById: Record<string, IntegrationType> = {
 
 // eslint-disable-next-line sonarjs/cognitive-complexity
 function IntegrationDetailPage(): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const { integrationId } = useAppParams<{ integrationId?: string }>();
 	const [activeDetailTab, setActiveDetailTab] = useState<string | null>(
 		'overview',
@@ -77,7 +79,7 @@ function IntegrationDetailPage(): JSX.Element {
 						navigate(ROUTES.INTEGRATIONS);
 					}}
 				>
-					All Integrations
+					{translateConsole('All Integrations')}
 				</Button>
 			</Flex>
 
@@ -86,7 +88,9 @@ function IntegrationDetailPage(): JSX.Element {
 					<div className="error-content">
 						<img src={awwSnapUrl} alt="error-emoji" className="error-state-svg" />
 						<Typography.Text>
-							Something went wrong :/ Please retry or contact support.
+							{translateConsole(
+								'Something went wrong :/ Please retry or contact support.',
+							)}
 						</Typography.Text>
 						<div className="error-btns">
 							<Button
@@ -96,7 +100,7 @@ function IntegrationDetailPage(): JSX.Element {
 								onClick={(): Promise<any> => refetch()}
 								prefix={<RotateCw size={14} />}
 							>
-								Retry
+								{translateConsole('Retry')}
 							</Button>
 							<Button
 								size="md"
@@ -105,7 +109,7 @@ function IntegrationDetailPage(): JSX.Element {
 								onClick={(): void => handleContactSupport(isCloudUserVal)}
 								suffix={<MoveUpRight size={12} />}
 							>
-								Contact Support
+								{translateConsole('Contact Support')}
 							</Button>
 						</div>
 					</div>

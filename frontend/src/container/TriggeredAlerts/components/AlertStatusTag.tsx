@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Badge } from '@signozhq/ui/badge';
 
 interface AlertStatusTagProps {
@@ -6,29 +7,30 @@ interface AlertStatusTagProps {
 }
 
 function AlertStatusTag({ state, testId }: AlertStatusTagProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	switch (state) {
 		case 'unprocessed':
 			return (
 				<Badge color="success" variant="outlined" testId={testId}>
-					Unprocessed
+					{translateConsole('Unprocessed')}
 				</Badge>
 			);
 		case 'active':
 			return (
 				<Badge color="danger" variant="outlined" testId={testId}>
-					Firing
+					{translateConsole('Firing')}
 				</Badge>
 			);
 		case 'suppressed':
 			return (
 				<Badge color="danger" variant="outlined" testId={testId}>
-					Suppressed
+					{translateConsole('Suppressed')}
 				</Badge>
 			);
 		default:
 			return (
 				<Badge color="secondary" variant="outlined" testId={testId}>
-					Unknown
+					{translateConsole('Unknown')}
 				</Badge>
 			);
 	}

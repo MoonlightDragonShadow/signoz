@@ -1,9 +1,11 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useAppParams } from 'lib/router/useAppParams';
 import { useFunnelMetrics } from 'hooks/TracesFunnels/useFunnelMetrics';
 
 import FunnelMetricsTable from './FunnelMetricsTable';
 
 function OverallMetrics(): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const { funnelId } = useAppParams<'funnelId'>();
 	const { isLoading, metricsData, conversionRate, isError } = useFunnelMetrics({
 		funnelId: funnelId || '',
@@ -11,7 +13,7 @@ function OverallMetrics(): JSX.Element {
 
 	return (
 		<FunnelMetricsTable
-			title="Overall Funnel Metrics"
+			title={translateConsole('Overall Funnel Metrics')}
 			subtitle={{
 				label: 'Conversion rate',
 				value: `${conversionRate.toFixed(2)}%`,

@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useMemo, useState } from 'react';
 import { UseQueryResult } from 'react-query';
 import { Skeleton, Table, TablePaginationConfig } from 'antd';
@@ -30,6 +31,7 @@ function DependentServices({
 	dependentServicesQuery,
 	timeRange,
 }: DependentServicesProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const { data, refetch, isError, isLoading, isRefetching } =
 		dependentServicesQuery;
 
@@ -86,7 +88,9 @@ function DependentServices({
 										/>
 
 										<Typography.Text className="no-status-code-data-message">
-											This query had no results. Edit your query and try again!
+											{translate(
+												'This query had no results. Edit your query and try again!',
+											)}
 										</Typography.Text>
 									</div>
 								</div>

@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { ILog } from 'types/api/logs/log';
 import { PipelineData } from 'types/api/pipeline/def';
 
@@ -10,6 +11,7 @@ function PipelineSimulationResult({
 	inputLogs,
 	pipeline,
 }: PipelineSimulationResultProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const { isLoading, outputLogs, isError, errorMsg } = usePipelinePreview({
 		pipeline: {
 			...pipeline,
@@ -22,18 +24,18 @@ function PipelineSimulationResult({
 	if (isError) {
 		return (
 			<div className="pipeline-simulation-error">
-				<div>There was an error</div>
+				<div>{translateConsole('There was an error')}</div>
 				<div>{errorMsg}</div>
 			</div>
 		);
 	}
 
 	if (isLoading) {
-		return <div>Loading...</div>;
+		return <div>{translateConsole('Loading...')}</div>;
 	}
 
 	if (outputLogs.length < 1) {
-		return <div>No logs found</div>;
+		return <div>{translateConsole('No logs found')}</div>;
 	}
 
 	return <LogsList logs={outputLogs} />;

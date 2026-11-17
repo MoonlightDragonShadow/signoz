@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useMemo } from 'react';
 import { Ellipsis } from '@signozhq/icons';
 import { Button } from '@signozhq/ui/button';
@@ -20,18 +21,20 @@ function ModelCostActionsMenu({
 	onEdit,
 	onDelete,
 }: ModelCostActionsMenuProps): JSX.Element | null {
+	const translateInterfaceCopy = useConsoleTranslation();
+	const translateConsole = useConsoleTranslation();
 	const menuItems = useMemo<DropdownItemType[]>(
 		() => [
 			{
 				type: 'item',
 				value: 'edit',
-				label: 'Edit',
+				label: translateInterfaceCopy('Edit'),
 				onClick: (): void => onEdit(rule),
 			},
 			{
 				type: 'item',
 				value: 'delete',
-				label: 'Delete',
+				label: translateInterfaceCopy('Delete'),
 				danger: true,
 				onClick: (): void => onDelete(rule),
 			},
@@ -50,7 +53,7 @@ function ModelCostActionsMenu({
 				color="secondary"
 				size="sm"
 				icon
-				aria-label="Model cost actions"
+				aria-label={translateConsole('Model cost actions')}
 				testId={`model-cost-actions-${rule.id}`}
 			>
 				<Ellipsis size={16} />

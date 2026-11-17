@@ -1,3 +1,5 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useRef, useState } from 'react';
 import { SolidAlertTriangle } from '@signozhq/icons';
 import { ButtonGroup } from '@signozhq/ui/button-group';
@@ -33,6 +35,7 @@ function PermissionEditor({
 	isLoading = false,
 	validationErrors,
 }: PermissionEditorProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const jsonEditorRef = useRef<JsonEditorRef>(null);
 
 	const handleJsonValidityChange = useCallback(
@@ -155,7 +158,7 @@ function PermissionEditor({
 					color="muted"
 					className={styles.permissionEditorTitle}
 				>
-					Transaction Groups
+					<ConsoleText message={'Transaction Groups'} />
 				</Typography>
 				<hr className={styles.permissionEditorDivider} />
 				<ToggleGroup
@@ -169,7 +172,7 @@ function PermissionEditor({
 					items={[
 						{
 							value: 'interactive',
-							label: 'Interactive',
+							label: translate('Interactive'),
 							testId: 'permission-editor-mode-interactive',
 						},
 						{
@@ -193,13 +196,13 @@ function PermissionEditor({
 								items={[
 									{
 										value: 'expand-all',
-										label: 'Expand all',
+										label: translate('Expand all'),
 										onClick: handleExpandAll,
 										testId: 'expand-all-button',
 									},
 									{
 										value: 'collapse-all',
-										label: 'Collapse all',
+										label: translate('Collapse all'),
 										onClick: handleCollapseAll,
 										testId: 'collapse-all-button',
 									},
@@ -237,7 +240,7 @@ function PermissionEditor({
 						handleDiscardCancel();
 					}
 				}}
-				title="Discard JSON changes?"
+				title={translate('Discard JSON changes?')}
 				titleIcon={<SolidAlertTriangle size={14} color="#fdd600" />}
 				confirmText="Discard"
 				confirmColor="danger"
@@ -246,8 +249,11 @@ function PermissionEditor({
 				onCancel={handleDiscardCancel}
 			>
 				<Typography>
-					The JSON contains errors and cannot be parsed. Switching to Interactive
-					mode will discard your changes.
+					<ConsoleText
+						message={
+							'The JSON contains errors and cannot be parsed. Switching to Interactive mode will discard your changes.'
+						}
+					/>
 				</Typography>
 			</ConfirmDialog>
 		</div>

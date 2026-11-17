@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { cloneDeep, isEqual } from 'lodash-es';
 import { toast } from '@signozhq/ui/sonner';
@@ -58,6 +59,7 @@ export interface AttributeMappingEditor {
 }
 
 export function useAttributeMappingEditor(): AttributeMappingEditor {
+	const translateToast = useConsoleTranslation();
 	const queryClient = useQueryClient();
 
 	const groupsQuery = useListSpanMapperGroups();
@@ -272,7 +274,9 @@ export function useAttributeMappingEditor(): AttributeMappingEditor {
 			const { isError: refreshFailed } = await refetchGroups();
 			if (refreshFailed) {
 				toast.warning(
-					'Changes saved, but the list failed to refresh. Reload to see the latest.',
+					translateToast(
+						'Changes saved, but the list failed to refresh. Reload to see the latest.',
+					),
 				);
 				return;
 			}
@@ -290,7 +294,7 @@ export function useAttributeMappingEditor(): AttributeMappingEditor {
 					typeof query.queryKey?.[0] === 'string' &&
 					(query.queryKey[0] as string).startsWith(`${GROUPS_KEY_PREFIX}/`),
 			});
-			toast.success('Attribute mapping changes saved');
+			toast.success(translateToast('Attribute mapping changes saved'));
 		} catch (error) {
 			const message = error instanceof Error ? error.message : 'Save failed';
 			setSaveError(message);
@@ -298,7 +302,7 @@ export function useAttributeMappingEditor(): AttributeMappingEditor {
 		} finally {
 			setIsSaving(false);
 		}
-	}, [draft, snapshot, mutations, refetchGroups, queryClient]);
+	}, [translateToast, draft, snapshot, mutations, refetchGroups, queryClient]);
 
 	const isDirty = useMemo(
 		() => draft !== null && !isEqual(draft, snapshot),

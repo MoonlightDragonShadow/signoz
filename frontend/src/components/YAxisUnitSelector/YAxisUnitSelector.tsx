@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useMemo } from 'react';
 import { SolidAlertTriangle } from '@signozhq/icons';
 import { Select, Tooltip } from 'antd';
@@ -25,6 +26,8 @@ function YAxisUnitSelector({
 	categoriesOverride,
 	containerClassName,
 }: YAxisUnitSelectorProps): JSX.Element {
+	const translateRuntimeCopy = useConsoleTranslation();
+	const translateInterfaceCopy = useConsoleTranslation();
 	const universalUnit = mapMetricUnitToUniversalUnit(value);
 
 	const incompatibleUnitMessage = useMemo(() => {
@@ -37,10 +40,13 @@ function YAxisUnitSelector({
 			const initialUniversalUnitName =
 				getUniversalNameFromMetricUnit(initialValue);
 			const currentUniversalUnitName = getUniversalNameFromMetricUnit(value);
-			return `Unit mismatch. The metric was sent with unit ${initialUniversalUnitName}, but ${currentUniversalUnitName} is selected.`;
+			return translateRuntimeCopy(
+				'Unit mismatch. The metric was sent with unit {{value1}}, but {{value2}} is selected.',
+				{ value1: initialUniversalUnitName, value2: currentUniversalUnitName },
+			);
 		}
 		return '';
-	}, [initialValue, value, loading]);
+	}, [initialValue, value, loading, translateRuntimeCopy]);
 
 	const handleSearch = (
 		searchTerm: string,
@@ -86,7 +92,11 @@ function YAxisUnitSelector({
 							title={incompatibleUnitMessage}
 							overlayClassName="y-axis-unit-warning-tooltip"
 						>
-							<span className="y-axis-unit-warning" role="img" aria-label="warning">
+							<span
+								className="y-axis-unit-warning"
+								role="img"
+								aria-label={translateInterfaceCopy('warning')}
+							>
 								<SolidAlertTriangle size="md" />
 							</span>
 						</Tooltip>

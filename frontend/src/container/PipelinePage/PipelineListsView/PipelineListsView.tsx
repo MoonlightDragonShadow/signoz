@@ -1,3 +1,5 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import React, {
 	useCallback,
 	useEffect,
@@ -85,7 +87,7 @@ function PipelinesListEmptyState(): JSX.Element {
 								target="_blank"
 								rel="noopener noreferrer"
 							>
-								here
+								<ConsoleText message={'here'} />
 							</a>
 						</Typography>
 					</div>
@@ -103,6 +105,7 @@ function PipelineListsView({
 	pipelineData,
 	refetchPipelineLists,
 }: PipelineListsViewProps): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
 	const { showErrorModal } = useErrorModal();
 	const [pipelineForm] = Form.useForm<PipelineData>();
 	const { t } = useTranslation(['pipeline', 'common']);
@@ -257,7 +260,7 @@ function PipelineListsView({
 		if (isEditingActionMode) {
 			fieldColumns.push(
 				{
-					title: 'Actions',
+					title: translateInterfaceCopy('Actions'),
 					dataIndex: 'smartAction',
 					key: 'smartAction',
 					align: 'center',
@@ -285,7 +288,7 @@ function PipelineListsView({
 			);
 		} else {
 			fieldColumns.push({
-				title: 'Actions',
+				title: translateInterfaceCopy('Actions'),
 				dataIndex: 'smartAction',
 				key: 'smartAction',
 				align: 'center',

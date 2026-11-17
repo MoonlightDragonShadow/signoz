@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { useMemo, useRef, useState } from 'react';
 import { Color } from '@signozhq/design-tokens';
 import { Group } from '@visx/group';
@@ -155,7 +156,11 @@ function PiePanelWrapper({
 
 	return (
 		<div className="piechart-wrapper">
-			{!pieChartData.length && <div className="piechart-no-data">No data</div>}
+			{!pieChartData.length && (
+				<div className="piechart-no-data">
+					<ConsoleText message={'No data'} />
+				</div>
+			)}
 			{pieChartData.length > 0 && (
 				<>
 					<div className="piechart-container" ref={chartRef}>

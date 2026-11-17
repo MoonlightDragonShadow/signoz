@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { ChangeEvent, ReactNode, useCallback, useMemo } from 'react';
 import { Button } from '@signozhq/ui/button';
 import { DrawerWrapper } from '@signozhq/ui/drawer';
@@ -67,6 +68,7 @@ function K8sOptionsSidePanel<TData>({
 	storageKey: string;
 	entity: InfraMonitoringEntity;
 }): JSX.Element {
+	const translate = useConsoleTranslation();
 	const columnPickerItems = useMemo(
 		() => toColumnPickerItems(columns),
 		[columns],
@@ -132,7 +134,7 @@ function K8sOptionsSidePanel<TData>({
 		<>
 			<div className={styles.sectionTitle}>
 				<Typography.Text size="sm" className={styles.sectionTitleText}>
-					Font Size
+					{translate('Font Size')}
 				</Typography.Text>
 			</div>
 			<div className={styles.fontSizeContainer}>
@@ -151,7 +153,7 @@ function K8sOptionsSidePanel<TData>({
 							) : undefined
 						}
 					>
-						{option.label}
+						{translate(option.label)}
 					</Button>
 				))}
 			</div>
@@ -160,7 +162,7 @@ function K8sOptionsSidePanel<TData>({
 
 			<div className={styles.sectionTitle}>
 				<Typography.Text size="sm" className={styles.sectionTitleText}>
-					Max lines per row
+					{translate('Max lines per row')}
 				</Typography.Text>
 			</div>
 			<div className={styles.lineClampContainer}>
@@ -173,12 +175,12 @@ function K8sOptionsSidePanel<TData>({
 					type="number"
 					prefix={
 						<Button
-							disabledTooltip="Minimum is 1 line"
+							disabledTooltip={translate('Minimum is 1 line')}
 							variant="solid"
 							color="primary"
 							size="sm"
 							icon
-							aria-label="Decrease max lines"
+							aria-label={translate('Decrease max lines')}
 							testId="line-clamp-decrease"
 							onClick={decreaseLineClamp}
 							disabled={lineClamp <= 1}
@@ -188,12 +190,12 @@ function K8sOptionsSidePanel<TData>({
 					}
 					suffix={
 						<Button
-							disabledTooltip="Maximum is 10 lines"
+							disabledTooltip={translate('Maximum is 10 lines')}
 							variant="solid"
 							color="primary"
 							size="sm"
 							icon
-							aria-label="Increase max lines"
+							aria-label={translate('Increase max lines')}
 							testId="line-clamp-increase"
 							onClick={increaseLineClamp}
 							disabled={lineClamp >= 10}
@@ -208,7 +210,7 @@ function K8sOptionsSidePanel<TData>({
 
 			<div className={styles.sectionTitle}>
 				<Typography.Text size="sm" className={styles.sectionTitleText}>
-					Columns
+					{translate('Columns')}
 				</Typography.Text>
 			</div>
 			<div className={styles.columnsList}>
@@ -222,7 +224,7 @@ function K8sOptionsSidePanel<TData>({
 							<Switch
 								color="primary"
 								textPlacement="right"
-								disabledTooltip="Required column cannot be hidden"
+								disabledTooltip={translate('Required column cannot be hidden')}
 								value={isVisible}
 								disabled={!column.canBeHidden}
 								testId={`toggle-column-${column.id}`}
@@ -243,7 +245,7 @@ function K8sOptionsSidePanel<TData>({
 					onClose();
 				}
 			}}
-			title="Options"
+			title={translate('Options')}
 			direction="right"
 			width="narrow"
 			showCloseButton

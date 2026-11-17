@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { SetStateAction } from 'react';
 import { Button, Modal } from 'antd';
 import { Typography } from '@signozhq/ui/typography';
@@ -16,6 +17,7 @@ interface PlannedDowntimeDeleteModalProps {
 export function PlannedDowntimeDeleteModal(
 	props: PlannedDowntimeDeleteModalProps,
 ): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const {
 		isDeleteModalOpen,
 		setIsDeleteModalOpen,
@@ -29,7 +31,7 @@ export function PlannedDowntimeDeleteModal(
 	return (
 		<Modal
 			className="delete-schedule-modal"
-			title={<span className="title">Delete Schedule</span>}
+			title={<span className="title">{translateConsole('Delete Schedule')}</span>}
 			open={isDeleteModalOpen}
 			closable={false}
 			onCancel={hideDeleteScheduleModal}
@@ -40,7 +42,7 @@ export function PlannedDowntimeDeleteModal(
 					className="cancel-btn"
 					icon={<X size={16} />}
 				>
-					Cancel
+					{translateConsole('Cancel')}
 				</Button>,
 				<Button
 					key="submit"
@@ -49,7 +51,7 @@ export function PlannedDowntimeDeleteModal(
 					className="delete-btn"
 					disabled={isDeleteLoading}
 				>
-					Delete Schedule
+					{translateConsole('Delete Schedule')}
 				</Button>,
 			]}
 		>

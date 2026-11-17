@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { ReactNode, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
@@ -54,6 +55,7 @@ export function useDashboardActionItems({
 	onOpenRename,
 	onOpenEditTags,
 }: Params): { items: AuthZDropdownItemType[]; contextHolder: ReactNode } {
+	const translate = useConsoleTranslation();
 	const { t } = useTranslation('dashboard');
 	const [, setCopy] = useCopyToClipboard();
 
@@ -95,7 +97,7 @@ export function useDashboardActionItems({
 		const deleteItem: AuthZDropdownItemType = {
 			type: 'item',
 			value: 'delete',
-			label: 'Delete Dashboard',
+			label: translate('Delete Dashboard'),
 			prefix: <Trash2 size={14} />,
 			testId: 'dashboard-action-delete',
 			danger: true,
@@ -117,7 +119,7 @@ export function useDashboardActionItems({
 			{
 				type: 'item',
 				value: 'view',
-				label: 'View',
+				label: translate('View'),
 				prefix: <Expand size={14} />,
 				testId: 'dashboard-action-view',
 				onClick: onView,
@@ -125,7 +127,7 @@ export function useDashboardActionItems({
 			{
 				type: 'item',
 				value: 'open-new-tab',
-				label: 'Open in New Tab',
+				label: translate('Open in New Tab'),
 				prefix: <SquareArrowOutUpRight size={14} />,
 				testId: 'dashboard-action-open-new-tab',
 				onClick: (): void => {
@@ -136,7 +138,7 @@ export function useDashboardActionItems({
 			{
 				type: 'item',
 				value: 'copy-link',
-				label: 'Copy Link',
+				label: translate('Copy Link'),
 				prefix: <Link2 size={14} />,
 				testId: 'dashboard-action-copy-link',
 				onClick: (): void => {
@@ -147,7 +149,7 @@ export function useDashboardActionItems({
 			{
 				type: 'item',
 				value: 'rename',
-				label: 'Rename',
+				label: translate('Rename'),
 				prefix: <PenLine size={14} />,
 				testId: 'dashboard-action-rename',
 				checks: editChecks,
@@ -157,7 +159,7 @@ export function useDashboardActionItems({
 			{
 				type: 'item',
 				value: 'edit-tags',
-				label: tags.length > 0 ? 'Edit Tags' : 'Add Tags',
+				label: translate(tags.length > 0 ? 'Edit Tags' : 'Add Tags'),
 				prefix: <Tag size={14} />,
 				testId: 'dashboard-action-edit-tags',
 				checks: editChecks,
@@ -167,31 +169,32 @@ export function useDashboardActionItems({
 			{
 				type: 'item',
 				value: 'duplicate',
-				label: 'Duplicate',
+				label: translate('Duplicate'),
 				prefix: <Copy size={14} />,
 				testId: 'dashboard-action-duplicate',
 				// Cloning reads this dashboard and creates another, so both are named.
 				checks: [readPermission, DashboardCreatePermission],
 				loading: isCloning,
-				loadingTooltip: 'Duplicating',
+				loadingTooltip: translate('Duplicating'),
 				onClick: clone,
 			},
 			{
 				type: 'item',
 				value: 'lock',
-				label: isLocked ? 'Unlock Dashboard' : 'Lock Dashboard',
+				label: translate(isLocked ? 'Unlock Dashboard' : 'Lock Dashboard'),
 				prefix: <LockKeyhole size={14} />,
 				testId: 'dashboard-action-lock',
 				checks: editChecks,
 				...blockedBy(lockDisabledTooltip),
 				loading: isTogglingLock,
-				loadingTooltip: isLocked ? 'Unlocking' : 'Locking',
+				loadingTooltip: translate(isLocked ? 'Unlocking' : 'Locking'),
 				onClick: toggleLock,
 			},
 			{ type: 'separator', value: 'before-delete' },
 			deleteItem,
 		];
 	}, [
+		translate,
 		clone,
 		dashboardId,
 		deleteChecks,

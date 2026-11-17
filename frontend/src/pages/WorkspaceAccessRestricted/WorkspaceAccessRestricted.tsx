@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { useEffect } from 'react';
 import { Button, Col, Modal, Row, Skeleton, Space } from 'antd';
 import { Typography } from '@signozhq/ui/typography';
@@ -37,7 +38,7 @@ function WorkspaceAccessRestricted(): JSX.Element {
 				title={
 					<div className="workspace-access-restricted__modal__header">
 						<span className="workspace-access-restricted__modal__title">
-							Your workspace access is restricted
+							<ConsoleText message={'Your workspace access is restricted'} />
 						</span>
 					</div>
 				}
@@ -60,43 +61,61 @@ function WorkspaceAccessRestricted(): JSX.Element {
 										>
 											{activeLicense.state === LicenseState.TERMINATED && (
 												<>
-													Your SigNoz license is terminated, please contact support at{' '}
+													<ConsoleText
+														message={
+															'Your SigNoz license is terminated, please contact support at'
+														}
+													/>{' '}
 													<a href="mailto:cloud-support@signoz.io">
 														cloud-support@signoz.io
 													</a>{' '}
-													for a new deployment
+													<ConsoleText message={'for a new deployment'} />
 												</>
 											)}
 											{activeLicense.state === LicenseState.EXPIRED && (
 												<>
-													Your SigNoz license is expired, please contact support at{' '}
+													<ConsoleText
+														message={
+															'Your SigNoz license is expired, please contact support at'
+														}
+													/>{' '}
 													<a href="mailto:cloud-support@signoz.io">
 														cloud-support@signoz.io
 													</a>{' '}
-													for renewal to avoid termination of license as per our{' '}
+													<ConsoleText
+														message={'for renewal to avoid termination of license as per our'}
+													/>{' '}
 													<a
 														href="https://signoz.io/terms-of-service"
 														target="_blank"
 														rel="noopener noreferrer"
 													>
-														terms of service
+														<ConsoleText message={'terms of service'} />
 													</a>
 													.
 												</>
 											)}
 											{activeLicense.state === LicenseState.CANCELLED && (
 												<>
-													Your SigNoz license is cancelled, please contact support at{' '}
+													<ConsoleText
+														message={
+															'Your SigNoz license is cancelled, please contact support at'
+														}
+													/>{' '}
 													<a href="mailto:cloud-support@signoz.io">
 														cloud-support@signoz.io
 													</a>{' '}
-													for reactivation to avoid termination of license as per our{' '}
+													<ConsoleText
+														message={
+															'for reactivation to avoid termination of license as per our'
+														}
+													/>{' '}
 													<a
 														href="https://signoz.io/terms-of-service"
 														target="_blank"
 														rel="noopener noreferrer"
 													>
-														terms of service
+														<ConsoleText message={'terms of service'} />
 													</a>
 													.
 												</>
@@ -110,7 +129,7 @@ function WorkspaceAccessRestricted(): JSX.Element {
 											href="mailto:cloud-support@signoz.io"
 											role="button"
 										>
-											Contact Us
+											<ConsoleText message={'Contact Us'} />
 										</Button>
 									</Space>
 								</Col>

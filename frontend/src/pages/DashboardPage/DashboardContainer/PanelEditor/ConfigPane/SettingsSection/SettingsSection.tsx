@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { type ReactNode, useState } from 'react';
 import { ChevronDown } from '@signozhq/icons';
 import cx from 'classnames';
@@ -30,6 +31,7 @@ function SettingsSection({
 	headerSlot,
 	children,
 }: SettingsSectionProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const [internalOpen, setInternalOpen] = useState(defaultOpen);
 	const isControlled = open !== undefined;
 	const isOpen = isControlled ? open : internalOpen;
@@ -56,7 +58,7 @@ function SettingsSection({
 					onClick={toggle}
 				>
 					<span className={styles.title}>{title}</span>
-					{changed && <ChangedDot title="Unsaved changes" />}
+					{changed && <ChangedDot title={translate('Unsaved changes')} />}
 				</button>
 				{headerSlot}
 				<ChevronDown

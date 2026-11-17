@@ -1,3 +1,5 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Download } from '@signozhq/icons';
 import { Button } from '@signozhq/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '@signozhq/ui/popover';
@@ -34,6 +36,7 @@ export default function ExportMenu({
 	yAxisUnit,
 	fileName,
 }: ExportMenuProps): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
 	const [exportFormat, setExportFormat] = useState<string>(ExportFormat.Csv);
 	const [isPopoverOpen, setIsPopoverOpen] = useState<boolean>(false);
 
@@ -51,14 +54,14 @@ export default function ExportMenu({
 
 	return (
 		<Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen}>
-			<Tooltip title="Download">
+			<Tooltip title={translateInterfaceCopy('Download')}>
 				<PopoverTrigger asChild>
 					<Button
 						variant="ghost"
 						color="secondary"
 						size="sm"
 						icon
-						aria-label="Download"
+						aria-label={translateInterfaceCopy('Download')}
 						testId={`export-menu-${dataSource}`}
 						loading={isExporting}
 					>
@@ -68,7 +71,9 @@ export default function ExportMenu({
 			</Tooltip>
 			<PopoverContent align="end" className="export-menu-popover">
 				<div className="export-format">
-					<Typography.Text className="title">FORMAT</Typography.Text>
+					<Typography.Text className="title">
+						<ConsoleText message={'FORMAT'} />
+					</Typography.Text>
 					<RadioGroup
 						color="primary"
 						value={exportFormat}
@@ -89,7 +94,7 @@ export default function ExportMenu({
 					loading={isExporting}
 					prefix={<Download size={16} />}
 				>
-					Export
+					<ConsoleText message={'Export'} />
 				</Button>
 			</PopoverContent>
 		</Popover>

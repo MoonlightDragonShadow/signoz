@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCopyToClipboard } from 'react-use';
 import { Button } from '@signozhq/ui/button';
 import { Typography } from '@signozhq/ui/typography';
@@ -12,6 +13,7 @@ import { getMaskedKey } from 'utils/maskedKey';
 import './LicenseSection.styles.scss';
 
 function LicenseSectionContent(): JSX.Element | null {
+	const translateConsole = useConsoleTranslation();
 	const { licenseKey } = useActiveLicenseKey();
 	const { notifications } = useNotifications();
 	const [, handleCopyToClipboard] = useCopyToClipboard();
@@ -31,14 +33,14 @@ function LicenseSectionContent(): JSX.Element | null {
 		<div className="license-section-content">
 			<div className="license-section-content-item">
 				<div className="license-section-content-item-title-action">
-					<span>License key</span>
+					<span>{translateConsole('License key')}</span>
 					<span style={{ display: 'flex', alignItems: 'center' }}>
 						<Typography.Text code>{getMaskedKey(licenseKey)}</Typography.Text>
 						<Button
 							size="sm"
 							variant="outlined"
 							color="secondary"
-							aria-label="Copy license key"
+							aria-label={translateConsole('Copy license key')}
 							testId="license-key-copy-btn"
 							onClick={(): void => handleCopyKey(licenseKey)}
 							icon
@@ -49,7 +51,7 @@ function LicenseSectionContent(): JSX.Element | null {
 				</div>
 
 				<div className="license-section-content-item-description">
-					Your SigNoz license key.
+					{translateConsole('Your SigNoz license key.')}
 				</div>
 			</div>
 		</div>
@@ -57,6 +59,7 @@ function LicenseSectionContent(): JSX.Element | null {
 }
 
 function LicenseSection(): JSX.Element | null {
+	const translateConsole = useConsoleTranslation();
 	const { activeLicense } = useAppContext();
 
 	if (!activeLicense) {
@@ -66,7 +69,7 @@ function LicenseSection(): JSX.Element | null {
 	return (
 		<div className="license-section">
 			<div className="license-section-header">
-				<div className="license-section-title">License</div>
+				<div className="license-section-title">{translateConsole('License')}</div>
 			</div>
 
 			<AuthZGuardContent checks={[buildLicenseReadPermission(activeLicense.id)]}>

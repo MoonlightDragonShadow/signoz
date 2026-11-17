@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { navigate } from 'lib/router/navigation';
 import { useAppParams } from 'lib/router/useAppParams';
@@ -121,7 +122,11 @@ function TraceFlamegraph({
 			return <Error error={(fetchError || workerError) as any} />;
 		}
 		if (data?.spans && data.spans.length === 0) {
-			return <div>No data found for trace {traceId}</div>;
+			return (
+				<div>
+					<ConsoleText message={'No data found for trace'} /> {traceId}
+				</div>
+			);
 		}
 		return (
 			<FlamegraphCanvas

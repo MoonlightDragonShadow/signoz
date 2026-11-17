@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 // Uses Popover (not DropdownMenu): DropdownMenuTrigger preventDefaults pointerdown,
 // which steals input focus and dismisses on every keystroke. PopoverAnchor is a passive
 // positioning element that leaves the wrapped input fully interactive.
@@ -32,6 +33,7 @@ function VariablesPopover({
 	onVariableSelect,
 	children,
 }: VariablesPopoverProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const [isOpen, setIsOpen] = useState(false);
 	const [cursorPosition, setCursorPosition] = useState<number | null>(null);
 	const anchorRef = useRef<HTMLDivElement>(null);
@@ -80,7 +82,7 @@ function VariablesPopover({
 					onFocusOutside={keepOpenIfInsideAnchor}
 				>
 					{variables.length === 0 ? (
-						<div className={styles.empty}>No variables available</div>
+						<div className={styles.empty}>{translate('No variables available')}</div>
 					) : (
 						variables.map((v) => (
 							<span

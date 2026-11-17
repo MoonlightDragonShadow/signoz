@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useRef, useState } from 'react';
 import { Plus } from '@signozhq/icons';
 import { Button } from '@signozhq/ui/button';
@@ -32,6 +33,7 @@ interface SectionProps {
 }
 
 function Section({ section, sections, dragHandle }: SectionProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const { isEditable, editChecks, editDisabledTooltip } =
 		useDashboardEditContext();
 	const {
@@ -140,15 +142,15 @@ function Section({ section, sections, dragHandle }: SectionProps): JSX.Element {
 								}
 								testId={`section-add-panel-${section.id}`}
 							>
-								New Panel
+								{translate('New Panel')}
 							</Button>
 						</AuthZTooltip>
 					</div>
 				))}
 			<SectionTitleModal
 				open={isRenaming}
-				heading="Rename section"
-				okText="Rename"
+				heading={translate('Rename section')}
+				okText={translate('Rename')}
 				initialValue={section.title}
 				isSaving={isSaving}
 				onClose={(): void => setIsRenaming(false)}
@@ -163,7 +165,7 @@ function Section({ section, sections, dragHandle }: SectionProps): JSX.Element {
 			<ConfirmDeleteDialog
 				open={isDeleteOpen}
 				title={`Delete section "${section.title ?? ''}"?`}
-				description="Panels in this section will be removed."
+				description={translate('Panels in this section will be removed.')}
 				onConfirm={handleDeleteSection}
 				onClose={(): void => setIsDeleteOpen(false)}
 			/>

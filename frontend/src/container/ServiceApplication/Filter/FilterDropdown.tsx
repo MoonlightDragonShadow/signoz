@@ -4,11 +4,10 @@ import type { FilterDropdownProps } from 'antd/es/table/interface';
 import { SEARCH_PLACEHOLDER } from '../Columns/ColumnContants';
 import { Search } from '@signozhq/icons';
 
-export const filterDropdown = ({
-	setSelectedKeys,
-	selectedKeys,
-	confirm,
-}: FilterDropdownProps): JSX.Element => {
+export const filterDropdown = (
+	{ setSelectedKeys, selectedKeys, confirm }: FilterDropdownProps,
+	translate: (message: string) => string = (message) => message,
+): JSX.Element => {
 	const handleSearch = (): void => {
 		confirm();
 	};
@@ -21,7 +20,7 @@ export const filterDropdown = ({
 		<Card size="small">
 			<Space align="start" direction="vertical">
 				<Input
-					placeholder={SEARCH_PLACEHOLDER}
+					placeholder={translate(SEARCH_PLACEHOLDER)}
 					value={selectedKeys[0]}
 					onChange={selectedKeysHandler}
 					allowClear
@@ -33,7 +32,7 @@ export const filterDropdown = ({
 					icon={<Search size="md" />}
 					size="small"
 				>
-					Search
+					{translate('Search')}
 				</Button>
 			</Space>
 		</Card>

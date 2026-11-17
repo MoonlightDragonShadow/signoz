@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useState } from 'react';
 // eslint-disable-next-line no-restricted-imports
 import { useSelector } from 'react-redux';
@@ -31,6 +32,7 @@ export function useExportRawData({
 	dataSource,
 	panelType = PANEL_TYPES.LIST,
 }: UseExportRawDataProps): UseExportRawDataReturn {
+	const translateRuntimeCopy = useConsoleTranslation();
 	const [isDownloading, setIsDownloading] = useState<boolean>(false);
 
 	const { stagedQuery } = useQueryBuilder();
@@ -91,14 +93,24 @@ export function useExportRawData({
 				});
 
 				await downloadExportData({ format, body: queryPayload });
-				message.success('Export completed successfully');
+				message.success(translateRuntimeCopy('Export completed successfully'));
 			} catch (error) {
-				message.error(`Failed to export ${dataSource}. Please try again.`);
+				message.error(
+					translateRuntimeCopy('Failed to export {{value1}}. Please try again.', {
+						value1: dataSource,
+					}),
+				);
 			} finally {
 				setIsDownloading(false);
 			}
 		},
-		[stagedQuery, globalSelectedInterval, dataSource, panelType],
+		[
+			stagedQuery,
+			globalSelectedInterval,
+			dataSource,
+			panelType,
+			translateRuntimeCopy,
+		],
 	);
 
 	return { isDownloading, handleExportRawData };

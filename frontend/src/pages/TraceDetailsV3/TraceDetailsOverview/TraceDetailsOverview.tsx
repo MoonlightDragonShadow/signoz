@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 /* eslint-disable sonarjs/cognitive-complexity */
 import {
 	MutableRefObject,
@@ -76,6 +77,7 @@ function TraceDetailsOverview({
 	onHasTraceDataChange,
 	dataLoadedFiredForRef,
 }: TraceDetailsOverviewProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const { id: traceId } = useAppParams<'id'>();
 	const urlQuery = useUrlQuery();
 	const [interestedSpanId, setInterestedSpanId] = useState<IInterestedSpan>(
@@ -391,11 +393,13 @@ function TraceDetailsOverview({
 										label: (
 											<div className={styles.collapseLabel}>
 												<span className={styles.collapseTitle}>
-													Flame Graph
+													{translateConsole('Flame Graph')}
 													{traceData?.payload?.totalSpansCount &&
 														traceData.payload.totalSpansCount > FLAMEGRAPH_SPAN_LIMIT && (
 															<WarningPopover
-																message="The total span count exceeds the visualization limit. Displaying a sampled subset of spans in flamegraph."
+																message={translateConsole(
+																	'The total span count exceeds the visualization limit. Displaying a sampled subset of spans in flamegraph.',
+																)}
 																placement="bottomLeft"
 															>
 																<Info
@@ -410,7 +414,7 @@ function TraceDetailsOverview({
 													<span className={styles.collapseCount}>
 														<span className={styles.collapseCountItem}>
 															<ChartNoAxesGantt size={13} />
-															Spans: {traceData.payload.totalSpansCount}
+															{translateConsole('Spans:')} {traceData.payload.totalSpansCount}
 														</span>
 														<span
 															className={cx(styles.collapseCountItem, {
@@ -418,7 +422,7 @@ function TraceDetailsOverview({
 															})}
 														>
 															<TriangleAlert size={13} />
-															Errors:{' '}
+															{translateConsole('Errors:')}{' '}
 															{traceData.payload.totalErrorSpansCount ?? (
 																<span className="translate-safe">{0}</span>
 															)}
@@ -454,7 +458,7 @@ function TraceDetailsOverview({
 								items={[
 									{
 										key: 'waterfall',
-										label: 'Waterfall',
+										label: translateConsole('Waterfall'),
 										children: activeKeys.includes('waterfall') ? waterfallChildren : null,
 									},
 								]}

@@ -1,3 +1,5 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { useMemo } from 'react';
 import { ArrowLeft } from '@signozhq/icons';
 import { Badge } from '@signozhq/ui/badge';
@@ -47,6 +49,7 @@ function ViewRoleContentInner({
 	handleTabChange,
 	activeTab,
 }: ViewRoleContentProps): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
 	const { formatTimezoneAdjustedTimestampOptional } = useTimezone();
 
 	const { data, isLoading, error } = useGetRole(
@@ -59,7 +62,7 @@ function ViewRoleContentInner({
 		() => [
 			{
 				key: 'overview' as const,
-				label: 'Overview',
+				label: translateInterfaceCopy('Overview'),
 				children: (
 					<div className={styles.permissionSection}>
 						<div className={styles.permissionHeader}>
@@ -70,7 +73,7 @@ function ViewRoleContentInner({
 								color="muted"
 								className={styles.permissionTitle}
 							>
-								Transaction Groups
+								<ConsoleText message={'Transaction Groups'} />
 							</Typography>
 							<hr className={styles.permissionDivider} />
 							<ToggleGroup
@@ -84,7 +87,7 @@ function ViewRoleContentInner({
 								items={[
 									{
 										value: 'list',
-										label: 'List',
+										label: translateInterfaceCopy('List'),
 										testId: 'permission-view-mode-list',
 									},
 									{
@@ -143,14 +146,14 @@ function ViewRoleContentInner({
 			<div className={styles.viewRolePageForm}>
 				<div className={styles.formField}>
 					<label htmlFor="role-description" className={styles.formLabel}>
-						Description
+						<ConsoleText message={'Description'} />
 					</label>
 					<Typography>{role.description}</Typography>
 				</div>
 				<div className={styles.formRow}>
 					<div className={styles.formField}>
 						<label htmlFor="role-created-at" className={styles.formLabel}>
-							Created At
+							<ConsoleText message={'Created At'} />
 						</label>
 						<Badge textTransform="none" variant="solid" color="secondary">
 							{formatTimezoneAdjustedTimestampOptional(role.createdAt)}
@@ -158,7 +161,7 @@ function ViewRoleContentInner({
 					</div>
 					<div className={styles.formField}>
 						<label htmlFor="role-modified-at" className={styles.formLabel}>
-							Last Modified At
+							<ConsoleText message={'Last Modified At'} />
 						</label>
 						<Badge textTransform="none" variant="solid" color="secondary">
 							{formatTimezoneAdjustedTimestampOptional(role.updatedAt)}
@@ -192,6 +195,7 @@ const ViewRoleContent = withAuthZContent<ViewRoleContentProps>(
 );
 
 function ViewRolePage(): JSX.Element {
+	const translate = useConsoleTranslation();
 	const { isRolesEnabled, isLoading: isFeatureGateLoading } =
 		useRolesFeatureGate();
 
@@ -239,11 +243,13 @@ function ViewRolePage(): JSX.Element {
 							onClick={handleCancel}
 							testId="cancel-button"
 							icon
-							aria-label="Back"
+							aria-label={translate('Back')}
 						>
 							<ArrowLeft size={16} />
 						</Button>
-						<Typography.Title level={3}>View Role</Typography.Title>
+						<Typography.Title level={3}>
+							<ConsoleText message={'View Role'} />
+						</Typography.Title>
 					</div>
 				</div>
 
@@ -285,7 +291,7 @@ function ViewRolePage(): JSX.Element {
 						onClick={handleCancel}
 						testId="cancel-button"
 						icon
-						aria-label="Back"
+						aria-label={translate('Back')}
 					>
 						<ArrowLeft size={16} />
 					</Button>

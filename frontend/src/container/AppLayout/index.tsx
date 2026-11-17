@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import {
 	ReactNode,
 	useCallback,
@@ -540,8 +541,11 @@ function AppLayout(props: AppLayoutProps): JSX.Element {
 			notifications.info({
 				message: (
 					<div>
-						Our systems are taking longer than expected for your trial workspace.
-						Please{' '}
+						<ConsoleText
+							message={
+								'Our systems are taking longer than expected for your trial workspace. Please'
+							}
+						/>{' '}
 						<span>
 							<a
 								className="upgrade-link"
@@ -553,9 +557,9 @@ function AppLayout(props: AppLayoutProps): JSX.Element {
 									handleUpgrade();
 								}}
 							>
-								upgrade
+								<ConsoleText message={'upgrade'} />
 							</a>
-							your workspace for a smoother experience.
+							<ConsoleText message={'your workspace for a smoother experience.'} />
 						</span>
 					</div>
 				),
@@ -581,67 +585,86 @@ function AppLayout(props: AppLayoutProps): JSX.Element {
 		<div className="workspace-restricted-banner">
 			{activeLicense?.state === LicenseState.TERMINATED && (
 				<>
-					Your SigNoz license is terminated, enterprise features have been disabled.
-					Please contact support at{' '}
-					<a href="mailto:support@signoz.io">support@signoz.io</a> for new license
+					<ConsoleText
+						message={
+							'Your SigNoz license is terminated, enterprise features have been disabled. Please contact support at'
+						}
+					/>{' '}
+					<a href="mailto:support@signoz.io">support@signoz.io</a>{' '}
+					<ConsoleText message={'for new license'} />
 				</>
 			)}
 			{activeLicense?.state === LicenseState.EXPIRED && (
 				<>
-					Your SigNoz license has expired. Please contact support at{' '}
-					<a href="mailto:support@signoz.io">support@signoz.io</a> for renewal to
-					avoid termination of license as per our{' '}
+					<ConsoleText
+						message={'Your SigNoz license has expired. Please contact support at'}
+					/>{' '}
+					<a href="mailto:support@signoz.io">support@signoz.io</a>{' '}
+					<ConsoleText
+						message={'for renewal to avoid termination of license as per our'}
+					/>{' '}
 					<a
 						href="https://signoz.io/terms-of-service"
 						target="_blank"
 						rel="noopener noreferrer"
 					>
-						terms of service
+						<ConsoleText message={'terms of service'} />
 					</a>
 				</>
 			)}
 			{activeLicense?.state === LicenseState.CANCELLED && (
 				<>
-					Your SigNoz license is cancelled. Please contact support at{' '}
-					<a href="mailto:support@signoz.io">support@signoz.io</a> for reactivation
-					to avoid termination of license as per our{' '}
+					<ConsoleText
+						message={'Your SigNoz license is cancelled. Please contact support at'}
+					/>{' '}
+					<a href="mailto:support@signoz.io">support@signoz.io</a>{' '}
+					<ConsoleText
+						message={'for reactivation to avoid termination of license as per our'}
+					/>{' '}
 					<a
 						href="https://signoz.io/terms-of-service"
 						target="_blank"
 						rel="noopener noreferrer"
 					>
-						terms of service
+						<ConsoleText message={'terms of service'} />
 					</a>
 				</>
 			)}
 
 			{activeLicense?.state === LicenseState.DEFAULTED && (
 				<>
-					Your SigNoz license is defaulted. Please clear the bill to continue using
-					the enterprise features. Contact support at{' '}
-					<a href="mailto:support@signoz.io">support@signoz.io</a> to avoid
-					termination of license as per our{' '}
+					<ConsoleText
+						message={
+							'Your SigNoz license is defaulted. Please clear the bill to continue using the enterprise features. Contact support at'
+						}
+					/>{' '}
+					<a href="mailto:support@signoz.io">support@signoz.io</a>{' '}
+					<ConsoleText message={'to avoid termination of license as per our'} />{' '}
 					<a
 						href="https://signoz.io/terms-of-service"
 						target="_blank"
 						rel="noopener noreferrer"
 					>
-						terms of service
+						<ConsoleText message={'terms of service'} />
 					</a>
 				</>
 			)}
 
 			{activeLicense?.state === LicenseState.EVALUATION_EXPIRED && (
 				<>
-					Your SigNoz trial has ended. Please contact support at{' '}
-					<a href="mailto:support@signoz.io">support@signoz.io</a> for next steps to
-					avoid termination of license as per our{' '}
+					<ConsoleText
+						message={'Your SigNoz trial has ended. Please contact support at'}
+					/>{' '}
+					<a href="mailto:support@signoz.io">support@signoz.io</a>{' '}
+					<ConsoleText
+						message={'for next steps to avoid termination of license as per our'}
+					/>{' '}
 					<a
 						href="https://signoz.io/terms-of-service"
 						target="_blank"
 						rel="noopener noreferrer"
 					>
-						terms of service
+						<ConsoleText message={'terms of service'} />
 					</a>
 				</>
 			)}
@@ -744,18 +767,21 @@ function AppLayout(props: AppLayoutProps): JSX.Element {
 					<div className={cx('app-banner-wrapper')}>
 						{SHOW_TRIAL_EXPIRY_BANNER && (
 							<div className="trial-expiry-banner">
-								You are in free trial period. Your free trial will end on{' '}
+								<ConsoleText
+									message={'You are in free trial period. Your free trial will end on'}
+								/>{' '}
 								<span>{getFormattedDate(trialInfo?.trialEnd || Date.now())}.</span>
 								<span>
 									{' '}
-									Please{' '}
+									<ConsoleText message={'Please'} />{' '}
 									<a className="upgrade-link" onClick={handleUpgrade}>
-										upgrade
+										<ConsoleText message={'upgrade'} />
 									</a>
-									to continue using SigNoz features.
+									<ConsoleText message={'to continue using SigNoz features.'} />
 									<span className="refresh-payment-status">
 										{' '}
-										| Already upgraded? <RefreshPaymentStatus type="text" />
+										<ConsoleText message={'| Already upgraded?'} />{' '}
+										<RefreshPaymentStatus type="text" />
 									</span>
 								</span>
 							</div>
@@ -765,7 +791,11 @@ function AppLayout(props: AppLayoutProps): JSX.Element {
 
 						{SHOW_PAYMENT_FAILED_BANNER && (
 							<div className="payment-failed-banner">
-								Your bill payment has failed. Your workspace will get suspended on{' '}
+								<ConsoleText
+									message={
+										'Your bill payment has failed. Your workspace will get suspended on'
+									}
+								/>{' '}
 								<span>
 									{getFormattedDateWithMinutes(
 										activeLicense?.eventQueue?.scheduledAt
@@ -776,16 +806,17 @@ function AppLayout(props: AppLayoutProps): JSX.Element {
 								</span>
 								<span>
 									{' '}
-									Please{' '}
+									<ConsoleText message={'Please'} />{' '}
 									<AuthZTooltip checks={SubscriptionManagePermissions}>
 										<a className="upgrade-link" onClick={handleFailedPayment}>
-											pay the bill
+											<ConsoleText message={'pay the bill'} />
 										</a>
 									</AuthZTooltip>
-									to continue using SigNoz features.
+									<ConsoleText message={'to continue using SigNoz features.'} />
 									<span className="refresh-payment-status">
 										{' '}
-										| Already paid? <RefreshPaymentStatus type="text" />
+										<ConsoleText message={'| Already paid?'} />{' '}
+										<RefreshPaymentStatus type="text" />
 									</span>
 								</span>
 							</div>

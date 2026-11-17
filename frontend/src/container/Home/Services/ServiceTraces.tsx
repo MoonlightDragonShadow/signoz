@@ -1,3 +1,5 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 // eslint-disable-next-line no-restricted-imports
 import { useSelector } from 'react-redux'; // old code, TODO: fix this correctly
@@ -33,6 +35,7 @@ export default function ServiceTraces({
 	onUpdateChecklistDoneItem: (itemKey: string) => void;
 	loadingUserPreferences: boolean;
 }): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const { selectedTime } = useSelector<AppState, GlobalReducer>(
 		(state) => state.globalTime,
 	);
@@ -113,10 +116,12 @@ export default function ServiceTraces({
 							className="empty-state-icon"
 						/>
 
-						<div className="empty-title">You are not sending traces yet.</div>
+						<div className="empty-title">
+							<ConsoleText message={'You are not sending traces yet.'} />
+						</div>
 
 						<div className="empty-description">
-							Start sending traces to see your services.
+							<ConsoleText message={'Start sending traces to see your services.'} />
 						</div>
 					</div>
 
@@ -140,7 +145,7 @@ export default function ServiceTraces({
 									}
 								}}
 							>
-								Get Started &nbsp; <ArrowRight size={16} />
+								<ConsoleText message={'Get Started  '} /> <ArrowRight size={16} />
 							</Button>
 
 							<Button
@@ -156,7 +161,7 @@ export default function ServiceTraces({
 									);
 								}}
 							>
-								Learn more <ArrowUpRight size={12} />
+								<ConsoleText message={'Learn more'} /> <ArrowUpRight size={12} />
 							</Button>
 						</div>
 					)}
@@ -222,7 +227,7 @@ export default function ServiceTraces({
 						className="services-header home-data-card-header"
 						data-testid="home-section-services"
 					>
-						Services
+						{translateConsole('Services')}
 						<div className="services-header-actions">
 							<Select
 								value={timeRange.selectedInterval}
@@ -249,7 +254,7 @@ export default function ServiceTraces({
 									logEvent('Homepage: All Services clicked', {});
 								}}
 							>
-								All Services <ArrowRight size={12} />
+								{translateConsole('All Services')} <ArrowRight size={12} />
 							</Button>
 						</AppLink>
 					</div>

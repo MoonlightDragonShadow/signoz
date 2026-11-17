@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { AlertRuleStats } from 'types/api/alerts/def';
 
 import StatsCard from '../StatsCard/StatsCard';
@@ -13,11 +14,12 @@ function TotalTriggeredCard({
 	totalPastTriggers,
 	timeSeries,
 }: TotalTriggeredCardProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	return (
 		<StatsCard
 			totalCurrentCount={totalCurrentTriggers}
 			totalPastCount={totalPastTriggers}
-			title="Total Triggered"
+			title={translateConsole('Total Triggered')}
 			timeSeries={timeSeries}
 		/>
 	);

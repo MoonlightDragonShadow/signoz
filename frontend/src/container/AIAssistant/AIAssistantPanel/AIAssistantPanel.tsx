@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useLayoutEffect, useRef, useState } from 'react';
 import { Button } from '@signozhq/ui/button';
 import { matchRoute } from 'lib/router/matchRoute';
@@ -23,6 +24,7 @@ const AI_ASSISTANT_PANEL_OPEN_CLASS = 'ai-assistant-panel-open';
 const AI_ASSISTANT_PANEL_WIDTH_VAR = '--ai-assistant-panel-width';
 
 export default function AIAssistantPanel(): JSX.Element | null {
+	const translateConsole = useConsoleTranslation();
 	const { pathname } = useAppLocation();
 	const [showHistory, setShowHistory] = useState(false);
 
@@ -151,48 +153,48 @@ export default function AIAssistantPanel(): JSX.Element | null {
 								icon
 								color="secondary"
 								onClick={(): void => setShowHistory((v) => !v)}
-								aria-label="Toggle conversations"
+								aria-label={translateConsole('Toggle conversations')}
 							>
 								<History size={14} />
 							</Button>
 						</Tooltip>
 
-						<Tooltip title="New conversation">
+						<Tooltip title={translateConsole('New conversation')}>
 							<Button
 								variant="ghost"
 								size="sm"
 								icon
 								color="secondary"
 								onClick={handleNew}
-								aria-label="New conversation"
+								aria-label={translateConsole('New conversation')}
 							>
 								<Plus size={14} />
 							</Button>
 						</Tooltip>
 
-						<Tooltip title="Open full screen">
+						<Tooltip title={translateConsole('Open full screen')}>
 							<Button
-								disabledTooltip="Start a conversation first"
+								disabledTooltip={translateConsole('Start a conversation first')}
 								variant="ghost"
 								size="sm"
 								icon
 								color="secondary"
 								onClick={handleExpand}
 								disabled={!activeConversationId}
-								aria-label="Open full screen"
+								aria-label={translateConsole('Open full screen')}
 							>
 								<Maximize2 size={14} />
 							</Button>
 						</Tooltip>
 
-						<Tooltip title="Close">
+						<Tooltip title={translateConsole('Close')}>
 							<Button
 								variant="ghost"
 								size="sm"
 								icon
 								color="secondary"
 								onClick={closeDrawer}
-								aria-label="Close panel"
+								aria-label={translateConsole('Close panel')}
 							>
 								<X size={14} />
 							</Button>

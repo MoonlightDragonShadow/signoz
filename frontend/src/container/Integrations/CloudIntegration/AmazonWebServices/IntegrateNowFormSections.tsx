@@ -1,3 +1,5 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Dispatch, SetStateAction } from 'react';
 import { Color } from '@signozhq/design-tokens';
 import { Form, Select } from 'antd';
@@ -15,22 +17,28 @@ function RegionDeploymentSection({
 	regions: Region[];
 	handleRegionChange: (value: string) => void;
 }): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
+	const translateConsole = useConsoleTranslation();
 	return (
 		<div className="cloud-account-setup-form__form-group">
 			<div className="cloud-account-setup-form__title">
-				Where should we deploy the SigNoz Cloud stack?
+				{translateConsole('Where should we deploy the SigNoz Cloud stack?')}
 			</div>
 			<div className="cloud-account-setup-form__description">
-				Choose the AWS region for CloudFormation stack deployment
+				{translateConsole(
+					'Choose the AWS region for CloudFormation stack deployment',
+				)}
 			</div>
 			<Form.Item
 				name="region"
-				rules={[{ required: true, message: 'Please select a region' }]}
+				rules={[
+					{ required: true, message: translateConsole('Please select a region') },
+				]}
 				className="cloud-account-setup-form__form-item"
 			>
 				<Select
 					data-testid="aws-deployment-region-select"
-					placeholder="e.g. US East (N. Virginia)"
+					placeholder={translateInterfaceCopy('e.g. US East (N. Virginia)')}
 					suffixIcon={<ChevronDown size={16} color={Color.BG_VANILLA_400} />}
 					className="cloud-account-setup-form__select integrations-select"
 					onChange={handleRegionChange}
@@ -58,14 +66,16 @@ function MonitoringRegionsSection({
 	setSelectedRegions: Dispatch<SetStateAction<string[]>>;
 	setIncludeAllRegions: Dispatch<SetStateAction<boolean>>;
 }): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	return (
 		<div className="cloud-account-setup-form__form-group">
 			<div className="cloud-account-setup-form__title">
-				Which regions do you want to monitor?
+				{translateConsole('Which regions do you want to monitor?')}
 			</div>
 			<div className="cloud-account-setup-form__description">
-				Choose only the regions you want SigNoz to monitor. You can enable all at
-				once, or pick specific ones:
+				{translateConsole(
+					'Choose only the regions you want SigNoz to monitor. You can enable all at once, or pick specific ones:',
+				)}
 			</div>
 
 			<RegionSelector
@@ -81,9 +91,11 @@ function ComplianceNote(): JSX.Element {
 	return (
 		<div className="cloud-account-setup-form__form-group">
 			<div className="cloud-account-setup-form__note">
-				Note: Some organizations may require the CloudFormation stack to be deployed
-				in the same region as their primary infrastructure for compliance or latency
-				reasons.
+				<ConsoleText
+					message={
+						'Note: Some organizations may require the CloudFormation stack to be deployed in the same region as their primary infrastructure for compliance or latency reasons.'
+					}
+				/>
 			</div>
 		</div>
 	);

@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import cx from 'classnames';
 import { useAppLocation } from 'lib/router/useAppLocation';
@@ -24,6 +25,7 @@ interface ConversationViewProps {
 export default function ConversationView({
 	conversationId,
 }: ConversationViewProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const variant = useVariant();
 	const isCompact = variant === 'panel';
 	const location = useAppLocation();
@@ -172,7 +174,7 @@ export default function ConversationView({
 						key={conversationId}
 						onSend={handleSend}
 						disabled
-						disabledTooltip="Wait for the conversation to load"
+						disabledTooltip={translateConsole('Wait for the conversation to load')}
 						autoContexts={autoContexts}
 						onDismissAutoContext={handleDismissAutoContext}
 					/>
@@ -198,7 +200,9 @@ export default function ConversationView({
 			/>
 			{showDisclaimer && (
 				<div className={disclaimerClass} role="note" aria-live="polite">
-					SigNoz AI can make mistakes. Please double-check responses.
+					{translateConsole(
+						'SigNoz AI can make mistakes. Please double-check responses.',
+					)}
 				</div>
 			)}
 			<div className={inputWrapperClass}>

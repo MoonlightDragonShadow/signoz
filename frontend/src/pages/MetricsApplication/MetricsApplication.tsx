@@ -1,4 +1,5 @@
 import { Tabs, TabsProps } from 'antd';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useAppParams } from 'lib/router/useAppParams';
 import { QueryParams } from 'constants/query';
 import DBCall from 'container/MetricsApplication/Tabs/DBCall';
@@ -15,6 +16,7 @@ import useMetricsApplicationTabKey from './useMetricsApplicationTabKey';
 import './MetricsApplication.styles.scss';
 
 function MetricsApplication(): JSX.Element {
+	const translate = useConsoleTranslation();
 	const { servicename: encodedServiceName } = useAppParams<{
 		servicename: string;
 	}>();
@@ -26,17 +28,17 @@ function MetricsApplication(): JSX.Element {
 
 	const items: TabsProps['items'] = [
 		{
-			label: TAB_KEY_VS_LABEL[MetricsApplicationTab.OVER_METRICS],
+			label: translate(TAB_KEY_VS_LABEL[MetricsApplicationTab.OVER_METRICS]),
 			key: MetricsApplicationTab.OVER_METRICS,
 			children: <Overview />,
 		},
 		{
-			label: TAB_KEY_VS_LABEL[MetricsApplicationTab.DB_CALL_METRICS],
+			label: translate(TAB_KEY_VS_LABEL[MetricsApplicationTab.DB_CALL_METRICS]),
 			key: MetricsApplicationTab.DB_CALL_METRICS,
 			children: <DBCall />,
 		},
 		{
-			label: TAB_KEY_VS_LABEL[MetricsApplicationTab.EXTERNAL_METRICS],
+			label: translate(TAB_KEY_VS_LABEL[MetricsApplicationTab.EXTERNAL_METRICS]),
 			key: MetricsApplicationTab.EXTERNAL_METRICS,
 			children: <External />,
 		},

@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useState } from 'react';
 import { Search } from '@signozhq/icons';
 import { Typography } from '@signozhq/ui/typography';
@@ -35,12 +36,13 @@ function LegendColors({
 	value,
 	onChange,
 }: LegendColorsProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const [query, setQuery] = useState('');
 
 	if (series.length === 0) {
 		return (
 			<Typography.Text className={styles.empty}>
-				Run the query to set a color for each series.
+				{translate('Run the query to set a color for each series.')}
 			</Typography.Text>
 		);
 	}
@@ -51,14 +53,14 @@ function LegendColors({
 		<div className={styles.container} data-testid="panel-editor-v2-legend-colors">
 			<Input
 				data-testid="panel-editor-v2-legend-search"
-				placeholder="Search series…"
+				placeholder={translate('Search series…')}
 				value={query}
 				prefix={<Search size={14} />}
 				onChange={(e): void => setQuery(e.target.value)}
 			/>
 			{filtered.length === 0 ? (
 				<Typography.Text className={styles.empty}>
-					No series match “{query}”.
+					{translate('No series match')} “{query}”.
 				</Typography.Text>
 			) : (
 				<Virtuoso

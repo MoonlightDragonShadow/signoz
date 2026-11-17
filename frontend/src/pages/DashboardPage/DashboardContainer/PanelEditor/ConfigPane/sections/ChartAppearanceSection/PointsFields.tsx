@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import type { DashboardtypesScatterPlotPointsDTO } from 'api/generated/services/sigNoz.schemas';
 import {
 	POINT_OPACITY_BOUNDS,
@@ -27,6 +28,7 @@ function PointsFields({
 	onChange,
 	sizeColumnLabel,
 }: PointsFieldsProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const reset = createFieldResetter(value, savedValue, onChange);
 	// Renderer defaults, so thumbs start where an unset field draws.
 	const size = resolvePointSize(value);
@@ -35,7 +37,7 @@ function PointsFields({
 		<>
 			{sizeColumnLabel ? (
 				<ConfigField
-					label="Point size"
+					label={translate('Point size')}
 					help={`Each dot's area scales with ${sizeColumnLabel} between min and max.`}
 					{...reset('minSize', 'maxSize')}
 				>
@@ -53,7 +55,7 @@ function PointsFields({
 				</ConfigField>
 			) : (
 				<ConfigField
-					label="Point size"
+					label={translate('Point size')}
 					help="Every dot uses this size. Map a Size column to draw a bubble chart."
 					{...reset('size')}
 				>
@@ -68,7 +70,7 @@ function PointsFields({
 					/>
 				</ConfigField>
 			)}
-			<ConfigField label="Fill opacity" {...reset('opacity')}>
+			<ConfigField label={translate('Fill opacity')} {...reset('opacity')}>
 				<ConfigSlider
 					testId="panel-editor-v2-point-opacity"
 					value={resolvePointOpacity(value)}

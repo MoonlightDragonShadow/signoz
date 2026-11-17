@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useEffect, useState } from 'react';
 import { Switch } from '@signozhq/ui/switch';
 import { ErrorResponseHandlerV2 } from 'api/ErrorResponseHandlerV2';
@@ -20,6 +21,7 @@ function SSOEnforcementToggle({
 	isDefaultChecked,
 	record,
 }: SSOEnforcementToggleProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const [isChecked, setIsChecked] = useState<boolean>(isDefaultChecked);
 	const { showErrorModal } = useErrorModal();
 
@@ -64,7 +66,7 @@ function SSOEnforcementToggle({
 			color="primary"
 			textPlacement="right"
 			disabled={isLoading}
-			disabledTooltip="Saving the SSO enforcement setting"
+			disabledTooltip={translateConsole('Saving the SSO enforcement setting')}
 			value={isChecked}
 			onChange={onChangeHandler}
 			testId="auth-domain-enforce-sso"

@@ -1,3 +1,5 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useState } from 'react';
 import { Button } from '@signozhq/ui/button';
 import { DrawerWrapper } from '@signozhq/ui/drawer';
@@ -61,6 +63,8 @@ function MapperFormDrawer({
 	isDeleting,
 	saveError,
 }: MapperFormDrawerProps): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
+	const translateConsole = useConsoleTranslation();
 	const isEdit = mode === 'edit';
 	const isValid = isMapperDraftValid(draft);
 
@@ -121,7 +125,9 @@ function MapperFormDrawer({
 				}
 			}}
 			title={isEdit ? 'Edit mapping' : 'New custom mapping'}
-			subTitle="Map source attributes onto a canonical target attribute"
+			subTitle={translateConsole(
+				'Map source attributes onto a canonical target attribute',
+			)}
 			width="wide"
 			testId="mapper-form-drawer"
 			footer={
@@ -147,7 +153,7 @@ function MapperFormDrawer({
 							onClick={onClose}
 							testId="mapper-form-cancel"
 						>
-							Cancel
+							{translateConsole('Cancel')}
 						</Button>
 						<Button
 							size="md"
@@ -172,9 +178,11 @@ function MapperFormDrawer({
 		>
 			<div className={styles.form}>
 				<div className={styles.field}>
-					<span className={styles.label}>Target attribute</span>
+					<span className={styles.label}>
+						{translateConsole('Target attribute')}
+					</span>
 					<KeySearchInput
-						placeholder="e.g. gen_ai.content.prompt"
+						placeholder={translateInterfaceCopy('e.g. gen_ai.content.prompt')}
 						value={draft.name}
 						fieldContext={draft.fieldContext}
 						disabled={isEdit}
@@ -183,13 +191,15 @@ function MapperFormDrawer({
 					/>
 					{isEdit && (
 						<span className={styles.hint}>
-							The target attribute can&apos;t be changed after creation.
+							<ConsoleText
+								message={"The target attribute can't be changed after creation."}
+							/>
 						</span>
 					)}
 				</div>
 
 				<div className={styles.field}>
-					<span className={styles.label}>Write target to</span>
+					<span className={styles.label}>{translateConsole('Write target to')}</span>
 					<SelectSimple
 						className={styles.fieldContext}
 						items={FIELD_CONTEXT_OPTIONS}
@@ -201,16 +211,16 @@ function MapperFormDrawer({
 						testId="mapper-form-field-context"
 					/>
 					<span className={styles.hint}>
-						Where the standardized attribute is written.
+						{translateConsole('Where the standardized attribute is written.')}
 					</span>
 				</div>
 
 				<div className={styles.field}>
 					<span className={styles.label}>
-						Source attributes
+						{translateConsole('Source attributes')}
 						<span className={styles.labelHint}>
 							{' '}
-							· priority: top → bottom · drag to reorder
+							{translateConsole('· priority: top → bottom · drag to reorder')}
 						</span>
 					</span>
 
@@ -245,7 +255,7 @@ function MapperFormDrawer({
 						onClick={addSource}
 						testId="mapper-form-add-source"
 					>
-						Add another source
+						{translateConsole('Add another source')}
 					</Button>
 				</div>
 

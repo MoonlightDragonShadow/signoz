@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useTranslation } from 'react-i18next';
 import { Select } from 'antd';
 
@@ -11,6 +12,7 @@ import {
 } from '../styles';
 
 function TypeSelect({ onChange, value }: TypeSelectProps): JSX.Element {
+	const translateCopy = useConsoleTranslation();
 	const { t } = useTranslation('pipeline');
 
 	return (
@@ -25,7 +27,7 @@ function TypeSelect({ onChange, value }: TypeSelectProps): JSX.Element {
 				>
 					{processorTypes.map(({ value, label }) => (
 						<Select.Option key={value + label} value={value}>
-							{label}
+							{translateCopy(label)}
 						</Select.Option>
 					))}
 				</StyledSelect>

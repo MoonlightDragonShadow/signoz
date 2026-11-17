@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Modal, ModalProps } from 'antd';
 
 import './SignozModal.style.scss';
@@ -8,11 +9,12 @@ function SignozModal({
 	rootClassName = '',
 	...rest
 }: ModalProps): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
 	return (
 		<Modal
 			centered
 			width={width}
-			cancelText="Close"
+			cancelText={translateInterfaceCopy('Close')}
 			rootClassName={`signoz-modal ${rootClassName}`}
 			{...rest}
 		>

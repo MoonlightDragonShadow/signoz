@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useState } from 'react';
 import { Button, Popover, Tooltip } from 'antd';
 import cx from 'classnames';
@@ -38,6 +39,7 @@ function FunnelStepActions({
 	stepsCount,
 	hasEditPermission,
 }: FunnelStepActionsProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	return (
 		<div className="funnel-item__actions">
 			<Button
@@ -50,7 +52,7 @@ function FunnelStepActions({
 					setIsAddDetailsModalOpen(true);
 				}}
 			>
-				Add details
+				{translateConsole('Add details')}
 			</Button>
 
 			<Tooltip
@@ -75,7 +77,7 @@ function FunnelStepActions({
 						}
 					}}
 				>
-					Delete
+					{translateConsole('Delete')}
 				</Button>
 			</Tooltip>
 		</div>
@@ -92,6 +94,7 @@ function FunnelStepPopover({
 	isAddDetailsModalOpen,
 	setIsAddDetailsModalOpen,
 }: FunnelStepPopoverProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
 	const { hasEditPermission } = useAppContext();
 
@@ -102,7 +105,11 @@ function FunnelStepPopover({
 
 	if (!hasEditPermission) {
 		return (
-			<Tooltip title="You need editor or admin access to add details to step">
+			<Tooltip
+				title={translateConsole(
+					'You need editor or admin access to add details to step',
+				)}
+			>
 				<Button
 					type="text"
 					className="funnel-item__action-btn"
@@ -139,7 +146,7 @@ function FunnelStepPopover({
 					})}
 					size={14}
 					data-testid="funnel-step-actions"
-					aria-label="Step actions"
+					aria-label={translateConsole('Step actions')}
 				/>
 			</Popover>
 

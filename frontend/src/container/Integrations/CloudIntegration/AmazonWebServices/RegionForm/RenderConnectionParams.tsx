@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Input } from '@signozhq/ui/input';
 import { Form } from 'antd';
 import { CloudintegrationtypesCredentialsDTO } from 'api/generated/services/sigNoz.schemas';
@@ -9,6 +10,7 @@ function RenderConnectionFields({
 	isConnectionParamsLoading?: boolean;
 	connectionParams?: CloudintegrationtypesCredentialsDTO | null;
 }): JSX.Element | null {
+	const translateConsole = useConsoleTranslation();
 	if (
 		isConnectionParamsLoading ||
 		(!!connectionParams?.ingestionUrl &&
@@ -24,37 +26,57 @@ function RenderConnectionFields({
 			{!connectionParams?.ingestionUrl && (
 				<Form.Item
 					name="ingestionUrl"
-					label="Ingestion URL"
-					rules={[{ required: true, message: 'Please enter ingestion URL' }]}
+					label={translateConsole('Ingestion URL')}
+					rules={[
+						{
+							required: true,
+							message: translateConsole('Please enter ingestion URL'),
+						},
+					]}
 				>
-					<Input placeholder="Enter ingestion URL" />
+					<Input placeholder={translateConsole('Enter ingestion URL')} />
 				</Form.Item>
 			)}
 			{!connectionParams?.ingestionKey && (
 				<Form.Item
 					name="ingestionKey"
-					label="Ingestion Key"
-					rules={[{ required: true, message: 'Please enter ingestion key' }]}
+					label={translateConsole('Ingestion Key')}
+					rules={[
+						{
+							required: true,
+							message: translateConsole('Please enter ingestion key'),
+						},
+					]}
 				>
-					<Input placeholder="Enter ingestion key" />
+					<Input placeholder={translateConsole('Enter ingestion key')} />
 				</Form.Item>
 			)}
 			{!connectionParams?.sigNozApiUrl && (
 				<Form.Item
 					name="sigNozApiUrl"
-					label="SigNoz API URL"
-					rules={[{ required: true, message: 'Please enter SigNoz API URL' }]}
+					label={translateConsole('SigNoz API URL')}
+					rules={[
+						{
+							required: true,
+							message: translateConsole('Please enter SigNoz API URL'),
+						},
+					]}
 				>
-					<Input placeholder="Enter SigNoz API URL" />
+					<Input placeholder={translateConsole('Enter SigNoz API URL')} />
 				</Form.Item>
 			)}
 			{!connectionParams?.sigNozApiKey && (
 				<Form.Item
 					name="sigNozApiKey"
-					label="SigNoz API KEY"
-					rules={[{ required: true, message: 'Please enter SigNoz API Key' }]}
+					label={translateConsole('SigNoz API KEY')}
+					rules={[
+						{
+							required: true,
+							message: translateConsole('Please enter SigNoz API Key'),
+						},
+					]}
 				>
-					<Input placeholder="Enter SigNoz API Key" />
+					<Input placeholder={translateConsole('Enter SigNoz API Key')} />
 				</Form.Item>
 			)}
 		</Form.Item>

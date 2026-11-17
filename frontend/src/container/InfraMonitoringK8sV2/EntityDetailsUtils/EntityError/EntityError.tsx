@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Typography } from '@signozhq/ui/typography';
 import { useGetTenantLicense } from 'hooks/useGetTenantLicense';
 import { navigate } from 'lib/router/navigation';
@@ -9,6 +10,7 @@ import awwSnapUrl from '@/assets/Icons/awwSnap.svg';
 import styles from './EntityError.module.scss';
 
 export default function EntityError(): JSX.Element {
+	const translate = useConsoleTranslation();
 	const { isCloudUser: isCloudUserVal } = useGetTenantLicense();
 
 	const handleContactSupport = (): void => {
@@ -24,8 +26,8 @@ export default function EntityError(): JSX.Element {
 			<div className={styles.content}>
 				<img src={awwSnapUrl} alt="error" className={styles.icon} />
 				<Typography.Text>
-					<span className={styles.title}>Aw snap :/ </span>
-					Something went wrong. Please try again or contact support.
+					<span className={styles.title}>{translate('Aw snap :/')} </span>
+					{translate('Something went wrong. Please try again or contact support.')}
 				</Typography.Text>
 
 				<div
@@ -40,7 +42,7 @@ export default function EntityError(): JSX.Element {
 					}}
 				>
 					<Typography.Link className={styles.contactSupportText}>
-						Contact Support
+						{translate('Contact Support')}
 					</Typography.Link>
 					<ArrowRight size={14} />
 				</div>

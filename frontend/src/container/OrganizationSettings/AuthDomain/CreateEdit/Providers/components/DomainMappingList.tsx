@@ -1,3 +1,5 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Plus, Trash2 } from '@signozhq/icons';
 import { Button } from '@signozhq/ui/button';
 import { Input } from '@signozhq/ui/input';
@@ -24,15 +26,19 @@ interface DomainMappingListProps {
 function DomainMappingList({
 	fieldNamePrefix,
 }: DomainMappingListProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	return (
 		<div className="domain-mapping-list">
 			<div className="domain-mapping-list__header">
 				<span className="domain-mapping-list__title">
-					Domain to Admin Email Mapping
+					{translateConsole('Domain to Admin Email Mapping')}
 				</span>
 				<p className="domain-mapping-list__description">
-					Map workspace domains to admin emails for service account impersonation.
-					Use &quot;*&quot; as a wildcard for any domain.
+					<ConsoleText
+						message={
+							'Map workspace domains to admin emails for service account impersonation. Use "*" as a wildcard for any domain.'
+						}
+					/>
 				</p>
 			</div>
 
@@ -44,9 +50,13 @@ function DomainMappingList({
 								<Form.Item
 									name={[field.name, 'domain']}
 									className="domain-mapping-list__field"
-									rules={[{ required: true, message: 'Domain is required' }]}
+									rules={[
+										{ required: true, message: translateConsole('Domain is required') },
+									]}
 								>
-									<Input placeholder="Domain (e.g., example.com or *)" />
+									<Input
+										placeholder={translateConsole('Domain (e.g., example.com or *)')}
+									/>
 								</Form.Item>
 
 								<Form.Item
@@ -54,7 +64,7 @@ function DomainMappingList({
 									className="domain-mapping-list__field"
 									rules={[{ validator: validateEmail }]}
 								>
-									<Input placeholder="Admin Email" />
+									<Input placeholder={translateConsole('Admin Email')} />
 								</Form.Item>
 
 								<Button
@@ -62,7 +72,7 @@ function DomainMappingList({
 									variant="ghost"
 									color="secondary"
 									onClick={(): void => remove(field.name)}
-									aria-label="Remove mapping"
+									aria-label={translateConsole('Remove mapping')}
 									icon
 								>
 									<Trash2 size={12} />
@@ -77,7 +87,7 @@ function DomainMappingList({
 							onClick={(): void => add({ domain: '', adminEmail: '' })}
 							prefix={<Plus size={14} />}
 						>
-							Add Domain Mapping
+							{translateConsole('Add Domain Mapping')}
 						</Button>
 					</div>
 				)}

@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Typography } from '@signozhq/ui/typography';
 // TODO(@signozhq/ui-input): migrate this <Input> once @signozhq/ui Input
 // supports the `onWheel` handler (used to blur on scroll for number inputs).
@@ -15,6 +16,7 @@ function MetricTimeAggregation({
 	inspectionStep,
 	inspectMetricsTimeSeries,
 }: MetricTimeAggregationProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	return (
 		<div
 			data-testid="metric-time-aggregation"
@@ -25,11 +27,11 @@ function MetricTimeAggregation({
 					'selected-step': inspectionStep === InspectionStep.TIME_AGGREGATION,
 				})}
 			>
-				<Typography.Text>AGGREGATE BY TIME</Typography.Text>
+				<Typography.Text>{translate('AGGREGATE BY TIME')}</Typography.Text>
 			</div>
 			<div className="metric-time-aggregation-content">
 				<div className="inspect-metrics-input-group">
-					<Typography.Text>Align with</Typography.Text>
+					<Typography.Text>{translate('Align with')}</Typography.Text>
 					<Select
 						value={currentMetricInspectionOptions.timeAggregationOption}
 						onChange={(value): void => {
@@ -48,7 +50,7 @@ function MetricTimeAggregation({
 							}
 						}}
 						style={{ width: 130 }}
-						placeholder="Select option"
+						placeholder={translate('Select option')}
 					>
 						{Object.entries(TIME_AGGREGATION_OPTIONS).map(([key, value]) => (
 							<Select.Option key={key} value={key}>
@@ -58,13 +60,13 @@ function MetricTimeAggregation({
 					</Select>
 				</div>
 				<div className="inspect-metrics-input-group">
-					<Typography.Text>aggregated every</Typography.Text>
+					<Typography.Text>{translate('aggregated every')}</Typography.Text>
 					<Input
 						type="number"
 						className="no-arrows-input"
 						value={currentMetricInspectionOptions.timeAggregationInterval}
-						placeholder="Select interval..."
-						suffix="seconds"
+						placeholder={translate('Select interval...')}
+						suffix={translate('seconds')}
 						onChange={(e): void => {
 							dispatchMetricInspectionOptions({
 								type: 'SET_TIME_AGGREGATION_INTERVAL',

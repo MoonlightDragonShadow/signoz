@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { memo, useCallback, useMemo } from 'react';
 import { Select } from 'antd';
 import {
@@ -43,6 +44,7 @@ export const MetricsSelect = memo(function MetricsSelect({
 	signalSourceChangeEnabled: boolean;
 	savePreviousQuery: boolean;
 }): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
 	const { handleChangeAggregatorAttribute } = useQueryOperations({
 		index,
 		query,
@@ -143,7 +145,7 @@ export const MetricsSelect = memo(function MetricsSelect({
 				<Select
 					className="source-selector"
 					popupClassName="qb-select-popover"
-					placeholder="Source"
+					placeholder={translateInterfaceCopy('Source')}
 					options={SOURCE_OPTIONS}
 					value={source}
 					defaultValue="metrics"

@@ -1,3 +1,5 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { useEffect, useRef, useState } from 'react';
 import { Input } from 'antd';
 import { Checkbox } from '@signozhq/ui/checkbox';
@@ -59,6 +61,7 @@ function AnomalyAlertEvaluationView({
 	data: any;
 	yAxisUnit: string;
 }): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
 	const { spline } = uPlot.paths;
 	const _spline = spline ? spline() : undefined;
 	const chartRef = useRef<HTMLDivElement>(null);
@@ -188,7 +191,7 @@ function AnomalyAlertEvaluationView({
 		},
 		series: [
 			{
-				label: 'Time',
+				label: translateInterfaceCopy('Time'),
 			},
 			...(selectedSeries
 				? [
@@ -301,7 +304,9 @@ function AnomalyAlertEvaluationView({
 					<div className="anomaly-alert-evaluation-view-no-data-container">
 						<ChartLine size={48} strokeWidth={0.5} />
 
-						<Typography>No Data</Typography>
+						<Typography>
+							<ConsoleText message={'No Data'} />
+						</Typography>
 					</div>
 				)}
 			</div>
@@ -312,7 +317,7 @@ function AnomalyAlertEvaluationView({
 						<div className="anomaly-alert-evaluation-view-series-list">
 							<Search
 								className="anomaly-alert-evaluation-view-series-list-search"
-								placeholder="Search a series"
+								placeholder={translateInterfaceCopy('Search a series')}
 								allowClear
 								onChange={handleSearchValueChange}
 							/>
@@ -325,7 +330,7 @@ function AnomalyAlertEvaluationView({
 										value={selectedSeries === null}
 										onChange={(): void => handleSeriesChange(null)}
 									>
-										Show All
+										<ConsoleText message={'Show All'} />
 									</Checkbox>
 								)}
 
@@ -350,7 +355,9 @@ function AnomalyAlertEvaluationView({
 								))}
 
 								{filteredSeriesKeys.length === 0 && (
-									<Typography>No series found</Typography>
+									<Typography>
+										<ConsoleText message={'No series found'} />
+									</Typography>
 								)}
 							</div>
 						</div>

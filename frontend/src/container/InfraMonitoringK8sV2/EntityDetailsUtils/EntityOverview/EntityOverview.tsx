@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useMemo, useState } from 'react';
 import { Compass } from '@signozhq/icons';
 import { Button } from '@signozhq/ui/button';
@@ -92,6 +93,7 @@ function EntityOverviewContent({
 	lockedClauses,
 	onCategoryChange,
 }: ContentProps): JSX.Element | null {
+	const translate = useConsoleTranslation();
 	const { timeRange } = useEntityDetailsTime();
 	const expression = useExpression();
 	const userExpression = useUserExpression();
@@ -227,7 +229,7 @@ function EntityOverviewContent({
 				header={
 					<div className={styles.resourcePicker}>
 						<Typography.Text color="muted" size="small">
-							Showing
+							{translate('Showing')}
 						</Typography.Text>
 
 						<Select value={targetCategory} onChange={handleCategoryChange}>

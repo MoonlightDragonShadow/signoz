@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useMemo, useState } from 'react';
 import { Empty } from 'antd';
 import SignozRadioGroup from 'components/SignozRadioGroup/SignozRadioGroup';
@@ -27,6 +28,7 @@ function InfraMetrics({
 	timestamp,
 	dataSource = DataSource.LOGS,
 }: MetricsDataProps): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
 	const [selectedView, setSelectedView] = useState<string>(() =>
 		nodeName || hostName ? VIEW_TYPES.NODE : VIEW_TYPES.POD,
 	);
@@ -35,7 +37,7 @@ function InfraMetrics({
 		const options = [
 			{
 				icon: <Table size={14} />,
-				label: 'Node',
+				label: translateInterfaceCopy('Node'),
 				value: VIEW_TYPES.NODE,
 			},
 		];
@@ -49,7 +51,7 @@ function InfraMetrics({
 		}
 
 		return options;
-	}, [podName]);
+	}, [podName, translateInterfaceCopy]);
 
 	const handleModeChange = (value: string): void => {
 		// single toggle-group emits '' on re-click of the pressed item
@@ -69,7 +71,7 @@ function InfraMetrics({
 			<div className="empty-container">
 				<Empty
 					image={Empty.PRESENTED_IMAGE_SIMPLE}
-					description={emptyStateDescription}
+					description={translateInterfaceCopy(emptyStateDescription)}
 				/>
 			</div>
 		);

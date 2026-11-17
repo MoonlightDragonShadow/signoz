@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useId } from 'react';
 import cx from 'classnames';
 
@@ -18,13 +19,14 @@ function AlignmentGrid({
 	description,
 	onChange,
 }: AlignmentGridProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const name = useId();
 
 	return (
 		<div className={styles.row}>
 			<div
 				role="radiogroup"
-				aria-label="Text position"
+				aria-label={translate('Text position')}
 				data-testid={testId}
 				className={styles.grid}
 			>

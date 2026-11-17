@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useAppParams } from 'lib/router/useAppParams';
 import { Typography } from '@signozhq/ui/typography';
 import Spinner from 'components/Spinner';
@@ -11,19 +12,21 @@ import FunnelResults from './components/FunnelResults/FunnelResults';
 import './TracesFunnelDetails.styles.scss';
 
 function TracesFunnelDetails(): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
+	const translateConsole = useConsoleTranslation();
 	const { funnelId } = useAppParams<'funnelId'>();
 	const { data, isLoading, isError } = useFunnelDetails({
 		funnelId: funnelId || '',
 	});
 
 	if (isLoading || !data?.payload) {
-		return <Spinner size="large" tip="Loading..." />;
+		return <Spinner size="large" tip={translateInterfaceCopy('Loading...')} />;
 	}
 
 	if (isError) {
 		return (
 			<NotFoundContainer>
-				<Typography>Error loading funnel details</Typography>
+				<Typography>{translateConsole('Error loading funnel details')}</Typography>
 			</NotFoundContainer>
 		);
 	}

@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import {
 	DashboardtypesHeatmapColorModeDTO,
 	type DashboardtypesHeatmapColorsDTO,
@@ -37,6 +38,7 @@ function HeatmapColorsField({
 	savedValue,
 	onChange,
 }: HeatmapColorsFieldProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const reset = createFieldResetter(value, savedValue, onChange);
 	// Unset fields select what the chart draws for them.
 	const mode = value?.mode ?? DEFAULT_COLOR_MODE;
@@ -47,13 +49,13 @@ function HeatmapColorsField({
 			<HeatmapRampPreview colors={value} />
 
 			<ConfigField
-				label="Color mode"
+				label={translate('Color mode')}
 				help={COLOR_MODE_HELP[mode]}
 				{...reset('mode')}
 			>
 				<ConfigTiles
 					testId="panel-editor-v2-heatmap-color-mode"
-					aria-label="Color mode"
+					aria-label={translate('Color mode')}
 					value={mode}
 					items={COLOR_MODE_OPTIONS}
 					onChange={(next): void => onChange({ ...value, mode: next })}
@@ -67,7 +69,7 @@ function HeatmapColorsField({
 					onChange={(fill): void => onChange({ ...value, fill })}
 				/>
 			) : (
-				<ConfigField label="Palette" {...reset('palette')}>
+				<ConfigField label={translate('Palette')} {...reset('palette')}>
 					<HeatmapPaletteGrid
 						value={value?.palette ?? DEFAULT_PALETTE}
 						onChange={(palette): void => onChange({ ...value, palette })}
@@ -76,13 +78,13 @@ function HeatmapColorsField({
 			)}
 
 			<ConfigField
-				label="Color scale"
+				label={translate('Color scale')}
 				help={COLOR_SCALE_HELP[scale]}
 				{...reset('scale')}
 			>
 				<ConfigTiles
 					testId="panel-editor-v2-heatmap-color-scale"
-					aria-label="Color scale"
+					aria-label={translate('Color scale')}
 					value={scale}
 					items={COLOR_SCALE_OPTIONS}
 					onChange={(next): void => onChange({ ...value, scale: next })}

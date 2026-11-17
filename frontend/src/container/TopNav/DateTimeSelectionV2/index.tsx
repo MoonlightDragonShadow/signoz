@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { useCallback, useEffect, useState } from 'react';
 // eslint-disable-next-line no-restricted-imports
 import { connect, useDispatch, useSelector } from 'react-redux';
@@ -681,7 +682,7 @@ function DateTimeSelection({
 						title={`Reset to ${defaultRelativeTime}`}
 						icon={<Undo size={14} />}
 					>
-						Reset
+						<ConsoleText message={'Reset'} />
 					</Button>
 				</FormItem>
 			)}

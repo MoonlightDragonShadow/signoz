@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useRef } from 'react';
 
 import { getPanelDefinition } from '../../../Panels/registry';
@@ -7,6 +8,7 @@ import { usePanelPickerReveal } from '../hooks/usePanelPickerReveal';
 import styles from './NewPanelPlaceholder.module.scss';
 
 function NewPanelPlaceholder({ kind }: { kind: PanelKind }): JSX.Element {
+	const translate = useConsoleTranslation();
 	const ref = useRef<HTMLDivElement>(null);
 	usePanelPickerReveal(ref, true);
 
@@ -17,7 +19,7 @@ function NewPanelPlaceholder({ kind }: { kind: PanelKind }): JSX.Element {
 			data-testid="new-panel-placeholder"
 		>
 			<span className={styles.name}>{getPanelDefinition(kind).displayName}</span>
-			<span className={styles.label}>New panel</span>
+			<span className={styles.label}>{translate('New panel')}</span>
 		</div>
 	);
 }

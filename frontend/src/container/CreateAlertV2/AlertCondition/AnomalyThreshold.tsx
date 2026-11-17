@@ -1,3 +1,5 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Button } from '@signozhq/ui/button';
 import { Select } from 'antd';
 import { Typography } from '@signozhq/ui/typography';
@@ -31,6 +33,7 @@ function AnomalyThreshold({
 	isErrorChannels,
 	refreshChannels,
 }: AnomalyAndThresholdProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const {
 		thresholdState,
 		setThresholdState,
@@ -59,7 +62,7 @@ function AnomalyThreshold({
 				{/* Sentence 1 */}
 				<div className="alert-condition-sentence">
 					<Typography.Text data-testid="notification-text" className="sentence-text">
-						Send a notification when
+						{translateConsole('Send a notification when')}
 					</Typography.Text>
 					<Select
 						value={thresholdState.selectedQuery}
@@ -89,13 +92,16 @@ function AnomalyThreshold({
 								payload: value,
 							});
 						}}
-						options={ANOMALY_THRESHOLD_OPERATOR_OPTIONS}
+						options={ANOMALY_THRESHOLD_OPERATOR_OPTIONS.map((option) => ({
+							...option,
+							label: translateConsole(option.label),
+						}))}
 					/>
 					<Typography.Text
 						data-testid="predicted-data-text"
 						className="sentence-text"
 					>
-						the prediction
+						<ConsoleText message={'the prediction'} />
 					</Typography.Text>
 					<Select
 						value={
@@ -110,19 +116,22 @@ function AnomalyThreshold({
 								payload: value,
 							});
 						}}
-						options={ANOMALY_THRESHOLD_MATCH_TYPE_OPTIONS}
+						options={ANOMALY_THRESHOLD_MATCH_TYPE_OPTIONS.map((option) => ({
+							...option,
+							label: translateConsole(option.label),
+						}))}
 					/>
 					<Typography.Text
 						data-testid="evaluation-window-text"
 						className="sentence-text"
 					>
-						during the <EvaluationSettings rollingOnly />
+						<ConsoleText message={'during the'} /> <EvaluationSettings rollingOnly />
 					</Typography.Text>
 				</div>
 				<div className="alert-condition-sentence">
 					{/* Sentence 2 */}
 					<Typography.Text data-testid="using-the-text" className="sentence-text">
-						using the
+						<ConsoleText message={'using the'} />
 					</Typography.Text>
 					<Select
 						value={thresholdState.algorithm}
@@ -140,7 +149,7 @@ function AnomalyThreshold({
 						data-testid="algorithm-with-text"
 						className="sentence-text"
 					>
-						algorithm with
+						<ConsoleText message={'algorithm with'} />
 					</Typography.Text>
 					<Select
 						value={thresholdState.seasonality}
@@ -152,10 +161,13 @@ function AnomalyThreshold({
 								payload: value,
 							});
 						}}
-						options={ANOMALY_SEASONALITY_OPTIONS}
+						options={ANOMALY_SEASONALITY_OPTIONS.map((option) => ({
+							...option,
+							label: translateConsole(option.label),
+						}))}
 					/>
 					<Typography.Text data-testid="seasonality-text" className="sentence-text">
-						seasonality
+						<ConsoleText message={'seasonality'} />
 					</Typography.Text>
 				</div>
 			</div>
@@ -184,7 +196,7 @@ function AnomalyThreshold({
 					onClick={handleAddThreshold}
 					testId="add-threshold-button"
 				>
-					Add Threshold
+					{translateConsole('Add Threshold')}
 				</Button>
 			</div>
 			<RoutingPolicyBanner

@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import type { ComponentType } from 'react';
 import { RotateCw, SquarePlus, TriangleAlert } from '@signozhq/icons';
 import type { DashboardtypesPanelDTO } from 'api/generated/services/sigNoz.schemas';
@@ -72,6 +73,7 @@ function PanelBody({
 	onClick,
 	enableDrillDown = false,
 }: PanelBodyProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	// A retained response (keepPreviousData) counts as data only if its type matches the current
 	// request — else a prior panel kind's response (time_series → raw) flashes NoData on switch.
 	const hasData =
@@ -84,8 +86,10 @@ function PanelBody({
 		return (
 			<PanelMessage
 				icon={<SquarePlus size={18} />}
-				title="Nothing to visualize yet"
-				description="This panel has no query. Add one to start plotting data."
+				title={translate('Nothing to visualize yet')}
+				description={translate(
+					'This panel has no query. Add one to start plotting data.',
+				)}
 				data-testid="panel-no-query"
 			/>
 		);
@@ -99,10 +103,10 @@ function PanelBody({
 			<PanelMessage
 				icon={<TriangleAlert size={18} />}
 				tone="danger"
-				title="Couldn’t load panel data"
+				title={translate('Couldn’t load panel data')}
 				description={errorDetail?.message || 'Something went wrong while fetching.'}
 				action={{
-					label: 'Retry',
+					label: translate('Retry'),
 					onClick: refetch,
 					icon: <RotateCw size={14} />,
 				}}

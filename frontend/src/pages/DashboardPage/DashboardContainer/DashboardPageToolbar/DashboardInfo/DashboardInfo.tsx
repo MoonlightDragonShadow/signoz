@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { type FocusEvent, KeyboardEvent } from 'react';
 import {
 	Check,
@@ -71,6 +72,7 @@ function DashboardInfo({
 	onCommit,
 	onCancel,
 }: DashboardInfoProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const { isEditable: canEdit } = useDashboardEditContext();
 	const dashboardId = useDashboardStore((s) => s.dashboardId);
 
@@ -141,7 +143,7 @@ function DashboardInfo({
 						color="primary"
 						size="sm"
 						icon
-						aria-label="Save title"
+						aria-label={translate('Save title')}
 						testId="dashboard-title-save"
 						onClick={onCommit}
 					>
@@ -153,7 +155,7 @@ function DashboardInfo({
 						color="secondary"
 						size="sm"
 						icon
-						aria-label="Cancel title edit"
+						aria-label={translate('Cancel title edit')}
 						testId="dashboard-title-cancel"
 						onClick={onCancel}
 					>
@@ -192,14 +194,18 @@ function DashboardInfo({
 			)}
 
 			{isPublicDashboard && (
-				<Tooltip title="This dashboard is publicly accessible. Click to open the public page.">
+				<Tooltip
+					title={translate(
+						'This dashboard is publicly accessible. Click to open the public page.',
+					)}
+				>
 					<Button
 						type="button"
 						variant="ghost"
 						color="secondary"
 						size="sm"
 						icon
-						aria-label="Open public dashboard"
+						aria-label={translate('Open public dashboard')}
 						testId="dashboard-public-link"
 						onClick={handleOpenPublicUrl}
 					>
@@ -217,7 +223,11 @@ function DashboardInfo({
 						color="secondary"
 						size="sm"
 						icon
-						aria-label={isDashboardLocked ? 'Unlock dashboard' : 'Lock dashboard'}
+						aria-label={
+							isDashboardLocked
+								? translate('Unlock dashboard')
+								: translate('Lock dashboard')
+						}
 						testId="dashboard-lock"
 						disabled={!onToggleLock}
 						onClick={onToggleLock}

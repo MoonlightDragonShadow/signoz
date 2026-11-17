@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { ScanSearch } from '@signozhq/icons';
 import { Badge } from '@signozhq/ui/badge';
 import { Tooltip } from 'antd';
@@ -29,14 +30,14 @@ export function StatusBadge({ status }: { status: string }): JSX.Element {
 	if (status?.toUpperCase() === 'ACTIVE') {
 		return (
 			<Badge color="success" variant="outlined">
-				ACTIVE
+				<ConsoleText message={'ACTIVE'} />
 			</Badge>
 		);
 	}
 	if (status?.toUpperCase() === 'DELETED') {
 		return (
 			<Badge color="danger" variant="outlined">
-				DELETED
+				<ConsoleText message={'DELETED'} />
 			</Badge>
 		);
 	}
@@ -57,11 +58,13 @@ export function ServiceAccountsEmptyState({
 			<ScanSearch size={24} className="sa-empty-state__icon" />
 			{searchQuery ? (
 				<p className="sa-empty-state__text">
-					No results for <strong>{searchQuery}</strong>
+					<ConsoleText message={'No results for'} /> <strong>{searchQuery}</strong>
 				</p>
 			) : (
 				<p className="sa-empty-state__text">
-					No service accounts. Start by creating one to manage keys.
+					<ConsoleText
+						message={'No service accounts. Start by creating one to manage keys.'}
+					/>
 				</p>
 			)}
 		</div>
@@ -101,6 +104,9 @@ export const showPaginationTotal = (
 		<span className="sa-pagination-range">
 			{range[0]} &#8212; {range[1]}
 		</span>
-		<span className="sa-pagination-total"> of {_total}</span>
+		<span className="sa-pagination-total">
+			{' '}
+			<ConsoleText message={'of'} /> {_total}
+		</span>
 	</>
 );

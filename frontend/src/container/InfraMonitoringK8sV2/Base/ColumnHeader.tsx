@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Info } from '@signozhq/icons';
 import { Tooltip } from '@signozhq/ui/tooltip';
 
@@ -21,12 +22,13 @@ function ColumnHeader({
 	tooltip,
 	className,
 }: ColumnHeaderProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const stopPropagationHandler: MouseEventHandler = (e): void =>
 		e.stopPropagation();
 
 	const renderContent = (): React.ReactNode => {
 		if (children) {
-			return children;
+			return typeof children === 'string' ? translate(children) : children;
 		}
 
 		return null;
@@ -41,7 +43,9 @@ function ColumnHeader({
 				<Tooltip
 					title={
 						<div onClick={stopPropagationHandler}>
-							{tooltipTitle}{' '}
+							{typeof tooltipTitle === 'string'
+								? translate(tooltipTitle)
+								: tooltipTitle}{' '}
 							<a
 								href={`${DOCS_ROOT}${docPath}`}
 								target="_blank"
@@ -49,8 +53,8 @@ function ColumnHeader({
 								onClick={stopPropagationHandler}
 							>
 								{isJustStringTitle
-									? 'Learn more.'
-									: 'Check the documentation to learn more.'}
+									? translate('Learn more.')
+									: translate('Check the documentation to learn more.')}
 							</a>
 						</div>
 					}
@@ -64,7 +68,13 @@ function ColumnHeader({
 
 		if (tooltip) {
 			return (
-				<Tooltip title={<div onClick={stopPropagationHandler}>{tooltip}</div>}>
+				<Tooltip
+					title={
+						<div onClick={stopPropagationHandler}>
+							{typeof tooltip === 'string' ? translate(tooltip) : tooltip}
+						</div>
+					}
+				>
 					<div className={styles.infoIcon}>
 						<Info size="md" />
 					</div>

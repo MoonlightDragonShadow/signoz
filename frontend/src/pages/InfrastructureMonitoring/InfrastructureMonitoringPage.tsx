@@ -1,15 +1,20 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useLocation } from 'react-use';
 import RouteTab from 'components/RouteTab';
 import { TabRoutes } from 'components/RouteTab/types';
 
-import { Hosts, Kubernetes } from './constants';
+import { getHostsRoute, getKubernetesRoute } from './constants';
 
 import './InfrastructureMonitoring.styles.scss';
 
 export default function InfrastructureMonitoringPage(): JSX.Element {
+	const translate = useConsoleTranslation();
 	const { pathname } = useLocation();
 
-	const routes: TabRoutes[] = [Hosts, Kubernetes];
+	const routes: TabRoutes[] = [
+		getHostsRoute(translate),
+		getKubernetesRoute(translate),
+	];
 
 	return (
 		<RouteTab

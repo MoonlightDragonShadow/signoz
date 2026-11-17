@@ -37,6 +37,7 @@ const DOWNLOAD_FORMAT_OPTIONS: {
 
 interface DownloadMenuItemArgs {
 	supported?: PanelActionCapabilities['download'];
+	translate?: (message: string) => string;
 	onDownload: (format: DownloadFormat) => void;
 }
 
@@ -47,6 +48,7 @@ interface DownloadMenuItemArgs {
 export function buildDownloadMenuItem({
 	supported,
 	onDownload,
+	translate = (message) => message,
 }: DownloadMenuItemArgs): DropdownSubmenuItemType | null {
 	if (!supported) {
 		return null;
@@ -57,7 +59,7 @@ export function buildDownloadMenuItem({
 	).map(({ format, label, icon }): DropdownActionItemType => ({
 		type: 'item',
 		value: `download-${format}`,
-		label,
+		label: translate(label),
 		prefix: icon,
 		onClick: (): void => onDownload(format),
 	}));
@@ -68,7 +70,7 @@ export function buildDownloadMenuItem({
 	return {
 		type: 'submenu',
 		value: 'download',
-		label: 'Download',
+		label: translate('Download'),
 		prefix: <CloudDownload size={14} />,
 		items,
 	};

@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { TabRoutes } from 'components/RouteTab/types';
 import ROUTES from 'constants/routes';
 import BreakDownPage from 'container/MeterExplorer/Breakdown/BreakDown';
@@ -8,7 +9,7 @@ export const Explorer: TabRoutes = {
 	Component: (): JSX.Element => <ExplorerPage />,
 	name: (
 		<div className="tab-item">
-			<Compass size={16} /> Explorer
+			<Compass size={16} /> <ConsoleText message="Explorer" />
 		</div>
 	),
 	route: ROUTES.METER_EXPLORER,
@@ -19,7 +20,7 @@ export const Meter: TabRoutes = {
 	Component: BreakDownPage,
 	name: (
 		<div className="tab-item">
-			<TowerControl size={16} /> Meter
+			<TowerControl size={16} /> <ConsoleText message="Meter" />
 		</div>
 	),
 	route: ROUTES.METER,

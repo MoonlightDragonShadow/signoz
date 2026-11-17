@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAppLocation } from 'lib/router/useAppLocation';
@@ -20,11 +21,15 @@ function ServiceTraceTable({
 }: ServiceTableProps): JSX.Element {
 	const { search } = useAppLocation();
 	const [RPS, setRPS] = useState(0);
+	const translate = useConsoleTranslation();
 	const { t: getText } = useTranslation(['services']);
 
 	const { isFetchingActiveLicense, trialInfo } = useAppContext();
 	const { isCloudUser: isCloudUserVal } = useGetTenantLicense();
-	const tableColumns = useMemo(() => getColumns(search, false), [search]);
+	const tableColumns = useMemo(
+		() => getColumns(search, false, translate),
+		[search, translate],
+	);
 
 	useEffect(() => {
 		if (
@@ -59,7 +64,7 @@ function ServiceTraceTable({
 				<Flex justify="left">
 					<Typography.Title level={5} color="warning" style={{ marginTop: 0 }}>
 						<SolidAlertTriangle size="md" /> {getText('rps_over_100')}
-						<a href="mailto:cloud-support@signoz.io">email</a>
+						<a href="mailto:cloud-support@signoz.io">{translate('email')}</a>
 					</Typography.Title>
 				</Flex>
 			)}

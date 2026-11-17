@@ -24,6 +24,7 @@ import UserInfo from './UserInfo';
 import './MySettings.styles.scss';
 
 function MySettings(): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const translate = useConsoleTranslation();
 	const isDarkMode = useIsDarkMode();
 	const { userPreferences, updateUserPreferenceInContext } = useAppContext();
@@ -69,7 +70,7 @@ function MySettings(): JSX.Element {
 				<div className="theme-option">
 					<Sun size={12} data-testid="light-theme-icon" /> {translate('Light')}{' '}
 					<Badge variant="solid" color="primary">
-						Beta
+						{translateConsole('Beta')}
 					</Badge>
 				</div>
 			),

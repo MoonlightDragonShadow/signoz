@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { Trash2, X } from '@signozhq/icons';
 import { Button } from '@signozhq/ui/button';
 import { DialogWrapper } from '@signozhq/ui/dialog';
@@ -24,15 +25,19 @@ function DeleteMemberDialog({
 
 	const body = isInvited ? (
 		<>
-			Are you sure you want to revoke the invite for{' '}
-			<strong>{member?.email}</strong>? They will no longer be able to join the
-			workspace using this invite.
+			<ConsoleText message={'Are you sure you want to revoke the invite for'} />{' '}
+			<strong>{member?.email}</strong>
+			<ConsoleText
+				message={
+					'? They will no longer be able to join the workspace using this invite.'
+				}
+			/>
 		</>
 	) : (
 		<>
-			Are you sure you want to delete{' '}
-			<strong>{member?.name || member?.email}</strong>? This will remove their
-			access to the workspace.
+			<ConsoleText message={'Are you sure you want to delete'} />{' '}
+			<strong>{member?.name || member?.email}</strong>
+			<ConsoleText message={'? This will remove their access to the workspace.'} />
 		</>
 	);
 
@@ -45,7 +50,7 @@ function DeleteMemberDialog({
 				onClick={onClose}
 				prefix={<X size={12} />}
 			>
-				Cancel
+				<ConsoleText message={'Cancel'} />
 			</Button>
 			<Button
 				size="md"

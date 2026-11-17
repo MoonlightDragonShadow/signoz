@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Button } from '@signozhq/ui/button';
 import { Tooltip } from '@signozhq/ui/tooltip';
 import { Typography } from '@signozhq/ui/typography';
@@ -36,6 +37,7 @@ export function EntityCountsSection<T>({
 	entityType,
 	activeTab,
 }: EntityCountsSectionProps<T>): JSX.Element {
+	const translate = useConsoleTranslation();
 	const handleCardNavigate = (cardLabel: string): void => {
 		logInfraExplorerNavigatedEvent({
 			entityType,
@@ -86,7 +88,7 @@ export function EntityCountsSection<T>({
 							side="top"
 						>
 							<Button
-								aria-label="Action"
+								aria-label={translate('Action')}
 								size="sm"
 								icon
 								variant="ghost"

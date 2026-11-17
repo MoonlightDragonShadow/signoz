@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useEffect } from 'react';
 import { LogsExplorerShortcuts } from 'constants/shortcuts/logsExplorerShortcuts';
 import { useKeyboardHotkeys } from 'hooks/hotkeys/useKeyboardHotkeys';
@@ -19,6 +20,7 @@ export default function RightToolbarActions({
 	handleCancelQuery,
 	showLiveLogs,
 }: RightToolbarActionsProps): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
 	const { registerShortcut, deregisterShortcut } = useKeyboardHotkeys();
 
 	useEffect(() => {
@@ -39,7 +41,7 @@ export default function RightToolbarActions({
 			<div className="right-toolbar-actions-container">
 				<RunQueryBtn
 					disabled
-					disabledTooltip="Not available in live mode"
+					disabledTooltip={translateInterfaceCopy('Not available in live mode')}
 					testId="explorer-run-query-btn"
 				/>
 			</div>

@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import cx from 'classnames';
 import { Undo2 } from '@signozhq/icons';
 
@@ -16,6 +17,7 @@ function SavedViewsListRow({
 	onAction,
 	hover,
 }: SavedViewsListRowProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	return (
 		<div
 			className={cx(styles.row, { [styles.isActive]: isActive })}
@@ -30,8 +32,8 @@ function SavedViewsListRow({
 			{isActive && (
 				<SavedViewsRowButton
 					icon={<Undo2 size={14} />}
-					label="Clear view"
-					tooltip="Clear view"
+					label={translateConsole('Clear view')}
+					tooltip={translateConsole('Clear view')}
 					onClick={onClear}
 					testId="saved-views-row-clear"
 				/>

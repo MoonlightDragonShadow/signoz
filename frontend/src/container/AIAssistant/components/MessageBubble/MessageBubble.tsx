@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import React, { useMemo } from 'react';
 import cx from 'classnames';
 import ReactMarkdown from 'react-markdown';
@@ -118,6 +119,7 @@ export default function MessageBubble({
 	onRetry,
 	isLastAssistant = false,
 }: MessageBubbleProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const variant = useVariant();
 	const isCompact = variant === 'panel';
 	const isUser = message.role === 'user';
@@ -207,7 +209,7 @@ export default function MessageBubble({
 							onClick={onRetry}
 							testId={`ai-message-retry-${message.id}`}
 						>
-							Retry
+							{translateConsole('Retry')}
 						</Button>
 					</div>
 				)}

@@ -1,0 +1,21 @@
+{
+  "total_retention_period": "总保留期限",
+  "move_to_s3": "迁移到 S3\n（应短于总保留期限）",
+  "status_message": {
+    "success": "上次将保留期限更改为 {{total_retention}} {{s3_part}} 的请求已成功。",
+    "failed": "上次将保留期限更改为 {{total_retention}} {{s3_part}} 的请求失败，请重试。",
+    "pending": "上次将保留期限更改为 {{total_retention}} {{s3_part}} 的请求仍在处理，可能需要一些时间。",
+    "s3_part": "，并将 S3 保留期限更改为 {{s3_retention}}"
+  },
+  "retention_save_button": {
+    "pending": "正在更新 {{name}} 的保留期限",
+    "success": "保存"
+  },
+  "retention_request_race_condition": "有另一项请求仍在处理中，无法更改保留期限。",
+  "retention_error_message": "更改 {{name}} 的保留期限时出错。请重试或联系 support@signoz.io。",
+  "retention_failed_message": "更改保留期限时出错。请重试或联系 support@signoz.io。",
+  "retention_comparison_error": "{{name}} 的总保留期限必须长于迁移到 S3 前的期限。",
+  "retention_null_value_error": "尚未设置 {{name}} 的保留期限，请在下方选择。",
+  "retention_confirmation": "确定要更改保留期限吗？",
+  "retention_confirmation_description": "这将改变保存 {{name}} 所需的存储空间。"
+}

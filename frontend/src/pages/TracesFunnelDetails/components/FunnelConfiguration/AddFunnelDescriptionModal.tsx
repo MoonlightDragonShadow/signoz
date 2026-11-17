@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useState } from 'react';
 import { useQueryClient } from 'react-query';
 import { Input } from 'antd';
@@ -22,6 +23,7 @@ function AddFunnelDescriptionModal({
 	funnelId,
 	funnelDescription,
 }: AddFunnelDescriptionProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const [description, setDescription] = useState<string>(funnelDescription);
 	const { notifications } = useNotifications();
 	const queryClient = useQueryClient();
@@ -66,12 +68,12 @@ function AddFunnelDescriptionModal({
 	return (
 		<SignozModal
 			open={isOpen}
-			title="Add funnel description"
+			title={translateConsole('Add funnel description')}
 			width={384}
 			onCancel={handleCancel}
 			rootClassName="funnel-step-modal funnel-modal signoz-modal"
-			cancelText="Cancel"
-			okText="Save changes"
+			cancelText={translateConsole('Cancel')}
+			okText={translateConsole('Save changes')}
 			okButtonProps={{
 				icon: <Check size={14} />,
 				type: 'primary',
@@ -90,10 +92,12 @@ function AddFunnelDescriptionModal({
 		>
 			<div className="funnel-step-modal-content">
 				<div className="funnel-step-modal-content__field">
-					<span className="funnel-step-modal-content__label">Description</span>
+					<span className="funnel-step-modal-content__label">
+						{translateConsole('Description')}
+					</span>
 					<Input.TextArea
 						className="funnel-step-modal-content__input"
-						placeholder="(Optional) Eg. checkout dropoff funnel"
+						placeholder={translateConsole('(Optional) Eg. checkout dropoff funnel')}
 						value={description}
 						onChange={(e): void => setDescription(e.target.value)}
 						autoSize={{ minRows: 3, maxRows: 5 }}

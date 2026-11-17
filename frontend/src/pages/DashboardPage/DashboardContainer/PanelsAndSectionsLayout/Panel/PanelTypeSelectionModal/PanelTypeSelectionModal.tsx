@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useEffect, useMemo, useState } from 'react';
 import { Button } from '@signozhq/ui/button';
 import { DrawerWrapper } from '@signozhq/ui/drawer';
@@ -32,6 +33,7 @@ function PanelTypeSelectionModal({
 	onSelect,
 	defaultLayoutIndex,
 }: PanelTypeSelectionModalProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const sections = useDashboardSections();
 	const options = useMemo(() => buildSectionOptions(sections), [sections]);
 	const hasSectionPicker = options.length > 1;
@@ -87,11 +89,11 @@ function PanelTypeSelectionModal({
 		setNewSectionTitle(null);
 	};
 
-	let confirmLabel = 'Add panel';
+	let confirmLabel = translate('Add panel');
 	if (isCreatingSection) {
-		confirmLabel = 'Add to new section';
+		confirmLabel = translate('Add to new section');
 	} else if (hasSectionPicker && selectedOption) {
-		confirmLabel = `Add to ${selectedOption.label}`;
+		confirmLabel = `${translate('Add to')} ${selectedOption.isRoot ? translate(selectedOption.label) : selectedOption.label}`;
 	}
 
 	return (
@@ -102,8 +104,8 @@ function PanelTypeSelectionModal({
 					handleClose();
 				}
 			}}
-			title="New panel"
-			subTitle="Pick a visualization. You can change it later."
+			title={translate('New panel')}
+			subTitle={translate('Pick a visualization. You can change it later.')}
 			direction="right"
 			width="wide"
 			testId="panel-type-drawer"
@@ -125,7 +127,7 @@ function PanelTypeSelectionModal({
 						size="md"
 						onClick={handleClose}
 					>
-						Cancel
+						{translate('Cancel')}
 					</Button>
 					<AddPanelSplitButton
 						label={confirmLabel}

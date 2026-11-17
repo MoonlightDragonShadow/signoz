@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback } from 'react';
 import { Typography } from '@signozhq/ui/typography';
 import logEvent from 'api/common/logEvent';
@@ -13,6 +14,7 @@ function MetricFilters({
 	currentQuery,
 	setCurrentQuery,
 }: MetricFiltersProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const handleOnChange = useCallback(
 		(expression: string): void => {
 			logEvent(MetricsExplorerEvents.FilterApplied, {
@@ -44,7 +46,7 @@ function MetricFilters({
 			data-testid="metric-filters"
 			className="inspect-metrics-input-group metric-filters"
 		>
-			<Typography.Text>Where</Typography.Text>
+			<Typography.Text>{translate('Where')}</Typography.Text>
 			<QuerySearch
 				queryData={currentQuery}
 				onChange={handleOnChange}

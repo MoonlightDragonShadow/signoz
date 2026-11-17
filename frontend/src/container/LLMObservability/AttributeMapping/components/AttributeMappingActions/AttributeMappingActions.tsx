@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Button } from '@signozhq/ui/button';
 
 import { useCanManageAttributeMapping } from '../../hooks/useCanManageAttributeMapping';
@@ -16,6 +17,7 @@ function AttributeMappingActions({
 	onDiscard,
 	onSave,
 }: AttributeMappingActionsProps): JSX.Element | null {
+	const translateConsole = useConsoleTranslation();
 	const canManage = useCanManageAttributeMapping();
 
 	if (!canManage || !isDirty) {
@@ -25,7 +27,7 @@ function AttributeMappingActions({
 	return (
 		<div className={styles.actions}>
 			<span className={styles.unsavedChanges} data-testid="unsaved-changes">
-				Unsaved changes
+				{translateConsole('Unsaved changes')}
 			</span>
 			<Button
 				size="md"
@@ -33,10 +35,10 @@ function AttributeMappingActions({
 				color="secondary"
 				onClick={onDiscard}
 				disabled={isSaving}
-				disabledTooltip="Wait for the save to finish"
+				disabledTooltip={translateConsole('Wait for the save to finish')}
 				testId="discard-changes-btn"
 			>
-				Discard
+				{translateConsole('Discard')}
 			</Button>
 			<Button
 				size="md"

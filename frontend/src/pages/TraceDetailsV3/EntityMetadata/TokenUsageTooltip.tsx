@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Typography } from '@signozhq/ui/typography';
 
 import TokenBreakdown from '../TokenBreakdown/TokenBreakdown';
@@ -10,6 +11,7 @@ interface TokenUsageTooltipProps {
 }
 
 function TokenUsageTooltip({ tokens }: TokenUsageTooltipProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const { input, output, cacheRead, cacheWrite, reasoning } = tokens;
 
 	return (
@@ -19,7 +21,7 @@ function TokenUsageTooltip({ tokens }: TokenUsageTooltipProps): JSX.Element {
 				weight="normal"
 				className={styles.tokenTooltipTitle}
 			>
-				Usage Breakdown
+				{translateConsole('Usage Breakdown')}
 			</Typography.Text>
 			<TokenBreakdown
 				input={input}

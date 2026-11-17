@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import type {
 	SectionEditorProps,
 	SectionKind,
@@ -11,13 +12,16 @@ function PanelHeaderSection({
 	value,
 	onChange,
 }: SectionEditorProps<SectionKind.PanelHeader>): JSX.Element {
+	const translate = useConsoleTranslation();
 	const hide = value?.hide === true;
 
 	return (
 		<ConfigSwitch
 			testId="panel-header-hide"
-			title="Hide panel header"
-			description="Removes the title strip on the dashboard. The drag handle and actions appear on hover."
+			title={translate('Hide panel header')}
+			description={translate(
+				'Removes the title strip on the dashboard. The drag handle and actions appear on hover.',
+			)}
 			sketch={SWITCH_SKETCHES.hideHeader}
 			changed={hide}
 			value={hide}

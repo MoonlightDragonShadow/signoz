@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { PenLine, RotateCw } from '@signozhq/icons';
 import { Button } from '@signozhq/ui/button';
 import type { TelemetrytypesSignalDTO } from 'api/generated/services/sigNoz.schemas';
@@ -62,6 +63,7 @@ type ViewPanelModalHeaderProps =
  * selector and the edit switch remain — the rest is query machinery.
  */
 function ViewPanelModalHeader(props: ViewPanelModalHeaderProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const { onSwitchToEdit, panelKind, onChangePanelKind } = props;
 	const query = props.mode === 'query' ? props : null;
 
@@ -98,7 +100,7 @@ function ViewPanelModalHeader(props: ViewPanelModalHeaderProps): JSX.Element {
 					onClick={onSwitchToEdit}
 					testId="view-panel-switch-to-edit"
 				>
-					Switch to Edit Mode
+					{translate('Switch to Edit Mode')}
 				</Button>
 			</AuthZTooltip>
 			{query && (
@@ -109,7 +111,7 @@ function ViewPanelModalHeader(props: ViewPanelModalHeaderProps): JSX.Element {
 					onClick={query.onResetQuery}
 					testId="view-panel-reset-query"
 				>
-					Reset Query
+					{translate('Reset Query')}
 				</Button>
 			)}
 			{query && (
@@ -132,7 +134,7 @@ function ViewPanelModalHeader(props: ViewPanelModalHeaderProps): JSX.Element {
 						color="secondary"
 						onClick={query.onRefresh}
 						loading={query.isFetching}
-						aria-label="Refresh"
+						aria-label={translate('Refresh')}
 						testId="view-panel-refresh"
 					>
 						<RotateCw />

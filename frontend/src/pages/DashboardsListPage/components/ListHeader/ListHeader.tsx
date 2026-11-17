@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 // eslint-disable-next-line signoz/no-antd-components -- Popover/Tooltip not yet migrated for this menu
 import { Popover, Tooltip } from 'antd';
 import { Button } from '@signozhq/ui/button';
@@ -47,6 +48,7 @@ function ListHeader({
 	sortOrder,
 	onOrderChange,
 }: Props): JSX.Element {
+	const translate = useConsoleTranslation();
 	const visibleColumns = useDashboardsListVisibleColumnsStore(
 		(s) => s.visibleColumns,
 	);
@@ -56,7 +58,9 @@ function ListHeader({
 
 	const metadataContent = (
 		<div className={styles.metaPanel}>
-			<Typography.Text className={styles.sortHeading}>Columns</Typography.Text>
+			<Typography.Text className={styles.sortHeading}>
+				{translate('Columns')}
+			</Typography.Text>
 			{METADATA_COLUMNS.map((col) => (
 				<div key={col.key} className={styles.metaRow}>
 					<Typography.Text className={styles.metaLabel}>{col.label}</Typography.Text>
@@ -80,13 +84,17 @@ function ListHeader({
 
 	return (
 		<div className={styles.wrapper}>
-			<Typography.Text className={styles.label}>Results</Typography.Text>
+			<Typography.Text className={styles.label}>
+				{translate('Results')}
+			</Typography.Text>
 			<section className={styles.rightActions}>
 				<Popover
 					trigger="click"
 					content={
 						<div className={styles.sortContent}>
-							<Typography.Text className={styles.sortHeading}>Sort By</Typography.Text>
+							<Typography.Text className={styles.sortHeading}>
+								{translate('Sort By')}
+							</Typography.Text>
 							<Button
 								size="md"
 								variant="ghost"
@@ -100,7 +108,7 @@ function ListHeader({
 									) : undefined
 								}
 							>
-								Name
+								{translate('Name')}
 							</Button>
 							<Button
 								size="md"
@@ -115,7 +123,7 @@ function ListHeader({
 									) : undefined
 								}
 							>
-								Last created
+								{translate('Last created')}
 							</Button>
 							<Button
 								size="md"
@@ -130,10 +138,12 @@ function ListHeader({
 									) : undefined
 								}
 							>
-								Last updated
+								{translate('Last updated')}
 							</Button>
 							<div className={styles.sortDivider} />
-							<Typography.Text className={styles.sortHeading}>Order</Typography.Text>
+							<Typography.Text className={styles.sortHeading}>
+								{translate('Order')}
+							</Typography.Text>
 							<Button
 								size="md"
 								variant="ghost"
@@ -147,7 +157,7 @@ function ListHeader({
 									) : undefined
 								}
 							>
-								Ascending
+								{translate('Ascending')}
 							</Button>
 							<Button
 								size="md"
@@ -162,7 +172,7 @@ function ListHeader({
 									) : undefined
 								}
 							>
-								Descending
+								{translate('Descending')}
 							</Button>
 						</div>
 					}
@@ -175,7 +185,7 @@ function ListHeader({
 						color="secondary"
 						size="sm"
 						testId="sort-by"
-						aria-label="Sort"
+						aria-label={translate('Sort')}
 						suffix={
 							sortOrder === DashboardtypesListOrderDTO.asc ? (
 								<ArrowUp size={12} />
@@ -184,7 +194,9 @@ function ListHeader({
 							)
 						}
 					>
-						<Typography.Text className={styles.sortPrefix}>Sort:</Typography.Text>{' '}
+						<Typography.Text className={styles.sortPrefix}>
+							{translate('Sort:')}
+						</Typography.Text>{' '}
 						{SORT_LABELS[sortColumn]}{' '}
 					</Button>
 				</Popover>
@@ -196,13 +208,13 @@ function ListHeader({
 					placement="bottomRight"
 					arrow={false}
 				>
-					<Tooltip title="Columns">
+					<Tooltip title={translate('Columns')}>
 						<Button
 							variant="ghost"
 							color="secondary"
 							size="sm"
 							icon
-							aria-label="Columns"
+							aria-label={translate('Columns')}
 							testId="configure-columns-trigger"
 						>
 							<Columns3 size={14} />

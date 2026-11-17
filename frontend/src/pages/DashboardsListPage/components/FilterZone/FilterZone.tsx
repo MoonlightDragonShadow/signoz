@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import {
 	type ReactNode,
 	useCallback,
@@ -53,6 +54,7 @@ function FilterZone({
 	rightSlot,
 	disabled = false,
 }: Props): JSX.Element {
+	const translate = useConsoleTranslation();
 	const [draft, setDraft] = useState(query);
 
 	useEffect(() => {
@@ -123,7 +125,9 @@ function FilterZone({
 					<div className={styles.searchInput} data-testid="dashboards-search-zone">
 						<SearchBar
 							value={draft}
-							placeholder="DSL Filter — e.g. name CONTAINS 'api' AND env IN ['prod','staging']"
+							placeholder={translate(
+								"DSL Filter — e.g. name CONTAINS 'api' AND env IN ['prod','staging']",
+							)}
 							source={source}
 							dirty={dirty}
 							disabled={disabled}
@@ -135,7 +139,9 @@ function FilterZone({
 				{rightSlot}
 			</div>
 			<div className={styles.filtersRow}>
-				<Typography.Text className={styles.filtersLabel}>Filters</Typography.Text>
+				<Typography.Text className={styles.filtersLabel}>
+					{translate('Filters')}
+				</Typography.Text>
 				<AuthZTooltip checks={LIST_CHECKS}>
 					<div
 						className={styles.filterControls}
@@ -162,7 +168,7 @@ function FilterZone({
 								onClick={handleClear}
 								testId="dashboards-filter-clear"
 							>
-								Clear
+								{translate('Clear')}
 							</Button>
 						)}
 					</div>

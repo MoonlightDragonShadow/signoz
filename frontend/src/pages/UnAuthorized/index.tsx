@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { useCallback } from 'react';
 import { Space } from 'antd';
 import { Typography } from '@signozhq/ui/typography';
@@ -32,10 +33,15 @@ function UnAuthorizePage(): JSX.Element {
 		<Container className="unauthorized-page">
 			<Space align="center" direction="vertical">
 				<UnAuthorized width={64} height={64} />
-				<Typography.Title level={3}>Access Restricted</Typography.Title>
+				<Typography.Title level={3}>
+					<ConsoleText message={'Access Restricted'} />
+				</Typography.Title>
 
 				<p className="unauthorized-page__description">
-					It looks like you don&lsquo;t have permission to view this page. <br />
+					<ConsoleText
+						message={'It looks like you don‘t have permission to view this page.'}
+					/>{' '}
+					<br />
 					{mistakeMessage}
 					{userIsAnonymous ? (
 						<Typography.Link
@@ -43,7 +49,7 @@ function UnAuthorizePage(): JSX.Element {
 							onClick={handleContactSupportClick}
 						>
 							{' '}
-							reach out to us.
+							<ConsoleText message={'reach out to us.'} />
 						</Typography.Link>
 					) : null}
 				</p>

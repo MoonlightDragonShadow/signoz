@@ -100,6 +100,7 @@ function CustomTimePicker({
 	isModalTimeSelection = false,
 	'data-testid': dataTestId,
 }: CustomTimePickerProps): JSX.Element {
+	const translateRuntimeCopy = useConsoleTranslation();
 	const translate = useConsoleTranslation();
 	const [selectedTimePlaceholderValue, setSelectedTimePlaceholderValue] =
 		useState('Select / Enter Time Range');
@@ -147,7 +148,7 @@ function CustomTimePicker({
 		const match = selectedTime.match(/^(\d+)([mhdw])$/);
 		if (!match) {
 			// If it doesn't match the format, return as is
-			return `Last ${selectedTime}`;
+			return translateRuntimeCopy('Last {{value1}}', { value1: selectedTime });
 		}
 
 		const value = parseInt(match[1], 10);
@@ -163,7 +164,10 @@ function CustomTimePicker({
 
 		const unitLabel = value === 1 ? unitMap[unit].singular : unitMap[unit].plural;
 
-		return `Last ${value} ${unitLabel}`;
+		return translateRuntimeCopy('Last {{value1}} {{value2}}', {
+			value1: value,
+			value2: translateRuntimeCopy(unitLabel),
+		});
 	};
 
 	const getSelectedTimeRangeLabel = (
@@ -217,6 +221,15 @@ function CustomTimePicker({
 
 		return '';
 	};
+
+	let displayedInputValue = inputValue;
+	if (showLiveLogs) {
+		displayedInputValue = translate('Live');
+	} else if (!open && selectedTime !== 'custom') {
+		displayedInputValue = translate(
+			getSelectedTimeRangeLabel(selectedTime, selectedValue),
+		);
+	}
 
 	const resetErrorStatus = (): void => {
 		setInputStatus(CustomTimePickerInputStatus.UNSET);
@@ -347,9 +360,15 @@ function CustomTimePicker({
 				setInputStatus(CustomTimePickerInputStatus.ERROR);
 				onError(true);
 				setInputErrorDetails({
-					message: `Please enter time less than ${maxAllowedMinTimeInMonths} months`,
+					message: translateRuntimeCopy(
+						'Please enter time less than {{value1}} months',
+						{ value1: maxAllowedMinTimeInMonths },
+					),
 					code: 'TIME_LESS_THAN_MAX_ALLOWED_TIME_IN_MONTHS',
-					description: `Please enter time less than ${maxAllowedMinTimeInMonths} months`,
+					description: translateRuntimeCopy(
+						'Please enter time less than {{value1}} months',
+						{ value1: maxAllowedMinTimeInMonths },
+					),
 				});
 				if (isFunction(onCustomTimeStatusUpdate)) {
 					onCustomTimeStatusUpdate(true);
@@ -437,7 +456,7 @@ function CustomTimePicker({
 							selectedValue === value ? 'active' : '',
 						)}
 					>
-						{label}
+						{typeof label === 'string' ? translate(label) : label}
 					</div>
 				))}
 			</div>
@@ -615,7 +634,7 @@ function CustomTimePicker({
 						}
 						readOnly={!open || showLiveLogs}
 						placeholder={translate(selectedTimePlaceholderValue)}
-						value={inputValue}
+						value={displayedInputValue}
 						onMouseDown={(e): void => {
 							// Only treat as "click from input" when the actual input element is clicked (not suffix/chevron)
 							if (e.target === inputRef.current?.input) {

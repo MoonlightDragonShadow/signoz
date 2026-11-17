@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { DraftGroup } from '../types';
 import { AttributeMappingEditor } from '../hooks/useAttributeMappingEditor';
 import styles from './AttributeMappingsTab.module.scss';
@@ -17,11 +18,12 @@ function AttributeMappingsTab({
 	onEditGroup,
 	onAddGroup,
 }: AttributeMappingsTabProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	return (
 		<div data-testid="attribute-mappings-tab">
 			{editor.isError ? (
 				<div className={styles.pageError} role="alert">
-					Failed to load mapping groups. Please try again.
+					{translateConsole('Failed to load mapping groups. Please try again.')}
 				</div>
 			) : (
 				<MappingsTable

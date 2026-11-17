@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import type { DashboardtypesTableThresholdDTO } from 'api/generated/services/sigNoz.schemas';
 import { getUniversalNameFromMetricUnit } from 'components/YAxisUnitSelector/utils';
 import { formatPanelValue } from 'pages/DashboardPage/DashboardContainer/Panels/utils/formatPanelValue';
@@ -45,6 +46,7 @@ function TableThresholdRow({
 	onDiscard,
 	onRemove,
 }: TableThresholdRowProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const { draft, setDraft, setValue } = useThresholdDraft(
 		threshold,
 		isEditing,
@@ -90,9 +92,9 @@ function TableThresholdRow({
 			onRemove={onRemove}
 		>
 			<ThresholdSelectField
-				label="Column"
+				label={translate('Column')}
 				testId={`table-threshold-column-${index}`}
-				placeholder="Select column"
+				placeholder={translate('Select column')}
 				value={draft.columnName || undefined}
 				items={columnItems}
 				onChange={(columnName): void => setDraft((d) => ({ ...d, columnName }))}
@@ -103,7 +105,7 @@ function TableThresholdRow({
 				onChange={(operator): void => setDraft((d) => ({ ...d, operator }))}
 			/>
 			<ThresholdAmountField
-				label="Value"
+				label={translate('Value')}
 				testIdPrefix="table-threshold"
 				index={index}
 				value={draft.value}

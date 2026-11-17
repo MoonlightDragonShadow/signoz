@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { toast } from '@signozhq/ui/sonner';
 import logEvent from 'api/common/logEvent';
@@ -87,6 +88,7 @@ export function useJsonEditor({
 	readOnly = false,
 	onApplied,
 }: Params): Result {
+	const translate = useConsoleTranslation();
 	const dashboardId = useDashboardStore((s) => s.dashboardId);
 	const refetch = useDashboardStore((s) => s.refetch);
 	const { showErrorModal } = useErrorModal();
@@ -201,7 +203,7 @@ export function useJsonEditor({
 				{ id: dashboardId },
 				dashboardToUpdatable({ ...dashboard, ...edited }),
 			);
-			toast.success('Dashboard updated');
+			toast.success(translate('Dashboard updated'));
 			void logEvent(DashboardDetailEvents.JsonEditorAction, {
 				action: 'apply',
 				dashboardId,
@@ -214,6 +216,7 @@ export function useJsonEditor({
 			setIsSaving(false);
 		}
 	}, [
+		translate,
 		dashboard,
 		dashboardId,
 		validity.valid,

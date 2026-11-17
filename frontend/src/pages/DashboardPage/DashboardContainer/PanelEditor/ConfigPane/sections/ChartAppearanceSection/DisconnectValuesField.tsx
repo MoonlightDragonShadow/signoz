@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useEffect, useState } from 'react';
 import type { DashboardtypesSpanGapsDTO } from 'api/generated/services/sigNoz.schemas';
 
@@ -32,6 +33,7 @@ function DisconnectValuesField({
 	onReset,
 	onChange,
 }: DisconnectValuesFieldProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const duration = value?.fillLessThan || undefined;
 	// `fillOnlyBelow` is authoritative; fall back to a stored duration for legacy panels.
 	const isThreshold = value?.fillOnlyBelow ?? !!duration;
@@ -60,14 +62,14 @@ function DisconnectValuesField({
 
 	return (
 		<ConfigField
-			label="When data is missing"
+			label={translate('When data is missing')}
 			help="Breaking the line makes outages and restarts visible."
 			changed={changed}
 			onReset={onReset}
 		>
 			<ConfigTiles
 				testId={testId}
-				aria-label="When data is missing"
+				aria-label={translate('When data is missing')}
 				value={
 					isThreshold ? DisconnectValuesMode.THRESHOLD : DisconnectValuesMode.NEVER
 				}
@@ -76,7 +78,9 @@ function DisconnectValuesField({
 			/>
 			{isThreshold && duration && (
 				<div className={styles.inset}>
-					<span className={styles.insetLabel}>Break when a gap is longer than</span>
+					<span className={styles.insetLabel}>
+						{translate('Break when a gap is longer than')}
+					</span>
 					<DisconnectValuesThresholdInput
 						testId={`${testId}-value`}
 						value={duration}

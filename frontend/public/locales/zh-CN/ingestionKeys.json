@@ -1,0 +1,4 @@
+{
+  "delete_confirm_message": "确定要删除 {{keyName}} 吗？删除接入密钥后无法恢复。",
+  "delete_limit_confirm_message": "确定要删除接入密钥 {{keyName}} 的 {{limit_name}} 限制吗？"
+}

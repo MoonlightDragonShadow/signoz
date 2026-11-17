@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { useMemo } from 'react';
 import { Button } from '@signozhq/ui/button';
 import { Skeleton } from 'antd';
@@ -105,7 +106,9 @@ function OtherFields({
 	if (isFetching) {
 		return (
 			<div className={cx(styles.section, styles.sectionOther)}>
-				<div className={styles.sectionHeader}>OTHER FIELDS</div>
+				<div className={styles.sectionHeader}>
+					<ConsoleText message={'OTHER FIELDS'} />
+				</div>
 				<div className={styles.otherList}>
 					{Array.from({ length: 5 }).map((_, i) => (
 						<div
@@ -123,12 +126,16 @@ function OtherFields({
 
 	return (
 		<div className={cx(styles.section, styles.sectionOther)}>
-			<div className={styles.sectionHeader}>OTHER FIELDS</div>
+			<div className={styles.sectionHeader}>
+				<ConsoleText message={'OTHER FIELDS'} />
+			</div>
 			<div className={styles.otherList}>
 				<OverlayScrollbar>
 					<>
 						{otherFields.length === 0 ? (
-							<div className={styles.noValues}>No values found</div>
+							<div className={styles.noValues}>
+								<ConsoleText message={'No values found'} />
+							</div>
 						) : (
 							otherFields.map((attr) => (
 								<div
@@ -143,7 +150,7 @@ function OtherFields({
 											size="sm"
 											onClick={(): void => onAdd(attr)}
 										>
-											Add
+											<ConsoleText message={'Add'} />
 										</Button>
 									)}
 								</div>

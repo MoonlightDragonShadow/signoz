@@ -1,3 +1,5 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { useCallback, useEffect, useState } from 'react';
 import { useAppLocation } from 'lib/router/useAppLocation';
 import { toast } from '@signozhq/ui/sonner';
@@ -9,6 +11,8 @@ import { handleContactSupport } from 'container/Integrations/utils';
 import { useGetTenantLicense } from 'hooks/useGetTenantLicense';
 
 function FeedbackModal({ onClose }: { onClose: () => void }): JSX.Element {
+	const translateRuntimeCopy = useConsoleTranslation();
+	const translateInterfaceCopy = useConsoleTranslation();
 	const [activeTab, setActiveTab] = useState('feedback');
 	const [feedback, setFeedback] = useState('');
 	const location = useAppLocation();
@@ -39,9 +43,14 @@ function FeedbackModal({ onClose }: { onClose: () => void }): JSX.Element {
 			})
 			.catch(() => {
 				console.error(`Failed to submit ${entityName}`);
-				toast.error(`Failed to submit ${entityName}`, {
-					position: 'top-right',
-				});
+				toast.error(
+					translateRuntimeCopy('Failed to submit {{value1}}', {
+						value1: entityName,
+					}),
+					{
+						position: 'top-right',
+					},
+				);
 			})
 			.finally(() => {
 				setIsLoading(false);
@@ -61,7 +70,7 @@ function FeedbackModal({ onClose }: { onClose: () => void }): JSX.Element {
 			label: (
 				<div className="feedback-modal-tab-label">
 					<div className="tab-icon dot feedback-tab" />
-					Feedback
+					<ConsoleText message={'Feedback'} />
 				</div>
 			),
 			key: 'feedback',
@@ -71,7 +80,7 @@ function FeedbackModal({ onClose }: { onClose: () => void }): JSX.Element {
 			label: (
 				<div className="feedback-modal-tab-label">
 					<div className="tab-icon dot bug-tab" />
-					Report a bug
+					<ConsoleText message={'Report a bug'} />
 				</div>
 			),
 			key: 'reportBug',
@@ -81,7 +90,7 @@ function FeedbackModal({ onClose }: { onClose: () => void }): JSX.Element {
 			label: (
 				<div className="feedback-modal-tab-label">
 					<div className="tab-icon dot feature-tab" />
-					Feature request
+					<ConsoleText message={'Feature request'} />
 				</div>
 			),
 			key: 'featureRequest',
@@ -115,7 +124,7 @@ function FeedbackModal({ onClose }: { onClose: () => void }): JSX.Element {
 			<div className="feedback-modal-content">
 				<div className="feedback-modal-content-header">
 					<Input.TextArea
-						placeholder="Write your feedback here..."
+						placeholder={translateInterfaceCopy('Write your feedback here...')}
 						rows={6}
 						required
 						className="feedback-input"
@@ -133,16 +142,16 @@ function FeedbackModal({ onClose }: { onClose: () => void }): JSX.Element {
 					loading={isLoading}
 					disabled={feedback.length === 0}
 				>
-					Submit
+					<ConsoleText message={'Submit'} />
 				</Button>
 				<div className="feedback-modal-content-footer-info-text">
 					<Typography.Text>
-						Have a specific issue?{' '}
+						<ConsoleText message={'Have a specific issue?'} />{' '}
 						<Typography.Link
 							className="contact-support-link"
 							onClick={handleContactSupportClick}
 						>
-							Contact Support{' '}
+							<ConsoleText message={'Contact Support'} />{' '}
 						</Typography.Link>
 						or{' '}
 						<a
@@ -151,7 +160,7 @@ function FeedbackModal({ onClose }: { onClose: () => void }): JSX.Element {
 							rel="noreferrer"
 							className="read-docs-link"
 						>
-							Read our docs
+							<ConsoleText message={'Read our docs'} />
 						</a>
 					</Typography.Text>
 				</div>

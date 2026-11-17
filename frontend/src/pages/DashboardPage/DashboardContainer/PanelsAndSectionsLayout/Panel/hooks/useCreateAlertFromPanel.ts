@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback } from 'react';
 // eslint-disable-next-line no-restricted-imports -- global time still lives in redux
 import { useSelector } from 'react-redux';
@@ -37,6 +38,7 @@ export function useCreateAlertFromPanel(): (
 	panel: DashboardtypesPanelDTO,
 	panelId: string,
 ) => void {
+	const translate = useConsoleTranslation();
 	const { safeNavigate } = useSafeNavigate();
 	const dashboardId = useDashboardStore((s) => s.dashboardId);
 	const variables = useDashboardStore(selectResolvedVariables(dashboardId));
@@ -96,12 +98,20 @@ export function useCreateAlertFromPanel(): (
 					},
 					onError: () => {
 						toast.error(SOMETHING_WENT_WRONG, {
-							description: 'Failed to create alert from panel',
+							description: translate('Failed to create alert from panel'),
 						});
 					},
 				},
 			);
 		},
-		[eventMeta, variables, minTime, maxTime, substituteVars, safeNavigate],
+		[
+			translate,
+			eventMeta,
+			variables,
+			minTime,
+			maxTime,
+			substituteVars,
+			safeNavigate,
+		],
 	);
 }

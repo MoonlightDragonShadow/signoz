@@ -1,3 +1,5 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { useEffect, useMemo, useState } from 'react';
 import { Button } from '@signozhq/ui/button';
 import { Checkbox } from '@signozhq/ui/checkbox';
@@ -56,6 +58,7 @@ export function AboutSigNozQuestions({
 	setSignozDetails,
 	onNext,
 }: AboutSigNozQuestionsProps): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
 	const { versionData } = useAppContext();
 
 	const [interestInSignoz, setInterestInSignoz] = useState<string[]>(
@@ -130,18 +133,24 @@ export function AboutSigNozQuestions({
 	return (
 		<div className="questions-container">
 			<OnboardingQuestionHeader
-				title="Set up your workspace"
-				subtitle="Tailor SigNoz to suit your observability needs."
+				title={translateInterfaceCopy('Set up your workspace')}
+				subtitle={translateInterfaceCopy(
+					'Tailor SigNoz to suit your observability needs.',
+				)}
 			/>
 
 			<div className="questions-form-container">
 				<div className="questions-form">
 					<div className="form-group">
-						<div className="question">How did you first come across SigNoz?</div>
+						<div className="question">
+							<ConsoleText message={'How did you first come across SigNoz?'} />
+						</div>
 
 						<AntdInput.TextArea
 							className="discover-signoz-input"
-							placeholder="e.g., I asked ChatGPT for Datadog alternatives, searched Google for “OpenTelemetry tools,” saw a Reddit or LinkedIn post, or heard about it from a colleague."
+							placeholder={translateInterfaceCopy(
+								'e.g., I asked ChatGPT for Datadog alternatives, searched Google for “OpenTelemetry tools,” saw a Reddit or LinkedIn post, or heard about it from a colleague.',
+							)}
 							value={discoverSignoz}
 							autoFocus
 							rows={4}
@@ -150,7 +159,9 @@ export function AboutSigNozQuestions({
 					</div>
 
 					<div className="form-group">
-						<div className="question">What got you interested in SigNoz?</div>
+						<div className="question">
+							<ConsoleText message={'What got you interested in SigNoz?'} />
+						</div>
 						<div className="checkbox-grid">
 							{shuffledOptionKeys.map((option: string) => (
 								<div key={option} className="checkbox-item">
@@ -178,7 +189,9 @@ export function AboutSigNozQuestions({
 									<Input
 										type="text"
 										className="onboarding-questionaire-other-input"
-										placeholder="What got you interested in SigNoz?"
+										placeholder={translateInterfaceCopy(
+											'What got you interested in SigNoz?',
+										)}
 										value={otherInterestInSignoz}
 										autoFocus
 										onChange={(e): void => setOtherInterestInSignoz(e.target.value)}
@@ -200,7 +213,7 @@ export function AboutSigNozQuestions({
 						disabledTooltip={getNextDisabledReason()}
 						suffix={<ArrowRight size={12} />}
 					>
-						Next
+						<ConsoleText message={'Next'} />
 					</Button>
 				</div>
 			</div>

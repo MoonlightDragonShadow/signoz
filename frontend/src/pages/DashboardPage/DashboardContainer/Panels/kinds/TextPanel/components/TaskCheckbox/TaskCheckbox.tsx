@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Tooltip } from '@signozhq/ui/tooltip';
 
 import { useTaskItemOffset } from '../MarkdownContent/taskItemOffset';
@@ -17,6 +18,7 @@ interface TaskCheckboxProps {
  * Disabled without an offset from its item: nothing would locate its marker.
  */
 function TaskCheckbox({ checked, onChange }: TaskCheckboxProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const offset = useTaskItemOffset();
 
 	const box = (
@@ -24,7 +26,7 @@ function TaskCheckbox({ checked, onChange }: TaskCheckboxProps): JSX.Element {
 			type="checkbox"
 			checked={checked}
 			disabled={offset === undefined}
-			aria-label="Toggle task item"
+			aria-label={translate('Toggle task item')}
 			data-testid="markdown-task-checkbox"
 			onChange={(event): void => {
 				if (offset !== undefined) {
@@ -37,7 +39,9 @@ function TaskCheckbox({ checked, onChange }: TaskCheckboxProps): JSX.Element {
 	// `asChild` on the trigger keeps the input itself as the hover target, so no
 	// wrapper lands inside the body's style reset.
 	return (
-		<Tooltip title={offset === undefined ? undefined : WRITE_BACK_HINT}>
+		<Tooltip
+			title={offset === undefined ? undefined : translate(WRITE_BACK_HINT)}
+		>
 			{box}
 		</Tooltip>
 	);

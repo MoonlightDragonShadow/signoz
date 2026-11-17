@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Callout } from '@signozhq/ui/callout';
 import { Button } from '@signozhq/ui/button';
 import { Typography } from '@signozhq/ui/typography';
@@ -138,6 +139,9 @@ const dummyColumns: ColumnsType<DataType> = [
 
 // eslint-disable-next-line sonarjs/cognitive-complexity
 export default function BillingContainer(): JSX.Element {
+	const translateRuntimeCopy = useConsoleTranslation();
+	const translateInterfaceCopy = useConsoleTranslation();
+	const translateConsole = useConsoleTranslation();
 	const { t } = useTranslation(['billings']);
 	const daysRemainingStr = t('days_remaining');
 	const [headerText, setHeaderText] = useState('');
@@ -201,9 +205,13 @@ export default function BillingContainer(): JSX.Element {
 				const remainingDays = getRemainingDays(billingPeriodEnd) - 1;
 
 				setHeaderText(
-					`Your current billing period is from ${getFormattedDate(
-						billingPeriodStart,
-					)} to ${getFormattedDate(billingPeriodEnd)}`,
+					translateRuntimeCopy(
+						'Your current billing period is from {{value1}} to {{value2}}',
+						{
+							value1: getFormattedDate(billingPeriodStart),
+							value2: getFormattedDate(billingPeriodEnd),
+						},
+					),
 				);
 				setDaysRemaining(remainingDays > 0 ? remainingDays : 0);
 				setBillAmount(billTotal);
@@ -211,7 +219,7 @@ export default function BillingContainer(): JSX.Element {
 
 			setApiResponse(usage);
 		},
-		[trialInfo?.onTrial],
+		[trialInfo?.onTrial, translateRuntimeCopy],
 	);
 
 	const isSubscriptionPastDue =
@@ -241,9 +249,10 @@ export default function BillingContainer(): JSX.Element {
 			setBillAmount(0);
 			setDaysRemaining(remainingDays > 0 ? remainingDays : 0);
 			setHeaderText(
-				`You are in free trial period. Your free trial will end on ${getFormattedDate(
-					trialInfo?.trialEnd,
-				)}`,
+				translateRuntimeCopy(
+					'You are in free trial period. Your free trial will end on {{value1}}',
+					{ value1: getFormattedDate(trialInfo?.trialEnd) },
+				),
 			);
 		}
 	}, [
@@ -274,7 +283,7 @@ export default function BillingContainer(): JSX.Element {
 			align: 'right',
 		},
 		{
-			title: 'Cost',
+			title: translateInterfaceCopy('Cost'),
 			dataIndex: 'cost',
 			key: 'cost',
 			align: 'right',
@@ -439,7 +448,7 @@ export default function BillingContainer(): JSX.Element {
 							{isFreeTrial ? (
 								<Badge variant="solid" color="success">
 									{' '}
-									Free Trial{' '}
+									{translateConsole('Free Trial')}{' '}
 								</Badge>
 							) : (
 								''
@@ -499,9 +508,10 @@ export default function BillingContainer(): JSX.Element {
 				trialInfo?.gracePeriodEnd &&
 				showGracePeriodMessage ? (
 					<Callout
-						title={`Your data is safe with us until ${getFormattedDate(
-							trialInfo?.gracePeriodEnd || Date.now(),
-						)}. Please upgrade plan now to retain your data.`}
+						title={translateRuntimeCopy(
+							'Your data is safe with us until {{value1}}. Please upgrade plan now to retain your data.',
+							{ value1: getFormattedDate(trialInfo?.gracePeriodEnd || Date.now()) },
+						)}
 						type="info"
 						showIcon
 						style={{ marginTop: 12 }}
@@ -533,7 +543,11 @@ export default function BillingContainer(): JSX.Element {
 							<BillingUsageGraph data={apiResponse} billAmount={billAmount} />
 						) : (
 							<Card className={styles.emptyGraphCard} bordered={false}>
-								<Spinner size="large" tip="Loading..." height="35vh" />
+								<Spinner
+									size="large"
+									tip={translateInterfaceCopy('Loading...')}
+									height="35vh"
+								/>
 							</Card>
 						)}
 						{!isLoading && !isFetchingBillingData && (
@@ -546,7 +560,7 @@ export default function BillingContainer(): JSX.Element {
 									prefix={<MonitorDown size={14} />}
 									testId="download-csv-button"
 								>
-									Download CSV
+									{translateConsole('Download CSV')}
 								</Button>
 								<RefreshPaymentStatus type="button" />
 							</div>
@@ -554,7 +568,7 @@ export default function BillingContainer(): JSX.Element {
 					</div>
 					{!isLoading && !isFetchingBillingData && (
 						<Callout type="info" size="small" className={styles.billingUpdateNote}>
-							Billing metrics are updated once every 24 hours.
+							{translateConsole('Billing metrics are updated once every 24 hours.')}
 						</Callout>
 					)}
 

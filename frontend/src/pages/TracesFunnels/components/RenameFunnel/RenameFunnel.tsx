@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useState } from 'react';
 import { useQueryClient } from 'react-query';
 import { Input } from '@signozhq/ui/input';
@@ -22,6 +23,7 @@ function RenameFunnel({
 	funnelId,
 	initialName,
 }: RenameFunnelProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const [newFunnelName, setNewFunnelName] = useState<string>(initialName);
 	const renameFunnelMutation = useRenameFunnel();
 	const { notifications } = useNotifications();
@@ -63,12 +65,12 @@ function RenameFunnel({
 	return (
 		<SignozModal
 			open={isOpen}
-			title="Rename Funnel"
+			title={translateConsole('Rename Funnel')}
 			width={384}
 			onCancel={handleCancel}
 			rootClassName="funnel-modal"
-			cancelText="Cancel"
-			okText="Rename Funnel"
+			cancelText={translateConsole('Cancel')}
+			okText={translateConsole('Rename Funnel')}
 			okButtonProps={{
 				icon: <Check size={14} />,
 				loading: renameFunnelMutation.isLoading,
@@ -87,7 +89,9 @@ function RenameFunnel({
 			destroyOnClose
 		>
 			<div className="funnel-modal-content">
-				<span className="funnel-modal-content__label">Enter a new name</span>
+				<span className="funnel-modal-content__label">
+					{translateConsole('Enter a new name')}
+				</span>
 				<Input
 					className="funnel-modal-content__input"
 					testId="rename-funnel-name-input"

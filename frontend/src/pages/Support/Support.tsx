@@ -1,3 +1,5 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useEffect, useState } from 'react';
 import { useMutation } from 'react-query';
 import { Button, Card, Modal } from 'antd';
@@ -88,6 +90,7 @@ const supportChannels = [
 ];
 
 export default function Support(): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const { notifications } = useNotifications();
 	const { trialInfo, featureFlags } = useAppContext();
 	const [isAddCreditCardModalOpen, setIsAddCreditCardModalOpen] =
@@ -191,14 +194,15 @@ export default function Support(): JSX.Element {
 			<header className="support-page-header">
 				<div className="support-page-header-title" data-testid="support-page-title">
 					<LifeBuoy size={16} />
-					Support
+					{translateConsole('Support')}
 				</div>
 			</header>
 
 			<div className="support-page-content">
 				<div className="support-page-content-description">
-					We are here to help in case of questions or issues. Pick the channel that
-					is most convenient for you.
+					{translateConsole(
+						'We are here to help in case of questions or issues. Pick the channel that is most convenient for you.',
+					)}
 				</div>
 
 				<div className="support-channels">
@@ -230,7 +234,11 @@ export default function Support(): JSX.Element {
 			{/* Add Credit Card Modal */}
 			<Modal
 				className="add-credit-card-modal"
-				title={<span className="title">Add Credit Card for Chat Support</span>}
+				title={
+					<span className="title">
+						{translateConsole('Add Credit Card for Chat Support')}
+					</span>
+				}
 				open={isAddCreditCardModalOpen}
 				closable
 				onCancel={(): void => setIsAddCreditCardModalOpen(false)}
@@ -242,7 +250,7 @@ export default function Support(): JSX.Element {
 						className="cancel-btn"
 						icon={<X size={16} />}
 					>
-						Cancel
+						{translateConsole('Cancel')}
 					</Button>,
 					<AuthZTooltip
 						key="submit"
@@ -258,14 +266,19 @@ export default function Support(): JSX.Element {
 							onClick={handleAddCreditCard}
 							className="add-credit-card-btn periscope-btn primary"
 						>
-							Add Credit Card
+							{translateConsole('Add Credit Card')}
 						</Button>
 					</AuthZTooltip>,
 				]}
 			>
 				<Typography.Text className="add-credit-card-text">
-					You&apos;re currently on <span className="highlight-text">Trial plan</span>
-					. Add a credit card to access SigNoz chat support to your workspace.
+					<ConsoleText message={"You're currently on"} />{' '}
+					<span className="highlight-text">{translateConsole('Trial plan')}</span>
+					<ConsoleText
+						message={
+							'. Add a credit card to access SigNoz chat support to your workspace.'
+						}
+					/>
 				</Typography.Text>
 			</Modal>
 		</div>

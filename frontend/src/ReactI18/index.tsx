@@ -21,7 +21,8 @@ void i18n
 	// init i18next
 	.init({
 		debug: false,
-		fallbackLng: 'en',
+		// Start in Chinese when no stored language matches. Missing messages fall back to English.
+		fallbackLng: (language) => (language ? ['en'] : ['zh-CN', 'en']),
 		supportedLngs: ['en', 'en-GB', 'zh-CN'],
 		load: 'currentOnly',
 		detection: {

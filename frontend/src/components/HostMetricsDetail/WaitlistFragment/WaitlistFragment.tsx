@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Color } from '@signozhq/design-tokens';
@@ -69,7 +70,7 @@ export default function WaitlistFragment({
 				}
 				onClick={handleJoinWaitlist}
 			>
-				Get early access
+				<ConsoleText message={'Get early access'} />
 			</Button>
 		</div>
 	);

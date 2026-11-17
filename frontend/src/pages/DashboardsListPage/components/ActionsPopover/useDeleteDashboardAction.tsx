@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { ReactNode, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useMutation, useQueryClient } from 'react-query';
@@ -36,6 +37,7 @@ export function useDeleteDashboardAction({
 	isLocked: boolean;
 	enabled: boolean;
 }): DeleteDashboardAction {
+	const translate = useConsoleTranslation();
 	const { t } = useTranslation(['dashboard']);
 	const { showErrorModal } = useErrorModal();
 	const queryClient = useQueryClient();
@@ -55,7 +57,7 @@ export function useDeleteDashboardAction({
 				dashboardId,
 			});
 			await invalidateListDashboardsForUserV2(queryClient);
-			toast.success('Dashboard deleted successfully');
+			toast.success(translate('Dashboard deleted successfully'));
 		},
 		onError: (error: APIError) => {
 			showErrorModal(error);
@@ -66,12 +68,12 @@ export function useDeleteDashboardAction({
 		confirmDelete({
 			title: (
 				<Typography.Title level={5}>
-					Are you sure you want to delete the
+					{translate('Are you sure you want to delete the')}
 					<Typography.Text className={styles.deleteName}>
 						{' '}
 						{dashboardName}{' '}
 					</Typography.Text>
-					dashboard?
+					{translate('dashboard?')}
 				</Typography.Title>
 			),
 			// Keeps the Delete button loading until the mutation settles, then closes.
@@ -80,7 +82,7 @@ export function useDeleteDashboardAction({
 					runDelete(undefined, { onSettled: () => resolve() });
 				}),
 		});
-	}, [confirmDelete, dashboardName, runDelete]);
+	}, [confirmDelete, dashboardName, runDelete, translate]);
 
 	// Access before state: the lock only matters to someone who could delete.
 	const lockTooltip =

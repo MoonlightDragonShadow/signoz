@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { type ChangeEvent, useState } from 'react';
 // eslint-disable-next-line signoz/no-antd-components -- no @signozhq/ui multiline TextArea yet
 import { Input as AntInput } from 'antd';
@@ -30,6 +31,7 @@ interface Props {
 }
 
 function BlankDashboardPanel({ onClose }: Props): JSX.Element {
+	const translate = useConsoleTranslation();
 	const { safeNavigate } = useSafeNavigate();
 	const { showErrorModal } = useErrorModal();
 
@@ -86,7 +88,8 @@ function BlankDashboardPanel({ onClose }: Props): JSX.Element {
 			<div className={styles.form}>
 				<div className={styles.field}>
 					<Typography.Text className={styles.label}>
-						Title <Typography.Text className={styles.required}>*</Typography.Text>
+						{translate('Title')}{' '}
+						<Typography.Text className={styles.required}>*</Typography.Text>
 					</Typography.Text>
 					<div className={styles.titleRow}>
 						<DashboardImagePicker
@@ -99,7 +102,7 @@ function BlankDashboardPanel({ onClose }: Props): JSX.Element {
 							value={name}
 							autoFocus
 							maxLength={DASHBOARD_NAME_MAX_LENGTH}
-							placeholder="e.g. Sample Dashboard"
+							placeholder={translate('e.g. Sample Dashboard')}
 							testId="create-dashboard-name"
 							onChange={(e: ChangeEvent<HTMLInputElement>): void =>
 								setName(e.target.value)
@@ -114,27 +117,31 @@ function BlankDashboardPanel({ onClose }: Props): JSX.Element {
 				</div>
 
 				<div className={styles.field}>
-					<Typography.Text className={styles.label}>Description</Typography.Text>
+					<Typography.Text className={styles.label}>
+						{translate('Description')}
+					</Typography.Text>
 					{/* eslint-disable-next-line signoz/no-antd-components -- no @signozhq TextArea yet */}
 					<AntInput.TextArea
 						value={description}
 						rows={3}
-						placeholder="What is this dashboard for?"
+						placeholder={translate('What is this dashboard for?')}
 						data-testid="create-dashboard-description"
 						onChange={(e): void => setDescription(e.target.value)}
 					/>
 				</div>
 
 				<div className={styles.field}>
-					<Typography.Text className={styles.label}>Tags</Typography.Text>
+					<Typography.Text className={styles.label}>
+						{translate('Tags')}
+					</Typography.Text>
 					<TagKeyValueInput
 						tags={tags}
 						onTagsChange={setTags}
-						placeholder="team:jarvis (press Enter)"
+						placeholder={translate('team:jarvis (press Enter)')}
 						testId="create-dashboard-tags"
 					/>
 					<Typography.Text className={styles.hint}>
-						Use key:value (e.g. team:jarvis) and press Enter to add.
+						{translate('Use key:value (e.g. team:jarvis) and press Enter to add.')}
 					</Typography.Text>
 				</div>
 			</div>
@@ -147,10 +154,10 @@ function BlankDashboardPanel({ onClose }: Props): JSX.Element {
 					onClick={onClose}
 					testId="create-dashboard-cancel"
 				>
-					Cancel
+					{translate('Cancel')}
 				</Button>
 				<Button
-					disabledTooltip="Enter a dashboard name first"
+					disabledTooltip={translate('Enter a dashboard name first')}
 					variant="solid"
 					color="primary"
 					size="md"
@@ -161,7 +168,7 @@ function BlankDashboardPanel({ onClose }: Props): JSX.Element {
 						void handleCreate();
 					}}
 				>
-					Create dashboard
+					{translate('Create dashboard')}
 				</Button>
 			</div>
 		</div>

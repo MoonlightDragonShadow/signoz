@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useState } from 'react';
 import { Button } from '@signozhq/ui/button';
 import { toast } from '@signozhq/ui/sonner';
@@ -56,6 +57,8 @@ interface CreateOrEditProps {
 }
 
 function CreateOrEdit(props: CreateOrEditProps): JSX.Element {
+	const translateRuntimeCopy = useConsoleTranslation();
+	const translateConsole = useConsoleTranslation();
 	const { isCreate, record, onClose } = props;
 	const [form] = Form.useForm<FormValues>();
 	const [authnProvider, setAuthnProvider] = useState<
@@ -116,7 +119,7 @@ function CreateOrEdit(props: CreateOrEditProps): JSX.Element {
 				},
 				{
 					onSuccess: () => {
-						toast.success('Domain created successfully');
+						toast.success(translateRuntimeCopy('Domain created successfully'));
 						onClose();
 					},
 					onError: handleError,
@@ -138,7 +141,7 @@ function CreateOrEdit(props: CreateOrEditProps): JSX.Element {
 				},
 				{
 					onSuccess: () => {
-						toast.success('Domain updated successfully');
+						toast.success(translateRuntimeCopy('Domain updated successfully'));
 						onClose();
 					},
 					onError: handleError,
@@ -151,10 +154,10 @@ function CreateOrEdit(props: CreateOrEditProps): JSX.Element {
 		form,
 		handleError,
 		isCreate,
-
 		onClose,
 		record,
 		updateAuthDomain,
+		translateRuntimeCopy,
 	]);
 
 	const onBackHandler = useCallback((): void => {
@@ -197,7 +200,7 @@ function CreateOrEdit(props: CreateOrEditProps): JSX.Element {
 									color="secondary"
 									testId="auth-domain-back"
 								>
-									Back
+									{translateConsole('Back')}
 								</Button>
 							)}
 							{!isCreate && (
@@ -208,7 +211,7 @@ function CreateOrEdit(props: CreateOrEditProps): JSX.Element {
 									color="secondary"
 									testId="auth-domain-cancel"
 								>
-									Cancel
+									{translateConsole('Cancel')}
 								</Button>
 							)}
 							<Button
@@ -219,7 +222,7 @@ function CreateOrEdit(props: CreateOrEditProps): JSX.Element {
 								loading={isCreating || isUpdating}
 								testId="auth-domain-save"
 							>
-								Save Changes
+								{translateConsole('Save Changes')}
 							</Button>
 						</section>
 					</div>

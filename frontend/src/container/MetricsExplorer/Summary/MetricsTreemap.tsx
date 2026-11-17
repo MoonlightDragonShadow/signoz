@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useMemo } from 'react';
 import { useWindowSize } from 'react-use';
 import { Group } from '@visx/group';
@@ -34,6 +35,7 @@ function MetricsTreemapInternal({
 	viewType,
 	openMetricDetails,
 }: MetricsTreemapInternalProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const { width: windowWidth } = useWindowSize();
 
 	const treemapWidth = useMemo(
@@ -101,7 +103,9 @@ function MetricsTreemapInternal({
 	if (isError) {
 		return (
 			<Empty
-				description="Error fetching metrics. If the problem persists, please contact support."
+				description={translate(
+					'Error fetching metrics. If the problem persists, please contact support.',
+				)}
 				data-testid="metrics-treemap-error-state"
 				style={treemapStylesWithPadding}
 			/>
@@ -111,7 +115,7 @@ function MetricsTreemapInternal({
 	if (!data || !data?.[viewType]?.length) {
 		return (
 			<Empty
-				description="No metrics found"
+				description={translate('No metrics found')}
 				data-testid="metrics-treemap-empty-state"
 				style={treemapStylesWithPadding}
 			/>
@@ -186,6 +190,7 @@ function MetricsTreemap({
 	openMetricDetails,
 	setHeatmapView,
 }: MetricsTreemapProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	return (
 		<div
 			className="metrics-treemap-container"
@@ -193,9 +198,13 @@ function MetricsTreemap({
 		>
 			<div className="metrics-treemap-title">
 				<div className="metrics-treemap-title-left">
-					<Typography.Title level={4}>Proportion View</Typography.Title>
+					<Typography.Title level={4}>
+						{translate('Proportion View')}
+					</Typography.Title>
 					<Tooltip
-						title="The treemap displays the proportion of samples/timeseries in the selected time range. Each tile represents a unique metric, and its size indicates the percentage of samples/timeseries it contributes to the total."
+						title={translate(
+							'The treemap displays the proportion of samples/timeseries in the selected time range. Each tile represents a unique metric, and its size indicates the percentage of samples/timeseries it contributes to the total.',
+						)}
 						placement="right"
 					>
 						<Info size={16} />

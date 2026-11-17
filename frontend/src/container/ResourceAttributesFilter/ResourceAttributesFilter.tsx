@@ -1,3 +1,5 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { ReactNode, useEffect, useMemo, useState } from 'react';
 import { SolidXCircle } from '@signozhq/icons';
 import { Button, Select, SelectProps, Spin } from 'antd';
@@ -26,6 +28,7 @@ const renderValueTag: SelectProps['tagRender'] = ({ label }) => (
 function ResourceAttributesFilter({
 	suffixIcon,
 }: ResourceAttributesFilterProps): JSX.Element | null {
+	const translateInterfaceCopy = useConsoleTranslation();
 	const {
 		queries,
 		staging,
@@ -87,7 +90,7 @@ function ResourceAttributesFilter({
 					showSearch
 					mode="multiple"
 					value={selectedEnvironments}
-					placeholder="Select Environment/s"
+					placeholder={translateInterfaceCopy('Select Environment/s')}
 					data-testid="resource-environment-filter"
 					style={{ minWidth: 200, height: 34 }}
 					onChange={handleEnvironmentChange}
@@ -132,12 +135,15 @@ function ResourceAttributesFilter({
 						notFoundContent={
 							loading ? (
 								<span>
-									<Spin size="small" /> Loading...
+									<Spin size="small" /> <ConsoleText message={'Loading...'} />
 								</span>
 							) : (
 								<span>
-									No resource attributes available to filter. Please refer docs to send
-									attributes.
+									<ConsoleText
+										message={
+											'No resource attributes available to filter. Please refer docs to send attributes.'
+										}
+									/>
 								</span>
 							)
 						}

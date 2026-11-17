@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useEffect, useState } from 'react';
 import { Plus, Trash2 } from '@signozhq/icons';
 import { Button } from '@signozhq/ui/button';
@@ -46,6 +47,8 @@ function ContextLinkDialog({
 	onOpenChange,
 	onSave,
 }: ContextLinkDialogProps): JSX.Element {
+	const translateRuntimeCopy = useConsoleTranslation();
+	const translate = useConsoleTranslation();
 	const [name, setName] = useState('');
 	const [url, setUrlState] = useState('');
 	const [targetBlank, setTargetBlank] = useState(true);
@@ -94,7 +97,11 @@ function ContextLinkDialog({
 		<DialogWrapper
 			open={open}
 			onOpenChange={onOpenChange}
-			title={initialLink ? 'Edit context link' : 'Add a context link'}
+			title={
+				initialLink
+					? translate('Edit context link')
+					: translate('Add a context link')
+			}
 			width="wide"
 			testId="context-link-dialog"
 			footer={
@@ -107,10 +114,10 @@ function ContextLinkDialog({
 						testId="context-link-cancel"
 						onClick={(): void => onOpenChange(false)}
 					>
-						Cancel
+						{translate('Cancel')}
 					</Button>
 					<Button
-						disabledTooltip={urlInvalid ? URL_ERROR : 'Enter a URL first'}
+						disabledTooltip={urlInvalid ? URL_ERROR : translate('Enter a URL first')}
 						size="md"
 						type="button"
 						variant="solid"
@@ -119,17 +126,19 @@ function ContextLinkDialog({
 						testId="context-link-save"
 						onClick={handleSave}
 					>
-						Save
+						{translate('Save')}
 					</Button>
 				</>
 			}
 		>
 			<div className={styles.form}>
 				<div className={styles.formField}>
-					<Typography.Text className={styles.formLabel}>Label</Typography.Text>
+					<Typography.Text className={styles.formLabel}>
+						{translate('Label')}
+					</Typography.Text>
 					<Input
 						data-testid="context-link-label"
-						placeholder="View trace details: {{_traceId}}"
+						placeholder={translate('View trace details: {{_traceId}}')}
 						value={name}
 						onChange={(e): void => setName(e.target.value)}
 					/>
@@ -175,7 +184,7 @@ function ContextLinkDialog({
 				{params.length > 0 && (
 					<div className={styles.formField}>
 						<Typography.Text className={styles.formLabel}>
-							URL parameters
+							{translate('URL parameters')}
 						</Typography.Text>
 						<div className={styles.params}>
 							{params.map((param, index) => (
@@ -187,7 +196,7 @@ function ContextLinkDialog({
 								>
 									<Input
 										data-testid={`context-link-param-key-${index}`}
-										placeholder="Key"
+										placeholder={translate('Key')}
 										value={param.key}
 										onChange={(e): void => patchParam(index, { key: e.target.value })}
 									/>
@@ -202,7 +211,7 @@ function ContextLinkDialog({
 										{({ setIsOpen, setCursorPosition }): JSX.Element => (
 											<Input
 												data-testid={`context-link-param-value-${index}`}
-												placeholder="Value"
+												placeholder={translate('Value')}
 												value={param.value}
 												onChange={(e): void => {
 													setCursorPosition(e.target.selectionStart ?? 0);
@@ -220,7 +229,9 @@ function ContextLinkDialog({
 										color="danger"
 										size="sm"
 										icon
-										aria-label={`Remove parameter ${index + 1}`}
+										aria-label={translateRuntimeCopy('Remove parameter {{value1}}', {
+											value1: index + 1,
+										})}
 										testId={`context-link-param-remove-${index}`}
 										onClick={(): void =>
 											applyParams(params.filter((_, i) => i !== index))
@@ -243,7 +254,7 @@ function ContextLinkDialog({
 					testId="context-link-add-param"
 					onClick={addParam}
 				>
-					Add URL parameter
+					{translate('Add URL parameter')}
 				</Button>
 
 				<div className={styles.newTab}>
@@ -255,7 +266,7 @@ function ContextLinkDialog({
 						onChange={setTargetBlank}
 					/>
 					<Typography.Text className={styles.newTabLabel}>
-						Open in new tab
+						{translate('Open in new tab')}
 					</Typography.Text>
 				</div>
 			</div>

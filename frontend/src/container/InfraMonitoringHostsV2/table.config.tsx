@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import React from 'react';
 import { Color } from '@signozhq/design-tokens';
 import { Container } from '@signozhq/icons';
@@ -125,7 +126,7 @@ export const hostColumnsConfig: HostColumnConfigType[] = [
 				tooltip="Sent system metrics in last 10 mins."
 				docPath="/infrastructure-monitoring/host-monitoring#status"
 			>
-				Status
+				<ConsoleText message={'Status'} />
 			</ColumnHeader>
 		),
 		accessorFn: (row): string => row.status,
@@ -169,7 +170,7 @@ export const hostColumnsConfig: HostColumnConfigType[] = [
 				docPath="/infrastructure-monitoring/host-monitoring#cpu-usage"
 				tooltip={<EntityProgressThresholds type="cpu" />}
 			>
-				CPU Usage
+				<ConsoleText message={'CPU Usage'} />
 			</ColumnHeader>
 		),
 		accessorFn: (row): number => row.cpu,
@@ -200,7 +201,7 @@ export const hostColumnsConfig: HostColumnConfigType[] = [
 				}
 				docPath="/infrastructure-monitoring/host-monitoring#memory-usage"
 			>
-				Memory Usage (WSS)
+				<ConsoleText message={'Memory Usage (WSS)'} />
 			</ColumnHeader>
 		),
 		accessorFn: (row): number => row.memory,
@@ -229,7 +230,7 @@ export const hostColumnsConfig: HostColumnConfigType[] = [
 				docPath="/infrastructure-monitoring/host-monitoring#disk-usage"
 				tooltip={<EntityProgressThresholds type="disk" />}
 			>
-				Disk Usage
+				<ConsoleText message={'Disk Usage'} />
 			</ColumnHeader>
 		),
 		accessorFn: (row): number => row.diskUsage,
@@ -256,7 +257,7 @@ export const hostColumnsConfig: HostColumnConfigType[] = [
 		id: 'wait',
 		header: (): React.ReactNode => (
 			<ColumnHeader docPath="/infrastructure-monitoring/host-monitoring#iowait">
-				IOWait
+				<ConsoleText message={'IOWait'} />
 			</ColumnHeader>
 		),
 		accessorFn: (row): number => row.wait,
@@ -283,7 +284,7 @@ export const hostColumnsConfig: HostColumnConfigType[] = [
 		id: 'load15',
 		header: (): React.ReactNode => (
 			<ColumnHeader docPath="/infrastructure-monitoring/host-monitoring#load-avg">
-				Load Avg (15min)
+				<ConsoleText message={'Load Avg (15min)'} />
 			</ColumnHeader>
 		),
 		accessorFn: (row): number => row.load15,

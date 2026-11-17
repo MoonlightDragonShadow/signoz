@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useMemo, useState } from 'react';
 import { Search } from '@signozhq/icons';
 import { Button } from '@signozhq/ui/button';
@@ -27,16 +28,20 @@ function PanelTypeBrowser({
 	onSelect,
 	getDisabledReason,
 }: PanelTypeBrowserProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const [query, setQuery] = useState('');
 	const [category, setCategory] = useState<CategoryId>('all');
 
-	const matched = useMemo(() => filterPanelTypeGroups(query), [query]);
+	const matched = useMemo(
+		() => filterPanelTypeGroups(query, translate),
+		[query, translate],
+	);
 
 	const categories = useMemo(
 		() => [
 			{
 				id: 'all' as const,
-				label: 'All',
+				label: translate('All'),
 				count: matched.reduce((sum, group) => sum + group.items.length, 0),
 			},
 			...matched.map(({ id, label, items }) => ({
@@ -45,7 +50,7 @@ function PanelTypeBrowser({
 				count: items.length,
 			})),
 		],
-		[matched],
+		[translate, matched],
 	);
 
 	const visibleGroups = matched.filter(
@@ -59,7 +64,7 @@ function PanelTypeBrowser({
 				<Input
 					value={query}
 					onChange={(e): void => setQuery(e.target.value)}
-					placeholder="Search panel types"
+					placeholder={translate('Search panel types')}
 					prefix={<Search size={14} />}
 					testId="panel-type-search"
 					containerClassName={styles.search}
@@ -101,14 +106,16 @@ function PanelTypeBrowser({
 				))}
 				{visibleGroups.length === 0 && (
 					<div className={styles.empty}>
-						<span>No panel types match “{query}”</span>
+						<span>
+							{translate('No panel types match')} “{query}”
+						</span>
 						<Button
 							variant="link"
 							color="primary"
 							size="sm"
 							onClick={(): void => setQuery('')}
 						>
-							Clear search
+							{translate('Clear search')}
 						</Button>
 					</div>
 				)}

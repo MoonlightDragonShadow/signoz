@@ -1,3 +1,5 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Button, Flex, SelectProps } from 'antd';
 import { Switch } from '@signozhq/ui/switch';
 import { Typography } from '@signozhq/ui/typography';
@@ -243,13 +245,14 @@ function TooltipExample({
 	thresholdValue: number;
 	matchType: AlertThresholdMatchType;
 }): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const pointsLabel =
 		matchType === AlertThresholdMatchType.IN_TOTAL
 			? 'error counts'
 			: 'data points';
 	return (
 		<div className="tooltip-example">
-			<strong>Example:</strong>
+			<strong>{translateConsole('Example:')}</strong>
 			<br />
 			<span className="translate-safe">
 				{`Say, For a 5-minute window (configured in Evaluation settings), 1 min aggregation interval (set up in query) → 5 ${pointsLabel}: [${dataPoints.join(', ')}]`}
@@ -264,6 +267,7 @@ function TooltipExample({
 }
 
 function TooltipLink(): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	return (
 		<div className="tooltip-link">
 			<a
@@ -272,7 +276,7 @@ function TooltipLink(): JSX.Element {
 				rel="noopener noreferrer"
 				className="tooltip-link-text"
 			>
-				Learn more
+				{translateConsole('Learn more')}
 			</a>
 		</div>
 	);
@@ -311,9 +315,17 @@ export const getMatchTypeTooltip = (
 			return (
 				<TooltipContent>
 					<div className="tooltip-description">
-						Data is aggregated at each interval within your evaluation window,
-						creating multiple data points. This option triggers if <span>ANY</span> of
-						those aggregated data points crosses the threshold.
+						<ConsoleText
+							message={
+								'Data is aggregated at each interval within your evaluation window, creating multiple data points. This option triggers if'
+							}
+						/>{' '}
+						<span>
+							<ConsoleText message={'ANY'} />
+						</span>{' '}
+						<ConsoleText
+							message={'of those aggregated data points crosses the threshold.'}
+						/>
 					</div>
 					<TooltipExample
 						dataPoints={dataPoints}
@@ -321,8 +333,9 @@ export const getMatchTypeTooltip = (
 						thresholdValue={thresholdValue}
 						matchType={matchType}
 					>
-						Alert triggers ({getMatchingPointsCount()} points {operatorWord}{' '}
-						{thresholdValue})
+						<ConsoleText message={'Alert triggers ('} />
+						{getMatchingPointsCount()} <ConsoleText message={'points'} />{' '}
+						{operatorWord} {thresholdValue})
 					</TooltipExample>
 					<TooltipLink />
 				</TooltipContent>
@@ -332,9 +345,15 @@ export const getMatchTypeTooltip = (
 			return (
 				<TooltipContent>
 					<div className="tooltip-description">
-						Data is aggregated at each interval within your evaluation window,
-						creating multiple data points. This option triggers if <span>ALL</span>{' '}
-						aggregated data points cross the threshold.
+						<ConsoleText
+							message={
+								'Data is aggregated at each interval within your evaluation window, creating multiple data points. This option triggers if'
+							}
+						/>{' '}
+						<span>
+							<ConsoleText message={'ALL'} />
+						</span>{' '}
+						<ConsoleText message={'aggregated data points cross the threshold.'} />
 					</div>
 					<TooltipExample
 						dataPoints={dataPoints}
@@ -342,9 +361,11 @@ export const getMatchTypeTooltip = (
 						thresholdValue={thresholdValue}
 						matchType={matchType}
 					>
-						Alert triggers (all points {operatorWord} {thresholdValue})<br />
-						If any point didn&apos;t {operatorWord} {thresholdValue}, no alert would
-						fire
+						<ConsoleText message={'Alert triggers (all points'} /> {operatorWord}{' '}
+						{thresholdValue})<br />
+						<ConsoleText message={"If any point didn't"} /> {operatorWord}{' '}
+						{thresholdValue}
+						<ConsoleText message={', no alert would fire'} />
 					</TooltipExample>
 					<TooltipLink />
 				</TooltipContent>
@@ -357,9 +378,17 @@ export const getMatchTypeTooltip = (
 			return (
 				<TooltipContent>
 					<div className="tooltip-description">
-						Data is aggregated at each interval within your evaluation window,
-						creating multiple data points. This option triggers if the{' '}
-						<span>AVERAGE</span> of all aggregated data points crosses the threshold.
+						<ConsoleText
+							message={
+								'Data is aggregated at each interval within your evaluation window, creating multiple data points. This option triggers if the'
+							}
+						/>{' '}
+						<span>
+							<ConsoleText message={'AVERAGE'} />
+						</span>{' '}
+						<ConsoleText
+							message={'of all aggregated data points crosses the threshold.'}
+						/>
 					</div>
 					<TooltipExample
 						dataPoints={dataPoints}
@@ -367,7 +396,7 @@ export const getMatchTypeTooltip = (
 						thresholdValue={thresholdValue}
 						matchType={matchType}
 					>
-						Alert triggers (average = {average})
+						<ConsoleText message={'Alert triggers (average ='} /> {average})
 					</TooltipExample>
 					<TooltipLink />
 				</TooltipContent>
@@ -379,9 +408,17 @@ export const getMatchTypeTooltip = (
 			return (
 				<TooltipContent>
 					<div className="tooltip-description">
-						Data is aggregated at each interval within your evaluation window,
-						creating multiple data points. This option triggers if the{' '}
-						<span>SUM</span> of all aggregated data points crosses the threshold.
+						<ConsoleText
+							message={
+								'Data is aggregated at each interval within your evaluation window, creating multiple data points. This option triggers if the'
+							}
+						/>{' '}
+						<span>
+							<ConsoleText message={'SUM'} />
+						</span>{' '}
+						<ConsoleText
+							message={'of all aggregated data points crosses the threshold.'}
+						/>
 					</div>
 					<TooltipExample
 						dataPoints={dataPoints}
@@ -389,7 +426,7 @@ export const getMatchTypeTooltip = (
 						thresholdValue={thresholdValue}
 						matchType={matchType}
 					>
-						Alert triggers (total = {total})
+						<ConsoleText message={'Alert triggers (total ='} /> {total})
 					</TooltipExample>
 					<TooltipLink />
 				</TooltipContent>
@@ -401,9 +438,15 @@ export const getMatchTypeTooltip = (
 			return (
 				<TooltipContent>
 					<div className="tooltip-description">
-						Data is aggregated at each interval within your evaluation window,
-						creating multiple data points. This option triggers based on the{' '}
-						<span>MOST RECENT</span> aggregated data point only.
+						<ConsoleText
+							message={
+								'Data is aggregated at each interval within your evaluation window, creating multiple data points. This option triggers based on the'
+							}
+						/>{' '}
+						<span>
+							<ConsoleText message={'MOST RECENT'} />
+						</span>{' '}
+						<ConsoleText message={'aggregated data point only.'} />
 					</div>
 					<TooltipExample
 						dataPoints={dataPoints}
@@ -411,7 +454,7 @@ export const getMatchTypeTooltip = (
 						thresholdValue={thresholdValue}
 						matchType={matchType}
 					>
-						Alert triggers (last point = {lastPoint})
+						<ConsoleText message={'Alert triggers (last point ='} /> {lastPoint})
 					</TooltipExample>
 					<TooltipLink />
 				</TooltipContent>
@@ -430,13 +473,14 @@ export function NotificationChannelsNotFoundContent({
 	user: IUser;
 	refreshChannels: () => void;
 }): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	return (
 		<Flex justify="space-between">
 			<Flex gap={4} align="center">
-				<Typography.Text>No channels yet.</Typography.Text>
+				<Typography.Text>{translateConsole('No channels yet.')}</Typography.Text>
 				{user?.role === USER_ROLES.ADMIN ? (
 					<Typography.Text>
-						Create one
+						{translateConsole('Create one')}
 						<Button
 							style={{ padding: '0 4px' }}
 							type="link"
@@ -444,15 +488,17 @@ export function NotificationChannelsNotFoundContent({
 								openInNewTab(ROUTES.CHANNELS_NEW);
 							}}
 						>
-							here.
+							<ConsoleText message={'here.'} />
 						</Button>
 					</Typography.Text>
 				) : (
-					<Typography.Text>Please ask your admin to create one.</Typography.Text>
+					<Typography.Text>
+						{translateConsole('Please ask your admin to create one.')}
+					</Typography.Text>
 				)}
 			</Flex>
 			<Button type="text" onClick={refreshChannels}>
-				Refresh
+				{translateConsole('Refresh')}
 			</Button>
 		</Flex>
 	);
@@ -462,11 +508,14 @@ export function RoutingPolicyBanner({
 	notificationSettings,
 	setNotificationSettings,
 }: RoutingPolicyBannerProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const { safeNavigate } = useSafeNavigate();
 	return (
 		<div className="routing-policies-info-banner">
 			<Typography.Text>
-				Use <strong>Routing Policies</strong> for dynamic routing
+				<ConsoleText message={'Use'} />{' '}
+				<strong>{translateConsole('Routing Policies')}</strong>{' '}
+				<ConsoleText message={'for dynamic routing'} />
 			</Typography.Text>
 			<div className="routing-policies-info-banner-right">
 				<Switch
@@ -487,7 +536,7 @@ export function RoutingPolicyBanner({
 					data-testid="view-routing-policies-button"
 					onClick={(): void => safeNavigate(ROUTING_POLICIES_ROUTE)}
 				>
-					View Routing Policies
+					{translateConsole('View Routing Policies')}
 					<ArrowRight size={14} />
 				</Button>
 			</div>

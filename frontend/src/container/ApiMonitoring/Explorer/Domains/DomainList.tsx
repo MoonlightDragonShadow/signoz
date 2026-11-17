@@ -1,3 +1,5 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useQueryClient } from 'react-query';
 // eslint-disable-next-line no-restricted-imports
@@ -28,12 +30,13 @@ import DOCLINKS from 'utils/docLinks';
 
 import { ApiMonitoringHardcodedAttributeKeys } from '../../constants';
 import { DEFAULT_PARAMS, useApiMonitoringParams } from '../../queryParams';
-import { columnsConfig, formatDataForTable } from '../../utils';
+import { getDomainColumns, formatDataForTable } from '../../utils';
 import DomainDetails from './DomainDetails/DomainDetails';
 
 import '../Explorer.styles.scss';
 
 function DomainList(): JSX.Element {
+	const translate = useConsoleTranslation();
 	const [params, setParams] = useApiMonitoringParams();
 	const { showIP, selectedDomain } = params;
 	const [selectedDomainIndex, setSelectedDomainIndex] = useState<number>(-1);
@@ -155,12 +158,16 @@ function DomainList(): JSX.Element {
 					dataSource={DataSource.TRACES}
 					queryData={query}
 					onChange={handleSearchChange}
-					placeholder="Enter your filter query (e.g., deployment.environment = 'otel-demo' AND service.name = 'frontend')"
+					placeholder={translate(
+						"Enter your filter query (e.g., deployment.environment = 'otel-demo' AND service.name = 'frontend')",
+					)}
 					hardcodedAttributeKeys={ApiMonitoringHardcodedAttributeKeys}
 				/>
 			</div>
 			{isCancelled && formattedDataForTable.length === 0 && (
-				<QueryCancelledPlaceholder subText='Click "Run Query" to load API monitoring data.' />
+				<QueryCancelledPlaceholder
+					subText={translate('Click "Run Query" to load API monitoring data.')}
+				/>
 			)}
 			{!isCancelled &&
 				!isFetching &&
@@ -179,13 +186,19 @@ function DomainList(): JSX.Element {
 
 							<div className="no-filtered-domains-message">
 								<div className="no-domain-title">
-									No External API calls detected with applied filters.
+									{translate('No External API calls detected with applied filters.')}
 								</div>
 								<div className="no-domain-subtitle">
-									Ensure all HTTP client spans are being sent with kind as{' '}
-									<span className="attribute">Client</span> and url set in{' '}
+									<ConsoleText
+										message={'Ensure all HTTP client spans are being sent with kind as'}
+									/>{' '}
+									<span className="attribute">
+										<ConsoleText message={'Client'} />
+									</span>{' '}
+									<ConsoleText message={'and url set in'} />{' '}
 									<span className="attribute">url.full</span> or{' '}
-									<span className="attribute">http.url</span> attribute.
+									<span className="attribute">http.url</span>{' '}
+									<ConsoleText message={'attribute.'} />
 								</div>
 								<a
 									href={DOCLINKS.EXTERNAL_API_MONITORING}
@@ -193,7 +206,7 @@ function DomainList(): JSX.Element {
 									rel="noreferrer"
 									className="external-api-doc-link"
 								>
-									Learn how External API monitoring works in SigNoz{' '}
+									{translate('Learn how External API monitoring works in SigNoz')}{' '}
 									<MoveUpRight size={14} />
 								</a>
 							</div>
@@ -205,7 +218,7 @@ function DomainList(): JSX.Element {
 					className="api-monitoring-domain-list-table"
 					data-testid="api-monitoring-domain-table"
 					dataSource={isFetching || isLoading ? [] : formattedDataForTable}
-					columns={columnsConfig}
+					columns={getDomainColumns(translate)}
 					loading={{
 						spinning: isFetching || isLoading,
 						indicator: (

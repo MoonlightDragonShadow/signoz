@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Button } from '@signozhq/ui/button';
 import { SelectSimple } from '@signozhq/ui/select';
 import { useSortable } from '@dnd-kit/sortable';
@@ -40,6 +41,7 @@ function SourceAttributeRow({
 	onChange,
 	onRemove,
 }: SourceAttributeRowProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const {
 		attributes,
 		listeners,
@@ -68,7 +70,7 @@ function SourceAttributeRow({
 			<span className={styles.sourceIndex}>{index + 1}</span>
 			<KeySearchInput
 				className={styles.sourceInput}
-				placeholder="Source attribute key"
+				placeholder={translateConsole('Source attribute key')}
 				value={value.key}
 				fieldContext={value.context}
 				onChange={(key): void => onChange(index, { key })}
@@ -99,9 +101,11 @@ function SourceAttributeRow({
 				color="secondary"
 				size="sm"
 				icon
-				aria-label="Remove source"
+				aria-label={translateConsole('Remove source')}
 				disabled={!canRemove}
-				disabledTooltip="A mapping needs at least one source attribute"
+				disabledTooltip={translateConsole(
+					'A mapping needs at least one source attribute',
+				)}
 				onClick={(): void => onRemove(index)}
 				testId={`mapper-form-source-remove-${index}`}
 			>

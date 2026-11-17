@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { Plus } from '@signozhq/icons';
 import { useQueryBuilder } from 'hooks/queryBuilder/useQueryBuilder';
 import { IPromQLQuery } from 'types/api/queryBuilder/queryBuilderData';
@@ -28,7 +29,7 @@ function PromQLQueryContainer(): JSX.Element | null {
 				icon={<Plus size="md" />}
 				style={{ margin: '0.4rem 1rem' }}
 			>
-				Query
+				<ConsoleText message={'Query'} />
 			</QueryButton>
 		</>
 	);

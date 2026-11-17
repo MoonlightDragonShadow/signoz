@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Configure, Plus } from '@signozhq/icons';
 import { Button } from '@signozhq/ui/button';
 import { Typography } from '@signozhq/ui/typography';
@@ -19,6 +20,7 @@ interface DashboardEmptyStateProps {
 function DashboardEmptyState({
 	canAddPanel,
 }: DashboardEmptyStateProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const { isEditable, editChecks, editDisabledTooltip } =
 		useDashboardEditContext();
 	const { isPickerOpen, openPicker, closePicker, createPanel } =
@@ -31,10 +33,12 @@ function DashboardEmptyState({
 				<div className={styles.heading}>
 					<img src={dashboardEmojiUrl} alt="" className={styles.emoji} />
 					<Typography.Text className={styles.welcome}>
-						Welcome to your new dashboard
+						{translate('Welcome to your new dashboard')}
 					</Typography.Text>
 					<Typography.Text className={styles.welcomeInfo}>
-						Follow the steps to populate it with data and share with your teammates
+						{translate(
+							'Follow the steps to populate it with data and share with your teammates',
+						)}
 					</Typography.Text>
 				</div>
 
@@ -44,10 +48,10 @@ function DashboardEmptyState({
 							<Configure size={14} className={styles.stepIcon} />
 							<div className={styles.stepCopy}>
 								<Typography.Text className={styles.stepTitle}>
-									Configure your new dashboard
+									{translate('Configure your new dashboard')}
 								</Typography.Text>
 								<Typography.Text className={styles.stepInfo}>
-									Give it a name, add description, tags and variables
+									{translate('Give it a name, add description, tags and variables')}
 								</Typography.Text>
 							</div>
 						</div>
@@ -63,7 +67,7 @@ function DashboardEmptyState({
 								onClick={(): void => requestSettings({ tab: 'Overview' })}
 								testId="empty-configure"
 							>
-								Configure
+								{translate('Configure')}
 							</Button>
 						</AuthZTooltip>
 					</div>
@@ -73,10 +77,10 @@ function DashboardEmptyState({
 							<img src={landscapeUrl} alt="" className={styles.stepIcon} />
 							<div className={styles.stepCopy}>
 								<Typography.Text className={styles.stepTitle}>
-									Add panels
+									{translate('Add panels')}
 								</Typography.Text>
 								<Typography.Text className={styles.stepInfo}>
-									Add panels to visualize your data
+									{translate('Add panels to visualize your data')}
 								</Typography.Text>
 							</div>
 						</div>
@@ -91,7 +95,7 @@ function DashboardEmptyState({
 								onClick={(): void => openPicker()}
 								testId="add-panel"
 							>
-								New Panel
+								{translate('New Panel')}
 							</Button>
 						</AuthZTooltip>
 					</div>

@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Typography } from '@signozhq/ui/typography';
 import { Select } from 'antd';
 import { popupContainer } from 'utils/selectPopupContainer';
@@ -20,6 +21,7 @@ function LabelSelector({
 	onChange,
 	loading,
 }: LabelSelectorProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const helpText =
 		mode === 'include'
 			? 'Only the selected attributes will remain queryable.'
@@ -31,7 +33,7 @@ function LabelSelector({
 			data-testid="volume-control-label-selector"
 		>
 			<Typography.Text size="small" weight="semibold">
-				Attributes
+				{translate('Attributes')}
 			</Typography.Text>
 			<Typography.Text size="sm" color="muted">
 				{helpText}
@@ -39,7 +41,7 @@ function LabelSelector({
 			<Select
 				mode="multiple"
 				className={styles.attributeSelect}
-				placeholder="Select attributes"
+				placeholder={translate('Select attributes')}
 				value={value}
 				onChange={onChange}
 				loading={loading}

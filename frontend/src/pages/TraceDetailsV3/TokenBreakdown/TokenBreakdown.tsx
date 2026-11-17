@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import {
 	AiTokenCounts,
 	formatTokens,
@@ -16,6 +17,7 @@ function TokenBreakdown({
 	cacheWrite,
 	reasoning,
 }: TokenBreakdownProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const totalInput = getTotalInputTokens({ input, cacheRead, cacheWrite });
 
 	return (
@@ -61,7 +63,7 @@ function TokenBreakdown({
 
 			<TraceTooltipSection>
 				<TraceTooltipRow
-					label="Total Token Usage"
+					label={translateConsole('Total Token Usage')}
 					value={formatTokens(totalInput + (output ?? 0))}
 					isHeading
 				/>

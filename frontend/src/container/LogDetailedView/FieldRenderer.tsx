@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { Divider } from '@signozhq/ui/divider';
 import { Tooltip } from '@signozhq/ui/tooltip';
 import { Typography } from '@signozhq/ui/typography';
@@ -24,14 +25,14 @@ function FieldRenderer({ field }: FieldRendererProps): JSX.Element {
 					<div className="tags">
 						<TagContainer>
 							<TagLabel>
-								type
+								<ConsoleText message={'type'} />
 								<Divider type="vertical" />{' '}
 							</TagLabel>
 							<TagValue>{logType}</TagValue>
 						</TagContainer>
 						<TagContainer>
 							<TagLabel>
-								data type <Divider type="vertical" />{' '}
+								<ConsoleText message={'data type'} /> <Divider type="vertical" />{' '}
 							</TagLabel>
 							<TagValue>{dataType}</TagValue>
 						</TagContainer>

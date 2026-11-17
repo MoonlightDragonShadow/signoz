@@ -1,3 +1,5 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useQueryClient } from 'react-query';
@@ -35,6 +37,8 @@ export interface EditKeyModalProps {
 }
 
 function EditKeyModal({ keyItem }: EditKeyModalProps): JSX.Element {
+	const translateRuntimeCopy = useConsoleTranslation();
+	const translateToast = useConsoleTranslation();
 	const queryClient = useQueryClient();
 	const [selectedAccountId] = useQueryState(SA_QUERY_PARAMS.ACCOUNT);
 	const [editKeyId, setEditKeyId] = useQueryState(
@@ -85,7 +89,7 @@ function EditKeyModal({ keyItem }: EditKeyModalProps): JSX.Element {
 	const { mutate: updateKey, isLoading: isSaving } = useUpdateServiceAccountKey({
 		mutation: {
 			onSuccess: async () => {
-				toast.success('Key updated successfully');
+				toast.success(translateToast('Key updated successfully'));
 				await setEditKeyId(null);
 				if (selectedAccountId) {
 					await invalidateListServiceAccountKeys(queryClient, {
@@ -107,7 +111,7 @@ function EditKeyModal({ keyItem }: EditKeyModalProps): JSX.Element {
 		useRevokeServiceAccountKey({
 			mutation: {
 				onSuccess: async () => {
-					toast.success('Key revoked successfully');
+					toast.success(translateToast('Key revoked successfully'));
 					setIsRevokeConfirmOpen(false);
 					await setEditKeyId(null);
 					if (selectedAccountId) {
@@ -167,7 +171,9 @@ function EditKeyModal({ keyItem }: EditKeyModalProps): JSX.Element {
 			}}
 			title={
 				isRevokeConfirmOpen
-					? `Revoke ${keyItem?.name ?? 'key'}?`
+					? translateRuntimeCopy('Revoke {{value1}}?', {
+							value1: keyItem?.name ?? 'key',
+						})
 					: 'Edit Key Details'
 			}
 			width={isRevokeConfirmOpen ? 'narrow' : 'base'}
@@ -191,8 +197,11 @@ function EditKeyModal({ keyItem }: EditKeyModalProps): JSX.Element {
 		>
 			{isRevokeConfirmOpen ? (
 				<>
-					Revoking this key will permanently invalidate it. Any systems using this
-					key will lose access immediately.
+					<ConsoleText
+						message={
+							'Revoking this key will permanently invalidate it. Any systems using this key will lose access immediately.'
+						}
+					/>
 				</>
 			) : (
 				<EditKeyForm

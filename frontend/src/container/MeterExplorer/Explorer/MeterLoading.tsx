@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { Typography } from '@signozhq/ui/typography';
 import { DataSource } from 'types/common/queryBuilder';
 
@@ -10,7 +11,9 @@ export default function MeterLoading(): JSX.Element {
 		<div className={styles.loadingMeter}>
 			<div className={styles.loadingMeterContent}>
 				<img className={styles.loadingGif} src={loadingPlaneUrl} alt="wait-icon" />
-				<Typography>Retrieving your {DataSource.METRICS}</Typography>
+				<Typography>
+					<ConsoleText message={'Retrieving your'} /> {DataSource.METRICS}
+				</Typography>
 			</div>
 		</div>
 	);

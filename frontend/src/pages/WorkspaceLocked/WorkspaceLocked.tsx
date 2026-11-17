@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 /* eslint-disable react/no-unescaped-entities */
 import React, { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -298,7 +299,7 @@ export default function WorkspaceBlocked(): JSX.Element {
 									role="button"
 									onClick={(e): void => handleViewBilling(e)}
 								>
-									View Billing
+									<ConsoleText message={'View Billing'} />
 								</Button>
 
 								<RefreshPaymentStatus withPortal={false} />
@@ -313,7 +314,7 @@ export default function WorkspaceBlocked(): JSX.Element {
 								className="periscope-btn"
 								onClick={handleContactUsClick}
 							>
-								Contact Us
+								<ConsoleText message={'Contact Us'} />
 							</Button>
 						</span>
 					</div>
@@ -332,7 +333,9 @@ export default function WorkspaceBlocked(): JSX.Element {
 								<Col>
 									<Space direction="vertical" align="center">
 										<Typography.Title level={2}>
-											<div className="workspace-locked__title">Upgrade to Continue</div>
+											<div className="workspace-locked__title">
+												<ConsoleText message={'Upgrade to Continue'} />
+											</div>
 										</Typography.Title>
 										<Typography.Text className="workspace-locked__details">
 											{t('upgradeNow')}
@@ -365,7 +368,7 @@ export default function WorkspaceBlocked(): JSX.Element {
 												loading={isLoading}
 												onClick={handleUpdateCreditCard}
 											>
-												Continue my Journey
+												<ConsoleText message={'Continue my Journey'} />
 											</Button>
 										</AuthZTooltip>
 									</Col>

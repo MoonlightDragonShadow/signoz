@@ -1,3 +1,5 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Plus } from '@signozhq/icons';
@@ -41,6 +43,7 @@ function BasicInfo({
 	alertDef,
 	setAlertDef,
 }: BasicInfoProps): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
 	const { t } = useTranslation('alerts');
 
 	const {
@@ -185,7 +188,7 @@ function BasicInfo({
 
 				<FormItemMedium
 					name="alert_all_configured_channels"
-					label="Alert all the configured channels"
+					label={translateInterfaceCopy('Alert all the configured channels')}
 				>
 					<Switch
 						color="primary"
@@ -212,7 +215,7 @@ function BasicInfo({
 						placement="right"
 					>
 						<FormItemMedium
-							label="Notification Channels"
+							label={translateInterfaceCopy('Notification Channels')}
 							name="notification_channels"
 							required
 							rules={[
@@ -255,7 +258,7 @@ function BasicInfo({
 						>
 							<Flex align="center" justify="center">
 								<Plus size="md" />
-								Create a notification channel
+								<ConsoleText message={'Create a notification channel'} />
 							</Flex>
 						</Button>
 					</Tooltip>

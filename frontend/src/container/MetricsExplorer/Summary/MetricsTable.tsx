@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback } from 'react';
 import { Info, Loader } from '@signozhq/icons';
 import { Spin, Table, TablePaginationConfig, TableProps, Tooltip } from 'antd';
@@ -25,6 +26,7 @@ function MetricsTable({
 	queryFilterExpression,
 	onFilterChange,
 }: MetricsTableProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const handleTableChange: TableProps<MetricsListItemRowData>['onChange'] =
 		useCallback(
 			(
@@ -60,10 +62,12 @@ function MetricsTable({
 		<div className="metrics-table-container">
 			<div className="metrics-table-title" data-testid="metrics-table-title">
 				<Typography.Title level={4} className="metrics-table-title">
-					List View
+					{translate('List View')}
 				</Typography.Title>
 				<Tooltip
-					title="The table displays all metrics in the selected time range. Each row represents a unique metric, and its metric name, and metadata like description, type, unit, and samples/timeseries cardinality observed in the selected time range."
+					title={translate(
+						'The table displays all metrics in the selected time range. Each row represents a unique metric, and its metric name, and metadata like description, type, unit, and samples/timeseries cardinality observed in the selected time range.',
+					)}
 					placement="right"
 				>
 					<Info size={16} />
@@ -84,7 +88,11 @@ function MetricsTable({
 						),
 					}}
 					dataSource={data}
-					columns={getMetricsTableColumns(queryFilterExpression, onFilterChange)}
+					columns={getMetricsTableColumns(
+						queryFilterExpression,
+						onFilterChange,
+						translate,
+					)}
 					locale={{
 						emptyText: isLoading ? null : (
 							<div
@@ -97,7 +105,9 @@ function MetricsTable({
 									className="empty-state-svg"
 								/>
 								<Typography.Text className="no-metrics-message">
-									This query had no results. Edit your query and try again!
+									{translate(
+										'This query had no results. Edit your query and try again!',
+									)}
 								</Typography.Text>
 							</div>
 						),

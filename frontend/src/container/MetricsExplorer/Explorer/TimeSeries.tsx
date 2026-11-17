@@ -1,3 +1,5 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useEffect, useMemo } from 'react';
 import { useQueries, useQueryClient } from 'react-query';
 // eslint-disable-next-line no-restricted-imports
@@ -54,6 +56,7 @@ function TimeSeries({
 	isCancelled = false,
 	exportDefaultQuery,
 }: TimeSeriesProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const { stagedQuery, currentQuery } = useQueryBuilder();
 
 	const {
@@ -201,13 +204,13 @@ function TimeSeries({
 				},
 				{
 					onSuccess: () => {
-						toast.success('Unit saved successfully');
+						toast.success(translate('Unit saved successfully'));
 						invalidateGetMetricMetadata(queryClient, {
 							metricName: metricNames[0],
 						});
 					},
 					onError: () => {
-						toast.error('Failed to save unit');
+						toast.error(translate('Failed to save unit'));
 					},
 				},
 			);
@@ -228,7 +231,7 @@ function TimeSeries({
 						{showSaveUnitButton && (
 							<div className="save-unit-container">
 								<Typography.Text>
-									Set the selected unit as the metric unit?
+									{translate('Set the selected unit as the metric unit?')}
 								</Typography.Text>
 								<Button
 									type="primary"
@@ -236,7 +239,7 @@ function TimeSeries({
 									disabled={isUpdatingMetricMetadata}
 									onClick={handleSaveUnit}
 								>
-									<Typography.Text>Yes</Typography.Text>
+									<Typography.Text>{translate('Yes')}</Typography.Text>
 								</Button>
 							</div>
 						)}
@@ -250,7 +253,9 @@ function TimeSeries({
 			>
 				{metricNames.length === 0 && <EmptyMetricsSearch />}
 				{isCancelled && metricNames.length > 0 && (
-					<QueryCancelledPlaceholder subText='Click "Run Query" to load metrics.' />
+					<QueryCancelledPlaceholder
+						subText={translate('Click "Run Query" to load metrics.')}
+					/>
 				)}
 				{!isCancelled &&
 					metricNames.length > 0 &&
@@ -289,13 +294,17 @@ function TimeSeries({
 										className="no-unit-warning"
 										title={
 											<Typography.Text>
-												No unit is set for this metric. You can assign one from the{' '}
+												<ConsoleText
+													message={
+														'No unit is set for this metric. You can assign one from the'
+													}
+												/>{' '}
 												<Typography.Link
 													onClick={(): void => handleOpenMetricDetails(metricName)}
 												>
-													metric details
+													{translate('metric details')}
 												</Typography.Link>{' '}
-												page.
+												<ConsoleText message={'page.'} />
 											</Typography.Text>
 										}
 									>
@@ -303,7 +312,7 @@ function TimeSeries({
 											size={16}
 											color={Color.BG_AMBER_400}
 											role="img"
-											aria-label="no unit warning"
+											aria-label={translate('no unit warning')}
 										/>
 									</Tooltip>
 								)}

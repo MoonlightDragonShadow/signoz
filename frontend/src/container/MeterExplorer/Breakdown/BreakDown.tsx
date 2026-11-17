@@ -1,3 +1,5 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback } from 'react';
 // eslint-disable-next-line no-restricted-imports
 import { useDispatch, useSelector } from 'react-redux';
@@ -118,6 +120,7 @@ function Section(section: MetricSection): JSX.Element {
 }
 
 function BreakDown(): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const { isCloudUser } = useGetTenantLicense();
 	const { maxTime, minTime } = useSelector<AppState, GlobalReducer>(
 		(state) => state.globalTime,
@@ -164,15 +167,18 @@ function BreakDown(): JSX.Element {
 						closable
 						message={
 							<>
-								Meter metrics data is aggregated over 1 hour period. Please select time
-								range accordingly.&nbsp;
+								<ConsoleText
+									message={
+										'Meter metrics data is aggregated over 1 hour period. Please select time range accordingly. '
+									}
+								/>
 								<a
 									href="https://signoz.io/docs/cost-meter/overview/#get-started"
 									rel="noopener noreferrer"
 									target="_blank"
 									style={{ textDecoration: 'underline' }}
 								>
-									Learn more
+									{translateConsole('Learn more')}
 								</a>
 								.
 							</>

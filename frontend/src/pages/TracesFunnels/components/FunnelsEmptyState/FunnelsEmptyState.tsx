@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Button } from 'antd';
 import LearnMore from 'components/LearnMore/LearnMore';
 import { Plus } from '@signozhq/icons';
@@ -14,6 +15,7 @@ interface FunnelsEmptyStateProps {
 function FunnelsEmptyState({
 	onCreateFunnel,
 }: FunnelsEmptyStateProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const { hasEditPermission } = useAppContext();
 
 	return (
@@ -26,9 +28,11 @@ function FunnelsEmptyState({
 						className="funnels-empty__icon"
 					/>
 					<div>
-						<span className="funnels-empty__title">No funnels yet. </span>
+						<span className="funnels-empty__title">
+							{translateConsole('No funnels yet.')}{' '}
+						</span>
 						<span className="funnels-empty__subtitle">
-							Create a funnel to start analyzing your data
+							{translateConsole('Create a funnel to start analyzing your data')}
 						</span>
 					</div>
 				</section>
@@ -42,7 +46,7 @@ function FunnelsEmptyState({
 							className="funnels-empty__new-btn"
 							data-testid="traces-funnels-empty-new-btn"
 						>
-							New funnel
+							{translateConsole('New funnel')}
 						</Button>
 					)}
 					<LearnMore url="https://signoz.io/blog/tracing-funnels-observability-distributed-systems/" />

@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { SolidInfoCircle } from '@signozhq/icons';
 
 import {
@@ -10,7 +11,9 @@ import { DisplayThresholdProps } from 'container/WidgetCard/Header/types';
 function DisplayThreshold({ threshold }: DisplayThresholdProps): JSX.Element {
 	return (
 		<DisplayThresholdContainer>
-			<TypographHeading>Threshold </TypographHeading>
+			<TypographHeading>
+				<ConsoleText message={'Threshold'} />{' '}
+			</TypographHeading>
 			<Typography>{threshold || <SolidInfoCircle size="md" />}</Typography>
 		</DisplayThresholdContainer>
 	);

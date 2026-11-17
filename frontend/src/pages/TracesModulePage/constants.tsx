@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { TabRoutes } from 'components/RouteTab/types';
 import { matchRoute } from 'lib/router/matchRoute';
 import ROUTES from 'constants/routes';
@@ -10,7 +11,7 @@ export const tracesExplorer: TabRoutes = {
 	Component: (): JSX.Element => <TracesExplorer />,
 	name: (
 		<div className="tab-item">
-			<Compass size={16} /> Explorer
+			<Compass size={16} /> <ConsoleText message="Explorer" />
 		</div>
 	),
 	route: ROUTES.TRACES_EXPLORER,
@@ -25,7 +26,7 @@ export const tracesFunnel = (pathname: string): TabRoutes => ({
 	},
 	name: (
 		<div className="tab-item">
-			<Cone className="funnel-icon" size={16} /> Funnels
+			<Cone className="funnel-icon" size={16} /> <ConsoleText message="Funnels" />
 		</div>
 	),
 	route: ROUTES.TRACES_FUNNELS,

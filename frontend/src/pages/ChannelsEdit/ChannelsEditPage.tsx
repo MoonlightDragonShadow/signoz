@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Spinner } from '@signozhq/ui/spinner';
 import { toast } from '@signozhq/ui/sonner';
 import { useGetNotificationChannel } from 'api/generated/services/channels';
@@ -14,6 +15,7 @@ interface ChannelsEditPageProps {
 }
 
 function ChannelsEditPage({ channelId }: ChannelsEditPageProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const { data, isLoading } = useGetNotificationChannel({ id: channelId });
 
 	return (
@@ -26,7 +28,7 @@ function ChannelsEditPage({ channelId }: ChannelsEditPageProps): JSX.Element {
 					isLoading ? (
 						<Spinner
 							size={16}
-							aria-label="Loading channel"
+							aria-label={translateConsole('Loading channel')}
 							testId="channel-name-loading"
 						/>
 					) : (
@@ -39,7 +41,7 @@ function ChannelsEditPage({ channelId }: ChannelsEditPageProps): JSX.Element {
 								ariaLabel="Copy channel ID"
 								testId="copy-channel-id"
 								onCopy={(): void => {
-									toast.success('Channel ID copied to clipboard');
+									toast.success(translateConsole('Channel ID copied to clipboard'));
 								}}
 							/>
 						</>

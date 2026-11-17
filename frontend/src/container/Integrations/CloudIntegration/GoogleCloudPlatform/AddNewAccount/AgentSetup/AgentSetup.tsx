@@ -1,3 +1,5 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { LoaderCircle } from '@signozhq/icons';
 import { Button } from '@signozhq/ui/button';
 import { Callout } from '@signozhq/ui/callout';
@@ -37,6 +39,7 @@ function AgentSetup({
 	onCancel,
 	onClose,
 }: AgentSetupProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const {
 		isLoading,
 		generateCommand,
@@ -69,9 +72,15 @@ function AgentSetup({
 					<AgentSetupCommand
 						description={
 							<>
-								Run this command in Google Cloud Shell, or in a terminal where gcloud is
-								signed in to <span className={styles.mono}>{commandProjectId}</span>. It
-								contains your SigNoz keys, so do not share it.
+								<ConsoleText
+									message={
+										'Run this command in Google Cloud Shell, or in a terminal where gcloud is signed in to'
+									}
+								/>{' '}
+								<span className={styles.mono}>{commandProjectId}</span>
+								<ConsoleText
+									message={'. It contains your SigNoz keys, so do not share it.'}
+								/>
 							</>
 						}
 						command={connectionCommand}
@@ -84,7 +93,9 @@ function AgentSetup({
 							title={
 								<div className={styles.waitingMessage}>
 									<LoaderCircle size={14} className="animate-spin" />
-									Waiting for GCP account connection, retrying in 10 secs...
+									{translateConsole(
+										'Waiting for GCP account connection, retrying in 10 secs...',
+									)}
 								</div>
 							}
 							testId="gcp-agent-waiting"
@@ -94,7 +105,9 @@ function AgentSetup({
 						<Callout
 							type="error"
 							showIcon
-							title="We couldn't establish a connection to your GCP account. Please try again"
+							title={translateConsole(
+								"We couldn't establish a connection to your GCP account. Please try again",
+							)}
 							testId="gcp-agent-connection-error"
 						/>
 					)}
@@ -132,7 +145,7 @@ function AgentSetup({
 						loading={isLoading || isConnectionParamsLoading}
 						testId="gcp-generate-command-btn"
 					>
-						Generate Command
+						{translateConsole('Generate Command')}
 					</Button>
 				)}
 				{modalState === ModalStateEnum.ERROR && (
@@ -143,7 +156,7 @@ function AgentSetup({
 						onClick={checkConnectionAgain}
 						testId="gcp-check-connection-btn"
 					>
-						Check Again
+						{translateConsole('Check Again')}
 					</Button>
 				)}
 			</SetupDrawerFooter>

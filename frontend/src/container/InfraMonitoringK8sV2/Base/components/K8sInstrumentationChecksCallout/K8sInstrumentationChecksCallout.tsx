@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { MouseEvent, useCallback, useMemo, useState } from 'react';
 import { useQueryClient } from 'react-query';
 import { Button } from '@signozhq/ui/button';
@@ -29,6 +30,7 @@ export interface InstrumentationChecksCalloutProps {
 export function K8sInstrumentationChecksCallout({
 	entity,
 }: InstrumentationChecksCalloutProps): JSX.Element | null {
+	const translate = useConsoleTranslation();
 	const checkType = ENTITY_TO_CHECK_TYPE[entity];
 	const queryClient = useQueryClient();
 
@@ -86,7 +88,7 @@ export function K8sInstrumentationChecksCallout({
 				size="medium"
 				title={
 					<div className={styles.header}>
-						Instrumentation checks
+						{translate('Instrumentation checks')}
 						<Button
 							variant="solid"
 							color="warning"
@@ -96,7 +98,7 @@ export function K8sInstrumentationChecksCallout({
 							prefix={<RefreshCw size={12} />}
 							testId="instrumentation-checks-recheck-btn"
 						>
-							Recheck
+							{translate('Recheck')}
 						</Button>
 					</div>
 				}

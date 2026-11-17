@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { Search } from '@signozhq/icons';
 import { Button, Card, Input, Space } from 'antd';
 import type { FilterDropdownProps } from 'antd/es/table/interface';
@@ -33,7 +34,7 @@ export const filterDropdown = ({
 					icon={<Search size="md" />}
 					size="small"
 				>
-					Search
+					<ConsoleText message={'Search'} />
 				</Button>
 			</Space>
 		</Card>

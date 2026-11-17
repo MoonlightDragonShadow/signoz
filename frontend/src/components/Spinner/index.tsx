@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { CSSProperties } from 'react';
 import { Loader } from '@signozhq/icons';
 import { Spin, SpinProps } from 'antd';
@@ -5,17 +6,18 @@ import { Spin, SpinProps } from 'antd';
 import { SpinerStyle } from './styles';
 
 function Spinner({ size, tip, height, style }: SpinnerProps): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
 	return (
 		<SpinerStyle height={height} style={style}>
 			<Spin
 				spinning
 				size={size}
-				tip={tip}
+				tip={typeof tip === 'string' ? translateInterfaceCopy(tip) : tip}
 				indicator={
 					<Loader
 						className="animate-spin"
 						role="img"
-						aria-label="loading"
+						aria-label={translateInterfaceCopy('loading')}
 						size="md"
 					/>
 				}

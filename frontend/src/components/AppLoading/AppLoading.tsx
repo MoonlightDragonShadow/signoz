@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { Typography } from '@signozhq/ui/typography';
 import get from 'api/browser/localstorage/get';
 import { LOCALSTORAGE } from 'constants/localStorage';
@@ -35,7 +36,11 @@ function AppLoading(): JSX.Element {
 
 				<div className="brand-tagline">
 					<Typography.Text>
-						OpenTelemetry-Native Logs, Metrics and Traces in a single pane
+						<ConsoleText
+							message={
+								'OpenTelemetry-Native Logs, Metrics and Traces in a single pane'
+							}
+						/>
 					</Typography.Text>
 				</div>
 

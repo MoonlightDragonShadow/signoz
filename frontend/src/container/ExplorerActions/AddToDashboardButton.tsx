@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useState } from 'react';
 import { Grid2X2 } from '@signozhq/icons';
 import { Button } from '@signozhq/ui/button';
@@ -30,6 +31,7 @@ function AddToDashboardButton({
 	panelType?: PANEL_TYPES;
 	isOneChartPerQuery?: boolean;
 }): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
 	const [queryToExport, setQueryToExport] = useState<Query | null>(null);
 	const { panelType: contextPanelType } = useQueryBuilder();
 	const { safeNavigate } = useSafeNavigate();
@@ -82,16 +84,16 @@ function AddToDashboardButton({
 
 	return (
 		<>
-			<Tooltip title="Add to dashboard">
+			<Tooltip title={translateInterfaceCopy('Add to dashboard')}>
 				<Button
 					variant="ghost"
 					color="secondary"
 					size="sm"
 					icon
 					disabled={!query}
-					disabledTooltip="Run a query first"
+					disabledTooltip={translateInterfaceCopy('Run a query first')}
 					onClick={open}
-					aria-label="Add to dashboard"
+					aria-label={translateInterfaceCopy('Add to dashboard')}
 					testId="explorer-add-to-dashboard"
 				>
 					<Grid2X2 size={16} />

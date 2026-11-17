@@ -1,3 +1,5 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useCopyToClipboard } from 'react-use';
 import { LockKeyhole, RefreshCw, Trash2, X } from '@signozhq/icons';
@@ -99,6 +101,7 @@ function EditMemberDrawer({
 	onClose,
 	onComplete,
 }: EditMemberDrawerProps): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
 	const { formatTimezoneAdjustedTimestamp } = useTimezone();
 	const { user: currentUser } = useAppContext();
 
@@ -352,7 +355,9 @@ function EditMemberDrawer({
 			if (errors.length > 0) {
 				setSaveErrors(errors);
 			} else {
-				toast.success('Member details updated successfully');
+				toast.success(
+					translateInterfaceCopy('Member details updated successfully'),
+				);
 				onComplete();
 			}
 
@@ -361,6 +366,7 @@ function EditMemberDrawer({
 			setIsSaving(false);
 		}
 	}, [
+		translateInterfaceCopy,
 		member,
 		isDirty,
 		isSelf,
@@ -409,9 +415,12 @@ function EditMemberDrawer({
 				setShowResetLinkDialog(true);
 				onClose();
 			} else {
-				toast.error('Failed to generate password reset link', {
-					position: 'top-right',
-				});
+				toast.error(
+					translateInterfaceCopy('Failed to generate password reset link'),
+					{
+						position: 'top-right',
+					},
+				);
 			}
 		} catch (err) {
 			const errMsg = convertToApiError(
@@ -419,7 +428,14 @@ function EditMemberDrawer({
 			);
 			showErrorModal(errMsg as APIError);
 		}
-	}, [member, isInvited, onClose, showErrorModal, createTokenMutation]);
+	}, [
+		translateInterfaceCopy,
+		member,
+		isInvited,
+		onClose,
+		showErrorModal,
+		createTokenMutation,
+	]);
 
 	const [copyState, copyToClipboard] = useCopyToClipboard();
 	const handleCopyResetLink = useCallback((): void => {
@@ -438,7 +454,7 @@ function EditMemberDrawer({
 
 	useEffect(() => {
 		if (copyState.error) {
-			toast.error('Failed to copy link');
+			toast.error(translateInterfaceCopy('Failed to copy link'));
 		}
 	}, [copyState.error]);
 
@@ -469,7 +485,7 @@ function EditMemberDrawer({
 		<>
 			<div className="edit-member-drawer__field">
 				<label className="edit-member-drawer__label" htmlFor="member-name">
-					Name
+					<ConsoleText message={'Name'} />
 				</label>
 				<Tooltip title={isRootUser ? ROOT_USER_TOOLTIP : undefined}>
 					<Input
@@ -481,7 +497,7 @@ function EditMemberDrawer({
 								prev.filter((err) => err.context !== 'Name update'),
 							);
 						}}
-						placeholder="Enter name"
+						placeholder={translateInterfaceCopy('Enter name')}
 						disabled={isRootUser || isDeleted}
 					/>
 				</Tooltip>
@@ -489,7 +505,7 @@ function EditMemberDrawer({
 
 			<div className="edit-member-drawer__field">
 				<label className="edit-member-drawer__label" htmlFor="member-email">
-					Email Address
+					<ConsoleText message={'Email Address'} />
 				</label>
 				<div className="edit-member-drawer__input-wrapper edit-member-drawer__input-wrapper--disabled">
 					<span className="edit-member-drawer__email-text">
@@ -501,7 +517,7 @@ function EditMemberDrawer({
 
 			<div className="edit-member-drawer__field">
 				<label className="edit-member-drawer__label" htmlFor="member-role">
-					Roles
+					<ConsoleText message={'Roles'} />
 				</label>
 				{isSelf || isRootUser || isDeleted ? (
 					<Tooltip
@@ -555,25 +571,27 @@ function EditMemberDrawer({
 								),
 							);
 						}}
-						placeholder="Select roles"
+						placeholder={translateInterfaceCopy('Select roles')}
 					/>
 				)}
 			</div>
 
 			<div className="edit-member-drawer__meta">
 				<div className="edit-member-drawer__meta-item">
-					<span className="edit-member-drawer__meta-label">Status</span>
+					<span className="edit-member-drawer__meta-label">
+						<ConsoleText message={'Status'} />
+					</span>
 					{member?.status === MemberStatus.Active ? (
 						<Badge color="success" variant="outlined">
-							ACTIVE
+							<ConsoleText message={'ACTIVE'} />
 						</Badge>
 					) : member?.status === MemberStatus.Deleted ? (
 						<Badge color="danger" variant="outlined">
-							DELETED
+							<ConsoleText message={'DELETED'} />
 						</Badge>
 					) : (
 						<Badge color="warning" variant="outlined">
-							INVITED
+							<ConsoleText message={'INVITED'} />
 						</Badge>
 					)}
 				</div>
@@ -586,7 +604,9 @@ function EditMemberDrawer({
 				</div>
 				{!isInvited && (
 					<div className="edit-member-drawer__meta-item">
-						<span className="edit-member-drawer__meta-label">Last Modified</span>
+						<span className="edit-member-drawer__meta-label">
+							<ConsoleText message={'Last Modified'} />
+						</span>
 						<Badge textTransform="none" variant="solid" color="secondary">
 							{formatTimestamp(member?.updatedAt)}
 						</Badge>
@@ -666,7 +686,7 @@ function EditMemberDrawer({
 							onClick={handleClose}
 							prefix={<X size={14} />}
 						>
-							Cancel
+							<ConsoleText message={'Cancel'} />
 						</Button>
 
 						<Button
@@ -699,7 +719,7 @@ function EditMemberDrawer({
 				direction="right"
 				showCloseButton
 				showOverlay={false}
-				title="Member Details"
+				title={translateInterfaceCopy('Member Details')}
 				footer={footer}
 				width="wide"
 			>

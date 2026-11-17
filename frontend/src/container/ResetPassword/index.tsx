@@ -1,3 +1,5 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-use';
@@ -22,6 +24,7 @@ import './ResetPassword.styles.scss';
 type FormValues = { password: string; confirmPassword: string };
 
 function ResetPassword({ version }: ResetPasswordProps): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
 	const [confirmPasswordTouched, setConfirmPasswordTouched] = useState(false);
 	const { t } = useTranslation(['common']);
 	const { search } = useLocation();
@@ -87,10 +90,12 @@ function ResetPassword({ version }: ResetPasswordProps): JSX.Element {
 						<KeyRound size={32} />
 					</div>
 					<Typography.Title level={4} className="reset-password-header-title">
-						Reset Your Password
+						<ConsoleText message={'Reset Your Password'} />
 					</Typography.Title>
 					<Typography.Text className="reset-password-header-subtitle">
-						Monitor your applications. Find what is causing issues.
+						<ConsoleText
+							message={'Monitor your applications. Find what is causing issues.'}
+						/>
 					</Typography.Text>
 					{version && (
 						<div className="reset-password-version-badge">SigNoz {version}</div>
@@ -106,34 +111,48 @@ function ResetPassword({ version }: ResetPasswordProps): JSX.Element {
 					<div className="reset-password-form-container">
 						<div className="reset-password-form-fields">
 							<div className="reset-password-field-container">
-								<Label htmlFor="password">New Password</Label>
+								<Label htmlFor="password">
+									<ConsoleText message={'New Password'} />
+								</Label>
 								<Form.Item
 									name="password"
 									validateTrigger="onBlur"
-									rules={[{ required: true, message: 'Please enter password!' }]}
+									rules={[
+										{
+											required: true,
+											message: translateInterfaceCopy('Please enter password!'),
+										},
+									]}
 								>
 									<AntdInput.Password
 										tabIndex={0}
 										id="password"
 										data-testid="password"
-										placeholder="Enter new password"
+										placeholder={translateInterfaceCopy('Enter new password')}
 										className="reset-password-form-input"
 									/>
 								</Form.Item>
 							</div>
 
 							<div className="reset-password-field-container">
-								<Label htmlFor="confirmPassword">Confirm New Password</Label>
+								<Label htmlFor="confirmPassword">
+									<ConsoleText message={'Confirm New Password'} />
+								</Label>
 								<Form.Item
 									name="confirmPassword"
 									validateTrigger="onBlur"
-									rules={[{ required: true, message: 'Please enter confirm password!' }]}
+									rules={[
+										{
+											required: true,
+											message: translateInterfaceCopy('Please enter confirm password!'),
+										},
+									]}
 								>
 									<AntdInput.Password
 										onBlur={(): void => setConfirmPasswordTouched(true)}
 										id="confirmPassword"
 										data-testid="confirmPassword"
-										placeholder="Confirm your new password"
+										placeholder={translateInterfaceCopy('Confirm your new password')}
 										className="reset-password-form-input"
 									/>
 								</Form.Item>
@@ -149,7 +168,7 @@ function ResetPassword({ version }: ResetPasswordProps): JSX.Element {
 							icon={<CircleAlert size={12} />}
 							className="reset-password-error-callout"
 						>
-							Passwords don&apos;t match. Please try again.
+							<ConsoleText message={"Passwords don't match. Please try again."} />
 						</Callout>
 					)}
 
@@ -167,11 +186,13 @@ function ResetPassword({ version }: ResetPasswordProps): JSX.Element {
 							testId="reset-password-submit"
 							loading={isLoading}
 							disabled={!isValidPassword}
-							disabledTooltip="Enter matching passwords in both fields"
+							disabledTooltip={translateInterfaceCopy(
+								'Enter matching passwords in both fields',
+							)}
 							width="100%"
 							suffix={<ArrowRight size={16} />}
 						>
-							Reset Password
+							<ConsoleText message={'Reset Password'} />
 						</Button>
 					</div>
 				</FormContainer>

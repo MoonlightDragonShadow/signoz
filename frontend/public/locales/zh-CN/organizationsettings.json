@@ -1,0 +1,18 @@
+{
+  "display_name": "显示名称",
+  "signoz": "SigNoz",
+  "email_address": "邮箱地址",
+  "name_optional": "名称（可选）",
+  "role": "角色",
+  "email_placeholder": "john@signoz.io",
+  "name_placeholder": "John",
+  "add_another_team_member": "再添加一位团队成员",
+  "invite_team_members": "邀请团队成员",
+  "invite_members": "邀请成员",
+  "pending_invites": "待接受的邀请",
+  "authenticated_domains": "已验证域名",
+  "delete_domain_message": "确定要删除此域名吗？",
+  "delete_domain": "删除域名",
+  "add_domain": "添加域名",
+  "saml_settings": "SAML 设置已保存。请在无痕窗口中登录，确认配置正确。"
+}

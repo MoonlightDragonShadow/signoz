@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import {
 	Dispatch,
 	SetStateAction,
@@ -37,6 +38,7 @@ export function useAccountSettingsDrawer({
 	account,
 	setActiveAccount,
 }: UseAccountSettingsDrawerProps): UseAccountSettingsDrawer {
+	const translateRuntimeCopy = useConsoleTranslation();
 	const [form] = Form.useForm();
 	const { mutate: updateAccount, isLoading } = useUpdateAccount();
 	const accountConfig = useMemo(
@@ -97,9 +99,12 @@ export function useAccountSettingsDrawer({
 						});
 						onClose();
 
-						toast.success('Account settings updated successfully', {
-							position: 'bottom-right',
-						});
+						toast.success(
+							translateRuntimeCopy('Account settings updated successfully'),
+							{
+								position: 'bottom-right',
+							},
+						);
 
 						void logEvent('GCP Integration: Account settings updated', {
 							cloudAccountId: account.cloud_account_id,
@@ -108,7 +113,7 @@ export function useAccountSettingsDrawer({
 						});
 					},
 					onError: (error) => {
-						toast.error('Failed to update account settings', {
+						toast.error(translateRuntimeCopy('Failed to update account settings'), {
 							description: error?.message,
 							position: 'bottom-right',
 						});
@@ -118,7 +123,15 @@ export function useAccountSettingsDrawer({
 		} catch (error) {
 			console.error('Form submission failed:', error);
 		}
-	}, [form, updateAccount, account, accountConfig, setActiveAccount, onClose]);
+	}, [
+		form,
+		updateAccount,
+		account,
+		accountConfig,
+		setActiveAccount,
+		onClose,
+		translateRuntimeCopy,
+	]);
 
 	const isSaveDisabled = useMemo(() => {
 		if (!accountConfig) {

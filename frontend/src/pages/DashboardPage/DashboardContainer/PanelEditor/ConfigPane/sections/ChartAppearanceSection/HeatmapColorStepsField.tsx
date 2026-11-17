@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useState } from 'react';
 import {
 	clampColorSteps,
@@ -26,11 +27,12 @@ function HeatmapColorStepsField({
 	changed,
 	onReset,
 }: HeatmapColorStepsFieldProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const [dragging, setDragging] = useState<number | null>(null);
 
 	return (
 		<ConfigField
-			label="Color steps"
+			label={translate('Color steps')}
 			help="Fewer steps make bands easier to tell apart."
 			changed={changed}
 			onReset={onReset}

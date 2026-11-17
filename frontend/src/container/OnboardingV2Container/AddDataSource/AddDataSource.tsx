@@ -1,3 +1,5 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { ArrowRight, Check, Goal, Search, UserPlus, X } from '@signozhq/icons';
 import {
@@ -153,6 +155,8 @@ const allGroupedDataSources = groupDataSourcesByTags(
 
 // eslint-disable-next-line sonarjs/cognitive-complexity
 function OnboardingAddDataSource(): JSX.Element {
+	const translateRuntimeCopy = useConsoleTranslation();
+	const translateInterfaceCopy = useConsoleTranslation();
 	const { safeNavigate } = useSafeNavigate();
 	const urlQuery = useUrlQuery();
 	const [groupedDataSources, setGroupedDataSources] = useState<{
@@ -590,7 +594,9 @@ function OnboardingAddDataSource(): JSX.Element {
 			<div className="request-data-source-container">
 				{!isNoResultsFound && (
 					<>
-						<Typography.Text>Can’t find what you’re looking for?</Typography.Text>
+						<Typography.Text>
+							<ConsoleText message={'Can’t find what you’re looking for?'} />
+						</Typography.Text>
 
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
@@ -614,7 +620,7 @@ function OnboardingAddDataSource(): JSX.Element {
 								icon={<Goal size={16} />}
 								onClick={handleRequestDataSource}
 							>
-								Request Data Source
+								<ConsoleText message={'Request Data Source'} />
 							</Button>
 						)}
 
@@ -624,7 +630,7 @@ function OnboardingAddDataSource(): JSX.Element {
 								className="periscope-btn request-data-source-btn success"
 								icon={<Check size={16} />}
 							>
-								Request raised
+								<ConsoleText message={'Request raised'} />
 							</Button>
 						)}
 					</>
@@ -633,9 +639,9 @@ function OnboardingAddDataSource(): JSX.Element {
 				{isNoResultsFound && !isSearchQueryEmpty && (
 					<>
 						<Typography.Text>
-							Our team can help add{' '}
+							<ConsoleText message={'Our team can help add'} />{' '}
 							<span className="request-data-source-search-query">{searchQuery}</span>{' '}
-							support for you
+							<ConsoleText message={'support for you'} />
 						</Typography.Text>
 
 						<svg
@@ -660,7 +666,7 @@ function OnboardingAddDataSource(): JSX.Element {
 								icon={<Goal size={16} />}
 								onClick={handleRaiseRequest}
 							>
-								Raise request
+								<ConsoleText message={'Raise request'} />
 							</Button>
 						)}
 
@@ -670,7 +676,7 @@ function OnboardingAddDataSource(): JSX.Element {
 								className="periscope-btn request-data-source-btn success"
 								icon={<Check size={16} />}
 							>
-								Request raised
+								<ConsoleText message={'Request raised'} />
 							</Button>
 						)}
 					</>
@@ -714,7 +720,7 @@ function OnboardingAddDataSource(): JSX.Element {
 								onClick={handleShowInviteTeamMembersModal}
 								icon={<UserPlus size={16} />}
 							>
-								Invite a teammate
+								<ConsoleText message={'Invite a teammate'} />
 							</Button>
 
 							<LaunchChatSupport
@@ -740,7 +746,10 @@ function OnboardingAddDataSource(): JSX.Element {
 						size="small"
 						className="setup-flow__steps"
 						current={currentStep}
-						items={setupStepItems}
+						items={setupStepItems.map((item) => ({
+							...item,
+							title: translateInterfaceCopy(item.title),
+						}))}
 					/>
 				</Header>
 
@@ -761,10 +770,14 @@ function OnboardingAddDataSource(): JSX.Element {
 												level={3}
 												className="question-title onboarding-question"
 											>
-												Select your data source
+												<ConsoleText message={'Select your data source'} />
 											</Typography.Title>
 											<Typography.Text className="question-sub-title">
-												Select from a host of services to start sending data to SigNoz
+												<ConsoleText
+													message={
+														'Select from a host of services to start sending data to SigNoz'
+													}
+												/>
 											</Typography.Text>
 										</div>
 									</div>
@@ -778,7 +791,7 @@ function OnboardingAddDataSource(): JSX.Element {
 											<div className="data-sources-container">
 												<div className="onboarding-data-source-search">
 													<Input
-														placeholder="Search"
+														placeholder={translateInterfaceCopy('Search')}
 														maxLength={20}
 														onChange={handleSearch}
 														addonAfter={<Search size="md" />}
@@ -817,7 +830,9 @@ function OnboardingAddDataSource(): JSX.Element {
 
 												{Object.keys(groupedDataSources).length === 0 && (
 													<div className="no-results-found-container">
-														<Typography.Text>No results for {searchQuery} :/</Typography.Text>
+														<Typography.Text>
+															<ConsoleText message={'No results for'} /> {searchQuery} :/
+														</Typography.Text>
 													</div>
 												)}
 
@@ -828,7 +843,7 @@ function OnboardingAddDataSource(): JSX.Element {
 												<div className="onboarding-data-source-category">
 													<Typography.Title level={5} className="onboarding-filters-title">
 														{' '}
-														Filters{' '}
+														<ConsoleText message={'Filters'} />{' '}
 													</Typography.Title>
 
 													<div
@@ -849,7 +864,7 @@ function OnboardingAddDataSource(): JSX.Element {
 																selectedCategory === 'All' ? 'selected' : ''
 															}`}
 														>
-															All
+															<ConsoleText message={'All'} />
 														</Typography.Title>
 
 														<div className="line-divider" />
@@ -1050,7 +1065,7 @@ function OnboardingAddDataSource(): JSX.Element {
 														}
 													}}
 												>
-													Next: Configure your product
+													<ConsoleText message={'Next: Configure your product'} />
 												</Button>
 											</div>
 										)}
@@ -1082,7 +1097,7 @@ function OnboardingAddDataSource(): JSX.Element {
 										</Flex>
 									</div>
 									<iframe
-										title="docs"
+										title={translateInterfaceCopy('docs')}
 										src={docsUrl}
 										className="configure-product-docs-section-iframe"
 										referrerPolicy="unsafe-url"
@@ -1110,7 +1125,7 @@ function OnboardingAddDataSource(): JSX.Element {
 											handleUpdateCurrentStep(1);
 										}}
 									>
-										Back
+										<ConsoleText message={'Back'} />
 									</Button>
 									<Button
 										type="primary"
@@ -1130,7 +1145,7 @@ function OnboardingAddDataSource(): JSX.Element {
 											handleUpdateCurrentStep(3, e);
 										}}
 									>
-										Continue
+										<ConsoleText message={'Continue'} />
 									</Button>
 								</div>
 							</div>
@@ -1144,7 +1159,11 @@ function OnboardingAddDataSource(): JSX.Element {
 
 				<Modal
 					className="invite-team-member-modal"
-					title={<span className="title">Invite a team member</span>}
+					title={
+						<span className="title">
+							<ConsoleText message={'Invite a team member'} />
+						</span>
+					}
 					open={showInviteTeamMembersModal}
 					closable
 					onCancel={(): void => setShowInviteTeamMembersModal(false)}
@@ -1161,7 +1180,9 @@ function OnboardingAddDataSource(): JSX.Element {
 								);
 								setShowInviteTeamMembersModal(false);
 
-								toast.success('Invites sent successfully', { position: 'top-center' });
+								toast.success(translateRuntimeCopy('Invites sent successfully'), {
+									position: 'top-center',
+								});
 							}}
 							onPartialSuccess={(): void => {
 								void logEvent(
@@ -1183,7 +1204,7 @@ function OnboardingAddDataSource(): JSX.Element {
 										color="secondary"
 										onClick={(): void => setShowInviteTeamMembersModal(false)}
 									>
-										Cancel
+										<ConsoleText message={'Cancel'} />
 									</SignozButton>
 									<SignozButton
 										size="md"
@@ -1197,11 +1218,13 @@ function OnboardingAddDataSource(): JSX.Element {
 											void submit();
 										}}
 										disabled={!canSubmit}
-										disabledTooltip="Add at least one team member to invite"
+										disabledTooltip={translateInterfaceCopy(
+											'Add at least one team member to invite',
+										)}
 										loading={isSubmitting}
 										suffix={<ArrowRight size={14} />}
 									>
-										Send Invites
+										<ConsoleText message={'Send Invites'} />
 									</SignozButton>
 								</div>
 							)}
@@ -1211,7 +1234,11 @@ function OnboardingAddDataSource(): JSX.Element {
 
 				<Modal
 					className="request-data-source-modal"
-					title={<span className="title">Request Data Source</span>}
+					title={
+						<span className="title">
+							<ConsoleText message={'Request Data Source'} />
+						</span>
+					}
 					open={showRequestDataSourceModal}
 					closable
 					onCancel={(): void => setShowRequestDataSourceModal(false)}
@@ -1224,7 +1251,7 @@ function OnboardingAddDataSource(): JSX.Element {
 							onClick={(): void => setShowRequestDataSourceModal(false)}
 							icon={<X size={16} />}
 						>
-							Cancel
+							<ConsoleText message={'Cancel'} />
 						</Button>,
 						<Button
 							key="submit"
@@ -1234,15 +1261,17 @@ function OnboardingAddDataSource(): JSX.Element {
 							onClick={handleSubmitDataSourceRequest}
 							icon={<Check size={16} />}
 						>
-							Submit request
+							<ConsoleText message={'Submit request'} />
 						</Button>,
 					]}
 					destroyOnClose
 				>
 					<div className="request-data-source-modal-content">
-						<Typography.Text>Enter your request</Typography.Text>
+						<Typography.Text>
+							<ConsoleText message={'Enter your request'} />
+						</Typography.Text>
 						<Input
-							placeholder="Eg: Kotlin"
+							placeholder={translateInterfaceCopy('Eg: Kotlin')}
 							className="request-data-source-modal-input"
 							onChange={(e): void => setDataSourceRequest(e.target.value)}
 						/>

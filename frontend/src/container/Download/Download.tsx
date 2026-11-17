@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { useState } from 'react';
 import { CloudDownload } from '@signozhq/icons';
 import { Dropdown, type DropdownItemType } from '@signozhq/ui/dropdown';
@@ -78,7 +79,7 @@ function Download({ data, isLoading, fileName }: DownloadProps): JSX.Element {
 			>
 				<Flex align="center" gap={4}>
 					<CloudDownload size="md" />
-					Download
+					<ConsoleText message={'Download'} />
 				</Flex>
 			</Button>
 		</Dropdown>

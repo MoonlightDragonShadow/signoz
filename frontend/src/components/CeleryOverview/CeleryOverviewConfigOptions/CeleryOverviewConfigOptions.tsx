@@ -1,3 +1,5 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { useCallback, useMemo, useState } from 'react';
 import { Row, Select, Spin } from 'antd';
 import { navigate } from 'lib/router/navigation';
@@ -32,6 +34,7 @@ export function FilterSelect({
 	onChange,
 	isMultiple,
 }: SelectOptionConfig): JSX.Element {
+	const translateDisplayCopy = useConsoleTranslation();
 	const { handleSearch, isFetching, options } =
 		useCeleryFilterOptions(filterType);
 
@@ -92,7 +95,7 @@ export function FilterSelect({
 	return (
 		<Select
 			key={filterType.toString()}
-			placeholder={placeholder}
+			placeholder={translateDisplayCopy(placeholder)}
 			showSearch
 			{...(isMultiple ? { mode: 'multiple' } : {})}
 			options={mergedOptions}
@@ -106,10 +109,13 @@ export function FilterSelect({
 			notFoundContent={
 				isFetching ? (
 					<span>
-						<Spin size="small" /> Loading...
+						<Spin size="small" /> <ConsoleText message={'Loading...'} />
 					</span>
 				) : (
-					<span>No {placeholder} found</span>
+					<span>
+						<ConsoleText message={'No'} /> {placeholder}{' '}
+						<ConsoleText message={'found'} />
+					</span>
 				)
 			}
 			onChange={handleSelectChange}
@@ -125,29 +131,30 @@ FilterSelect.defaultProps = {
 };
 
 function CeleryOverviewConfigOptions(): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
 	const selectConfigs: SelectOptionConfig[] = [
 		{
-			placeholder: 'Service Name',
+			placeholder: translateInterfaceCopy('Service Name'),
 			queryParam: QueryParams.service,
 			filterType: 'serviceName',
 		},
 		{
-			placeholder: 'Span Name',
+			placeholder: translateInterfaceCopy('Span Name'),
 			queryParam: QueryParams.spanName,
 			filterType: 'name',
 		},
 		{
-			placeholder: 'Msg System',
+			placeholder: translateInterfaceCopy('Msg System'),
 			queryParam: QueryParams.msgSystem,
 			filterType: 'messaging.system',
 		},
 		{
-			placeholder: 'Destination',
+			placeholder: translateInterfaceCopy('Destination'),
 			queryParam: QueryParams.destination,
 			filterType: ['messaging.destination.name', 'messaging.destination'],
 		},
 		{
-			placeholder: 'Kind',
+			placeholder: translateInterfaceCopy('Kind'),
 			queryParam: QueryParams.kindString,
 			filterType: 'kind_string',
 		},

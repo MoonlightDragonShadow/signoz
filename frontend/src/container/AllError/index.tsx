@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Typography } from '@signozhq/ui/typography';
 import { useCallback, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -65,6 +66,7 @@ type QueryParams = {
 };
 
 function AllErrors(): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const { maxTime, minTime, loading } = useSelector<AppState, GlobalReducer>(
 		(state) => state.globalTime,
 	);
@@ -279,13 +281,18 @@ function AllErrors(): JSX.Element {
 					>
 						<Flex align="center" justify="center" gap={4}>
 							<Search size="md" />
-							Search
+							{translateConsole('Search')}
 						</Flex>
 					</Button>
 				</Space>
 			</Card>
 		),
-		[getUpdatedExceptionType, getUpdatedServiceName, handleSearch],
+		[
+			translateConsole,
+			getUpdatedExceptionType,
+			getUpdatedServiceName,
+			handleSearch,
+		],
 	);
 
 	const onExceptionTypeFilter: ColumnType<Exception>['onFilter'] = useCallback(
@@ -332,7 +339,7 @@ function AllErrors(): JSX.Element {
 
 	const columns: ColumnsType<Exception> = [
 		{
-			title: 'Exception Type',
+			title: translateConsole('Exception Type'),
 			width: 100,
 			dataIndex: 'exceptionType',
 			key: 'exceptionType',
@@ -357,7 +364,7 @@ function AllErrors(): JSX.Element {
 			),
 		},
 		{
-			title: 'Error Message',
+			title: translateConsole('Error Message'),
 			dataIndex: 'exceptionMessage',
 			key: 'exceptionMessage',
 			width: 100,
@@ -368,7 +375,7 @@ function AllErrors(): JSX.Element {
 			),
 		},
 		{
-			title: 'Count',
+			title: translateConsole('Count'),
 			width: 50,
 			dataIndex: 'exceptionCount',
 			key: 'exceptionCount',
@@ -380,7 +387,7 @@ function AllErrors(): JSX.Element {
 			),
 		},
 		{
-			title: 'Last Seen',
+			title: translateConsole('Last Seen'),
 			dataIndex: 'lastSeen',
 			width: 80,
 			key: 'lastSeen',
@@ -394,7 +401,7 @@ function AllErrors(): JSX.Element {
 			),
 		},
 		{
-			title: 'First Seen',
+			title: translateConsole('First Seen'),
 			dataIndex: 'firstSeen',
 			width: 80,
 			key: 'firstSeen',
@@ -408,7 +415,7 @@ function AllErrors(): JSX.Element {
 			),
 		},
 		{
-			title: 'Application',
+			title: translateConsole('Application'),
 			dataIndex: 'serviceName',
 			width: 100,
 			key: 'serviceName',

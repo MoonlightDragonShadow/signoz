@@ -1,3 +1,5 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useMemo } from 'react';
 import { ArrowRight } from '@signozhq/icons';
 import { Button } from '@signozhq/ui/button';
@@ -29,6 +31,7 @@ function InviteTeamMembers({
 	isLoading,
 	onNext,
 }: InviteTeamMembersProps): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
 	const { notifications } = useNotifications();
 	const { roles } = useRoles();
 
@@ -59,7 +62,7 @@ function InviteTeamMembers({
 			teamMembers: toTeamMembers(rows),
 		});
 		notifications.success({
-			message: 'Invites sent successfully!',
+			message: translateInterfaceCopy('Invites sent successfully!'),
 		});
 		setTimeout(() => {
 			onNext();
@@ -74,7 +77,9 @@ function InviteTeamMembers({
 			teamMembers: toTeamMembers(rows),
 		});
 		notifications.warning({
-			message: 'Some invites failed. Check the errors above.',
+			message: translateInterfaceCopy(
+				'Some invites failed. Check the errors above.',
+			),
 		});
 	};
 
@@ -97,15 +102,17 @@ function InviteTeamMembers({
 	return (
 		<div className="questions-container">
 			<OnboardingQuestionHeader
-				title="Invite your team"
-				subtitle="SigNoz is a lot more useful with collaborators on board."
+				title={translateInterfaceCopy('Invite your team')}
+				subtitle={translateInterfaceCopy(
+					'SigNoz is a lot more useful with collaborators on board.',
+				)}
 			/>
 
 			<div className="questions-form-container">
 				<div className="questions-form invite-team-members-form">
 					<div className="form-group">
 						<div className="question-label">
-							Invite your team to the SigNoz workspace
+							<ConsoleText message={'Invite your team to the SigNoz workspace'} />
 						</div>
 
 						<InviteMembers
@@ -126,11 +133,13 @@ function InviteTeamMembers({
 											onClick={submit}
 											loading={isButtonDisabled}
 											disabled={!canSubmit}
-											disabledTooltip="Add at least one team member to invite"
+											disabledTooltip={translateInterfaceCopy(
+												'Add at least one team member to invite',
+											)}
 											testId="send-invites-button"
 											suffix={<ArrowRight size={12} />}
 										>
-											Send Invites
+											<ConsoleText message={'Send Invites'} />
 										</Button>
 										<Button
 											size="md"
@@ -140,10 +149,12 @@ function InviteTeamMembers({
 											onClick={handleDoLater}
 											loading={isLoading}
 											disabled={isSubmitting}
-											disabledTooltip="Wait for the invites to be sent"
+											disabledTooltip={translateInterfaceCopy(
+												'Wait for the invites to be sent',
+											)}
 											testId="do-later-button"
 										>
-											I&apos;ll do this later
+											<ConsoleText message={"I'll do this later"} />
 										</Button>
 									</div>
 								);

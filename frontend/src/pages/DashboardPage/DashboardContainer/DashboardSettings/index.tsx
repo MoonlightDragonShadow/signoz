@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useMemo } from 'react';
 
 import { Braces, Globe, Table } from '@signozhq/icons';
@@ -28,6 +29,7 @@ const prefixIcons: Record<TabKeys, JSX.Element> = {
 };
 
 function DashboardSettings({ dashboard }: DashboardSettingsProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const { isCloudUser, isEnterpriseSelfHostedUser } = useGetTenantLicense();
 	// Opened once per drawer mount (the drawer destroys on close); a deep-link
 	// request lands us on the right tab.
@@ -39,13 +41,13 @@ function DashboardSettings({ dashboard }: DashboardSettingsProps): JSX.Element {
 		const next: TabsItemProps[] = [
 			{
 				key: TabKeys.OVERVIEW,
-				label: TabKeys.OVERVIEW,
+				label: translate(TabKeys.OVERVIEW),
 				prefixIcon: prefixIcons[TabKeys.OVERVIEW],
 				children: <Overview dashboard={dashboard} />,
 			},
 			{
 				key: TabKeys.VARIABLES,
-				label: TabKeys.VARIABLES,
+				label: translate(TabKeys.VARIABLES),
 				prefixIcon: prefixIcons[TabKeys.VARIABLES],
 				children: <VariablesSettings dashboard={dashboard} />,
 			},
@@ -56,14 +58,14 @@ function DashboardSettings({ dashboard }: DashboardSettingsProps): JSX.Element {
 		if (enablePublicDashboard) {
 			next.push({
 				key: TabKeys.PUBLISH,
-				label: TabKeys.PUBLISH,
+				label: translate(TabKeys.PUBLISH),
 				prefixIcon: prefixIcons[TabKeys.PUBLISH],
 				children: <PublicDashboardSettings dashboard={dashboard} />,
 			});
 		}
 
 		return next;
-	}, [enablePublicDashboard, dashboard]);
+	}, [enablePublicDashboard, dashboard, translate]);
 
 	return (
 		<Tabs

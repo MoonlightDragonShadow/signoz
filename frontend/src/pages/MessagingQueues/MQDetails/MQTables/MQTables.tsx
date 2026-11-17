@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useMutation } from 'react-query';
 import { Skeleton, Table } from 'antd';
@@ -15,6 +16,7 @@ import { QueryParams } from 'constants/query';
 import { navigate } from 'lib/router/navigation';
 import { useAppLocation } from 'lib/router/useAppLocation';
 import { useNotifications } from 'hooks/useNotifications';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import useUrlQuery from 'hooks/useUrlQuery';
 import { isEmpty } from 'lodash-es';
 import {
@@ -120,7 +122,10 @@ const showPaginationItem = (total: number, range: number[]): JSX.Element => (
 		<Typography.Text className="numbers">
 			{range[0]} &#8212; {range[1]}
 		</Typography.Text>
-		<Typography.Text className="total"> of {total}</Typography.Text>
+		<Typography.Text className="total">
+			{' '}
+			<ConsoleText message={'of'} /> {total}
+		</Typography.Text>
 	</>
 );
 
@@ -146,6 +151,7 @@ function MessagingQueuesTable({
 	type?: 'Detail' | 'Overview';
 	option?: ProducerLatencyOptions;
 }): JSX.Element {
+	const translate = useConsoleTranslation();
 	const [columns, setColumns] = useState<any[]>([]);
 	const [tableData, setTableData] = useState<any[]>([]);
 	const { notifications } = useNotifications();
@@ -183,7 +189,9 @@ function MessagingQueuesTable({
 
 	const handleConsumerDetailsOnError = (error: Error): void => {
 		notifications.error({
-			message: axios.isAxiosError(error) ? error?.message : SOMETHING_WENT_WRONG,
+			message: axios.isAxiosError(error)
+				? error?.message
+				: translate(SOMETHING_WENT_WRONG),
 		});
 	};
 
@@ -311,20 +319,22 @@ function MessagingQueuesTable({
 				<div className="no-data-style">
 					<Typography.Text>
 						{selectedView === MessagingQueuesViewType.consumerLag.value
-							? 'Click on a co-ordinate above to see the details'
-							: 'Click on a row above to see the details'}
+							? translate('Click on a co-ordinate above to see the details')
+							: translate('Click on a row above to see the details')}
 					</Typography.Text>
 					<Skeleton />
 				</div>
 			) : isError ? (
 				<div className="no-data-style">
-					<Typography.Text>{error?.message || SOMETHING_WENT_WRONG}</Typography.Text>
+					<Typography.Text>
+						{error?.message || translate(SOMETHING_WENT_WRONG)}
+					</Typography.Text>
 				</div>
 			) : (
 				<>
 					{currentTab && (
 						<div className="mq-table-title">
-							{ConsumerLagDetailTitle[currentTab]}
+							{translate(ConsumerLagDetailTitle[currentTab])}
 							<div className="mq-table-subtitle">{subtitle}</div>
 						</div>
 					)}
@@ -336,7 +346,13 @@ function MessagingQueuesTable({
 						)}
 						pagination={paginationConfig}
 						size="middle"
-						columns={columns}
+						columns={columns.map((column) => ({
+							...column,
+							title:
+								typeof column.title === 'string'
+									? translate(column.title)
+									: column.title,
+						}))}
 						dataSource={tableData}
 						bordered={false}
 						loading={isLoading}

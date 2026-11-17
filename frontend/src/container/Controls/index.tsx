@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { memo, useMemo } from 'react';
 import { ChevronLeft, ChevronRight } from '@signozhq/icons';
 import { Button } from '@signozhq/ui/button';
@@ -55,7 +56,7 @@ function Controls({
 				prefix={<ChevronLeft size={16} />}
 				onClick={handleNavigatePrevious}
 			>
-				Previous
+				<ConsoleText message={'Previous'} />
 			</Button>
 			<Button
 				disabledTooltip={getDisabledReason('You are on the last page')}
@@ -66,7 +67,7 @@ function Controls({
 				suffix={<ChevronRight size={16} />}
 				onClick={handleNavigateNext}
 			>
-				Next
+				<ConsoleText message={'Next'} />
 			</Button>
 
 			{showSizeChanger && (

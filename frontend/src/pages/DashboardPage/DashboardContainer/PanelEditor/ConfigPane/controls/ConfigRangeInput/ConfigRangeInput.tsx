@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import ConfigNumberInput from '../ConfigNumberInput/ConfigNumberInput';
 
 import { isRangeInverted } from './utils';
@@ -21,13 +22,14 @@ function ConfigRangeInput({
 	onChangeMin,
 	onChangeMax,
 }: ConfigRangeInputProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const inverted = isRangeInverted(min, max);
 
 	return (
 		<div className={styles.range}>
 			<ConfigNumberInput
 				testId={minTestId}
-				placeholder="Min"
+				placeholder={translate('Min')}
 				invalid={inverted}
 				value={min}
 				onChange={onChangeMin}
@@ -35,7 +37,7 @@ function ConfigRangeInput({
 			<span className={styles.dash}>–</span>
 			<ConfigNumberInput
 				testId={maxTestId}
-				placeholder="Max"
+				placeholder={translate('Max')}
 				invalid={inverted}
 				value={max}
 				onChange={onChangeMax}

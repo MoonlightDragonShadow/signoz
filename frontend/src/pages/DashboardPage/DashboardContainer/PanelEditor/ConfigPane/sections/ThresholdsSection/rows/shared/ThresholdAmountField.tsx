@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useEffect, useState } from 'react';
 import { TriangleAlert } from '@signozhq/icons';
 import { Typography } from '@signozhq/ui/typography';
@@ -40,6 +41,7 @@ function ThresholdAmountField({
 	scopeLabel,
 	onUnitChange,
 }: ThresholdAmountFieldProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const [raw, setRaw] = useState(String(value));
 
 	useEffect(() => {
@@ -53,8 +55,8 @@ function ThresholdAmountField({
 				<Input
 					data-testid={`${testIdPrefix}-value-${index}`}
 					type="number"
-					placeholder="e.g. 500"
-					aria-label="Value"
+					placeholder={translate('e.g. 500')}
+					aria-label={translate('Value')}
 					value={raw}
 					onChange={(e): void => {
 						setRaw(e.target.value);
@@ -64,7 +66,7 @@ function ThresholdAmountField({
 				<YAxisUnitSelector
 					containerClassName={styles.unitSelector}
 					data-testid={`${testIdPrefix}-unit-${index}`}
-					placeholder="Unit"
+					placeholder={translate('Unit')}
 					source={YAxisSource.DASHBOARDS}
 					categoriesOverride={thresholdUnitCategories(scopeUnit)}
 					value={unit}
@@ -78,8 +80,9 @@ function ThresholdAmountField({
 				>
 					<TriangleAlert size={13} className={styles.invalidUnitIcon} />
 					<Typography.Text className={styles.invalidUnitText}>
-						{getUniversalNameFromMetricUnit(unit)} can&apos;t be compared with the{' '}
-						{scopeLabel} ({getUniversalNameFromMetricUnit(scopeUnit)}).
+						{getUniversalNameFromMetricUnit(unit)}{' '}
+						{translate('cannot be compared with')} {scopeLabel} (
+						{getUniversalNameFromMetricUnit(scopeUnit)}).
 					</Typography.Text>
 				</div>
 			)}

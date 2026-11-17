@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { ReactElement } from 'react';
 import { Dock, PanelBottom, PanelRight } from '@signozhq/icons';
 import { ToggleGroup } from '@signozhq/ui/toggle-group';
@@ -37,6 +38,7 @@ function DockModeSwitcher({
 	value,
 	onChange,
 }: DockModeSwitcherProps): JSX.Element {
+	const translateCopy = useConsoleTranslation();
 	return (
 		<ToggleGroup
 			type="single"
@@ -64,7 +66,7 @@ function DockModeSwitcher({
 								overflow: 'hidden',
 							}}
 						>
-							{option.tooltip}
+							{translateCopy(option.tooltip)}
 						</span>
 					</span>
 				),

@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Typography } from '@signozhq/ui/typography';
 import { MarkdownRenderer } from 'components/MarkdownRenderer/MarkdownRenderer';
 
@@ -16,6 +17,7 @@ interface OverviewProps {
 }
 
 function Overview(props: OverviewProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const { categories, assets, overviewContent } = props;
 	const assetsCount = [
 		assets?.logs?.pipelines?.length || 0,
@@ -29,7 +31,9 @@ function Overview(props: OverviewProps): JSX.Element {
 		<div className="integration-detail-overview">
 			<div className="integration-detail-overview-left-container">
 				<div className="integration-detail-overview-category">
-					<Typography.Text className="heading">Category</Typography.Text>
+					<Typography.Text className="heading">
+						{translateConsole('Category')}
+					</Typography.Text>
 					<div className="category-tabs">
 						{categories.map((category) => (
 							<div
@@ -43,7 +47,9 @@ function Overview(props: OverviewProps): JSX.Element {
 					</div>
 				</div>
 				<div className="integration-detail-overview-assets">
-					<Typography.Text className="heading">Assets</Typography.Text>
+					<Typography.Text className="heading">
+						{translateConsole('Assets')}
+					</Typography.Text>
 					<ul className="assets-list" data-testid="integration-assets">
 						{assetsCount.map((count, index) => {
 							if (count === 0) {

@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { ReactNode } from 'react';
 import { Trash2, X } from '@signozhq/icons';
 import { Button } from '@signozhq/ui/button';
@@ -29,6 +30,7 @@ function ConfirmDeleteDialog({
 	onConfirm,
 	onClose,
 }: ConfirmDeleteDialogProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const footer = (
 		<div className={styles.footer}>
 			<Button
@@ -39,7 +41,7 @@ function ConfirmDeleteDialog({
 				prefix={<X size={12} />}
 				testId="confirm-delete-cancel"
 			>
-				Cancel
+				{translate('Cancel')}
 			</Button>
 			<Button
 				size="md"

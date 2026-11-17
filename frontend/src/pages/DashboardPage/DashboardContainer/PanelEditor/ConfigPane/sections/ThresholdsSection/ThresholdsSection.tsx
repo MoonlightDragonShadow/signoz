@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Plus } from '@signozhq/icons';
 import { Button } from '@signozhq/ui/button';
@@ -98,6 +99,7 @@ function ThresholdsSection({
 	axisColumnUnits,
 	registerHeaderAction,
 }: ThresholdsSectionProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const variant = controls?.variant ?? ThresholdVariant.LABEL;
 	const withAxis = !!controls?.axis;
 	const thresholds = value ?? [];
@@ -220,7 +222,7 @@ function ThresholdsSection({
 				testId={ADD_TESTID[variant]}
 				onClick={addThreshold}
 			>
-				Add threshold
+				{translate('Add threshold')}
 			</Button>
 		</div>
 	);

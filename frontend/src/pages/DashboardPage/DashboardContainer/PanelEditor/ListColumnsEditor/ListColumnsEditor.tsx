@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useMemo } from 'react';
 import {
 	closestCenter,
@@ -43,6 +44,7 @@ function ListColumnsEditor({
 	onChangeSpec,
 	signal,
 }: ListColumnsEditorProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const fields = useMemo(() => readSelectFields(spec), [spec]);
 	const names = useMemo(() => fields.map((field) => field.name), [fields]);
 	const selectedNames = useMemo(() => new Set(names), [names]);
@@ -82,7 +84,9 @@ function ListColumnsEditor({
 	return (
 		<div className={styles.editor} data-testid="list-columns-editor">
 			<div className={styles.header}>
-				<Typography.Text className={styles.title}>Columns</Typography.Text>
+				<Typography.Text className={styles.title}>
+					{translate('Columns')}
+				</Typography.Text>
 			</div>
 			<div className={styles.body}>
 				<DndContext
@@ -111,7 +115,7 @@ function ListColumnsEditor({
 			</div>
 			{fields.length === 0 && (
 				<Typography.Text className={styles.hint}>
-					Leave empty to show all fields returned by the query.
+					{translate('Leave empty to show all fields returned by the query.')}
 				</Typography.Text>
 			)}
 		</div>

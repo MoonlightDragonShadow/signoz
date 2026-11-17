@@ -1,4 +1,5 @@
 import { Tabs, TabsProps } from 'antd';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import cx from 'classnames';
 import HeaderRightSection from 'components/HeaderRightSection/HeaderRightSection';
 import OverlayScrollbar from 'components/OverlayScrollbar/OverlayScrollbar';
@@ -31,6 +32,7 @@ function RouteTab({
 	className,
 	...rest
 }: RouteTabProps & TabsProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const params = useAppParams<Params>();
 	const location = useAppLocation();
 
@@ -53,7 +55,7 @@ function RouteTab({
 	};
 
 	const items = routes.map(({ Component, name, route, key }) => ({
-		label: name,
+		label: typeof name === 'string' ? translate(name) : name,
 		key,
 		tabKey: route,
 		children: (

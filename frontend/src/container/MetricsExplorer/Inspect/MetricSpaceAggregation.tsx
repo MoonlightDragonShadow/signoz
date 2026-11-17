@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Typography } from '@signozhq/ui/typography';
 import { Select } from 'antd';
 import classNames from 'classnames';
@@ -12,6 +13,7 @@ function MetricSpaceAggregation({
 	dispatchMetricInspectionOptions,
 	inspectionStep,
 }: MetricSpaceAggregationProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	return (
 		<div
 			data-testid="metric-space-aggregation"
@@ -22,13 +24,13 @@ function MetricSpaceAggregation({
 					'selected-step': inspectionStep === InspectionStep.SPACE_AGGREGATION,
 				})}
 			>
-				<Typography.Text>AGGREGATE BY LABELS</Typography.Text>
+				<Typography.Text>{translate('AGGREGATE BY LABELS')}</Typography.Text>
 			</div>
 			<div className="metric-space-aggregation-content">
 				<div className="metric-space-aggregation-content-left">
 					<Select
 						value={currentMetricInspectionOptions.spaceAggregationOption}
-						placeholder="Select option"
+						placeholder={translate('Select option')}
 						onChange={(value): void => {
 							dispatchMetricInspectionOptions({
 								type: 'SET_SPACE_AGGREGATION_OPTION',
@@ -49,7 +51,7 @@ function MetricSpaceAggregation({
 				<Select
 					mode="multiple"
 					style={{ width: '100%' }}
-					placeholder="Search for attributes..."
+					placeholder={translate('Search for attributes...')}
 					value={currentMetricInspectionOptions.spaceAggregationLabels}
 					onChange={(value): void => {
 						dispatchMetricInspectionOptions({

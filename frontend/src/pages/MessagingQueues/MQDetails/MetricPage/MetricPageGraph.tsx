@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 // eslint-disable-next-line no-restricted-imports
 import { useDispatch } from 'react-redux';
 import { navigate } from 'lib/router/navigation';
@@ -8,6 +8,7 @@ import { PANEL_TYPES } from 'constants/queryBuilder';
 import { ViewMenuAction } from 'container/WidgetCard/config';
 import GridCard from 'container/WidgetCard/Card';
 import { Card } from 'container/WidgetCard/styles';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useIsDarkMode } from 'hooks/useDarkMode';
 import useUrlQuery from 'hooks/useUrlQuery';
 import { UpdateTimeInterval } from 'store/actions';
@@ -26,6 +27,18 @@ function MetricPageGridGraph({
 	const dispatch = useDispatch();
 	const urlQuery = useUrlQuery();
 	const isDarkMode = useIsDarkMode();
+	const translate = useConsoleTranslation();
+	const localizedWidget = useMemo(
+		() => ({
+			...widgetData,
+			title:
+				typeof widgetData.title === 'string'
+					? translate(widgetData.title)
+					: widgetData.title,
+			description: translate(widgetData.description),
+		}),
+		[translate, widgetData],
+	);
 
 	const onDragSelect = useCallback(
 		(start: number, end: number) => {
@@ -51,7 +64,7 @@ function MetricPageGridGraph({
 			className="metric-graph"
 		>
 			<GridCard
-				widget={widgetData}
+				widget={localizedWidget}
 				headerMenuList={[...ViewMenuAction]}
 				onDragSelect={onDragSelect}
 				dataAvailable={checkIfDataExists}

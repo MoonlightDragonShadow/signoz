@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useState } from 'react';
 import { Typography } from '@signozhq/ui/typography';
 import { initialQueriesMap } from 'constants/queryBuilder';
@@ -11,6 +12,7 @@ function MetricNameSearch({
 	currentMetricName,
 	setCurrentMetricName,
 }: MetricNameSearchProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const [searchText, setSearchText] = useState(currentMetricName);
 
 	const handleSetMetricName = (value: BaseAutocompleteData): void => {
@@ -26,7 +28,7 @@ function MetricNameSearch({
 			data-testid="metric-name-search"
 			className="inspect-metrics-input-group metric-name-search"
 		>
-			<Typography.Text>From</Typography.Text>
+			<Typography.Text>{translate('From')}</Typography.Text>
 			<MetricNameSelector
 				defaultValue={searchText ?? ''}
 				query={initialQueriesMap[DataSource.METRICS].builder.queryData[0]}

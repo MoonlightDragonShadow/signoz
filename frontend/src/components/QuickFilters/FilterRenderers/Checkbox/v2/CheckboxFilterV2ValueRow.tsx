@@ -1,3 +1,5 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { Badge } from '@signozhq/ui/badge';
 import { Button } from '@signozhq/ui/button';
 import { Checkbox } from '@signozhq/ui/checkbox';
@@ -45,6 +47,7 @@ export function CheckboxFilterV2ValueRow({
 	onOnlyOrAllClick,
 	badge,
 }: ValueRowProps): JSX.Element {
+	const translateDisplayCopy = useConsoleTranslation();
 	const indicatorClass = INDICATOR_CLASS_MAP[value];
 
 	return (
@@ -56,7 +59,7 @@ export function CheckboxFilterV2ValueRow({
 		>
 			<div className={styles.checkbox}>
 				<Checkbox
-					disabledTooltip={disabledTooltip}
+					disabledTooltip={disabledTooltip && translateDisplayCopy(disabledTooltip)}
 					onChange={(isChecked): void =>
 						onCheckboxChange(isChecked === true, checkedState)
 					}
@@ -105,14 +108,14 @@ export function CheckboxFilterV2ValueRow({
 							data-action="badge"
 							testId={`badge-${badge.key}`}
 						>
-							{badge.label}
+							{translateDisplayCopy(badge.label)}
 						</Badge>
 					)}
 					<Button size="md" variant="ghost" color="secondary" data-action="only">
-						{onlyButtonLabel}
+						{translateDisplayCopy(onlyButtonLabel)}
 					</Button>
 					<Button size="md" variant="ghost" color="secondary" data-action="toggle">
-						Toggle
+						<ConsoleText message={'Toggle'} />
 					</Button>
 				</div>
 			</div>

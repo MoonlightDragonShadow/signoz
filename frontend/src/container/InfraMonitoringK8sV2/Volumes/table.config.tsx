@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import TanStackTable, { TableColumnDef } from 'components/TanStackTableView';
 import { InframonitoringtypesVolumeRecordDTO } from 'api/generated/services/sigNoz.schemas';
 import { ExpandButtonWrapper } from 'container/InfraMonitoringK8sV2/components';
@@ -87,7 +88,7 @@ export const k8sVolumesColumnsConfig: VolumeTableColumnConfig[] = [
 		id: 'namespaceName',
 		header: (): React.ReactNode => (
 			<ColumnHeader docPath="/infrastructure-monitoring/kubernetes/volumes#namespace-name">
-				Namespace
+				<ConsoleText message={'Namespace'} />
 			</ColumnHeader>
 		),
 		accessorFn: (row): string =>
@@ -102,7 +103,7 @@ export const k8sVolumesColumnsConfig: VolumeTableColumnConfig[] = [
 		id: 'capacity',
 		header: (): React.ReactNode => (
 			<ColumnHeader docPath="/infrastructure-monitoring/kubernetes/volumes#volume-capacity">
-				Capacity
+				<ConsoleText message={'Capacity'} />
 			</ColumnHeader>
 		),
 		accessorFn: (row): number => row.volumeCapacity,
@@ -126,7 +127,7 @@ export const k8sVolumesColumnsConfig: VolumeTableColumnConfig[] = [
 		id: 'usage',
 		header: (): React.ReactNode => (
 			<ColumnHeader docPath="/infrastructure-monitoring/kubernetes/volumes#volume-used">
-				Used
+				<ConsoleText message={'Used'} />
 			</ColumnHeader>
 		),
 		accessorFn: (row): number => row.volumeUsage,
@@ -150,7 +151,7 @@ export const k8sVolumesColumnsConfig: VolumeTableColumnConfig[] = [
 		id: 'available',
 		header: (): React.ReactNode => (
 			<ColumnHeader docPath="/infrastructure-monitoring/kubernetes/volumes#volume-available">
-				Available
+				<ConsoleText message={'Available'} />
 			</ColumnHeader>
 		),
 		accessorFn: (row): number => row.volumeAvailable,
@@ -174,7 +175,7 @@ export const k8sVolumesColumnsConfig: VolumeTableColumnConfig[] = [
 		id: 'inodes',
 		header: (): React.ReactNode => (
 			<ColumnHeader docPath="/infrastructure-monitoring/kubernetes/volumes#volume-inodes">
-				Inodes
+				<ConsoleText message={'Inodes'} />
 			</ColumnHeader>
 		),
 		accessorFn: (row): number => row.volumeInodes,
@@ -198,7 +199,7 @@ export const k8sVolumesColumnsConfig: VolumeTableColumnConfig[] = [
 		id: 'inodes_used',
 		header: (): React.ReactNode => (
 			<ColumnHeader docPath="/infrastructure-monitoring/kubernetes/volumes#volume-inodes-used">
-				Inodes Used
+				<ConsoleText message={'Inodes Used'} />
 			</ColumnHeader>
 		),
 		accessorFn: (row): number => row.volumeInodesUsed,
@@ -222,7 +223,7 @@ export const k8sVolumesColumnsConfig: VolumeTableColumnConfig[] = [
 		id: 'inodes_free',
 		header: (): React.ReactNode => (
 			<ColumnHeader docPath="/infrastructure-monitoring/kubernetes/volumes#volume-inodes-free">
-				Inodes Free
+				<ConsoleText message={'Inodes Free'} />
 			</ColumnHeader>
 		),
 		accessorFn: (row): number => row.volumeInodesFree,

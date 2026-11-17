@@ -1,3 +1,5 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { Select, Spin } from 'antd';
 import { navigate } from 'lib/router/navigation';
 import { useAppLocation } from 'lib/router/useAppLocation';
@@ -15,6 +17,7 @@ import { useCeleryFilterOptions } from '../useCeleryFilterOptions';
 import './CeleryTaskConfigOptions.styles.scss';
 
 function CeleryTaskConfigOptions(): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
 	const { handleSearch, isFetching, options } =
 		useCeleryFilterOptions('celery.task_name');
 	const location = useAppLocation();
@@ -25,11 +28,11 @@ function CeleryTaskConfigOptions(): JSX.Element {
 		<div className="celery-task-filters">
 			<div className="celery-filters">
 				<Typography.Text style={{ whiteSpace: 'nowrap' }}>
-					Task Name
+					<ConsoleText message={'Task Name'} />
 				</Typography.Text>
 				<Select
 					data-testid="celery-task-name-select"
-					placeholder="Task Name"
+					placeholder={translateInterfaceCopy('Task Name')}
 					showSearch
 					mode="multiple"
 					options={options}
@@ -42,10 +45,12 @@ function CeleryTaskConfigOptions(): JSX.Element {
 					notFoundContent={
 						isFetching ? (
 							<span>
-								<Spin size="small" /> Loading...
+								<Spin size="small" /> <ConsoleText message={'Loading...'} />
 							</span>
 						) : (
-							<span>No Task Name found</span>
+							<span>
+								<ConsoleText message={'No Task Name found'} />
+							</span>
 						)
 					}
 					onChange={(value): void => {

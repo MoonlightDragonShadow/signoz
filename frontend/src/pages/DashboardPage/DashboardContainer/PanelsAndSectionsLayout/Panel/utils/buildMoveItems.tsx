@@ -14,6 +14,7 @@ interface MoveItemsArgs {
 	sections: DashboardSection[];
 	currentLayoutIndex: number;
 	panelId: string;
+	translate?: (message: string) => string;
 	movePanel: (args: MovePanelArgs) => Promise<void>;
 }
 
@@ -29,6 +30,7 @@ export function buildMoveItems({
 	currentLayoutIndex,
 	panelId,
 	movePanel,
+	translate = (message) => message,
 }: MoveItemsArgs): DropdownSubmenuItemType[] {
 	const rootSection = findRootSection(sections);
 
@@ -48,14 +50,14 @@ export function buildMoveItems({
 		{
 			type: 'submenu',
 			value: 'move',
-			label: 'Move to section',
+			label: translate('Move to section'),
 			prefix: <FolderInput size={14} />,
 			items: targets.map((section): DropdownActionItemType => {
 				const isRoot = section === rootSection;
 				return {
 					type: 'item',
 					value: isRoot ? 'move-to-root' : `move-${section.layoutIndex}`,
-					label: isRoot ? ROOT_LABEL : (section.title as string),
+					label: isRoot ? translate(ROOT_LABEL) : (section.title as string),
 					onClick: (): void =>
 						void movePanel({
 							panelId,

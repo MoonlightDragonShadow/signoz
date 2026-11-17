@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useMemo } from 'react';
 import { Plus, Search } from '@signozhq/icons';
 import { Button } from '@signozhq/ui/button';
@@ -34,6 +35,7 @@ const DEFAULT_PAGE = 1;
 const DEFAULT_LIMIT = 10;
 
 function ListAlertRules(): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const { user } = useAppContext();
 	const [addNewAlert, action] = useComponentPermission(
 		['add_new_alert', 'action'],
@@ -79,8 +81,8 @@ function ListAlertRules(): JSX.Element {
 	}, [setFilterValues, clearSearch]);
 
 	const columns = useMemo(
-		() => getAlertRuleColumns(formatTimezoneAdjustedTimestamp),
-		[formatTimezoneAdjustedTimestamp],
+		() => getAlertRuleColumns(translateConsole, formatTimezoneAdjustedTimestamp),
+		[formatTimezoneAdjustedTimestamp, translateConsole],
 	);
 
 	const paginatedRules = useMemo(() => {
@@ -103,7 +105,9 @@ function ListAlertRules(): JSX.Element {
 			{
 				id: 'actions',
 				header: (): JSX.Element => (
-					<span style={{ textAlign: 'right', display: 'block' }}>Actions</span>
+					<span style={{ textAlign: 'right', display: 'block' }}>
+						{translateConsole('Actions')}
+					</span>
 				),
 				accessorKey: 'id',
 				width: { fixed: '80px', ignoreLastColumnFill: true },
@@ -118,7 +122,7 @@ function ListAlertRules(): JSX.Element {
 				),
 			},
 		];
-	}, [action, columns, handleEdit]);
+	}, [translateConsole, action, columns, handleEdit]);
 
 	const hasActiveFilters =
 		searchText.length > 0 || (filterValues ?? []).length > 0;
@@ -148,7 +152,7 @@ function ListAlertRules(): JSX.Element {
 								color="primary"
 								testId="list-alerts-new-alert-button"
 							>
-								New Alert
+								{translateConsole('New Alert')}
 							</Button>
 						)}
 						<TextToolTip
@@ -164,7 +168,9 @@ function ListAlertRules(): JSX.Element {
 				<div className={styles.filtersRow}>
 					<Input
 						className={styles.searchInput}
-						placeholder="Search by Alert Name, Severity and Labels"
+						placeholder={translateConsole(
+							'Search by Alert Name, Severity and Labels',
+						)}
 						value={searchText}
 						onChange={handleSearchChange}
 						suffix={<Search size={14} className={styles.searchIcon} />}
@@ -175,13 +181,18 @@ function ListAlertRules(): JSX.Element {
 
 			<div ref={containerRef} className={styles.tableContainer}>
 				{isError ? (
-					<ErrorEmptyState title="Failed to load alert rules" onRefresh={refetch} />
+					<ErrorEmptyState
+						title={translateConsole('Failed to load alert rules')}
+						onRefresh={refetch}
+					/>
 				) : isEmptyDueToFilters ? (
 					<NoResultsEmptyState
-						title="No matching alert rules"
-						subtitle="No alert rules match your search. Try adjusting your search criteria."
+						title={translateConsole('No matching alert rules')}
+						subtitle={translateConsole(
+							'No alert rules match your search. Try adjusting your search criteria.',
+						)}
 						onClear={handleClearFilters}
-						clearButtonText="Clear Search"
+						clearButtonText={translateConsole('Clear Search')}
 					/>
 				) : isEmptyNoRules ? (
 					<AlertsEmptyState onRefresh={refetch} />

@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import cx from 'classnames';
 import { resolveFillOpacity } from 'lib/uPlotV2/utils/fillOpacity';
 import type {
@@ -43,16 +44,17 @@ function ChartAppearanceSection({
 	sizeColumnLabel,
 }: SectionEditorProps<SectionKind.ChartAppearance> &
 	Pick<SectionEditorContext, 'stepInterval' | 'sizeColumnLabel'>): JSX.Element {
+	const translate = useConsoleTranslation();
 	const reset = createFieldResetter(value, savedValue, onChange);
 	const interpolation = value?.lineInterpolation;
 
 	return (
 		<>
 			{controls.lineStyle && (
-				<ConfigField label="Line" {...reset('lineStyle')}>
+				<ConfigField label={translate('Line')} {...reset('lineStyle')}>
 					<ConfigTiles
 						testId="panel-editor-v2-line-style"
-						aria-label="Line style"
+						aria-label={translate('Line style')}
 						value={value?.lineStyle}
 						items={LINE_STYLE_OPTIONS}
 						onChange={(lineStyle): void => onChange({ ...value, lineStyle })}
@@ -62,13 +64,13 @@ function ChartAppearanceSection({
 
 			{controls.lineInterpolation && (
 				<ConfigField
-					label="How points connect"
+					label={translate('How points connect')}
 					help={interpolation && LINE_INTERPOLATION_HELP[interpolation]}
 					{...reset('lineInterpolation')}
 				>
 					<ConfigTiles
 						testId="panel-editor-v2-line-interpolation"
-						aria-label="How points connect"
+						aria-label={translate('How points connect')}
 						value={interpolation}
 						items={LINE_INTERPOLATION_OPTIONS}
 						onChange={(lineInterpolation): void =>
@@ -80,12 +82,12 @@ function ChartAppearanceSection({
 
 			{controls.fillMode && (
 				<ConfigField
-					label="Area under the line"
+					label={translate('Area under the line')}
 					{...reset('fillMode', 'fillOpacity')}
 				>
 					<ConfigTiles
 						testId="panel-editor-v2-fill-mode"
-						aria-label="Area under the line"
+						aria-label={translate('Area under the line')}
 						value={value?.fillMode}
 						items={
 							controls.fillOpacity ? FILLED_FILL_MODE_OPTIONS : FILL_MODE_OPTIONS
@@ -94,7 +96,7 @@ function ChartAppearanceSection({
 					/>
 					{controls.fillOpacity && (
 						<div className={cx(styles.inset, styles.insetRow)}>
-							<span className={styles.insetLabel}>Opacity</span>
+							<span className={styles.insetLabel}>{translate('Opacity')}</span>
 							<div className={styles.opacitySlider}>
 								<ConfigSlider
 									testId="panel-editor-v2-fill-opacity"
@@ -115,8 +117,8 @@ function ChartAppearanceSection({
 			{controls.showPoints && (
 				<ConfigSwitch
 					testId="panel-editor-v2-show-points"
-					title="Show points"
-					description="Marks each sample the query returned."
+					title={translate('Show points')}
+					description={translate('Marks each sample the query returned.')}
 					sketch={SWITCH_SKETCHES.points}
 					changed={reset('showPoints').changed}
 					value={value?.showPoints ?? false}

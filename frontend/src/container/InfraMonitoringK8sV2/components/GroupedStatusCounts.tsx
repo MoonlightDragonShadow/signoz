@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 // oxlint-disable jsx-a11y/click-events-have-key-events
 import styles from './GroupedStatusCounts.module.scss';
 import TanStackTable from 'components/TanStackTableView';
@@ -56,7 +57,9 @@ function buildTooltipContent(
 					{item.label}
 				</Typography.Text>
 
-				<Typography.Text>No errors</Typography.Text>
+				<Typography.Text>
+					<ConsoleText message={'No errors'} />
+				</Typography.Text>
 			</div>
 		);
 	}

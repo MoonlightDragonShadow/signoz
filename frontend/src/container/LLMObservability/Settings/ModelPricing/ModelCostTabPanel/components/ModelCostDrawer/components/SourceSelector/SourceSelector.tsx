@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useState } from 'react';
 import { Button } from '@signozhq/ui/button';
 import { RadioGroup } from '@signozhq/ui/radio-group';
@@ -21,6 +22,8 @@ function SourceSelector({
 	disableAuto = false,
 	onChange,
 }: SourceSelectorProps): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
+	const translateConsole = useConsoleTranslation();
 	const [showResetConfirm, setShowResetConfirm] = useState<boolean>(false);
 
 	const handleSourceChange = (value: 'auto' | 'override'): void => {
@@ -41,12 +44,12 @@ function SourceSelector({
 	return (
 		<div className={cx(styles.drawerSection, styles.drawerSurface)}>
 			<div className={styles.drawerSurfaceHead}>
-				<span className={styles.fieldLabel}>Source</span>
+				<span className={styles.fieldLabel}>{translateConsole('Source')}</span>
 
 				{isReadOnly && (
 					<span className={styles.managedLabel} data-testid="drawer-managed-label">
 						<Lock size={12} />
-						Managed by SigNoz
+						{translateConsole('Managed by SigNoz')}
 					</span>
 				)}
 			</div>
@@ -61,13 +64,18 @@ function SourceSelector({
 								value: 'auto',
 								testId: 'drawer-source-auto',
 								disabled: true,
-								disabledTooltip:
+								disabledTooltip: translateInterfaceCopy(
 									'Available once SigNoz has default pricing for this model.',
+								),
 								label: (
 									<>
-										<div className={styles.sourceRadioTitle}>Auto-populated</div>
+										<div className={styles.sourceRadioTitle}>
+											{translateConsole('Auto-populated')}
+										</div>
 										<div className={styles.sourceRadioDesc}>
-											Available once SigNoz has default pricing for this model.
+											{translateConsole(
+												'Available once SigNoz has default pricing for this model.',
+											)}
 										</div>
 									</>
 								),
@@ -77,9 +85,11 @@ function SourceSelector({
 								testId: 'drawer-source-auto',
 								label: (
 									<>
-										<div className={styles.sourceRadioTitle}>Auto-populated</div>
+										<div className={styles.sourceRadioTitle}>
+											{translateConsole('Auto-populated')}
+										</div>
 										<div className={styles.sourceRadioDesc}>
-											Default pricing from SigNoz.
+											{translateConsole('Default pricing from SigNoz.')}
 										</div>
 									</>
 								),
@@ -89,9 +99,11 @@ function SourceSelector({
 						testId: 'drawer-source-override',
 						label: (
 							<>
-								<div className={styles.sourceRadioTitle}>User override</div>
+								<div className={styles.sourceRadioTitle}>
+									{translateConsole('User override')}
+								</div>
 								<div className={styles.sourceRadioDesc}>
-									Custom pricing. Takes precedence.
+									{translateConsole('Custom pricing. Takes precedence.')}
 								</div>
 							</>
 						),
@@ -99,10 +111,14 @@ function SourceSelector({
 				]}
 			/>
 			{showResetConfirm && (
-				<div className={styles.resetConfirm} aria-label="Reset to default pricing">
+				<div
+					className={styles.resetConfirm}
+					aria-label={translateConsole('Reset to default pricing')}
+				>
 					<p>
-						Reset to default pricing? Custom values will be discarded. It might take
-						24 hours for changes to take effect.
+						{translateConsole(
+							'Reset to default pricing? Custom values will be discarded. It might take 24 hours for changes to take effect.',
+						)}
 					</p>
 					<div className={styles.resetConfirmActions}>
 						<Button
@@ -112,7 +128,7 @@ function SourceSelector({
 							onClick={(): void => setShowResetConfirm(false)}
 							testId="drawer-reset-keep-btn"
 						>
-							Keep
+							{translateConsole('Keep')}
 						</Button>
 						<Button
 							size="md"
@@ -121,7 +137,7 @@ function SourceSelector({
 							onClick={confirmReset}
 							testId="drawer-reset-confirm-btn"
 						>
-							Reset
+							{translateConsole('Reset')}
 						</Button>
 					</div>
 				</div>

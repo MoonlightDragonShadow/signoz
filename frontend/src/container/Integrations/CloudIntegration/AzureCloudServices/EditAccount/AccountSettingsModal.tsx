@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Dispatch, SetStateAction, useMemo } from 'react';
 import { useQueryClient } from 'react-query';
 import { Button } from '@signozhq/ui/button';
@@ -24,6 +25,8 @@ function AccountSettingsModal({
 	account,
 	setActiveAccount,
 }: AccountSettingsModalProps): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
+	const translateConsole = useConsoleTranslation();
 	const {
 		form,
 		isLoading,
@@ -49,7 +52,7 @@ function AccountSettingsModal({
 		<DrawerWrapper
 			open={true}
 			className="account-settings-modal"
-			title="Account Settings"
+			title={translateConsole('Account Settings')}
 			direction="right"
 			showCloseButton
 			onOpenChange={(open): void => {
@@ -72,7 +75,9 @@ function AccountSettingsModal({
 						cloudProvider={INTEGRATION_TYPES.AZURE}
 					/>
 					<Button
-						disabledTooltip="Change the resource groups first"
+						disabledTooltip={translateInterfaceCopy(
+							'Change the resource groups first',
+						)}
 						size="md"
 						variant="solid"
 						color="secondary"
@@ -81,7 +86,7 @@ function AccountSettingsModal({
 						loading={isLoading}
 						prefix={<Save size={14} />}
 					>
-						Update Changes
+						{translateConsole('Update Changes')}
 					</Button>
 				</div>
 			}
@@ -97,10 +102,10 @@ function AccountSettingsModal({
 					<div className="account-settings-modal__body-account-info">
 						<div className="account-settings-modal__body-account-info-connected-account-details">
 							<div className="account-settings-modal__body-account-info-connected-account-details-title">
-								Connected Account details
+								{translateConsole('Connected Account details')}
 							</div>
 							<div className="account-settings-modal__body-account-info-connected-account-details-account-id">
-								Azure Subscription:{' '}
+								{translateConsole('Azure Subscription:')}{' '}
 								<span className="account-settings-modal__body-account-info-connected-account-details-account-id-account-id">
 									{account?.providerAccountId}
 								</span>
@@ -111,7 +116,7 @@ function AccountSettingsModal({
 					{azureConfig?.deployment_region && (
 						<div className="account-settings-modal__body-region-selector">
 							<div className="account-settings-modal__body-region-selector-title">
-								Deployment region
+								{translateConsole('Deployment region')}
 							</div>
 							<div className="account-settings-modal__body-region-selector-description">
 								{azureConfig.deployment_region}
@@ -121,10 +126,12 @@ function AccountSettingsModal({
 
 					<div className="account-settings-modal__body-region-selector">
 						<div className="account-settings-modal__body-region-selector-title">
-							Resource groups
+							{translateConsole('Resource groups')}
 						</div>
 						<div className="account-settings-modal__body-region-selector-description">
-							Update the resource groups that should be monitored.
+							{translateConsole(
+								'Update the resource groups that should be monitored.',
+							)}
 						</div>
 
 						<Form.Item
@@ -134,7 +141,7 @@ function AccountSettingsModal({
 									required: true,
 									type: 'array',
 									min: 1,
-									message: 'Please add at least one resource group',
+									message: translateConsole('Please add at least one resource group'),
 								},
 							]}
 						>

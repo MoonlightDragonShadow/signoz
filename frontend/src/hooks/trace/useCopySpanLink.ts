@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { MouseEventHandler, useCallback } from 'react';
 import { useAppLocation } from 'lib/router/useAppLocation';
 import { useCopyToClipboard } from 'react-use';
@@ -15,6 +16,7 @@ interface SpanLike {
 export const useCopySpanLink = (
 	span?: SpanLike,
 ): { onSpanCopy: MouseEventHandler<HTMLElement> } => {
+	const translateRuntimeCopy = useConsoleTranslation();
 	const { pathname } = useAppLocation();
 	const [, setCopy] = useCopyToClipboard();
 
@@ -38,11 +40,11 @@ export const useCopySpanLink = (
 			const link = getAbsoluteUrl(`${pathname}?${params.toString()}`);
 
 			setCopy(link);
-			toast.success('Copied to clipboard', {
+			toast.success(translateRuntimeCopy('Copied to clipboard'), {
 				position: 'top-right',
 			});
 		},
-		[span, pathname, setCopy],
+		[span, pathname, setCopy, translateRuntimeCopy],
 	);
 
 	return {

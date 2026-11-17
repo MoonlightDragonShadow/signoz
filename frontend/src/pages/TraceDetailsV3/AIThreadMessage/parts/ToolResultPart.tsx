@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { MouseEvent, useMemo } from 'react';
 import { CornerUpRight } from '@signozhq/icons';
 
@@ -28,6 +29,7 @@ function ToolResultPart({
 	isLinkEnabled,
 	onLinkClick,
 }: ToolResultPartProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	// Short plain results fit in the chip; JSON or long ones render below it.
 	const isInline = useMemo(
 		() => content.length <= MAX_INLINE_RESULT_LENGTH && !parseJsonObject(content),
@@ -58,7 +60,7 @@ function ToolResultPart({
 					type="button"
 					className={styles.toolLink}
 					onClick={handleLinkClick}
-					title="Go to tool call"
+					title={translateConsole('Go to tool call')}
 					data-testid="ai-tool-result-link"
 				>
 					{chip}

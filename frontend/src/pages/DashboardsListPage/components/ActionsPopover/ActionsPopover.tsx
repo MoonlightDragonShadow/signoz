@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useState } from 'react';
 import { Button } from '@signozhq/ui/button';
 import { EllipsisVertical } from '@signozhq/icons';
@@ -33,6 +34,7 @@ function ActionsPopover({
 	onView,
 	isLegacy = false,
 }: Props): JSX.Element {
+	const translate = useConsoleTranslation();
 	const [hasOpened, setHasOpened] = useState(false);
 	const [isRenameOpen, setIsRenameOpen] = useState(false);
 	const [isEditTagsOpen, setIsEditTagsOpen] = useState(false);
@@ -66,12 +68,12 @@ function ActionsPopover({
 				nativeButton
 				side="bottom"
 				align="end"
-				aria-label="Dashboard actions"
+				aria-label={translate('Dashboard actions')}
 				testId="dashboard-action-icon"
 				onOpenChange={handleOpenChange}
 			>
 				<Button
-					aria-label="Action"
+					aria-label={translate('Action')}
 					size="sm"
 					icon
 					variant="ghost"

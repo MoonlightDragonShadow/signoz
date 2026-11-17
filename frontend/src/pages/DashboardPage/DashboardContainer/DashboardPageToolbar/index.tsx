@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { FullScreenHandle } from 'react-full-screen';
 import { toast } from '@signozhq/ui/sonner';
@@ -32,6 +33,7 @@ interface DashboardPageToolbarProps {
 }
 
 function DashboardPageToolbar(props: DashboardPageToolbarProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const { dashboard, handle } = props;
 
 	const id = dashboard.id;
@@ -127,7 +129,7 @@ function DashboardPageToolbar(props: DashboardPageToolbarProps): JSX.Element {
 					},
 				];
 				await patchAsync(patch);
-				toast.success('Dashboard renamed successfully');
+				toast.success(translate('Dashboard renamed successfully'));
 				void logEvent(DashboardDetailEvents.Renamed, {
 					dashboardId: id,
 					dashboardName: next,
@@ -137,7 +139,7 @@ function DashboardPageToolbar(props: DashboardPageToolbarProps): JSX.Element {
 				showErrorModal(error as APIError);
 			}
 		},
-		[id, patchAsync, showErrorModal],
+		[translate, id, patchAsync, showErrorModal],
 	);
 
 	const { isEditing, draft, setDraft, startEdit, cancel, commit } =

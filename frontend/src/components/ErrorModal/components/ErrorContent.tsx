@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { ReactNode } from 'react';
 import { Color } from '@signozhq/design-tokens';
 import { Button } from 'antd';
@@ -57,7 +58,7 @@ function ErrorContent({ error, icon }: ErrorContentProps): JSX.Element {
 								data-testid="error-docs-button"
 							>
 								<BookOpenText size={14} />
-								Open Docs
+								<ConsoleText message={'Open Docs'} />
 							</Button>
 						</div>
 					)}
@@ -69,7 +70,9 @@ function ErrorContent({ error, icon }: ErrorContentProps): JSX.Element {
 							badgeKey={
 								<div className="error-content__message-badge-label">
 									<div className="error-content__message-badge-label-dot" />
-									<div className="error-content__message-badge-label-text">MESSAGES</div>
+									<div className="error-content__message-badge-label-text">
+										<ConsoleText message={'MESSAGES'} />
+									</div>
 								</div>
 							}
 							badgeValue={errorMessages.length.toString()}
@@ -98,7 +101,9 @@ function ErrorContent({ error, icon }: ErrorContentProps): JSX.Element {
 								color={Color.BG_VANILLA_100}
 								className="error-content__scroll-hint-icon"
 							/>
-							<span className="error-content__scroll-hint-text">Scroll for more</span>
+							<span className="error-content__scroll-hint-text">
+								<ConsoleText message={'Scroll for more'} />
+							</span>
 						</div>
 					)}
 				</div>

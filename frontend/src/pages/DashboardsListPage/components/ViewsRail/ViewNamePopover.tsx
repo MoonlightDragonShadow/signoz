@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { type ChangeEvent, type ReactNode, useEffect, useState } from 'react';
 import { Button } from '@signozhq/ui/button';
 import { Input } from '@signozhq/ui/input';
@@ -34,6 +35,7 @@ function ViewNamePopover({
 	initialName = '',
 	testIdPrefix = 'view-name',
 }: Props): JSX.Element {
+	const translate = useConsoleTranslation();
 	const [name, setName] = useState(initialName);
 
 	useEffect(() => {
@@ -60,12 +62,14 @@ function ViewNamePopover({
 			<PopoverContent align="start">
 				<div className={styles.savePopover}>
 					<div className={styles.saveTitle}>{title}</div>
-					<Typography.Text className={styles.saveLabel}>Name</Typography.Text>
+					<Typography.Text className={styles.saveLabel}>
+						{translate('Name')}
+					</Typography.Text>
 					<Input
 						value={name}
 						autoFocus
 						maxLength={VIEW_NAME_MAX_LENGTH}
-						placeholder="e.g. Prod alerts"
+						placeholder={translate('e.g. Prod alerts')}
 						testId={`${testIdPrefix}-name`}
 						onChange={(e: ChangeEvent<HTMLInputElement>): void =>
 							setName(e.target.value)
@@ -83,12 +87,12 @@ function ViewNamePopover({
 							size="sm"
 							onClick={(): void => onOpenChange(false)}
 						>
-							Cancel
+							{translate('Cancel')}
 						</Button>
 						<Button
 							disabledTooltip={
 								trimmed.length === 0
-									? 'Enter a view name first'
+									? translate('Enter a view name first')
 									: `Use at most ${VIEW_NAME_MAX_LENGTH} characters`
 							}
 							variant="solid"

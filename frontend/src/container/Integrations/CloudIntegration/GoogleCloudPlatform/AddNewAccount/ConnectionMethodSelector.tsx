@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { RadioGroup } from '@signozhq/ui/radio-group';
 import { Typography } from '@signozhq/ui/typography';
 import { CloudintegrationtypesGCPConnectionMethodDTO } from 'api/generated/services/sigNoz.schemas';
@@ -18,6 +19,7 @@ function ConnectionMethodSelector({
 	onChange,
 	disabled,
 }: ConnectionMethodSelectorProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	return (
 		<div className={cx(styles.drawerSection, styles.drawerSurface)}>
 			<Typography.Text
@@ -25,7 +27,7 @@ function ConnectionMethodSelector({
 				size="base"
 				className={styles.drawerSurfaceHead}
 			>
-				Connection method
+				{translateConsole('Connection method')}
 			</Typography.Text>
 
 			<RadioGroup
@@ -36,7 +38,9 @@ function ConnectionMethodSelector({
 					onChange(next as CloudintegrationtypesGCPConnectionMethodDTO)
 				}
 				disabled={disabled}
-				disabledTooltip="The connection method can't be changed once setup has started"
+				disabledTooltip={translateConsole(
+					"The connection method can't be changed once setup has started",
+				)}
 				items={[
 					{
 						value: CloudintegrationtypesGCPConnectionMethodDTO.manual,
@@ -44,7 +48,7 @@ function ConnectionMethodSelector({
 						label: (
 							<>
 								<Typography.Text weight="semibold" size="base" display="block">
-									Connect Manually
+									{translateConsole('Connect Manually')}
 								</Typography.Text>
 								<Typography.Text
 									as="p"
@@ -52,7 +56,7 @@ function ConnectionMethodSelector({
 									color="muted"
 									className={styles.methodRadioDesc}
 								>
-									Deploy your own OTel Collector.
+									{translateConsole('Deploy your own OTel Collector.')}
 								</Typography.Text>
 							</>
 						),
@@ -63,7 +67,7 @@ function ConnectionMethodSelector({
 						label: (
 							<>
 								<Typography.Text weight="semibold" size="base" display="block">
-									Connect via Agent
+									{translateConsole('Connect via Agent')}
 								</Typography.Text>
 								<Typography.Text
 									as="p"
@@ -71,7 +75,7 @@ function ConnectionMethodSelector({
 									color="muted"
 									className={styles.methodRadioDesc}
 								>
-									SigNoz deploys and manages the collector for you.
+									{translateConsole('SigNoz deploys and manages the collector for you.')}
 								</Typography.Text>
 							</>
 						),

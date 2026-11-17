@@ -1,3 +1,5 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useEffect } from 'react';
 import { Button } from '@signozhq/ui/button';
 import { Select, Tooltip } from 'antd';
@@ -38,6 +40,7 @@ function AlertThreshold({
 	isErrorChannels,
 	refreshChannels,
 }: AnomalyAndThresholdProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const {
 		alertState,
 		thresholdState,
@@ -126,7 +129,9 @@ function AlertThreshold({
 					destroyTooltipOnHide={false}
 					onOpenChange={onTooltipOpenChange}
 				>
-					<span style={{ display: 'block', width: '100%' }}>{option.label}</span>
+					<span style={{ display: 'block', width: '100%' }}>
+						{translateConsole(option.label)}
+					</span>
 				</Tooltip>
 			),
 		}),
@@ -191,7 +196,7 @@ function AlertThreshold({
 			<div className="alert-condition-sentences">
 				<div className="alert-condition-sentence">
 					<Typography.Text className="sentence-text">
-						Send a notification when
+						{translateConsole('Send a notification when')}
 					</Typography.Text>
 					<Select
 						value={thresholdState.selectedQuery}
@@ -213,11 +218,14 @@ function AlertThreshold({
 							});
 						}}
 						style={{ width: 180 }}
-						options={THRESHOLD_OPERATOR_OPTIONS}
+						options={THRESHOLD_OPERATOR_OPTIONS.map((option) => ({
+							...option,
+							label: translateConsole(option.label),
+						}))}
 						data-testid="alert-threshold-operator-select"
 					/>
 					<Typography.Text className="sentence-text">
-						the threshold(s)
+						<ConsoleText message={'the threshold(s)'} />
 					</Typography.Text>
 					<Select
 						value={
@@ -235,7 +243,7 @@ function AlertThreshold({
 						data-testid="alert-threshold-match-type-select"
 					/>
 					<Typography.Text className="sentence-text">
-						during the <EvaluationSettings />
+						<ConsoleText message={'during the'} /> <EvaluationSettings />
 					</Typography.Text>
 				</div>
 			</div>
@@ -263,7 +271,7 @@ function AlertThreshold({
 					onClick={(): void => addThreshold()}
 					testId="add-threshold-button"
 				>
-					Add Threshold
+					{translateConsole('Add Threshold')}
 				</Button>
 			</div>
 

@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useState } from 'react';
 import { Button } from '@signozhq/ui/button';
 import { Input } from '@signozhq/ui/input';
@@ -26,6 +27,8 @@ function ExtraPricingBuckets({
 	isReadOnly,
 	onChange,
 }: ExtraPricingBucketsProps): JSX.Element {
+	const translateRuntimeCopy = useConsoleTranslation();
+	const translateConsole = useConsoleTranslation();
 	const [isExtraPricingBucketOpen, setIsExtraPricingBucketOpen] =
 		useState<boolean>(false);
 
@@ -67,9 +70,11 @@ function ExtraPricingBuckets({
 	return (
 		<div className={cx(styles.extraBucketsSection, styles.drawerSection)}>
 			<div className={styles.extraBucketsSectionHead}>
-				<span className={styles.fieldLabel}>Extra Pricing Buckets</span>
+				<span className={styles.fieldLabel}>
+					{translateConsole('Extra Pricing Buckets')}
+				</span>
 				<Typography.Text as="span" size="small" color="muted">
-					Optional
+					{translateConsole('Optional')}
 				</Typography.Text>
 			</div>
 
@@ -92,7 +97,10 @@ function ExtraPricingBuckets({
 						}
 						testId={`drawer-${bucket.testId}-cost`}
 					/>
-					<Tooltip title="Pricing per 1M tokens" placement="left">
+					<Tooltip
+						title={translateConsole('Pricing per 1M tokens')}
+						placement="left"
+					>
 						<Typography.Text size="xs" color="muted">
 							1M
 						</Typography.Text>
@@ -105,7 +113,9 @@ function ExtraPricingBuckets({
 							variant="link"
 							color="danger"
 							onClick={(): void => removeBucket(bucket.key)}
-							aria-label={`Remove ${bucket.label}`}
+							aria-label={translateRuntimeCopy('Remove {{value1}}', {
+								value1: bucket.label,
+							})}
 							testId={`drawer-remove-${bucket.testId}`}
 						>
 							<Trash2 size={14} />
@@ -117,7 +127,7 @@ function ExtraPricingBuckets({
 			{addedBuckets.length > 0 && (
 				<div className={cx(styles.pricingField, styles.cacheModeField)}>
 					<label htmlFor="cache-mode" className={styles.fieldLabel}>
-						Cache mode
+						{translateConsole('Cache mode')}
 					</label>
 					<SelectSimple
 						id="cache-mode"
@@ -142,13 +152,15 @@ function ExtraPricingBuckets({
 					onClick={(): void => setIsExtraPricingBucketOpen(true)}
 					testId="drawer-add-bucket-btn"
 				>
-					Add pricing bucket
+					{translateConsole('Add pricing bucket')}
 				</Button>
 			)}
 
 			{!isReadOnly && isExtraPricingBucketOpen && (
 				<div className={styles.bucketPicker} data-testid="drawer-bucket-picker">
-					<div className={styles.bucketPickerTitle}>Add a pricing bucket</div>
+					<div className={styles.bucketPickerTitle}>
+						{translateConsole('Add a pricing bucket')}
+					</div>
 					<div className={styles.bucketPickerChips}>
 						{availableBuckets.map((bucket) => (
 							<Button
@@ -171,7 +183,7 @@ function ExtraPricingBuckets({
 						onClick={(): void => setIsExtraPricingBucketOpen(false)}
 						testId="drawer-add-bucket-cancel"
 					>
-						Cancel
+						{translateConsole('Cancel')}
 					</Button>
 				</div>
 			)}

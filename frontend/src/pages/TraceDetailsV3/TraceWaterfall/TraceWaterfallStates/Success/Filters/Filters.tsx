@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useMemo, useRef, useState } from 'react';
 import { navigate } from 'lib/router/navigation';
 import { ArrowRightFromLine, Search, X } from '@signozhq/icons';
@@ -68,6 +69,8 @@ function Filters({
 	onExpand: () => void;
 	onCollapse: () => void;
 }): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
+	const translateConsole = useConsoleTranslation();
 	const [expression, setExpression] = useState<string>('');
 	const [committedExpression, setCommittedExpression] = useState<string>('');
 	const [noData, setNoData] = useState<boolean>(false);
@@ -243,7 +246,7 @@ function Filters({
 			className={styles.highlightErrorsToggle}
 			data-testid="highlight-errors-toggle"
 		>
-			<Typography.Text>Highlight errors</Typography.Text>
+			<Typography.Text>{translateConsole('Highlight errors')}</Typography.Text>
 			<Switch
 				textPlacement="right"
 				color="danger"
@@ -285,7 +288,7 @@ function Filters({
 				expression ? (
 					<div className={styles.pillPopover}>
 						<div className={styles.pillPopoverHeader}>
-							<Typography.Text>Search query</Typography.Text>
+							<Typography.Text>{translateConsole('Search query')}</Typography.Text>
 							<CopyButton value={expression} size={12} />
 						</div>
 						<div className={styles.pillPopoverExpression}>{expression}</div>
@@ -350,7 +353,9 @@ function Filters({
 								onChange={handleExpressionChange}
 								onRun={handleRunQuery}
 								dataSource={DataSource.TRACES}
-								placeholder="Enter your filter query (e.g., http.status_code >= 500 AND service.name = 'frontend')"
+								placeholder={translateInterfaceCopy(
+									"Enter your filter query (e.g., http.status_code >= 500 AND service.name = 'frontend')",
+								)}
 							/>
 						</div>
 					</div>
@@ -375,9 +380,9 @@ function Filters({
 				{isExpanded && (
 					<div className={styles.expandedActions}>
 						{hasExpression && (
-							<Tooltip title="Clear filter">
+							<Tooltip title={translateConsole('Clear filter')}>
 								<Button
-									aria-label="Clear filter"
+									aria-label={translateConsole('Clear filter')}
 									variant="ghost"
 									size="sm"
 									icon
@@ -389,9 +394,9 @@ function Filters({
 								</Button>
 							</Tooltip>
 						)}
-						<Tooltip title="Collapse filters">
+						<Tooltip title={translateConsole('Collapse filters')}>
 							<Button
-								aria-label="Collapse filters"
+								aria-label={translateConsole('Collapse filters')}
 								testId="waterfall-filter-collapse"
 								variant="ghost"
 								size="sm"

@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useMemo, useState } from 'react';
 import { Loader } from '@signozhq/icons';
 import { Empty, Spin } from 'antd';
@@ -29,6 +30,7 @@ Chart.register(
 );
 
 function FunnelGraph(): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const { funnelId, startTime, endTime, steps } = useFunnelContext();
 
 	const payload = {
@@ -83,7 +85,7 @@ function FunnelGraph(): JSX.Element {
 	if (!data) {
 		return (
 			<div className="funnel-graph">
-				<Empty description="No data" />
+				<Empty description={translateConsole('No data')} />
 			</div>
 		);
 	}
@@ -91,7 +93,11 @@ function FunnelGraph(): JSX.Element {
 	if (isError) {
 		return (
 			<div className="funnel-graph">
-				<Empty description="Error fetching data. If the problem persists, please contact support." />
+				<Empty
+					description={translateConsole(
+						'Error fetching data. If the problem persists, please contact support.',
+					)}
+				/>
 			</div>
 		);
 	}

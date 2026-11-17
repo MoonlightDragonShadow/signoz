@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useMemo } from 'react';
 import { Ellipsis } from '@signozhq/icons';
 import AuthZDropdown from 'lib/authz/components/AuthZDropdown/AuthZDropdown';
@@ -12,6 +13,7 @@ function SavedViewsRowMenu({
 	onAction,
 	onOpen,
 }: SavedViewsRowMenuProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const items = useMemo<AuthZDropdownItemType[]>(
 		() =>
 			SAVED_VIEW_ROW_ACTIONS.flatMap(
@@ -55,8 +57,8 @@ function SavedViewsRowMenu({
 		>
 			<SavedViewsRowButton
 				icon={<Ellipsis size={14} />}
-				label="More options"
-				tooltip="More options"
+				label={translateConsole('More options')}
+				tooltip={translateConsole('More options')}
 				testId="saved-views-row-menu"
 			/>
 		</AuthZDropdown>

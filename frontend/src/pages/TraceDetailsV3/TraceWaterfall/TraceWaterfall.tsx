@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Dispatch, SetStateAction, useMemo } from 'react';
 import { Skeleton } from 'antd';
 import { AxiosError } from 'axios';
@@ -36,6 +37,7 @@ interface ITraceWaterfallProps {
 }
 
 function TraceWaterfall(props: ITraceWaterfallProps): JSX.Element {
+	const translateRemainingCopy = useConsoleTranslation();
 	const {
 		traceData,
 		isFetchingTraceData,
@@ -136,7 +138,7 @@ function TraceWaterfall(props: ITraceWaterfallProps): JSX.Element {
 					/>
 				);
 			default:
-				return <Spinner tip="Fetching the trace!" />;
+				return <Spinner tip={translateRemainingCopy('Fetching the trace!')} />;
 		}
 	}, [
 		errorFetchingTraceData,

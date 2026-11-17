@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { ReactNode } from 'react';
 import { Button, Tooltip } from 'antd';
 import classNames from 'classnames';
@@ -23,6 +24,7 @@ import styles from './AlertCondition.module.scss';
 import './styles.scss';
 
 function AlertCondition(): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const { alertType, setAlertType } = useCreateAlertState();
 	useAnomalyFunctionSync();
 
@@ -42,14 +44,14 @@ function AlertCondition(): JSX.Element {
 
 	const tabs = [
 		{
-			label: 'Threshold',
+			label: translateConsole('Threshold'),
 			icon: <ChartLine size={14} data-testid="threshold-view" />,
 			value: AlertTypes.METRICS_BASED_ALERT,
 		},
 		...(showMultipleTabs
 			? [
 					{
-						label: 'Anomaly',
+						label: translateConsole('Anomaly'),
 						icon: <Activity size={14} data-testid="anomaly-view" />,
 						value: AlertTypes.ANOMALY_BASED_ALERT,
 					},
@@ -85,7 +87,7 @@ function AlertCondition(): JSX.Element {
 
 	return (
 		<div className="alert-condition-container">
-			<Stepper stepNumber={2} label="Set alert conditions" />
+			<Stepper stepNumber={2} label={translateConsole('Set alert conditions')} />
 			<div className="alert-condition">
 				<div className="alert-condition-tabs">
 					{tabs.map((tab) => (

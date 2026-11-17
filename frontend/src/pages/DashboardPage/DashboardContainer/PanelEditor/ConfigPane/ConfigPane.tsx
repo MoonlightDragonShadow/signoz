@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useMemo } from 'react';
 import { Input } from 'antd';
 import { Typography } from '@signozhq/ui/typography';
@@ -75,6 +76,7 @@ function ConfigPane({
 	panelId,
 	metricUnit,
 }: ConfigPaneProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const panelKind = spec.plugin.kind;
 	const definition = getPanelDefinition(panelKind);
 	// The header toggle belongs with the title and description it hides, so the kind's
@@ -102,13 +104,13 @@ function ConfigPane({
 		<div className={styles.config} data-testid="panel-editor-v2-config">
 			<header className={styles.heading}>
 				<span className={styles.marker} />
-				<Typography.Text>Panel Details</Typography.Text>
+				<Typography.Text>{translate('Panel Details')}</Typography.Text>
 			</header>
 			<div className={styles.divider} />
 
 			<div className={styles.group}>
 				<div className={styles.field}>
-					<Typography.Text>Title</Typography.Text>
+					<Typography.Text>{translate('Title')}</Typography.Text>
 					<PanelTitleInput
 						value={spec.display.name}
 						onChange={(value): void => setDisplayField('name', value)}
@@ -116,11 +118,11 @@ function ConfigPane({
 				</div>
 
 				<div className={styles.field}>
-					<Typography.Text>Description</Typography.Text>
+					<Typography.Text>{translate('Description')}</Typography.Text>
 					<Input.TextArea
 						data-testid="panel-editor-v2-description"
 						value={spec.display.description ?? ''}
-						placeholder="Add a description"
+						placeholder={translate('Add a description')}
 						rows={3}
 						onChange={(e): void => setDisplayField('description', e.target.value)}
 					/>
@@ -152,7 +154,7 @@ function ConfigPane({
 				<>
 					<div className={styles.divider} />
 					<div className={styles.sectionsContainer}>
-						<span className={styles.eyebrow}>DISPLAY OPTIONS</span>
+						<span className={styles.eyebrow}>{translate('DISPLAY OPTIONS')}</span>
 						<div className={styles.sections}>
 							{sections.map((config) => (
 								<SectionSlot

@@ -1,3 +1,5 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import type React from 'react';
 import { Badge } from '@signozhq/ui/badge';
 import { Table, Tooltip } from 'antd';
@@ -56,14 +58,14 @@ function StatusBadge({ status }: { status: MemberRow['status'] }): JSX.Element {
 	if (status === MemberStatus.Active) {
 		return (
 			<Badge color="success" variant="outlined">
-				ACTIVE
+				<ConsoleText message={'ACTIVE'} />
 			</Badge>
 		);
 	}
 	if (status === MemberStatus.Deleted) {
 		return (
 			<Badge color="danger" variant="outlined">
-				DELETED
+				<ConsoleText message={'DELETED'} />
 			</Badge>
 		);
 	}
@@ -71,7 +73,7 @@ function StatusBadge({ status }: { status: MemberRow['status'] }): JSX.Element {
 	if (status === MemberStatus.Invited) {
 		return (
 			<Badge color="warning" variant="outlined">
-				INVITED
+				<ConsoleText message={'INVITED'} />
 			</Badge>
 		);
 	}
@@ -99,10 +101,12 @@ function MembersEmptyState({
 			</span>
 			{searchQuery ? (
 				<p className="members-empty-state__text">
-					No results for <strong>{searchQuery}</strong>
+					<ConsoleText message={'No results for'} /> <strong>{searchQuery}</strong>
 				</p>
 			) : (
-				<p className="members-empty-state__text">No members found</p>
+				<p className="members-empty-state__text">
+					<ConsoleText message={'No members found'} />
+				</p>
 			)}
 		</div>
 	);
@@ -119,6 +123,7 @@ function MembersTable({
 	onRowClick,
 	onSortChange,
 }: MembersTableProps): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
 	const { formatTimezoneAdjustedTimestamp } = useTimezone();
 
 	const formatJoinedOn = (date: string | null): string => {
@@ -143,7 +148,7 @@ function MembersTable({
 			),
 		},
 		{
-			title: 'Status',
+			title: translateInterfaceCopy('Status'),
 			dataIndex: 'status',
 			key: 'status',
 			width: 100,
@@ -189,7 +194,10 @@ function MembersTable({
 			<span className="members-pagination-range">
 				{range[0]} &#8212; {range[1]}
 			</span>
-			<span className="members-pagination-total"> of {_total}</span>
+			<span className="members-pagination-total">
+				{' '}
+				<ConsoleText message={'of'} /> {_total}
+			</span>
 		</>
 	);
 

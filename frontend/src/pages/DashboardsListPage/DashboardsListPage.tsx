@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { LayoutGrid } from '@signozhq/icons';
 
 import Spinner from 'components/Spinner';
@@ -9,6 +10,7 @@ import styles from './DashboardsListPage.module.scss';
 import { BreadcrumbLink } from '@signozhq/ui/breadcrumb';
 
 function DashboardsListPage(): JSX.Element {
+	const translate = useConsoleTranslation();
 	// Resolved before the list mounts, so no control renders enabled-then-disabled.
 	const { isLoading } = useDashboardCollectionPermissions();
 
@@ -16,7 +18,9 @@ function DashboardsListPage(): JSX.Element {
 		<div className={styles.page}>
 			<div className={styles.header}>
 				<div className={styles.headerLeft}>
-					<BreadcrumbLink icon={<LayoutGrid size={14} />}>Dashboard</BreadcrumbLink>
+					<BreadcrumbLink icon={<LayoutGrid size={14} />}>
+						{translate('Dashboard')}
+					</BreadcrumbLink>
 				</div>
 				<HeaderRightSection
 					enableAnnouncements={false}
@@ -24,7 +28,11 @@ function DashboardsListPage(): JSX.Element {
 					enableFeedback
 				/>
 			</div>
-			{isLoading ? <Spinner tip="Loading dashboards..." /> : <DashboardsList />}
+			{isLoading ? (
+				<Spinner tip={translate('Loading dashboards...')} />
+			) : (
+				<DashboardsList />
+			)}
 		</div>
 	);
 }

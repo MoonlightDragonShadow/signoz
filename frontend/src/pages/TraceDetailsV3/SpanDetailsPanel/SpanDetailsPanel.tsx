@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useMemo, useState } from 'react';
 import { Badge } from '@signozhq/ui/badge';
 import { Tabs, type TabsItemProps } from '@signozhq/ui/tabs';
@@ -78,6 +79,7 @@ function SpanDetailsContent({
 	traceStartTime?: number;
 	traceEndTime?: number;
 }): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
 	const [bodyRef, { width: bodyWidth }] = useMeasure<HTMLDivElement>();
 	const spanAttributeActions = useSpanAttributeActions();
 	const logTraceEvent = useTraceDetailLogEvent('v3', selectedSpan.trace_id);
@@ -290,7 +292,7 @@ function SpanDetailsContent({
 	const spanDetailTabs: TabsItemProps[] = [
 		{
 			key: 'overview',
-			label: 'Overview',
+			label: translateInterfaceCopy('Overview'),
 			prefixIcon: <Bookmark size={14} />,
 			children: (
 				<>
@@ -312,7 +314,7 @@ function SpanDetailsContent({
 		},
 		{
 			key: 'events',
-			label: 'Events',
+			label: translateInterfaceCopy('Events'),
 			prefixIcon: <ScrollText size={14} />,
 			suffixIcon:
 				eventsCount > 0 ? (
@@ -330,7 +332,7 @@ function SpanDetailsContent({
 		},
 		{
 			key: 'logs',
-			label: 'Logs',
+			label: translateInterfaceCopy('Logs'),
 			prefixIcon: <List size={14} />,
 			children: (
 				<SpanLogs
@@ -355,7 +357,7 @@ function SpanDetailsContent({
 	if (infraMetadata) {
 		spanDetailTabs.push({
 			key: 'metrics',
-			label: 'Metrics',
+			label: translateInterfaceCopy('Metrics'),
 			prefixIcon: <ChartColumnBig size={14} />,
 			children: (
 				<InfraMetrics
@@ -409,6 +411,7 @@ function SpanDetailsPanel({
 	traceStartTime,
 	traceEndTime,
 }: SpanDetailsPanelProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const headerActions = useMemo((): HeaderAction[] => {
 		const actions: HeaderAction[] = [
 			// TODO: Add back when driven through separate config for different pages
@@ -450,7 +453,7 @@ function SpanDetailsPanel({
 	const content = (
 		<>
 			<DetailsHeader
-				title="Span details"
+				title={translateConsole('Span details')}
 				onClose={panelState.close}
 				actions={headerActions}
 				className={

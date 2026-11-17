@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { ChangeEvent } from 'react';
 import { Color } from '@signozhq/design-tokens';
 import { Input } from '@signozhq/ui/input';
@@ -24,6 +25,7 @@ function SearchBar({
 	onSort,
 	onCreateFunnel,
 }: SearchBarProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const { hasEditPermission } = useAppContext();
 
 	return (
@@ -33,14 +35,14 @@ function SearchBar({
 				content={
 					<div className="sort-popover-content">
 						<Typography.Text className="sort-popover-content__heading">
-							Sort By
+							{translateConsole('Sort By')}
 						</Typography.Text>
 						<Button
 							type="text"
 							className="sort-popover-content__button"
 							onClick={(): void => onSort('created_at')}
 						>
-							Last created
+							{translateConsole('Last created')}
 							{sortOrder.columnKey === 'created_at' && <Check size={14} />}
 						</Button>
 						<Button
@@ -48,7 +50,7 @@ function SearchBar({
 							className="sort-popover-content__button"
 							onClick={(): void => onSort('updated_at')}
 						>
-							Last updated
+							{translateConsole('Last updated')}
 							{sortOrder.columnKey === 'updated_at' && <Check size={14} />}
 						</Button>
 					</div>
@@ -63,13 +65,13 @@ function SearchBar({
 					data-testid="traces-funnels-sort-btn"
 				>
 					<ArrowDownWideNarrow size={12} data-testid="sort-by" />
-					<div className="search__sort-btn-text">Sort</div>
+					<div className="search__sort-btn-text">{translateConsole('Sort')}</div>
 				</Button>
 			</Popover>
 			<Input
 				className="search__input"
 				testId="traces-funnels-search"
-				placeholder="Search by name, description, or tags..."
+				placeholder={translateConsole('Search by name, description, or tags...')}
 				prefix={
 					<Search
 						size={12}
@@ -95,7 +97,7 @@ function SearchBar({
 					onClick={onCreateFunnel}
 					disabled={!hasEditPermission}
 				>
-					New funnel
+					{translateConsole('New funnel')}
 				</Button>
 			</Tooltip>
 		</div>

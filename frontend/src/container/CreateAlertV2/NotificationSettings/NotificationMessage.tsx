@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Input, Tooltip } from 'antd';
 import { Typography } from '@signozhq/ui/typography';
 import { Info } from '@signozhq/icons';
@@ -5,6 +6,7 @@ import { Info } from '@signozhq/icons';
 import { useCreateAlertState } from '../context';
 
 function NotificationMessage(): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const { notificationSettings, setNotificationSettings } =
 		useCreateAlertState();
 
@@ -54,14 +56,19 @@ function NotificationMessage(): JSX.Element {
 			<div className="notification-message-header">
 				<div className="notification-message-header-content">
 					<Typography.Text className="notification-message-header-title">
-						Notification Message
-						<Tooltip title="Customize the message content sent in alert notifications. Template variables like {{alertname}}, {{value}}, and {{threshold}} will be replaced with actual values when the alert fires.">
+						{translateConsole('Notification Message')}
+						<Tooltip
+							title={translateConsole(
+								'Customize the message content sent in alert notifications. Template variables like {{alertname}}, {{value}}, and {{threshold}} will be replaced with actual values when the alert fires.',
+							)}
+						>
 							<Info size={16} />
 						</Tooltip>
 					</Typography.Text>
 					<Typography.Text className="notification-message-header-description">
-						Custom message content for alert notifications. Use template variables to
-						include dynamic information.
+						{translateConsole(
+							'Custom message content for alert notifications. Use template variables to include dynamic information.',
+						)}
 					</Typography.Text>
 				</div>
 				<div className="notification-message-header-actions">
@@ -82,7 +89,7 @@ function NotificationMessage(): JSX.Element {
 						payload: e.target.value,
 					})
 				}
-				placeholder="Enter notification message..."
+				placeholder={translateConsole('Enter notification message...')}
 			/>
 		</div>
 	);

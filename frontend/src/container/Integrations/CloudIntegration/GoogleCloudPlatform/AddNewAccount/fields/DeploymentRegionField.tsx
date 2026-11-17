@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { ComboboxSimple } from '@signozhq/ui/combobox';
 import { CloudintegrationtypesGCPConnectionMethodDTO } from 'api/generated/services/sigNoz.schemas';
 import cx from 'classnames';
@@ -30,6 +31,7 @@ function DeploymentRegionField({
 	control,
 	connectionMethod,
 }: DeploymentRegionFieldProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	return (
 		<Controller
 			name="deploymentRegion"
@@ -38,7 +40,7 @@ function DeploymentRegionField({
 			render={({ field, fieldState }): JSX.Element => (
 				<FormField
 					htmlFor="gcp-deployment-region-select"
-					label="Deployment Region"
+					label={translateConsole('Deployment Region')}
 					tooltip={TOOLTIPS[connectionMethod]}
 					required
 					error={fieldState.error}
@@ -51,7 +53,7 @@ function DeploymentRegionField({
 						items={REGION_ITEMS}
 						value={field.value}
 						onChange={(value): void => field.onChange(value as string)}
-						placeholder="Select a region..."
+						placeholder={translateConsole('Select a region...')}
 						inputPlaceholder="Search regions…"
 						withPortal={false}
 						testId="gcp-deployment-region-select"

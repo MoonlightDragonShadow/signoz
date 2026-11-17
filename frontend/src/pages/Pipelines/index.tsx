@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from 'react-query';
@@ -31,6 +32,7 @@ const pipelineRefetchInterval = (
 };
 
 function Pipelines(): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
 	const { t } = useTranslation('common');
 	const { notifications } = useNotifications();
 	const {
@@ -78,7 +80,12 @@ function Pipelines(): JSX.Element {
 	}, [isError, notifications, pipelineData?.error, t]);
 
 	if (isLoading) {
-		return <Spinner height="75vh" tip="Loading Pipelines..." />;
+		return (
+			<Spinner
+				height="75vh"
+				tip={translateInterfaceCopy('Loading Pipelines...')}
+			/>
+		);
 	}
 
 	return (

@@ -1,3 +1,5 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { useEffect, useState } from 'react';
 import { Button } from '@signozhq/ui/button';
 import { Input } from '@signozhq/ui/input';
@@ -41,6 +43,7 @@ const migrationTimelineOptions = {
 };
 
 function OrgQuestions({ orgDetails, onNext }: OrgQuestionsProps): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
 	const [observabilityTool, setObservabilityTool] = useState<string | null>(
 		orgDetails?.observabilityTool || null,
 	);
@@ -140,10 +143,10 @@ function OrgQuestions({ orgDetails, onNext }: OrgQuestionsProps): JSX.Element {
 			<div className="onboarding-header-section">
 				<div className="onboarding-header-icon">🎉</div>
 				<Typography.Title level={4} className="onboarding-header-title">
-					Welcome to SigNoz Cloud
+					<ConsoleText message={'Welcome to SigNoz Cloud'} />
 				</Typography.Title>
 				<Typography.Text className="onboarding-header-subtitle">
-					Let&apos;s get you started
+					<ConsoleText message={"Let's get you started"} />
 				</Typography.Text>
 			</div>
 
@@ -151,7 +154,9 @@ function OrgQuestions({ orgDetails, onNext }: OrgQuestionsProps): JSX.Element {
 				<div className="questions-form">
 					<div className="form-group">
 						<label className="question" htmlFor="observabilityTool">
-							Which observability tool do you currently use?
+							<ConsoleText
+								message={'Which observability tool do you currently use?'}
+							/>
 						</label>
 						<RadioGroup
 							color="primary"
@@ -165,7 +170,9 @@ function OrgQuestions({ orgDetails, onNext }: OrgQuestionsProps): JSX.Element {
 										<Input
 											type="text"
 											className="onboarding-questionaire-other-input"
-											placeholder="What tool do you currently use?"
+											placeholder={translateInterfaceCopy(
+												'What tool do you currently use?',
+											)}
 											value={otherTool || ''}
 											autoFocus
 											style={{ userSelect: 'text' }}
@@ -173,7 +180,7 @@ function OrgQuestions({ orgDetails, onNext }: OrgQuestionsProps): JSX.Element {
 											onChange={(e): void => setOtherTool(e.target.value)}
 										/>
 									) : (
-										label
+										translateInterfaceCopy(label)
 									),
 							}))}
 						/>
@@ -182,7 +189,9 @@ function OrgQuestions({ orgDetails, onNext }: OrgQuestionsProps): JSX.Element {
 					{showMigrationQuestion && (
 						<div className="form-group">
 							<div className="question">
-								What is your timeline for migrating to SigNoz?
+								<ConsoleText
+									message={'What is your timeline for migrating to SigNoz?'}
+								/>
 							</div>
 							<RadioGroup
 								color="primary"
@@ -190,21 +199,23 @@ function OrgQuestions({ orgDetails, onNext }: OrgQuestionsProps): JSX.Element {
 								onChange={setMigrationTimeline}
 								items={Object.entries(migrationTimelineOptions).map(([key, label]) => ({
 									value: key,
-									label,
+									label: translateInterfaceCopy(label),
 								}))}
 							/>
 						</div>
 					)}
 
 					<div className="form-group">
-						<div className="question">Do you already use OpenTelemetry?</div>
+						<div className="question">
+							<ConsoleText message={'Do you already use OpenTelemetry?'} />
+						</div>
 						<RadioGroup
 							color="primary"
 							value={usesOtel === true ? 'yes' : usesOtel === false ? 'no' : null}
 							onChange={handleOtelChange}
 							items={[
-								{ value: 'yes', label: 'Yes' },
-								{ value: 'no', label: 'No' },
+								{ value: 'yes', label: translateInterfaceCopy('Yes') },
+								{ value: 'no', label: translateInterfaceCopy('No') },
 							]}
 						/>
 					</div>
@@ -220,7 +231,7 @@ function OrgQuestions({ orgDetails, onNext }: OrgQuestionsProps): JSX.Element {
 					disabledTooltip={getNextDisabledReason()}
 					suffix={<ArrowRight size={12} />}
 				>
-					Next
+					<ConsoleText message={'Next'} />
 				</Button>
 			</div>
 		</div>

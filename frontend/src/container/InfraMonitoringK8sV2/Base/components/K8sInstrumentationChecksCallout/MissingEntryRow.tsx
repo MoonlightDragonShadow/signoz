@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import styles from './MissingEntryRow.module.scss';
 import { ExternalLink, TriangleAlert } from '@signozhq/icons';
 import { Typography } from '@signozhq/ui/typography';
@@ -24,6 +25,7 @@ export function MissingEntryRow({
 	typeLabel,
 	itemType,
 }: MissingEntryRowProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const items = itemType === 'metrics' ? entry.metrics : entry.attributes;
 
 	return (
@@ -56,7 +58,7 @@ export function MissingEntryRow({
 					size="base"
 					className={styles.learnMoreLink}
 				>
-					Learn here
+					{translate('Learn here')}
 					<ExternalLink size={12} />
 				</Typography.Link>
 			)}

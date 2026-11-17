@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { type ReactNode, useId } from 'react';
 import cx from 'classnames';
 
@@ -33,6 +34,7 @@ function ConfigTiles<T extends string>({
 	compact,
 	'aria-label': ariaLabel,
 }: ConfigTilesProps<T>): JSX.Element {
+	const translate = useConsoleTranslation();
 	const name = useId();
 
 	return (
@@ -58,11 +60,11 @@ function ConfigTiles<T extends string>({
 								name={name}
 								value={item.value}
 								checked={selected}
-								aria-label={item.ariaLabel ?? item.label}
+								aria-label={translate(item.ariaLabel ?? item.label)}
 								onChange={(): void => onChange(item.value)}
 							/>
 							{item.drawing}
-							<span className={styles.label}>{item.label}</span>
+							<span className={styles.label}>{translate(item.label)}</span>
 						</label>
 					);
 				})}

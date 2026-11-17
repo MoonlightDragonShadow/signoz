@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useMemo, useState } from 'react';
 import {
@@ -46,6 +47,7 @@ import { FiltersType, IQuickFiltersProps, QuickFiltersSource } from './types';
 import './QuickFilters.styles.scss';
 
 export default function QuickFilters(props: IQuickFiltersProps): JSX.Element {
+	const translateRuntimeCopy = useConsoleTranslation();
 	const translate = useConsoleTranslation();
 	const {
 		className,
@@ -221,7 +223,10 @@ export default function QuickFilters(props: IQuickFiltersProps): JSX.Element {
 			) : (
 				displayedQueryName && (
 					<Tooltip
-						title={`Filter currently in sync with query ${displayedQueryName}`}
+						title={translateRuntimeCopy(
+							'Filter currently in sync with query {{value1}}',
+							{ value1: displayedQueryName },
+						)}
 					>
 						<Typography.Text className="sync-tag">
 							{displayedQueryName}
@@ -297,7 +302,9 @@ export default function QuickFilters(props: IQuickFiltersProps): JSX.Element {
 		<>
 			{quickFilterSource === QuickFiltersSource.API_MONITORING && (
 				<div className="api-quick-filters-header">
-					<Typography.Text>Show IP addresses</Typography.Text>
+					<Typography.Text>
+						<ConsoleText message={'Show IP addresses'} />
+					</Typography.Text>
 					<Switch
 						color="primary"
 						textPlacement="right"
@@ -342,7 +349,9 @@ export default function QuickFilters(props: IQuickFiltersProps): JSX.Element {
 				{filterConfig.length === 0 && (
 					<div className="no-filters-container">
 						<Frown size={16} />
-						<Typography.Text>No filters found</Typography.Text>
+						<Typography.Text>
+							<ConsoleText message={'No filters found'} />
+						</Typography.Text>
 					</div>
 				)}
 			</section>

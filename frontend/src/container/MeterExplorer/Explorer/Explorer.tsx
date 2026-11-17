@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useQueryClient } from 'react-query';
 import * as Sentry from '@sentry/react';
@@ -24,6 +25,7 @@ import TimeSeries from './TimeSeries';
 import './Explorer.styles.scss';
 
 function Explorer(): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const quickFilterFieldApis = useSignalFieldApis();
 	const { handleRunQuery, updateAllQueriesOperators } = useQueryBuilder();
 	const queryClient = useQueryClient();
@@ -82,7 +84,11 @@ function Explorer(): JSX.Element {
 						<div className="explore-header">
 							<div className="explore-header-left-actions">
 								{!showQuickFilters && (
-									<Tooltip title="Show Quick Filters" placement="right" arrow={false}>
+									<Tooltip
+										title={translateConsole('Show Quick Filters')}
+										placement="right"
+										arrow={false}
+									>
 										<Button
 											className="periscope-btn outline"
 											icon={<Filter size={16} />}

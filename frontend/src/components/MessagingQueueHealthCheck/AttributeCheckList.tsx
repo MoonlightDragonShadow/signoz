@@ -1,3 +1,5 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Typography } from '@signozhq/ui/typography';
 import { ReactNode, useEffect, useState } from 'react';
 import {
@@ -93,7 +95,7 @@ function ErrorTitleAndKey({
 						}}
 					>
 						<OctagonAlert size={14} />
-						Fix
+						<ConsoleText message={'Fix'} />
 					</div>
 				</Tooltip>
 			</div>
@@ -173,6 +175,7 @@ function AttributeCheckList({
 	onboardingStatusResponses,
 	loading,
 }: AttributeCheckListProps): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
 	const [filter, setFilter] = useState<AttributesFilters>(AttributesFilters.ALL);
 	const [treeData, setTreeData] = useState<TreeDataNode[]>([]);
 
@@ -216,7 +219,7 @@ function AttributeCheckList({
 
 	return (
 		<Modal
-			title="Kafka Service Attributes"
+			title={translateInterfaceCopy('Kafka Service Attributes')}
 			open={visible}
 			onCancel={onClose}
 			footer={false}

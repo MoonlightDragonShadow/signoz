@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useQueryClient } from 'react-query';
@@ -869,7 +870,7 @@ function FormAlertRules({
 						onClick={(): void => handleRedirection(alertDef.alertType as AlertTypes)}
 						icon={<ExternalLink size={14} />}
 					>
-						Alert Setup Guide
+						<ConsoleText message={'Alert Setup Guide'} />
 					</Button>
 				</div>
 

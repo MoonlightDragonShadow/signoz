@@ -1,3 +1,5 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import type { Control, UseFormRegister } from 'react-hook-form';
 import { Controller } from 'react-hook-form';
 import { Button } from '@signozhq/ui/button';
@@ -37,6 +39,7 @@ function KeyFormPhase({
 	onClose,
 	accountId,
 }: KeyFormPhaseProps): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
 	const checks = accountId
 		? [APIKeyCreatePermission, buildSAAttachPermission(accountId)]
 		: [];
@@ -48,11 +51,14 @@ function KeyFormPhase({
 					<>
 						<div className="add-key-modal__field">
 							<label className="add-key-modal__label" htmlFor="key-name">
-								Name <span style={{ color: 'var(--destructive)' }}>*</span>
+								<ConsoleText message={'Name'} />{' '}
+								<span style={{ color: 'var(--destructive)' }}>*</span>
 							</label>
 							<Input
 								id="key-name"
-								placeholder="Enter key name e.g.: Service Owner"
+								placeholder={translateInterfaceCopy(
+									'Enter key name e.g.: Service Owner',
+								)}
 								className="add-key-modal__input"
 								testId="add-key-name-input"
 								{...register('keyName', {
@@ -63,7 +69,9 @@ function KeyFormPhase({
 						</div>
 
 						<div className="add-key-modal__field">
-							<span className="add-key-modal__label">Expiration</span>
+							<span className="add-key-modal__label">
+								<ConsoleText message={'Expiration'} />
+							</span>
 							<Controller
 								name="expiryMode"
 								control={control}
@@ -92,7 +100,7 @@ function KeyFormPhase({
 						{expiryMode === ExpiryMode.DATE && (
 							<div className="add-key-modal__field">
 								<label className="add-key-modal__label" htmlFor="expiry-date">
-									Expiration Date
+									<ConsoleText message={'Expiration Date'} />
 								</label>
 								<div className="add-key-modal__datepicker">
 									<Controller
@@ -125,7 +133,7 @@ function KeyFormPhase({
 						onClick={onClose}
 						testId="add-key-cancel-btn"
 					>
-						Cancel
+						<ConsoleText message={'Cancel'} />
 					</Button>
 					<AuthZButton
 						size="md"
@@ -139,7 +147,7 @@ function KeyFormPhase({
 						disabled={!isValid}
 						testId="add-key-submit-btn"
 					>
-						Create Key
+						<ConsoleText message={'Create Key'} />
 					</AuthZButton>
 				</div>
 			</div>

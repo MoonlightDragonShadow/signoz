@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback } from 'react';
 import { useQueryClient } from 'react-query';
 import { useCopyToClipboard } from 'react-use';
@@ -40,6 +41,7 @@ function showErrorToast(error: unknown, fallback: string): void {
 export function useSavedViewRowActions(
 	source: SavedviewtypesSourceDTO,
 ): UseSavedViewRowActionsResult {
+	const translateToast = useConsoleTranslation();
 	const queryClient = useQueryClient();
 	const { pathname } = useAppLocation();
 	const timeSearch = useTimeSearchParams();
@@ -55,20 +57,24 @@ export function useSavedViewRowActions(
 			copyToClipboard(
 				getAbsoluteUrl(getSavedViewPath(pathname, view, timeSearch)),
 			);
-			toast.success('Link copied', { position: SAVED_VIEW_TOAST_POSITION });
+			toast.success(translateToast('Link copied'), {
+				position: SAVED_VIEW_TOAST_POSITION,
+			});
 			logSavedViewEvent(SavedViewEvents.LinkCopied, {
 				[SavedViewEventKeys.ViewId]: view.id,
 			});
 		},
-		[pathname, timeSearch, copyToClipboard, logSavedViewEvent],
+		[translateToast, pathname, timeSearch, copyToClipboard, logSavedViewEvent],
 	);
 
 	const copyViewId = useCallback(
 		(view: SavedviewtypesSavedViewDTO): void => {
 			copyToClipboard(view.id);
-			toast.success('View ID copied', { position: SAVED_VIEW_TOAST_POSITION });
+			toast.success(translateToast('View ID copied'), {
+				position: SAVED_VIEW_TOAST_POSITION,
+			});
 		},
-		[copyToClipboard],
+		[translateToast, copyToClipboard],
 	);
 
 	const renameView = useCallback(
@@ -86,7 +92,9 @@ export function useSavedViewRowActions(
 					},
 				});
 				await invalidateSavedViews(queryClient, source, view.id);
-				toast.success('View updated', { position: SAVED_VIEW_TOAST_POSITION });
+				toast.success(translateToast('View updated'), {
+					position: SAVED_VIEW_TOAST_POSITION,
+				});
 				logSavedViewEvent(SavedViewEvents.ViewDetailsEdited, {
 					[SavedViewEventKeys.ViewId]: view.id,
 				});
@@ -96,7 +104,7 @@ export function useSavedViewRowActions(
 				return false;
 			}
 		},
-		[updateSavedView, source, queryClient, logSavedViewEvent],
+		[translateToast, updateSavedView, source, queryClient, logSavedViewEvent],
 	);
 
 	// The deleted view's own query is left alone: refetching it would fail
@@ -106,7 +114,9 @@ export function useSavedViewRowActions(
 			try {
 				await deleteSavedView({ pathParams: { id: view.id } });
 				await invalidateSavedViews(queryClient, source);
-				toast.success('View deleted', { position: SAVED_VIEW_TOAST_POSITION });
+				toast.success(translateToast('View deleted'), {
+					position: SAVED_VIEW_TOAST_POSITION,
+				});
 				logSavedViewEvent(SavedViewEvents.ViewDeleted, {
 					[SavedViewEventKeys.ViewId]: view.id,
 				});
@@ -116,7 +126,7 @@ export function useSavedViewRowActions(
 				return false;
 			}
 		},
-		[deleteSavedView, source, queryClient, logSavedViewEvent],
+		[translateToast, deleteSavedView, source, queryClient, logSavedViewEvent],
 	);
 
 	return {

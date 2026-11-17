@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import {
 	Dispatch,
 	memo,
@@ -150,10 +151,10 @@ function TracesView({
 		<div className={styles.container}>
 			<div className={styles.actionsContainer}>
 				<Typography>
-					This tab only shows Root Spans. More details
+					<ConsoleText message={'This tab only shows Root Spans. More details'} />
 					<Typography.Link href={DOCLINKS.TRACES_DETAILS_LINK} target="_blank">
 						{' '}
-						here
+						<ConsoleText message={'here'} />
 					</Typography.Link>
 				</Typography>
 

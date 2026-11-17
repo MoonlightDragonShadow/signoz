@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useTranslation } from 'react-i18next';
 import { Controller, useFormContext } from 'react-hook-form';
 import { Input } from '@signozhq/ui/input';
@@ -11,6 +12,7 @@ import FormField from '../FormField';
 const { TextArea } = AntdInput;
 
 function JiraSettings(): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
 	const { t } = useTranslation('channels');
 	const {
 		register,
@@ -164,7 +166,7 @@ function JiraSettings(): JSX.Element {
 					<Input
 						{...register('project')}
 						aria-required
-						placeholder="e.g. OPS"
+						placeholder={translateInterfaceCopy('e.g. OPS')}
 						data-testid="jira-project-textbox"
 					/>
 				</FormField>

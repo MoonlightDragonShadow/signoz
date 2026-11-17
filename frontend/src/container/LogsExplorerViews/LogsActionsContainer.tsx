@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { ReactNode, useState } from 'react';
 import { Switch } from '@signozhq/ui/switch';
 import { Typography } from '@signozhq/ui/typography';
@@ -27,6 +28,8 @@ function LogsActionsContainer({
 	onOrderChange: (value: string) => void;
 	explorerActions: ReactNode;
 }): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
+	const translate = useConsoleTranslation();
 	const { options, config } = useOptionsMenu({
 		storageKey: LOCALSTORAGE.LOGS_LIST_OPTIONS,
 		sourcePage: SavedviewtypesSourceDTO.logs,
@@ -40,7 +43,7 @@ function LogsActionsContainer({
 			key: 'raw',
 			label: 'Raw',
 			data: {
-				title: 'max lines per row',
+				title: translateInterfaceCopy('max lines per row'),
 			},
 		},
 		{
@@ -49,7 +52,7 @@ function LogsActionsContainer({
 		},
 		{
 			key: 'table',
-			label: 'Column',
+			label: translateInterfaceCopy('Column'),
 			data: {
 				title: 'columns',
 			},
@@ -61,7 +64,7 @@ function LogsActionsContainer({
 			<div className="tab-options">
 				<div className="tab-options-left">
 					<div className="frequency-chart-view-controller">
-						<Typography>Frequency chart</Typography>
+						<Typography>{translate('Frequency chart')}</Typography>
 						<Switch
 							color="primary"
 							textPlacement="right"
@@ -76,7 +79,7 @@ function LogsActionsContainer({
 					{explorerActions}
 					<div className="order-by-container">
 						<div className="order-by-label">
-							Order by <Minus size={14} /> <ArrowUp10 size={14} />
+							{translate('Order by')} <Minus size={14} /> <ArrowUp10 size={14} />
 						</div>
 
 						<ListViewOrderBy
@@ -104,7 +107,7 @@ function LogsActionsContainer({
 			{config.fieldsSelector && (
 				<FieldsSelector
 					isOpen={isFieldsSelectorOpen}
-					title="Edit columns"
+					title={translateInterfaceCopy('Edit columns')}
 					fields={config.fieldsSelector.value}
 					onFieldsChange={config.fieldsSelector.onFieldsChange}
 					onClose={(): void => setIsFieldsSelectorOpen(false)}

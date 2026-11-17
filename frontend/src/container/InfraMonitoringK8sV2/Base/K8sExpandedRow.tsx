@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useEffect, useMemo } from 'react';
 import { useQuery, useQueryClient } from 'react-query';
 import { useAppLocation } from 'lib/router/useAppLocation';
@@ -89,6 +90,7 @@ export function K8sExpandedRow<
 	getRowTestId,
 	detailsQueryKeyPrefix,
 }: K8sExpandedRowProps<T, TItemKey>): JSX.Element {
+	const translate = useConsoleTranslation();
 	const fontSize = useInfraMonitoringFontSize();
 	const [, setGroupBy] = useInfraMonitoringGroupBy();
 	const [, setCurrentPage] = useInfraMonitoringPageListing();
@@ -301,7 +303,7 @@ export function K8sExpandedRow<
 			onClick={handleViewAllClick}
 			prefix={<CornerDownRight size={14} />}
 		>
-			View All
+			{translate('View All')}
 		</Button>
 	) : null;
 

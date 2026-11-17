@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Button } from '@signozhq/ui/button';
 import { DialogWrapper } from '@signozhq/ui/dialog';
 import { Typography } from '@signozhq/ui/typography';
@@ -34,6 +35,7 @@ function LegacyDashboardDialog({
 	dashboardName,
 	onClose,
 }: LegacyDashboardDialogProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const [, copyToClipboard] = useCopyToClipboard();
 	const { isCloudUser } = useGetTenantLicense();
 	const { retryMigration, isMigrating } = useRetryMigration(onClose);
@@ -41,7 +43,7 @@ function LegacyDashboardDialog({
 
 	const onCopyId = (): void => {
 		copyToClipboard(dashboardId);
-		toast.success('Dashboard ID copied');
+		toast.success(translate('Dashboard ID copied'));
 		void logEvent(DashboardListEvents.LegacyDialogAction, {
 			action: 'copyId',
 			dashboardId,
@@ -66,7 +68,7 @@ function LegacyDashboardDialog({
 
 	return (
 		<DialogWrapper
-			title="This dashboard isn't available in the new experience"
+			title={translate("This dashboard isn't available in the new experience")}
 			open={open}
 			width="narrow"
 			onOpenChange={(next): void => {
@@ -84,7 +86,7 @@ function LegacyDashboardDialog({
 						onClick={onClose}
 						testId="legacy-dashboard-close"
 					>
-						Close
+						{translate('Close')}
 					</Button>
 					{canEdit ? (
 						<Button
@@ -95,7 +97,7 @@ function LegacyDashboardDialog({
 							onClick={onContactSupport}
 							testId="legacy-dashboard-contact-support"
 						>
-							Contact Support
+							{translate('Contact Support')}
 						</Button>
 					) : (
 						<Button
@@ -106,7 +108,7 @@ function LegacyDashboardDialog({
 							onClick={onContactSupport}
 							testId="legacy-dashboard-contact-support"
 						>
-							Contact Support
+							{translate('Contact Support')}
 						</Button>
 					)}
 					<AuthZButton
@@ -120,23 +122,30 @@ function LegacyDashboardDialog({
 						onClick={onRetryMigration}
 						testId="legacy-dashboard-retry-migration"
 					>
-						Retry migration
+						{translate('Retry migration')}
 					</AuthZButton>
 				</div>
 			}
 		>
 			<div className={styles.body}>
 				<Typography.Text className={styles.description}>
-					<strong>{dashboardName || 'This dashboard'}</strong> hasn&apos;t been
-					migrated to the new dashboard experience yet, so it can&apos;t be opened
-					here.{' '}
+					<strong>{dashboardName || translate('This dashboard')}</strong>{' '}
+					{translate(
+						"hasn't been migrated to the new dashboard experience yet, so it can't be opened here.",
+					)}{' '}
 					{canEdit
-						? "Retrying the migration often works once we've handled the case that blocked it. If it still fails, share the dashboard ID below with support."
-						: "Share the dashboard ID below with support and we'll help you move it over."}
+						? translate(
+								"Retrying the migration often works once we've handled the case that blocked it. If it still fails, share the dashboard ID below with support.",
+							)
+						: translate(
+								"Share the dashboard ID below with support and we'll help you move it over.",
+							)}
 				</Typography.Text>
 
 				<div className={styles.idField}>
-					<Typography.Text className={styles.idLabel}>Dashboard ID</Typography.Text>
+					<Typography.Text className={styles.idLabel}>
+						{translate('Dashboard ID')}
+					</Typography.Text>
 					<div className={styles.idRow}>
 						<Typography.Text
 							className={styles.idValue}
@@ -149,7 +158,7 @@ function LegacyDashboardDialog({
 							color="secondary"
 							size="sm"
 							icon
-							aria-label="Copy dashboard ID"
+							aria-label={translate('Copy dashboard ID')}
 							onClick={onCopyId}
 							testId="legacy-dashboard-copy-id"
 						>

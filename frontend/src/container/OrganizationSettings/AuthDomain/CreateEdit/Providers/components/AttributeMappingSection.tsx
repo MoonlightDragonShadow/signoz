@@ -1,3 +1,5 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useState } from 'react';
 import { Color, Style } from '@signozhq/design-tokens';
 import {
@@ -23,6 +25,7 @@ function AttributeMappingSection({
 	isExpanded,
 	onExpandChange,
 }: AttributeMappingSectionProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	// Support both controlled and uncontrolled modes
 	const [internalExpanded, setInternalExpanded] = useState(false);
 	const isControlled = isExpanded !== undefined;
@@ -64,11 +67,14 @@ function AttributeMappingSection({
 							{!expanded ? <ChevronRight size={16} /> : <ChevronDown size={16} />}
 							<div className="attribute-mapping-section__collapse-header-text">
 								<h4 className="attribute-mapping-section__section-title">
-									Attribute Mapping (Advanced)
+									{translateConsole('Attribute Mapping (Advanced)')}
 								</h4>
 								<p className="attribute-mapping-section__section-description">
-									Configure how SAML assertion attributes from your Identity Provider map
-									to SigNoz user attributes. Leave empty to use default values.
+									<ConsoleText
+										message={
+											'Configure how SAML assertion attributes from your Identity Provider map to SigNoz user attributes. Leave empty to use default values.'
+										}
+									/>
 								</p>
 							</div>
 							{!expanded && hasErrors && (
@@ -96,8 +102,16 @@ function AttributeMappingSection({
 								className="attribute-mapping-section__label"
 								htmlFor="email-attribute"
 							>
-								Email Attribute
-								<Tooltip title="The SAML attribute key that contains the user's email. Default: 'email'">
+								{translateConsole('Email Attribute')}
+								<Tooltip
+									title={
+										<ConsoleText
+											message={
+												"The SAML attribute key that contains the user's email. Default: 'email'"
+											}
+										/>
+									}
+								>
 									<CircleHelp size={14} color={Style.L3_FOREGROUND} cursor="help" />
 								</Tooltip>
 							</label>
@@ -105,7 +119,7 @@ function AttributeMappingSection({
 								name={[...fieldNamePrefix, 'email']}
 								className="attribute-mapping-section__form-item"
 							>
-								<Input id="email-attribute" placeholder="Email" />
+								<Input id="email-attribute" placeholder={translateConsole('Email')} />
 							</Form.Item>
 						</div>
 
@@ -115,8 +129,16 @@ function AttributeMappingSection({
 								className="attribute-mapping-section__label"
 								htmlFor="name-attribute"
 							>
-								Name Attribute
-								<Tooltip title="The SAML attribute key that contains the user's display name. Default: 'name'">
+								{translateConsole('Name Attribute')}
+								<Tooltip
+									title={
+										<ConsoleText
+											message={
+												"The SAML attribute key that contains the user's display name. Default: 'name'"
+											}
+										/>
+									}
+								>
 									<CircleHelp size={14} color={Style.L3_FOREGROUND} cursor="help" />
 								</Tooltip>
 							</label>
@@ -124,7 +146,7 @@ function AttributeMappingSection({
 								name={[...fieldNamePrefix, 'name']}
 								className="attribute-mapping-section__form-item"
 							>
-								<Input id="name-attribute" placeholder="Name" />
+								<Input id="name-attribute" placeholder={translateConsole('Name')} />
 							</Form.Item>
 						</div>
 
@@ -134,8 +156,16 @@ function AttributeMappingSection({
 								className="attribute-mapping-section__label"
 								htmlFor="groups-attribute"
 							>
-								Groups Attribute
-								<Tooltip title="The SAML attribute key that contains the user's group memberships. Used for role mapping. Default: 'groups'">
+								{translateConsole('Groups Attribute')}
+								<Tooltip
+									title={
+										<ConsoleText
+											message={
+												"The SAML attribute key that contains the user's group memberships. Used for role mapping. Default: 'groups'"
+											}
+										/>
+									}
+								>
 									<CircleHelp size={14} color={Style.L3_FOREGROUND} cursor="help" />
 								</Tooltip>
 							</label>
@@ -143,7 +173,7 @@ function AttributeMappingSection({
 								name={[...fieldNamePrefix, 'groups']}
 								className="attribute-mapping-section__form-item"
 							>
-								<Input id="groups-attribute" placeholder="Groups" />
+								<Input id="groups-attribute" placeholder={translateConsole('Groups')} />
 							</Form.Item>
 						</div>
 
@@ -153,8 +183,16 @@ function AttributeMappingSection({
 								className="attribute-mapping-section__label"
 								htmlFor="role-attribute"
 							>
-								Role Attribute
-								<Tooltip title="The SAML attribute key that contains the user's role directly from the IDP. Default: 'role'">
+								{translateConsole('Role Attribute')}
+								<Tooltip
+									title={
+										<ConsoleText
+											message={
+												"The SAML attribute key that contains the user's role directly from the IDP. Default: 'role'"
+											}
+										/>
+									}
+								>
 									<CircleHelp size={14} color={Style.L3_FOREGROUND} cursor="help" />
 								</Tooltip>
 							</label>
@@ -162,7 +200,7 @@ function AttributeMappingSection({
 								name={[...fieldNamePrefix, 'role']}
 								className="attribute-mapping-section__form-item"
 							>
-								<Input id="role-attribute" placeholder="Role" />
+								<Input id="role-attribute" placeholder={translateConsole('Role')} />
 							</Form.Item>
 						</div>
 					</div>

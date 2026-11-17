@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useRef } from 'react';
 // eslint-disable-next-line no-restricted-imports
 import { useSelector } from 'react-redux';
@@ -39,6 +40,7 @@ function TopOperationsTable({
 	isEntryPoint,
 	onEntryPointToggle,
 }: TopOperationsTableProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const searchInput = useRef<InputRef>(null);
 	const { servicename: encodedServiceName } = useAppParams<'servicename'>();
 	const { safeNavigate } = useSafeNavigate();
@@ -137,14 +139,14 @@ function TopOperationsTable({
 
 	const columns: ColumnsType<TopOperationList> = [
 		{
-			title: 'Name',
+			title: translate('Name'),
 			dataIndex: 'name',
 			key: 'name',
 			width: 100,
 			...getSearchOption(),
 		},
 		{
-			title: 'P50  (in ms)',
+			title: translate('P50  (in ms)'),
 			dataIndex: 'p50',
 			key: 'p50',
 			width: 50,
@@ -152,7 +154,7 @@ function TopOperationsTable({
 			render: (value: number): string => (value / 1_000_000).toFixed(2),
 		},
 		{
-			title: 'P95  (in ms)',
+			title: translate('P95  (in ms)'),
 			dataIndex: 'p95',
 			key: 'p95',
 			width: 50,
@@ -160,7 +162,7 @@ function TopOperationsTable({
 			render: (value: number): string => (value / 1_000_000).toFixed(2),
 		},
 		{
-			title: 'P99  (in ms)',
+			title: translate('P99  (in ms)'),
 			dataIndex: 'p99',
 			key: 'p99',
 			width: 50,
@@ -168,7 +170,7 @@ function TopOperationsTable({
 			render: (value: number): string => (value / 1_000_000).toFixed(2),
 		},
 		{
-			title: 'Number of Calls',
+			title: translate('Number of Calls'),
 			dataIndex: 'numCalls',
 			key: 'numCalls',
 			width: 50,
@@ -176,7 +178,7 @@ function TopOperationsTable({
 				a.numCalls - b.numCalls,
 		},
 		{
-			title: 'Error Rate',
+			title: translate('Error Rate'),
 			dataIndex: 'errorCount',
 			key: 'errorCount',
 			width: 50,
@@ -214,13 +216,15 @@ function TopOperationsTable({
 				<div className="top-operation__entry-point">
 					<Switch
 						testId="top-operations-entrypoint-toggle"
-						aria-label="Entrypoint Spans"
+						aria-label={translate('Entrypoint Spans')}
 						color="primary"
 						textPlacement="right"
 						value={isEntryPoint}
 						onChange={onEntryPointToggle}
 					/>
-					<span className="top-operation__entry-point-label">Entrypoint Spans</span>
+					<span className="top-operation__entry-point-label">
+						{translate('Entrypoint Spans')}
+					</span>
 					<TextToolTip
 						text={entryPointSpanInfo.text}
 						url={entryPointSpanInfo.url}

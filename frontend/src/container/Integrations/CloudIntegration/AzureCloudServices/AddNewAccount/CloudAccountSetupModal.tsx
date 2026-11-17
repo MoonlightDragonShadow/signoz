@@ -1,3 +1,5 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useState } from 'react';
 import { ChevronDown, ChevronRight, LoaderCircle } from '@signozhq/icons';
 import { Button } from '@signozhq/ui/button';
@@ -22,6 +24,8 @@ import '../../AmazonWebServices/AddNewAccount/CloudAccountSetupModal.style.scss'
 function CloudAccountSetupModal({
 	onClose,
 }: IntegrationModalProps): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
+	const translateConsole = useConsoleTranslation();
 	const {
 		form,
 		modalState,
@@ -48,8 +52,11 @@ function CloudAccountSetupModal({
 						title={
 							<div className="cloud-account-setup-form__alert-message">
 								<Spin indicator={<LoaderCircle size={14} className="animate-spin" />} />
-								Waiting for Azure account connection, retrying in{' '}
-								<span className="retry-time">10</span> secs...
+								<ConsoleText
+									message={'Waiting for Azure account connection, retrying in'}
+								/>{' '}
+								<span className="retry-time">10</span>{' '}
+								<ConsoleText message={'secs...'} />
 							</div>
 						}
 						type="info"
@@ -65,8 +72,11 @@ function CloudAccountSetupModal({
 					<Callout
 						title={
 							<div className="cloud-account-setup-form__alert-message">
-								We couldn&apos;t establish a connection to your Azure account. Please
-								try again
+								<ConsoleText
+									message={
+										"We couldn't establish a connection to your Azure account. Please try again"
+									}
+								/>
 							</div>
 						}
 						type="error"
@@ -87,7 +97,7 @@ function CloudAccountSetupModal({
 				onClick={requestClose}
 				testId="azure-cancel-btn"
 			>
-				Cancel
+				{translateConsole('Cancel')}
 			</Button>
 			{!connectionCommand && (
 				<Button
@@ -98,7 +108,7 @@ function CloudAccountSetupModal({
 					loading={isLoading}
 					testId="azure-generate-command-btn"
 				>
-					Generate Command
+					{translateConsole('Generate Command')}
 				</Button>
 			)}
 			{modalState === ModalStateEnum.ERROR && connectionCommand && (
@@ -109,7 +119,7 @@ function CloudAccountSetupModal({
 					onClick={checkConnectionAgain}
 					testId="azure-check-connection-btn"
 				>
-					Check Again
+					{translateConsole('Check Again')}
 				</Button>
 			)}
 		</div>
@@ -127,14 +137,14 @@ function CloudAccountSetupModal({
 				}}
 				direction="right"
 				showCloseButton
-				title="Add Azure Account"
+				title={translateConsole('Add Azure Account')}
 				width="wide"
 				footer={footer}
 			>
 				<div className="cloud-account-setup-modal__content">
 					<div className="cloud-account-setup-prerequisites">
 						<div className="cloud-account-setup-prerequisites__title">
-							Prerequisites
+							{translateConsole('Prerequisites')}
 						</div>
 
 						<ul className="cloud-account-setup-prerequisites__list">
@@ -143,8 +153,11 @@ function CloudAccountSetupModal({
 									—
 								</span>{' '}
 								<span className="cloud-account-setup-prerequisites__list-item-text">
-									Ensure that you&apos;re logged in to the Azure workspace which you want
-									to monitor.
+									<ConsoleText
+										message={
+											"Ensure that you're logged in to the Azure workspace which you want to monitor."
+										}
+									/>
 								</span>
 							</li>
 							<li className="cloud-account-setup-prerequisites__list-item">
@@ -152,11 +165,11 @@ function CloudAccountSetupModal({
 									—
 								</span>{' '}
 								<span className="cloud-account-setup-prerequisites__list-item-text">
-									Ensure that you either have the{' '}
+									<ConsoleText message={'Ensure that you either have the'} />{' '}
 									<span className="cloud-account-setup-prerequisites__list-item-highlight">
-										Owner
+										{translateConsole('Owner')}
 									</span>{' '}
-									role OR
+									<ConsoleText message={'role OR'} />
 								</span>
 							</li>
 							<li className="cloud-account-setup-prerequisites__list-item">
@@ -164,15 +177,15 @@ function CloudAccountSetupModal({
 									—
 								</span>{' '}
 								<span className="cloud-account-setup-prerequisites__list-item-text">
-									Both the{' '}
+									{translateConsole('Both the')}{' '}
 									<span className="cloud-account-setup-prerequisites__list-item-highlight">
-										Contributor
+										{translateConsole('Contributor')}
 									</span>{' '}
-									and{' '}
+									<ConsoleText message={'and'} />{' '}
 									<span className="cloud-account-setup-prerequisites__list-item-highlight">
-										user access admin
+										<ConsoleText message={'user access admin'} />
 									</span>{' '}
-									roles
+									<ConsoleText message={'roles'} />
 								</span>
 							</li>
 						</ul>
@@ -189,27 +202,31 @@ function CloudAccountSetupModal({
 								variant="link"
 								color="secondary"
 								icon
-								aria-label="How it works"
+								aria-label={translateConsole('How it works')}
 								onClick={(): void => setIsHowItWorksOpen(!isHowItWorksOpen)}
 							>
 								{isHowItWorksOpen ? <ChevronDown /> : <ChevronRight />}
 							</Button>
 
 							<span className="cloud-account-setup-how-it-works-accordion__title-text">
-								How it works?
+								{translateConsole('How it works?')}
 							</span>
 						</div>
 						{isHowItWorksOpen && (
 							<div className="cloud-account-setup-how-it-works-accordion__description">
 								<div className="cloud-account-setup-how-it-works-accordion__description-item">
-									SigNoz will create new resource-group to manage the resources required
-									for this integration. The following steps will create a User-Assigned
-									Managed Identity with the necessary permissions and follows the
-									Principle of Least Privilege.
+									<ConsoleText
+										message={
+											'SigNoz will create new resource-group to manage the resources required for this integration. The following steps will create a User-Assigned Managed Identity with the necessary permissions and follows the Principle of Least Privilege.'
+										}
+									/>
 								</div>
 								<div className="cloud-account-setup-how-it-works__description-item">
-									Once the Integration template is deployed, you can enable the services
-									you want to monitor right here in Signoz dashboard.
+									<ConsoleText
+										message={
+											'Once the Integration template is deployed, you can enable the services you want to monitor right here in Signoz dashboard.'
+										}
+									/>
 								</div>
 							</div>
 						)}
@@ -224,7 +241,9 @@ function CloudAccountSetupModal({
 						<div className="cloud-account-setup-form__content">
 							{connectionCommand ? (
 								<AgentSetupCommand
-									description="Run this command in Azure Cloud Shell (Bash), or in a terminal where the Azure CLI is signed in to the subscription you want to monitor. It contains your SigNoz keys, so do not share it."
+									description={translateInterfaceCopy(
+										'Run this command in Azure Cloud Shell (Bash), or in a terminal where the Azure CLI is signed in to the subscription you want to monitor. It contains your SigNoz keys, so do not share it.',
+									)}
 									command={connectionCommand}
 									testId="azure-agent-command"
 								/>
@@ -232,18 +251,25 @@ function CloudAccountSetupModal({
 								<>
 									<div className="cloud-account-setup-form__form-group">
 										<div className="cloud-account-setup-form__title">
-											Where should we deploy the SigNoz collector resources?
+											{translateConsole(
+												'Where should we deploy the SigNoz collector resources?',
+											)}
 										</div>
 										<div className="cloud-account-setup-form__description">
-											Choose the Azure region for deployment.
+											{translateConsole('Choose the Azure region for deployment.')}
 										</div>
 										<Form.Item
 											name="region"
-											rules={[{ required: true, message: 'Please select a region' }]}
+											rules={[
+												{
+													required: true,
+													message: translateConsole('Please select a region'),
+												},
+											]}
 											className="cloud-account-setup-form__form-item"
 										>
 											<Select
-												placeholder="e.g. East US"
+												placeholder={translateInterfaceCopy('e.g. East US')}
 												options={AZURE_REGIONS.map((region) => ({
 													label: `${region.label} (${region.value})`,
 													value: region.value,
@@ -255,10 +281,10 @@ function CloudAccountSetupModal({
 
 									<div className="cloud-account-setup-form__form-group">
 										<div className="cloud-account-setup-form__title">
-											Which resource groups do you want to monitor?
+											{translateConsole('Which resource groups do you want to monitor?')}
 										</div>
 										<div className="cloud-account-setup-form__description">
-											Add one or more Azure resource group names.
+											{translateConsole('Add one or more Azure resource group names.')}
 										</div>
 										<Form.Item
 											name="resourceGroups"
@@ -267,14 +293,16 @@ function CloudAccountSetupModal({
 													required: true,
 													type: 'array',
 													min: 1,
-													message: 'Please add at least one resource group',
+													message: translateConsole(
+														'Please add at least one resource group',
+													),
 												},
 											]}
 											className="cloud-account-setup-form__form-item"
 										>
 											<Select
 												mode="tags"
-												placeholder="e.g. prod-platform-rg"
+												placeholder={translateInterfaceCopy('e.g. prod-platform-rg')}
 												tokenSeparators={[',']}
 											/>
 										</Form.Item>
@@ -291,8 +319,9 @@ function CloudAccountSetupModal({
 
 							{modalState === ModalStateEnum.WAITING && (
 								<div className="cloud-account-setup-status-message">
-									After running the command, return here and wait for automatic
-									connection detection.
+									{translateConsole(
+										'After running the command, return here and wait for automatic connection detection.',
+									)}
 								</div>
 							)}
 						</div>

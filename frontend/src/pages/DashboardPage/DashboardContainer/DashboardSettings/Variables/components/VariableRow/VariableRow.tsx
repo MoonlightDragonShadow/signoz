@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import type { CSSProperties } from 'react';
 import { Check, GripVertical, PenLine, Trash2, X } from '@signozhq/icons';
 import { useSortable } from '@dnd-kit/sortable';
@@ -39,6 +40,7 @@ function VariableRow({
 	onApplyToAll,
 	isAppliedToAll,
 }: VariableRowProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const {
 		attributes,
 		listeners,
@@ -67,7 +69,7 @@ function VariableRow({
 					<span
 						ref={setActivatorNodeRef}
 						className={styles.dragHandle}
-						aria-label="Reorder variable"
+						aria-label={translate('Reorder variable')}
 						{...attributes}
 						{...listeners}
 					>
@@ -97,7 +99,7 @@ function VariableRow({
 						{isConfirmingDelete ? (
 							<>
 								<Typography.Text className={styles.confirmText}>
-									Delete?
+									{translate('Delete?')}
 								</Typography.Text>
 								<Button
 									variant="solid"
@@ -105,7 +107,7 @@ function VariableRow({
 									size="sm"
 									icon
 									onClick={(): void => onConfirmDelete(index)}
-									aria-label="Confirm delete"
+									aria-label={translate('Confirm delete')}
 									testId={`variable-delete-confirm-${variable.name}`}
 								>
 									<Check size={14} />
@@ -116,7 +118,7 @@ function VariableRow({
 									size="sm"
 									icon
 									onClick={onCancelDelete}
-									aria-label="Cancel delete"
+									aria-label={translate('Cancel delete')}
 								>
 									<X size={14} />
 								</Button>
@@ -129,11 +131,11 @@ function VariableRow({
 										title={
 											isAppliedToAll
 												? undefined
-												: 'Add this variable as a filter to every panel'
+												: translate('Add this variable as a filter to every panel')
 										}
 									>
 										<Button
-											disabledTooltip="Already applied to all panels"
+											disabledTooltip={translate('Already applied to all panels')}
 											variant="ghost"
 											color="secondary"
 											size="sm"
@@ -141,7 +143,7 @@ function VariableRow({
 											onClick={(): void => onApplyToAll(index)}
 											testId={`variable-apply-all-${variable.name}`}
 										>
-											Apply to all
+											{translate('Apply to all')}
 										</Button>
 									</Tooltip>
 								) : null}
@@ -151,7 +153,7 @@ function VariableRow({
 									size="sm"
 									icon
 									onClick={(): void => onEdit(index)}
-									aria-label="Edit variable"
+									aria-label={translate('Edit variable')}
 									testId={`variable-edit-${variable.name}`}
 								>
 									<PenLine size={14} />
@@ -162,7 +164,7 @@ function VariableRow({
 									size="sm"
 									icon
 									onClick={(): void => onRequestDelete(index)}
-									aria-label="Delete variable"
+									aria-label={translate('Delete variable')}
 									testId={`variable-delete-${variable.name}`}
 								>
 									<Trash2 size={14} />

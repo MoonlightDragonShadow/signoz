@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { ComboboxSimple } from '@signozhq/ui/combobox';
 import cx from 'classnames';
 
@@ -19,6 +20,7 @@ function ProjectIdsInput({
 	onChange,
 	className,
 }: ProjectIdsInputProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	return (
 		<ComboboxSimple
 			id={id}
@@ -28,7 +30,7 @@ function ProjectIdsInput({
 			allowCreate
 			value={value}
 			onChange={(next): void => onChange(Array.isArray(next) ? next : [])}
-			placeholder="Add project IDs…"
+			placeholder={translateConsole('Add project IDs…')}
 			inputPlaceholder="Type a project ID and press Enter"
 			emptyPlaceholder="Type a project ID to add it"
 			withPortal={false}

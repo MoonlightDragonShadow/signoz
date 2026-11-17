@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { SelectSimple } from '@signozhq/ui/select';
 import { Switch } from '@signozhq/ui/switch';
 import { Typography } from '@signozhq/ui/typography';
@@ -22,6 +23,7 @@ function PublicDashboardSettingsForm({
 	onTimeRangeEnabledChange,
 	onDefaultTimeRangeChange,
 }: PublicDashboardSettingsFormProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	return (
 		<>
 			<div className={styles.switchRow}>
@@ -34,18 +36,18 @@ function PublicDashboardSettingsForm({
 					disabled={disabled}
 					onChange={onTimeRangeEnabledChange}
 				>
-					Enable time range
+					{translate('Enable time range')}
 				</Switch>
 			</div>
 
 			<div className={styles.fieldGroup}>
 				<Typography.Text className={styles.fieldLabel}>
-					Default time range
+					{translate('Default time range')}
 				</Typography.Text>
 				<SelectSimple
 					className={styles.timeRangeSelect}
 					testId="public-dashboard-default-time-range"
-					placeholder="Select default time range"
+					placeholder={translate('Select default time range')}
 					items={RelativeDurationOptions}
 					value={defaultTimeRange}
 					disabled={disabled}

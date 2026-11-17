@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useMemo, useState } from 'react';
 import { useQueryClient } from 'react-query';
 import { Button } from 'antd';
@@ -28,6 +29,7 @@ import { buildAlertDefForChartPreview } from './utils';
 import './styles.scss';
 
 function QuerySection(): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const {
 		currentQuery,
 		stagedQuery,
@@ -111,22 +113,22 @@ function QuerySection(): JSX.Element {
 
 	const tabs = [
 		{
-			label: 'Metrics',
+			label: translateConsole('Metrics'),
 			icon: <BarChart size={14} data-testid="metrics-view" />,
 			value: AlertTypes.METRICS_BASED_ALERT,
 		},
 		{
-			label: 'Logs',
+			label: translateConsole('Logs'),
 			icon: <ScrollText size={14} data-testid="logs-view" />,
 			value: AlertTypes.LOGS_BASED_ALERT,
 		},
 		{
-			label: 'Traces',
+			label: translateConsole('Traces'),
 			icon: <DraftingCompass size={14} data-testid="traces-view" />,
 			value: AlertTypes.TRACES_BASED_ALERT,
 		},
 		{
-			label: 'Exceptions',
+			label: translateConsole('Exceptions'),
 			icon: <FileText size={14} data-testid="exceptions-view" />,
 			value: AlertTypes.EXCEPTIONS_BASED_ALERT,
 		},
@@ -139,7 +141,7 @@ function QuerySection(): JSX.Element {
 
 	return (
 		<div className="query-section">
-			<Stepper stepNumber={1} label="Define the query" />
+			<Stepper stepNumber={1} label={translateConsole('Define the query')} />
 			<ChartPreview
 				alertDef={alertDef}
 				source={source}

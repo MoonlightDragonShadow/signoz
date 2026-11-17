@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { memo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Settings } from '@signozhq/icons';
@@ -21,6 +22,7 @@ function TraceExplorerControls({
 	extraFields,
 	requiredFields,
 }: TraceExplorerControlsProps): JSX.Element | null {
+	const translateConsole = useConsoleTranslation();
 	const { t } = useTranslation(['trace']);
 	const [isFieldsSelectorOpen, setIsFieldsSelectorOpen] = useState(false);
 
@@ -44,7 +46,7 @@ function TraceExplorerControls({
 					</div>
 					<FieldsSelector
 						isOpen={isFieldsSelectorOpen}
-						title="Edit columns"
+						title={translateConsole('Edit columns')}
 						fields={config.fieldsSelector.value}
 						onFieldsChange={config.fieldsSelector.onFieldsChange}
 						onClose={(): void => setIsFieldsSelectorOpen(false)}

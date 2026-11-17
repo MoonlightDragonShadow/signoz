@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { Plus } from '@signozhq/icons';
 import AuthZButton from 'lib/authz/components/AuthZButton/AuthZButton';
 import type { BrandedPermission } from 'lib/authz/hooks/useAuthZ/types';
@@ -21,7 +22,7 @@ const AddVariableButton = ({
 		onClick={(): void => setIsEditing({ type: 'new' })}
 		testId="add-variable"
 	>
-		Add variable
+		<ConsoleText message="Add variable" />
 	</AuthZButton>
 );
 

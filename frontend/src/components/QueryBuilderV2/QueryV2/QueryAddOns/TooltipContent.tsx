@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { ExternalLink } from '@signozhq/icons';
 
 import styles from './TooltipContent.module.scss';
@@ -24,7 +25,7 @@ export default function TooltipContent({
 					onClick={(e): void => e.stopPropagation()}
 					className={styles.docLink}
 				>
-					Learn more
+					<ConsoleText message={'Learn more'} />
 					<ExternalLink size={12} />
 				</a>
 			)}

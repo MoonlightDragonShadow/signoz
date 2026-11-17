@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback } from 'react';
 import { Button } from '@signozhq/ui/button';
 import { Select } from 'antd';
@@ -48,6 +49,7 @@ function K8sTableToolbar({
 	onOpenOptionsDrawer,
 	onDownload,
 }: K8sTableToolbarProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const { groupByOptions, isLoading: isLoadingGroupByFilters } =
 		useInfraMonitoringGroupByData(entity);
 
@@ -79,7 +81,7 @@ function K8sTableToolbar({
 	return (
 		<div className={styles.toolbar}>
 			<div className={styles.groupByContainer} data-testid="k8s-table-group-by">
-				<div className={styles.groupByLabel}>Group by</div>
+				<div className={styles.groupByLabel}>{translate('Group by')}</div>
 				<Select
 					className={styles.groupBySelect}
 					data-testid="k8s-table-group-by-select"
@@ -88,7 +90,7 @@ function K8sTableToolbar({
 					value={groupBy}
 					allowClear
 					maxTagCount="responsive"
-					placeholder="Search for attribute"
+					placeholder={translate('Search for attribute')}
 					options={groupByOptions}
 					onChange={handleGroupByChange}
 				/>
@@ -99,9 +101,9 @@ function K8sTableToolbar({
 			{leftFilters}
 
 			{onDownload && (
-				<Tooltip title="Download">
+				<Tooltip title={translate('Download')}>
 					<Button
-						aria-label="Action"
+						aria-label={translate('Action')}
 						type="button"
 						variant="ghost"
 						size="sm"
@@ -115,9 +117,9 @@ function K8sTableToolbar({
 				</Tooltip>
 			)}
 
-			<Tooltip title="Options">
+			<Tooltip title={translate('Options')}>
 				<Button
-					aria-label="Action"
+					aria-label={translate('Action')}
 					type="button"
 					variant="ghost"
 					size="sm"

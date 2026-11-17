@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useState } from 'react';
 import { TowerControl, X } from '@signozhq/icons';
 import { Input } from '@signozhq/ui/input';
@@ -24,6 +25,7 @@ function SavedViewsPanel({
 	// Absent when the list is always on screen.
 	onClose?: () => void;
 }): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const [search, setSearch] = useState('');
 	// Batched with the list check, so the hover card reads it from cache.
 	useAuthZ([SavedViewReadPermission]);
@@ -38,10 +40,12 @@ function SavedViewsPanel({
 				<div className={styles.header} data-testid="saved-views-panel-header">
 					<div className={styles.title}>
 						<TowerControl size={16} />
-						<Typography.Text className={styles.titleText}>All views</Typography.Text>
+						<Typography.Text className={styles.titleText}>
+							{translateConsole('All views')}
+						</Typography.Text>
 					</div>
 					<SavedViewsIconButton
-						title="Close"
+						title={translateConsole('Close')}
 						icon={<X size={14} />}
 						onClick={onClose}
 						testId="saved-views-close"
@@ -54,8 +58,8 @@ function SavedViewsPanel({
 						<Input
 							value={search}
 							onChange={(event): void => setSearch(event.target.value)}
-							placeholder="Search..."
-							aria-label="Search views"
+							placeholder={translateConsole('Search...')}
+							aria-label={translateConsole('Search views')}
 							testId="saved-views-search"
 						/>
 					</div>

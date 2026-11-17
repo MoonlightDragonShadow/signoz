@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -20,6 +21,7 @@ import { requireErrorMessage } from 'utils/form/requireErrorMessage';
 import './DisplayName.styles.scss';
 
 function DisplayName({ index, id: orgId }: DisplayNameProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const { t } = useTranslation(['organizationsettings', 'common']);
 	const { showErrorModal } = useErrorModal();
 	const { org, updateOrg, user } = useAppContext();
@@ -85,7 +87,7 @@ function DisplayName({ index, id: orgId }: DisplayNameProps): JSX.Element {
 			autoComplete="off"
 		>
 			<div className="form-field">
-				<label htmlFor="displayName">Display name</label>
+				<label htmlFor="displayName">{translateConsole('Display name')}</label>
 				<Controller
 					name="displayName"
 					control={control}
@@ -115,7 +117,7 @@ function DisplayName({ index, id: orgId }: DisplayNameProps): JSX.Element {
 					htmlType="submit"
 					data-testid="org-display-name-submit"
 				>
-					Submit
+					{translateConsole('Submit')}
 				</Button>
 			</div>
 		</form>

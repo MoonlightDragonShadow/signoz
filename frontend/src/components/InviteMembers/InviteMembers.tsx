@@ -1,3 +1,5 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { CircleAlert, Plus, Trash2 } from '@signozhq/icons';
 import { Button } from '@signozhq/ui/button';
 import { Callout } from '@signozhq/ui/callout';
@@ -22,6 +24,7 @@ function InviteMembers({
 	onAllFailed,
 	renderFooter,
 }: InviteMembersProps): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
 	const {
 		rows,
 		emailValidity,
@@ -73,14 +76,14 @@ function InviteMembers({
 							weight="semibold"
 							className={styles.headerCellEmail}
 						>
-							Email address
+							<ConsoleText message={'Email address'} />
 						</Typography.Text>
 						<Typography.Text
 							size="base"
 							weight="semibold"
 							className={styles.headerCellRole}
 						>
-							Roles
+							<ConsoleText message={'Roles'} />
 						</Typography.Text>
 						<div className={styles.headerCellAction} />
 					</div>
@@ -101,7 +104,7 @@ function InviteMembers({
 								/>
 								{emailValidity[row.id] === false && row.email.trim() !== '' && (
 									<Typography.Text size="small" className={styles.errorText}>
-										Invalid email address
+										<ConsoleText message={'Invalid email address'} />
 									</Typography.Text>
 								)}
 							</div>
@@ -111,7 +114,7 @@ function InviteMembers({
 									mode="multiple"
 									value={row.roleIds}
 									onChange={(roleIds): void => updateRole(row.id, roleIds)}
-									placeholder="Select roles"
+									placeholder={translateInterfaceCopy('Select roles')}
 									id={`invite-role-${row.id}`}
 								/>
 							</div>
@@ -123,7 +126,7 @@ function InviteMembers({
 										variant="solid"
 										color="danger"
 										onClick={(): void => removeRow(row.id)}
-										aria-label="Remove row"
+										aria-label={translateInterfaceCopy('Remove row')}
 										testId={`invite-remove-${row.id}`}
 										icon
 									>
@@ -145,7 +148,7 @@ function InviteMembers({
 							onClick={addRow}
 							testId="invite-add-row"
 						>
-							Add another
+							<ConsoleText message={'Add another'} />
 						</Button>
 					</div>
 				)}
@@ -176,11 +179,12 @@ function InviteMembers({
 					<div className={styles.results}>
 						{hasSuccesses && (
 							<Typography.Text size="small">
-								{successResults.length} invite(s) sent successfully.
+								{successResults.length}{' '}
+								<ConsoleText message={'invite(s) sent successfully.'} />
 							</Typography.Text>
 						)}
 						<Typography.Text size="small">
-							{failedResults.length} invite(s) failed:
+							{failedResults.length} <ConsoleText message={'invite(s) failed:'} />
 						</Typography.Text>
 						<ul className={styles.resultsList}>
 							{failedResults.map((result) => (
@@ -204,7 +208,8 @@ function InviteMembers({
 					data-testid="invite-success"
 				>
 					<Typography.Text size="small">
-						{successResults.length} invite(s) sent successfully!
+						{successResults.length}{' '}
+						<ConsoleText message={'invite(s) sent successfully!'} />
 					</Typography.Text>
 				</Callout>
 			)}

@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Badge } from '@signozhq/ui/badge';
 
 import { MessageType, ThreadMessage } from './types';
@@ -22,6 +23,7 @@ function AIThreadMessage({
 	canLinkToToolCall,
 	onToolLinkClick,
 }: AIThreadMessageProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const { role, parts: messageParts, finish_reason: finishReason } = message;
 	const roleLabel = getRoleLabel(role);
 	const tone = getFinishReasonTone(finishReason);
@@ -30,7 +32,7 @@ function AIThreadMessage({
 	const parts = (
 		<div className={styles.parts}>
 			{messageParts.length === 0 ? (
-				<span className={styles.empty}>No content</span>
+				<span className={styles.empty}>{translateConsole('No content')}</span>
 			) : (
 				messageParts.map((part, index) => (
 					<MessagePart
@@ -69,7 +71,7 @@ function AIThreadMessage({
 									textTransform="none"
 									testId="ai-message-output-badge"
 								>
-									Output
+									{translateConsole('Output')}
 								</Badge>
 							)}
 						</div>
@@ -79,7 +81,7 @@ function AIThreadMessage({
 			)}
 			{finishReason && (
 				<PartChip
-					label="Finish Reason"
+					label={translateConsole('Finish Reason')}
 					value={finishReason}
 					tone={tone}
 					testId="ai-message-finish-reason"

@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Typography } from '@signozhq/ui/typography';
 import { ArrowRight } from '@signozhq/icons';
 import { openInNewTab } from 'utils/navigation';
@@ -10,6 +11,7 @@ const K8S_EVENTS_DOCS_URL =
 	'https://signoz.io/docs/infrastructure-monitoring/k8s-metrics/';
 
 export default function EventsNotConfigured(): JSX.Element {
+	const translate = useConsoleTranslation();
 	const handleLearnMore = (): void => {
 		openInNewTab(K8S_EVENTS_DOCS_URL);
 	};
@@ -19,9 +21,12 @@ export default function EventsNotConfigured(): JSX.Element {
 			<div className={styles.content}>
 				<img src={emptyStateUrl} alt="not-configured" className={styles.icon} />
 				<Typography.Text>
-					<span className={styles.title}>No Kubernetes events received yet. </span>
-					To view events, enable the k8s events receiver in your OpenTelemetry
-					Collector.
+					<span className={styles.title}>
+						{translate('No Kubernetes events received yet.')}{' '}
+					</span>
+					{translate(
+						'To view events, enable the k8s events receiver in your OpenTelemetry Collector.',
+					)}
 				</Typography.Text>
 
 				<div
@@ -36,7 +41,7 @@ export default function EventsNotConfigured(): JSX.Element {
 					}}
 				>
 					<Typography.Link className={styles.learnMoreText}>
-						Learn how to configure
+						{translate('Learn how to configure')}
 					</Typography.Link>
 					<ArrowRight size={14} />
 				</div>

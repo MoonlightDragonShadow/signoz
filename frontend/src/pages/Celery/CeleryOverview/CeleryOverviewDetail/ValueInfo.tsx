@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useMemo } from 'react';
 import { useQueries } from 'react-query';
 // eslint-disable-next-line no-restricted-imports
@@ -32,6 +33,7 @@ export default function ValueInfo({
 }: {
 	filters?: TagFilterItem[];
 }): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const { maxTime, minTime } = useSelector<AppState, GlobalReducer>(
 		(state) => state.globalTime,
 	);
@@ -143,7 +145,7 @@ export default function ValueInfo({
 		<Card className="value-info-card">
 			<Row gutter={16}>
 				<Col span={8} className="metric-column">
-					<div className="metric-title">Request Rate</div>
+					<div className="metric-title">{translateConsole('Request Rate')}</div>
 					<div className="metric-value-container">
 						<div
 							className={`metric-value ${getColorBasedOnValue(requestRate)} ${
@@ -174,11 +176,11 @@ export default function ValueInfo({
 							});
 						}}
 					>
-						View Traces
+						{translateConsole('View Traces')}
 					</Button>
 				</Col>
 				<Col span={8} className="metric-column">
-					<div className="metric-title">Error Rate</div>
+					<div className="metric-title">{translateConsole('Error Rate')}</div>
 					<div className="metric-value-container">
 						<div
 							className={`metric-value ${getColorForErrorRate(errorRate)} ${
@@ -222,11 +224,11 @@ export default function ValueInfo({
 							});
 						}}
 					>
-						View Traces
+						{translateConsole('View Traces')}
 					</Button>
 				</Col>
 				<Col span={8} className="metric-column">
-					<div className="metric-title">Average Latency</div>
+					<div className="metric-title">{translateConsole('Average Latency')}</div>
 					<div className="metric-value-container">
 						<div
 							className={`metric-value ${getColorForLatency(avgLatencyInMs)} ${
@@ -235,7 +237,7 @@ export default function ValueInfo({
 						>
 							{avgLatencyInMs === 'NaN' ? '0' : avgLatencyInMs}
 						</div>
-						<div className="metric-unit">ms</div>
+						<div className="metric-unit">{translateConsole('ms')}</div>
 					</div>
 					<Button
 						type="primary"
@@ -257,7 +259,7 @@ export default function ValueInfo({
 							});
 						}}
 					>
-						View Traces
+						{translateConsole('View Traces')}
 					</Button>
 				</Col>
 			</Row>

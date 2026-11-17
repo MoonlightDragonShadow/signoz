@@ -1,3 +1,5 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 /* eslint-disable sonarjs/cognitive-complexity */
 import React, {
 	useCallback,
@@ -80,6 +82,8 @@ const CustomMultiSelect: React.FC<CustomMultiSelectProps> = ({
 	waitingMessage,
 	...rest
 }) => {
+	const translateRuntimeCopy = useConsoleTranslation();
+	const translateInterfaceCopy = useConsoleTranslation();
 	// ===== State & Refs =====
 	const [isOpen, setIsOpen] = useState(false);
 	const [searchText, setSearchText] = useState('');
@@ -793,7 +797,7 @@ const CustomMultiSelect: React.FC<CustomMultiSelectProps> = ({
 										className="toggle-btn"
 										onClick={(e): void => selectFromButton(e, 'checkbox')}
 									>
-										Toggle
+										<ConsoleText message={'Toggle'} />
 									</Button>
 								</div>
 							</Checkbox>
@@ -886,7 +890,7 @@ const CustomMultiSelect: React.FC<CustomMultiSelectProps> = ({
 				// Add all options to flat list
 				if (hasAll) {
 					flatList.push({
-						label: 'ALL',
+						label: translateInterfaceCopy('ALL'),
 						value: ALL_SELECTED_VALUE, // Special value for the ALL option
 						type: 'defined',
 					});
@@ -1610,7 +1614,9 @@ const CustomMultiSelect: React.FC<CustomMultiSelectProps> = ({
 							<div style={{ display: 'flex', alignItems: 'center', width: '100%' }}>
 								<Checkbox color="primary" value={allOptionsSelected} width="100%">
 									<div className="option-content">
-										<div className="all-option-text">ALL</div>
+										<div className="all-option-text">
+											<ConsoleText message={'ALL'} />
+										</div>
 									</div>
 								</Checkbox>
 								<div
@@ -1722,7 +1728,9 @@ const CustomMultiSelect: React.FC<CustomMultiSelectProps> = ({
 								<ArrowUp size={8} className="icons" />
 								<ArrowLeft size={8} className="icons" />
 								<ArrowRight size={8} className="icons" />
-								<span className="keyboard-text">to navigate</span>
+								<span className="keyboard-text">
+									<ConsoleText message={'to navigate'} />
+								</span>
 							</section>
 						)}
 					{loading && (
@@ -1730,7 +1738,9 @@ const CustomMultiSelect: React.FC<CustomMultiSelectProps> = ({
 							<div className="navigation-icons">
 								<Loader size="md" className="animate-spin" />
 							</div>
-							<div className="navigation-text">Refreshing values...</div>
+							<div className="navigation-text">
+								<ConsoleText message={'Refreshing values...'} />
+							</div>
 						</div>
 					)}
 					{!loading && waitingMessage && (
@@ -1769,7 +1779,7 @@ const CustomMultiSelect: React.FC<CustomMultiSelectProps> = ({
 						!waitingMessage &&
 						!errorMessage && (
 							<div className="navigation-text-incomplete">
-								Don&apos;t see the value? Use search
+								<ConsoleText message={"Don't see the value? Use search"} />
 							</div>
 						)}
 
@@ -1976,7 +1986,9 @@ const CustomMultiSelect: React.FC<CustomMultiSelectProps> = ({
 								onKeyDown={handleTagKeyDown}
 								role="button"
 								tabIndex={0}
-								aria-label={`Remove tag ${label}`}
+								aria-label={translateRuntimeCopy('Remove tag {{value1}}', {
+									value1: label,
+								})}
 							>
 								×
 							</span>
@@ -2004,6 +2016,7 @@ const CustomMultiSelect: React.FC<CustomMultiSelectProps> = ({
 			selectedValues,
 			maxTagCount,
 			options,
+			translateRuntimeCopy,
 		],
 	);
 
@@ -2031,7 +2044,9 @@ const CustomMultiSelect: React.FC<CustomMultiSelectProps> = ({
 			})}
 		>
 			{(allOptionShown || isAllSelected) && !searchText && (
-				<div className="all-text">ALL</div>
+				<div className="all-text">
+					<ConsoleText message={'ALL'} />
+				</div>
 			)}
 			<Select
 				ref={selectRef}

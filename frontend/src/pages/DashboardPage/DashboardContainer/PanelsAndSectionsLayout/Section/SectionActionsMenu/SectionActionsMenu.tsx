@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useMemo } from 'react';
 import { Copy, EllipsisVertical, PenLine, Plus, Trash2 } from '@signozhq/icons';
 import { Button } from '@signozhq/ui/button';
@@ -26,6 +27,7 @@ function SectionActionsMenu({
 	onCloneSection,
 	onDeleteSection,
 }: SectionActionsMenuProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const items = useMemo<AuthZDropdownItemType[]>(() => {
 		const gate = { checks: disabledChecks, ...blockedBy(disabledTooltip) };
 		const result: AuthZDropdownItemType[] = [];
@@ -33,7 +35,7 @@ function SectionActionsMenu({
 			result.push({
 				type: 'item',
 				value: 'add-panel',
-				label: 'Add panel',
+				label: translate('Add panel'),
 				prefix: <Plus size={14} />,
 				...gate,
 				onClick: onAddPanel,
@@ -43,7 +45,7 @@ function SectionActionsMenu({
 			result.push({
 				type: 'item',
 				value: 'rename',
-				label: 'Rename section',
+				label: translate('Rename section'),
 				prefix: <PenLine size={14} />,
 				...gate,
 				onClick: onRename,
@@ -53,7 +55,7 @@ function SectionActionsMenu({
 			result.push({
 				type: 'item',
 				value: 'clone-section',
-				label: 'Clone section',
+				label: translate('Clone section'),
 				prefix: <Copy size={14} />,
 				...gate,
 				onClick: onCloneSection,
@@ -65,7 +67,7 @@ function SectionActionsMenu({
 				{
 					type: 'item',
 					value: 'delete-section',
-					label: 'Delete section',
+					label: translate('Delete section'),
 					prefix: <Trash2 size={14} />,
 					danger: true,
 					...gate,
@@ -75,6 +77,7 @@ function SectionActionsMenu({
 		}
 		return result;
 	}, [
+		translate,
 		disabledChecks,
 		disabledTooltip,
 		onAddPanel,
@@ -97,7 +100,7 @@ function SectionActionsMenu({
 				color="secondary"
 				size="sm"
 				icon
-				aria-label="Section actions"
+				aria-label={translate('Section actions')}
 			>
 				<EllipsisVertical size={14} />
 			</Button>

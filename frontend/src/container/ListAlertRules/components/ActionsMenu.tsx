@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useMemo } from 'react';
 import { useQueryClient } from 'react-query';
 import { Ellipsis } from '@signozhq/icons';
@@ -26,6 +27,7 @@ interface ActionsMenuProps {
 }
 
 function ActionsMenu({ rule, onEdit }: ActionsMenuProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const queryClient = useQueryClient();
 
 	const handleToggle = useCallback((): void => {
@@ -117,31 +119,32 @@ function ActionsMenu({ rule, onEdit }: ActionsMenuProps): JSX.Element {
 			{
 				type: 'item',
 				value: 'edit',
-				label: 'Edit',
+				label: translateConsole('Edit'),
 				onClick: handleEdit,
 			},
 			{
 				type: 'item',
 				value: 'edit-new-tab',
-				label: 'Edit in New Tab',
+				label: translateConsole('Edit in New Tab'),
 				onClick: handleEditNewTab,
 			},
 			{
 				type: 'item',
 				value: 'clone',
-				label: 'Clone',
+				label: translateConsole('Clone'),
 				onClick: handleClone,
 			},
 			{ type: 'separator', value: 'before-delete' },
 			{
 				type: 'item',
 				value: 'delete',
-				label: 'Delete',
+				label: translateConsole('Delete'),
 				danger: true,
 				onClick: handleDelete,
 			},
 		],
 		[
+			translateConsole,
 			rule.disabled,
 			handleToggle,
 			handleEdit,
@@ -160,7 +163,7 @@ function ActionsMenu({ rule, onEdit }: ActionsMenuProps): JSX.Element {
 		<div onClick={handleClick}>
 			<Dropdown items={menuItems} nativeButton align="end" side="bottom">
 				<Button
-					aria-label="Action"
+					aria-label={translateConsole('Action')}
 					variant="outlined"
 					color="secondary"
 					size="sm"

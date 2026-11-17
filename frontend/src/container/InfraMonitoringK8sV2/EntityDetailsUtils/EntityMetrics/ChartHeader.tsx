@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { AppLink } from 'lib/router/AppLink';
 import { Compass, Info } from '@signozhq/icons';
 import { Tooltip } from '@signozhq/ui/tooltip';
@@ -24,6 +25,7 @@ function ChartHeader({
 	metricsExplorerTestId = 'open-metrics-explorer',
 	onExploreClick,
 }: ChartHeaderProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const renderInfoIcon = (): React.ReactNode => {
 		if (docPath) {
 			const tooltipTitle = tooltip || 'Not sure what this represents?';
@@ -38,7 +40,7 @@ function ChartHeader({
 								rel="noopener"
 								onClick={(e): void => e.stopPropagation()}
 							>
-								Learn more.
+								{translate('Learn more.')}
 							</a>
 						</>
 					}
@@ -68,7 +70,7 @@ function ChartHeader({
 			<span className={styles.chartHeaderLabel}>{title}</span>
 			{renderInfoIcon()}
 			{metricsExplorerUrl && (
-				<Tooltip title="Go to Metrics Explorer">
+				<Tooltip title={translate('Go to Metrics Explorer')}>
 					<AppLink
 						to={metricsExplorerUrl}
 						className={styles.metricsExplorerLink}

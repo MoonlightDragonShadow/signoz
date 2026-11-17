@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback } from 'react';
 import { Undo } from '@signozhq/icons';
 import { Button } from '@signozhq/ui/button';
@@ -27,6 +28,7 @@ function EntityDateTimeSelector({
 	category,
 	view,
 }: EntityDateTimeSelectorProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const {
 		timeRange,
 		selectedInterval,
@@ -53,7 +55,7 @@ function EntityDateTimeSelector({
 	return (
 		<div className={styles.container} data-testid="drawer-time-selection">
 			{hasTimeChanged && (
-				<Tooltip title="Reset to list time" side="bottom">
+				<Tooltip title={translate('Reset to list time')} side="bottom">
 					<Button
 						size="md"
 						variant="outlined"
@@ -62,7 +64,7 @@ function EntityDateTimeSelector({
 						testId="reset-to-list-time-button"
 						prefix={<Undo size={14} />}
 					>
-						Reset
+						{translate('Reset')}
 					</Button>
 				</Tooltip>
 			)}

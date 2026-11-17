@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { useMemo } from 'react';
 import { Button, Skeleton } from 'antd';
 import {
@@ -93,7 +94,11 @@ function OtherFilters({
 			return <OtherFiltersSkeleton />;
 		}
 		if (!otherFilters?.length) {
-			return <div className="no-values-found">No values found</div>;
+			return (
+				<div className="no-values-found">
+					<ConsoleText message={'No values found'} />
+				</div>
+			);
 		}
 
 		return otherFilters.map((filter) => (
@@ -104,7 +109,7 @@ function OtherFilters({
 					size="small"
 					onClick={(): void => handleAddFilter(filter)}
 				>
-					Add
+					<ConsoleText message={'Add'} />
 				</Button>
 			</div>
 		));
@@ -112,7 +117,9 @@ function OtherFilters({
 
 	return (
 		<div className="qf-filters other-filters">
-			<div className="qf-filters-header">OTHER FILTERS</div>
+			<div className="qf-filters-header">
+				<ConsoleText message={'OTHER FILTERS'} />
+			</div>
 			<div className="qf-other-filters-list">
 				<OverlayScrollbar>
 					<>{renderFilters()}</>

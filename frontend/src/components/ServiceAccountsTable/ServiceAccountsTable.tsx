@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import React from 'react';
 import { Table } from 'antd';
 import { SA_QUERY_PARAMS } from 'container/ServiceAccountsSettings/constants';
@@ -25,6 +26,7 @@ function ServiceAccountsTable({
 	loading,
 	onRowClick,
 }: ServiceAccountsTableProps): JSX.Element {
+	const translateRuntimeCopy = useConsoleTranslation();
 	const [currentPage, setPage] = useQueryState(
 		SA_QUERY_PARAMS.PAGE,
 		parseAsInteger.withDefault(1),
@@ -88,7 +90,9 @@ function ServiceAccountsTable({
 						style: { cursor: 'pointer' },
 						tabIndex: 0,
 						role: 'button',
-						'aria-label': `View service account ${record.name || record.email}`,
+						'aria-label': translateRuntimeCopy('View service account {{value1}}', {
+							value1: record.name || record.email,
+						}),
 					};
 				}}
 			/>

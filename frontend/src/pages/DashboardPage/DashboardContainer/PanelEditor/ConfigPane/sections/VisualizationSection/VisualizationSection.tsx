@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { DashboardtypesTimePreferenceDTO } from 'api/generated/services/sigNoz.schemas';
 import type {
 	SectionEditorProps,
@@ -51,6 +52,7 @@ function VisualizationSection({
 	queryType,
 	signal,
 }: VisualizationSectionProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const reset = createFieldResetter(value, savedValue, onChange);
 	const timePreference =
 		value?.timePreference ?? DashboardtypesTimePreferenceDTO.global_time;
@@ -75,18 +77,21 @@ function VisualizationSection({
 
 			{controls.timePreference && (
 				<ConfigField
-					label="Time range"
+					label={translate('Time range')}
 					help={
 						timePreference === DashboardtypesTimePreferenceDTO.global_time
-							? 'Follows the dashboard time picker.'
-							: 'Pinned. This panel ignores the dashboard time picker.'
+							? translate('Follows the dashboard time picker.')
+							: translate('Pinned. This panel ignores the dashboard time picker.')
 					}
 					{...reset('timePreference')}
 				>
 					<ConfigSelect
 						testId="panel-editor-v2-time-preference"
 						value={timePreference}
-						items={TIME_PREFERENCE_OPTIONS}
+						items={TIME_PREFERENCE_OPTIONS.map((option) => ({
+							...option,
+							label: translate(option.label),
+						}))}
 						onChange={(next): void => onChange({ ...value, timePreference: next })}
 					/>
 				</ConfigField>
@@ -95,8 +100,10 @@ function VisualizationSection({
 			{controls.fillSpans && (
 				<ConfigSwitch
 					testId="panel-editor-v2-fill-spans"
-					title="Treat missing data as 0"
-					description="Empty intervals plot as 0 instead of a gap, which lowers averages."
+					title={translate('Treat missing data as 0')}
+					description={translate(
+						'Empty intervals plot as 0 instead of a gap, which lowers averages.',
+					)}
 					sketch={SWITCH_SKETCHES.fillGaps}
 					changed={reset('fillSpans').changed}
 					value={value?.fillSpans ?? false}
@@ -106,13 +113,13 @@ function VisualizationSection({
 
 			{controls.stacking && (
 				<ConfigField
-					label="Series layout"
+					label={translate('Series layout')}
 					help={BAR_LAYOUT_HELP[barLayout]}
 					{...reset('stackedBarChart')}
 				>
 					<ConfigTiles
 						testId="panel-editor-v2-stacked-bar-chart"
-						aria-label="Series layout"
+						aria-label={translate('Series layout')}
 						value={barLayout}
 						items={BAR_LAYOUT_OPTIONS}
 						onChange={(next): void =>
@@ -124,13 +131,13 @@ function VisualizationSection({
 
 			{controls.stackMode && (
 				<ConfigField
-					label="Series layout"
+					label={translate('Series layout')}
 					help={stack && STACK_MODE_HELP[stack]}
 					{...reset('stack')}
 				>
 					<ConfigTiles
 						testId="panel-editor-v2-stack-mode"
-						aria-label="Series layout"
+						aria-label={translate('Series layout')}
 						value={stack}
 						items={STACK_MODE_OPTIONS}
 						onChange={(next): void => onChange({ ...value, stack: next })}

@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useEffect, useRef } from 'react';
 import { Virtuoso, VirtuosoHandle } from 'react-virtuoso';
 import Noz from 'components/Noz/Noz';
@@ -34,6 +35,7 @@ export default function VirtualizedMessages({
 	isStreaming,
 	onSendSuggestedPrompt,
 }: VirtualizedMessagesProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const regenerateAssistantMessage = useAIAssistantStore(
 		(s) => s.regenerateAssistantMessage,
 	);
@@ -165,7 +167,9 @@ export default function VirtualizedMessages({
 				</div>
 				<h3 className={styles.emptyTitle}>Noz</h3>
 				<p className={styles.emptySubtitle}>
-					Ask questions about your traces, logs, metrics, and infrastructure.
+					{translateConsole(
+						'Ask questions about your traces, logs, metrics, and infrastructure.',
+					)}
 				</p>
 				<div className={styles.suggestions}>
 					{emptyStateChips.map((chip) => (

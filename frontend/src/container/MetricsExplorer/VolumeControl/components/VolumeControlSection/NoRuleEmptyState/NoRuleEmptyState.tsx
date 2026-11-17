@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Button } from '@signozhq/ui/button';
 import { Typography } from '@signozhq/ui/typography';
 
@@ -12,11 +13,13 @@ function NoRuleEmptyState({
 	canManage,
 	onSetup,
 }: NoRuleEmptyStateProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	return (
 		<div className={styles.emptyState} data-testid="volume-control-empty">
 			<Typography.Text size="small" color="muted">
-				No volume control rule. All series are retained. Aggregate away
-				high-cardinality attributes to reduce cost.
+				{translate(
+					'No volume control rule. All series are retained. Aggregate away high-cardinality attributes to reduce cost.',
+				)}
 			</Typography.Text>
 			{canManage && (
 				<Button
@@ -26,7 +29,7 @@ function NoRuleEmptyState({
 					onClick={onSetup}
 					testId="volume-control-setup"
 				>
-					Set up volume control
+					{translate('Set up volume control')}
 				</Button>
 			)}
 		</div>

@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { useMemo } from 'react';
 import useUrlQuery from 'hooks/useUrlQuery';
 import { useGetAlertRuleDetailsTimelineGraphData } from 'pages/AlertDetails/hooks';
@@ -34,7 +35,8 @@ function GraphWrapper({
 	return (
 		<div className="timeline-graph" data-testid="timeline-graph">
 			<div className="timeline-graph__title" data-testid="timeline-graph-title">
-				{totalCurrentTriggers} triggers in {relativeTime}
+				{totalCurrentTriggers} <ConsoleText message={'triggers in'} />{' '}
+				{relativeTime}
 			</div>
 			<div className="timeline-graph__chart">
 				<DataStateRenderer

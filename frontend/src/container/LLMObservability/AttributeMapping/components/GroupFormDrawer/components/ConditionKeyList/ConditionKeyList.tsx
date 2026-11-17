@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Button } from '@signozhq/ui/button';
 import { Plus, X } from '@signozhq/icons';
 
@@ -30,6 +31,7 @@ function ConditionKeyList({
 	fieldContext,
 	onChange,
 }: ConditionKeyListProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const updateKey = (index: number, value: string): void => {
 		onChange(keys.map((key, i) => (i === index ? { ...key, value } : key)));
 	};
@@ -67,7 +69,7 @@ function ConditionKeyList({
 								color="secondary"
 								size="sm"
 								icon
-								aria-label="Remove key"
+								aria-label={translateConsole('Remove key')}
 								onClick={(): void => removeKey(index)}
 								testId={`${testIdPrefix}-remove-${index}`}
 							>

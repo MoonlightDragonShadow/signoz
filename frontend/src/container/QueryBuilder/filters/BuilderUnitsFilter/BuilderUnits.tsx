@@ -1,3 +1,5 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Select, SelectProps, Space } from 'antd';
 import { Typography } from '@signozhq/ui/typography';
 import { getCategorySelectOptionByName } from 'constants/formats/alertFormatCategories';
@@ -13,6 +15,7 @@ function BuilderUnitsFilter({
 	onChange,
 	yAxisUnit,
 }: IBuilderUnitsFilterProps): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
 	const getPopupContainer = useSelectPopupContainer();
 	const { currentQuery, handleOnUnitsChange } = useQueryBuilder();
 
@@ -34,7 +37,7 @@ function BuilderUnitsFilter({
 	return (
 		<Space className="builder-units-filter">
 			<Typography.Text className="builder-units-filter-label">
-				Y-axis unit
+				<ConsoleText message={'Y-axis unit'} />
 			</Typography.Text>
 			<Select
 				getPopupContainer={getPopupContainer}
@@ -45,7 +48,7 @@ function BuilderUnitsFilter({
 				allowClear
 				showSearch
 				optionFilterProp="label"
-				placeholder="Select unit"
+				placeholder={translateInterfaceCopy('Select unit')}
 				filterOption={filterOption}
 			/>
 		</Space>

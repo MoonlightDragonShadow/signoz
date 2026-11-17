@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import {
 	isValidElement,
@@ -130,6 +131,7 @@ function SortableFilter({ item }: { item: SidebarItem }): JSX.Element {
 
 // eslint-disable-next-line sonarjs/cognitive-complexity
 function SideNav({ isPinned }: { isPinned: boolean }): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
 	const translate = useConsoleTranslation();
 	const { openCmdK } = useCmdK();
 	const { pathname, search } = useAppLocation();
@@ -339,7 +341,7 @@ function SideNav({ isPinned }: { isPinned: boolean }): JSX.Element {
 
 	const userSettingsMenuItem = {
 		key: ROUTES.SETTINGS,
-		label: 'Settings',
+		label: translateInterfaceCopy('Settings'),
 		icon: <Cog size={16} />,
 	};
 
@@ -1034,7 +1036,7 @@ function SideNav({ isPinned }: { isPinned: boolean }): JSX.Element {
 												changelog && (
 													<div className="version-update-notification-tooltip">
 														<div className="version-update-notification-tooltip-title">
-															There&apos;s a new version available.
+															<ConsoleText message={"There's a new version available."} />
 														</div>
 
 														<div className="version-update-notification-tooltip-content">
@@ -1091,7 +1093,10 @@ function SideNav({ isPinned }: { isPinned: boolean }): JSX.Element {
 									}}
 								>
 									<PackagePlus size={16} />
-									<div className="license tag nav-item-label"> New source </div>
+									<div className="license tag nav-item-label">
+										{' '}
+										<ConsoleText message={'New source'} />{' '}
+									</div>
 								</Button>
 							</div>
 						)}
@@ -1295,7 +1300,7 @@ function SideNav({ isPinned }: { isPinned: boolean }): JSX.Element {
 						className="periscope-btn cancel-btn secondary-btn"
 						icon={<X size={16} />}
 					>
-						Cancel
+						<ConsoleText message={'Cancel'} />
 					</Button>,
 					<Button
 						key="submit"
@@ -1304,7 +1309,7 @@ function SideNav({ isPinned }: { isPinned: boolean }): JSX.Element {
 						onClick={handleReorderShortcutNavItems}
 						data-testid="save-changes-btn"
 					>
-						Save Changes
+						<ConsoleText message={'Save Changes'} />
 					</Button>,
 				]}
 			>

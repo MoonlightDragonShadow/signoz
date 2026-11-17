@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { ToggleGroup } from '@signozhq/ui/toggle-group';
 import { InfraMonitoringEntity } from 'container/InfraMonitoringK8sV2/constants';
 import {
@@ -20,6 +21,7 @@ const statusOptions: Array<{
 ];
 
 function StatusFilter(): JSX.Element {
+	const translate = useConsoleTranslation();
 	const [statusFilter, setStatusFilter] = useInfraMonitoringStatusFilter();
 	const [, setCurrentPage] = useInfraMonitoringPageListing();
 	const { currentQuery } = useQueryBuilder();
@@ -42,7 +44,7 @@ function StatusFilter(): JSX.Element {
 
 	return (
 		<div className={styles.statusFilterContainer}>
-			<div className={styles.statusLabel}>Status</div>
+			<div className={styles.statusLabel}>{translate('Status')}</div>
 			<ToggleGroup
 				type="single"
 				variant="outlined"
@@ -52,7 +54,7 @@ function StatusFilter(): JSX.Element {
 				onChange={handleChange}
 				items={statusOptions.map((option) => ({
 					value: option.value,
-					label: option.label,
+					label: translate(option.label),
 					testId: `status-filter-${option.value}`,
 					prefix: (
 						<span

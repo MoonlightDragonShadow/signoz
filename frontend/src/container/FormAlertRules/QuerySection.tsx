@@ -1,3 +1,5 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Color } from '@signozhq/design-tokens';
@@ -44,6 +46,7 @@ function QuerySection({
 	hideTitle,
 	isAnomalyDetection,
 }: QuerySectionProps): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
 	// init namespace for translations
 	const { t } = useTranslation('alerts');
 	const [currentTab, setCurrentTab] = useState(queryCategory);
@@ -88,26 +91,28 @@ function QuerySection({
 
 	const anomalyDisabledTooltip = (url: string): JSX.Element => (
 		<span>
-			Coming soon for anomaly detection.{' '}
+			<ConsoleText message={'Coming soon for anomaly detection.'} />{' '}
 			<Typography.Link
 				href={url}
 				target="_blank"
 				rel="noopener noreferrer"
 				style={{ color: 'inherit', textDecoration: 'underline' }}
 			>
-				Leave a thumbs-up
+				<ConsoleText message={'Leave a thumbs-up'} />
 			</Typography.Link>{' '}
-			to help us prioritize!
+			<ConsoleText message={'to help us prioritize!'} />
 		</span>
 	);
 
 	const tabs = [
 		{
 			label: (
-				<Tooltip title="Query Builder">
+				<Tooltip title={translateInterfaceCopy('Query Builder')}>
 					<Button className="nav-btns" data-testid="query-builder-tab">
 						<Atom size={14} />
-						<Typography.Text>Query Builder</Typography.Text>
+						<Typography.Text>
+							<ConsoleText message={'Query Builder'} />
+						</Typography.Text>
 					</Button>
 				</Tooltip>
 			),
@@ -128,7 +133,9 @@ function QuerySection({
 						data-testid="clickhouse-tab"
 					>
 						<Terminal size={14} />
-						<Typography.Text>ClickHouse Query</Typography.Text>
+						<Typography.Text>
+							<ConsoleText message={'ClickHouse Query'} />
+						</Typography.Text>
 					</Button>
 				</Tooltip>
 			),
@@ -148,10 +155,12 @@ function QuerySection({
 		() => [
 			{
 				label: (
-					<Tooltip title="Query Builder">
+					<Tooltip title={translateInterfaceCopy('Query Builder')}>
 						<Button className="nav-btns" data-testid="query-builder-tab">
 							<Atom size={14} />
-							<Typography.Text>Query Builder</Typography.Text>
+							<Typography.Text>
+								<ConsoleText message={'Query Builder'} />
+							</Typography.Text>
 						</Button>
 					</Tooltip>
 				),
@@ -172,7 +181,9 @@ function QuerySection({
 							data-testid="clickhouse-tab"
 						>
 							<Terminal size={14} />
-							<Typography.Text>ClickHouse Query</Typography.Text>
+							<Typography.Text>
+								<ConsoleText message={'ClickHouse Query'} />
+							</Typography.Text>
 						</Button>
 					</Tooltip>
 				),

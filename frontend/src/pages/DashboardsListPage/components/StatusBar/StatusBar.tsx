@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Button } from '@signozhq/ui/button';
 import { Typography } from '@signozhq/ui/typography';
 import { PanelLeftClose, PanelLeftOpen } from '@signozhq/icons';
@@ -17,6 +18,7 @@ function StatusBar({
 	count,
 	total,
 }: Props): JSX.Element {
+	const translate = useConsoleTranslation();
 	return (
 		<div className={styles.statusBar}>
 			<Button
@@ -29,10 +31,10 @@ function StatusBar({
 				onClick={onToggleCollapse}
 				testId="dashboards-rail-toggle"
 			>
-				{collapsed ? 'Expand' : 'Collapse'}
+				{collapsed ? translate('Expand') : translate('Collapse')}
 			</Button>
 			<Typography.Text className={styles.count}>
-				{count} of {total} dashboards
+				{count} {translate('of')} {total} {translate('dashboards')}
 			</Typography.Text>
 		</div>
 	);

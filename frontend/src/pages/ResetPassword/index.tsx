@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useEffect, useMemo } from 'react';
 import { useQuery } from 'react-query';
 import { useLocation } from 'react-use';
@@ -17,6 +18,7 @@ import { useErrorModal } from 'providers/ErrorModalProvider';
 import APIError from 'types/api/error';
 
 function ResetPassword(): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
 	const { user, isLoggedIn } = useAppContext();
 	const { showErrorModal } = useErrorModal();
 	const { search } = useLocation();
@@ -66,11 +68,15 @@ function ResetPassword(): JSX.Element {
 	}, [versionError, showErrorModal]);
 
 	if (!token) {
-		return <Spinner tip="Loading..." />;
+		return <Spinner tip={translateInterfaceCopy('Loading...')} />;
 	}
 
 	if (isVersionLoading || isVerifying) {
-		return <Spinner tip="Validating your reset password token..." />;
+		return (
+			<Spinner
+				tip={translateInterfaceCopy('Validating your reset password token...')}
+			/>
+		);
 	}
 
 	if (isTokenError) {

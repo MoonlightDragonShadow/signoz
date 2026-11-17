@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { Fragment } from 'react';
 import { Typography } from '@signozhq/ui/typography';
 import cx from 'classnames';
@@ -38,14 +39,18 @@ function AnalyticsTabContent({
 	if (isError) {
 		return (
 			<div className={styles.state}>
-				<Typography.Text>Couldn&apos;t load analytics</Typography.Text>
+				<Typography.Text>
+					<ConsoleText message={"Couldn't load analytics"} />
+				</Typography.Text>
 			</div>
 		);
 	}
 	if (rows.length === 0) {
 		return (
 			<div className={styles.state}>
-				<Typography.Text>No data for {fieldName}</Typography.Text>
+				<Typography.Text>
+					<ConsoleText message={'No data for'} /> {fieldName}
+				</Typography.Text>
 			</div>
 		);
 	}

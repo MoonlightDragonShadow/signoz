@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { ReactNode, useCallback } from 'react';
 import { toast } from '@signozhq/ui/sonner';
 import { Tooltip } from '@signozhq/ui/tooltip';
@@ -18,6 +19,7 @@ export function EntityMetadataItem({
 	value,
 	renderedValue,
 }: EntityMetadataItemProps): JSX.Element {
+	const translateRuntimeCopy = useConsoleTranslation();
 	const handleCopy = useCallback((): void => {
 		toast.success(`${label} copied to clipboard`, { position: 'bottom-left' });
 	}, [label]);
@@ -50,7 +52,7 @@ export function EntityMetadataItem({
 						<CopyButton
 							value={value}
 							size={10}
-							ariaLabel={`Copy ${label}`}
+							ariaLabel={translateRuntimeCopy('Copy {{value1}}', { value1: label })}
 							testId={`copy-metadata-${label.toLowerCase().replace(/\s+/g, '-')}`}
 							onCopy={handleCopy}
 						/>

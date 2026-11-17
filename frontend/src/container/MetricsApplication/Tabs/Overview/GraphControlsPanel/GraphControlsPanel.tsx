@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import React from 'react';
 import { Color } from '@signozhq/design-tokens';
 import { Button } from 'antd';
@@ -18,6 +19,7 @@ function GraphControlsPanel({
 	onViewTracesClick,
 	onViewAPIMonitoringClick,
 }: GraphControlsPanelProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	return (
 		<div id={id} className="graph-controls-panel">
 			<Button
@@ -27,7 +29,7 @@ function GraphControlsPanel({
 				onClick={onViewTracesClick}
 				style={{ color: Color.BG_VANILLA_100 }}
 			>
-				View traces
+				{translate('View traces')}
 			</Button>
 			{onViewLogsClick && (
 				<Button
@@ -37,7 +39,7 @@ function GraphControlsPanel({
 					onClick={onViewLogsClick}
 					style={{ color: Color.BG_VANILLA_100 }}
 				>
-					View logs
+					{translate('View logs')}
 				</Button>
 			)}
 			{onViewAPIMonitoringClick && (
@@ -48,7 +50,7 @@ function GraphControlsPanel({
 					onClick={onViewAPIMonitoringClick}
 					style={{ color: Color.BG_VANILLA_100 }}
 				>
-					View External APIs
+					{translate('View External APIs')}
 				</Button>
 			)}
 		</div>

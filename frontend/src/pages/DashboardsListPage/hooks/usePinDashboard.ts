@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback } from 'react';
 import { useQueryClient } from 'react-query';
 import { toast } from '@signozhq/ui/sonner';
@@ -20,6 +21,7 @@ export interface UsePinDashboardResult {
 // Wraps the per-user pin/unpin mutations: refreshes the personalized list on
 // success and surfaces the 10-pin limit (HTTP 409) as a toast.
 export function usePinDashboard(): UsePinDashboardResult {
+	const translate = useConsoleTranslation();
 	const queryClient = useQueryClient();
 
 	const invalidate = useCallback((): void => {
@@ -43,7 +45,7 @@ export function usePinDashboard(): UsePinDashboardResult {
 		mutation: {
 			onSuccess: invalidate,
 			onError: (): void => {
-				toast.error('Failed to unpin dashboard.');
+				toast.error(translate('Failed to unpin dashboard.'));
 			},
 		},
 	});

@@ -1,0 +1,78 @@
+# syntax=docker/dockerfile:1
+
+# Build the frontend from the current working tree, not a published SigNoz image.
+FROM node:22-bookworm AS frontend-build
+WORKDIR /opt/frontend
+ENV PNPM_HOME=/pnpm \
+    NODE_OPTIONS=--max-old-space-size=8192
+
+RUN npm install --global pnpm@10.34.9
+COPY frontend/package.json frontend/pnpm-lock.yaml frontend/pnpm-workspace.yaml frontend/.npmrc ./
+RUN --mount=type=cache,target=/pnpm/store CI=1 pnpm fetch
+COPY frontend/ ./
+RUN --mount=type=cache,target=/pnpm/store CI=1 pnpm install --offline --frozen-lockfile
+
+ARG SIGNOZ_VERSION=v0.149.0
+# An empty API endpoint makes the browser use the same origin as SigNoz.
+# Local .env files are excluded by Dockerfile.source.dockerignore.
+RUN CI=1 \
+    VITE_FRONTEND_API_ENDPOINT= \
+    VITE_WEBSOCKET_API_ENDPOINT= \
+    VITE_DOCS_BASE_URL=https://signoz.io \
+    VITE_ENVIRONMENT=production \
+    VITE_VERSION="${SIGNOZ_VERSION}" \
+    pnpm build && \
+    test -f build/index.html && \
+    test -f build/locales/zh-CN/console.json
+
+# The upstream release image uses cmd/enterprise as its application entrypoint.
+FROM golang:1.25.7-bookworm AS backend-build
+WORKDIR /src
+COPY go.mod go.sum ./
+RUN --mount=type=cache,target=/go/pkg/mod go mod download
+COPY cmd/ ./cmd/
+COPY ee/ ./ee/
+COPY pkg/ ./pkg/
+
+ARG TARGETARCH
+ARG SIGNOZ_VERSION=v0.149.0
+ARG SIGNOZ_REVISION=unknown
+ARG SIGNOZ_BRANCH=unknown
+ARG SIGNOZ_BUILD_TIME=unknown
+RUN --mount=type=cache,target=/go/pkg/mod \
+    --mount=type=cache,target=/root/.cache/go-build \
+    set -eu; \
+    target_arch="${TARGETARCH:-$(go env GOARCH)}"; \
+    case "${target_arch}" in amd64|arm64) ;; *) echo "Unsupported architecture: ${target_arch}" >&2; exit 1 ;; esac; \
+    CGO_ENABLED=0 GOOS=linux GOARCH="${target_arch}" go build \
+      -buildvcs=false \
+      -tags timetzdata \
+      -ldflags "-s -w \
+        -X github.com/SigNoz/signoz/pkg/version.version=${SIGNOZ_VERSION} \
+        -X github.com/SigNoz/signoz/pkg/version.variant=enterprise \
+        -X github.com/SigNoz/signoz/pkg/version.hash=${SIGNOZ_REVISION} \
+        -X github.com/SigNoz/signoz/pkg/version.time=${SIGNOZ_BUILD_TIME} \
+        -X github.com/SigNoz/signoz/pkg/version.branch=${SIGNOZ_BRANCH} \
+        -X github.com/SigNoz/signoz/ee/zeus.url=https://api.signoz.cloud \
+        -X github.com/SigNoz/signoz/ee/zeus.deprecatedURL=https://license.signoz.io \
+        -X github.com/SigNoz/signoz/pkg/analytics.key=9kRrJ7oPCGPEJLF6QjMPLt5bljFhRQBr" \
+      -o /out/signoz ./cmd/enterprise
+
+# Match the official image's operating-system family, paths and entrypoint.
+FROM alpine:3.20.3
+LABEL maintainer="signoz"
+ARG SIGNOZ_VERSION=v0.149.0
+ARG SIGNOZ_REVISION=unknown
+LABEL org.opencontainers.image.version="${SIGNOZ_VERSION}" \
+      org.opencontainers.image.revision="${SIGNOZ_REVISION}"
+WORKDIR /root
+RUN apk update && \
+    apk add ca-certificates && \
+    rm -rf /var/cache/apk/*
+COPY --from=backend-build /out/signoz /root/signoz
+COPY --from=frontend-build /opt/frontend/build/ /etc/signoz/web/
+COPY templates/ /root/templates/
+COPY LICENSE /usr/share/licenses/signoz/LICENSE
+COPY ee/LICENSE /usr/share/licenses/signoz/ee-LICENSE
+RUN chmod 755 /root /root/signoz
+ENTRYPOINT ["./signoz", "server"]

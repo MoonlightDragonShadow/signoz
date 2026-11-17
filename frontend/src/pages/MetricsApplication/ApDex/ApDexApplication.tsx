@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useEffect, useState } from 'react';
 import { Popover } from 'antd';
 import { useAppParams } from 'lib/router/useAppParams';
@@ -9,6 +10,7 @@ import ApDexSettings from './ApDexSettings';
 import { Settings } from '@signozhq/icons';
 
 function ApDexApplication(): JSX.Element {
+	const translate = useConsoleTranslation();
 	const { servicename: encodedServiceName } = useAppParams<'servicename'>();
 	const servicename = decodeURIComponent(encodedServiceName || '');
 
@@ -60,7 +62,7 @@ function ApDexApplication(): JSX.Element {
 			<div className="ap-dex-settings-popover-content">
 				<Button size="middle">
 					<ButtonContainer>
-						<Settings size="md" /> Settings
+						<Settings size="md" /> {translate('Settings')}
 					</ButtonContainer>
 				</Button>
 			</div>

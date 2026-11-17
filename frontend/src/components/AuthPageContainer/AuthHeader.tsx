@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { useCallback } from 'react';
 import { Button } from '@signozhq/ui/button';
 import { LifeBuoy } from '@signozhq/icons';
@@ -28,7 +29,7 @@ function AuthHeader(): JSX.Element {
 				variant="solid"
 				color="secondary"
 			>
-				Get Help
+				<ConsoleText message={'Get Help'} />
 			</Button>
 		</header>
 	);

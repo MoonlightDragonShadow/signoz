@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback } from 'react';
 import { Typography } from '@signozhq/ui/typography';
 import { Input } from 'antd';
@@ -51,6 +52,7 @@ function LabelThresholdRow({
 	onDiscard,
 	onRemove,
 }: LabelThresholdRowProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const { draft, setDraft, setValue } = useThresholdDraft(
 		threshold,
 		isEditing,
@@ -95,7 +97,7 @@ function LabelThresholdRow({
 				/>
 			)}
 			<ThresholdAmountField
-				label="Draw a line at"
+				label={translate('Draw a line at')}
 				testIdPrefix="threshold"
 				index={index}
 				value={draft.value}
@@ -112,12 +114,13 @@ function LabelThresholdRow({
 			/>
 			<div className={styles.field}>
 				<Typography.Text className={styles.fieldLabel}>
-					Label <span className={styles.optional}>· optional</span>
+					{translate('Label')}{' '}
+					<span className={styles.optional}>{translate('· optional')}</span>
 				</Typography.Text>
 				<Input
 					data-testid={`threshold-label-${index}`}
-					aria-label="Label"
-					placeholder="e.g. SLO breach"
+					aria-label={translate('Label')}
+					placeholder={translate('e.g. SLO breach')}
 					value={draft.label ?? ''}
 					onChange={(e): void => setDraft((d) => ({ ...d, label: e.target.value }))}
 				/>

@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Button } from '@signozhq/ui/button';
 import { Input } from '@signozhq/ui/input';
 import { CloudintegrationtypesGCPConnectionMethodDTO } from 'api/generated/services/sigNoz.schemas';
@@ -31,6 +32,8 @@ function ManualSetup({
 	onConnectionMethodChange,
 	onClose,
 }: ManualSetupProps): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
+	const translateConsole = useConsoleTranslation();
 	const {
 		isLoading,
 		connectAccount,
@@ -61,7 +64,7 @@ function ManualSetup({
 				render={({ field, fieldState }): JSX.Element => (
 					<FormField
 						htmlFor="gcp-account-name-input"
-						label="Account Name"
+						label={translateConsole('Account Name')}
 						tooltip="A label to identify this group of GCP projects (org ID, billing email, or any descriptive name)"
 						required
 						error={fieldState.error}
@@ -69,7 +72,9 @@ function ManualSetup({
 						<Input
 							id="gcp-account-name-input"
 							className={styles.fullWidth}
-							placeholder="e.g. my-org or billing@company.com"
+							placeholder={translateInterfaceCopy(
+								'e.g. my-org or billing@company.com',
+							)}
 							value={field.value}
 							onChange={(e): void => field.onChange(e.target.value)}
 							testId="gcp-account-name-input"
@@ -95,8 +100,8 @@ function ManualSetup({
 				render={({ field, fieldState }): JSX.Element => (
 					<FormField
 						htmlFor="gcp-project-ids-select"
-						label="Projects to Monitor"
-						tooltip="Enter each GCP project ID then press Enter"
+						label={translateConsole('Projects to Monitor')}
+						tooltip={translateConsole('Enter each GCP project ID then press Enter')}
 						required
 						error={fieldState.error}
 					>
@@ -129,7 +134,7 @@ function ManualSetup({
 					loading={isLoading || isConnectionParamsLoading}
 					testId="gcp-connect-account-btn"
 				>
-					Connect Account
+					{translateConsole('Connect Account')}
 				</Button>
 			</SetupDrawerFooter>
 		</>

@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useEffect, useState } from 'react';
 import { Plus } from '@signozhq/icons';
 import { Button } from '@signozhq/ui/button';
@@ -25,6 +26,7 @@ function ContextLinksSection({
 	registerHeaderAction,
 }: SectionEditorProps<SectionKind.ContextLinks> &
 	Pick<SectionEditorContext, 'registerHeaderAction'>): JSX.Element {
+	const translate = useConsoleTranslation();
 	const links = value ?? [];
 	const variables = useContextLinkVariables();
 
@@ -62,8 +64,9 @@ function ContextLinksSection({
 	return (
 		<div className={styles.list}>
 			<span className={styles.help}>
-				Links appear in a menu when someone clicks a data point. Variables pass the
-				clicked series and time range along.
+				{translate(
+					'Links appear in a menu when someone clicks a data point. Variables pass the clicked series and time range along.',
+				)}
 			</span>
 			{links.map((link, index) => (
 				<ContextLinkListItem
@@ -86,7 +89,7 @@ function ContextLinksSection({
 				testId="panel-editor-v2-add-link"
 				onClick={openAddDialog}
 			>
-				Add link
+				{translate('Add link')}
 			</Button>
 
 			<ContextLinkDialog

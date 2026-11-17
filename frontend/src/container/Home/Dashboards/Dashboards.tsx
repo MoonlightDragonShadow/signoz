@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useEffect, useMemo } from 'react';
 import { Button, Skeleton } from 'antd';
 import { AppLink } from 'lib/router/AppLink';
@@ -34,6 +35,7 @@ export default function Dashboards({
 	onUpdateChecklistDoneItem: (itemKey: string) => void;
 	loadingUserPreferences: boolean;
 }): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const { safeNavigate } = useSafeNavigate();
 	const { user } = useAppContext();
 
@@ -70,10 +72,14 @@ export default function Dashboards({
 				<div className="empty-state-content">
 					<img src={dialsUrl} alt="empty-alert-icon" className="empty-state-icon" />
 
-					<div className="empty-title">You don’t have any dashboards yet.</div>
+					<div className="empty-title">
+						{translateConsole('You don’t have any dashboards yet.')}
+					</div>
 
 					{user?.role !== USER_ROLES.VIEWER && (
-						<div className="empty-description">Create a dashboard to get started</div>
+						<div className="empty-description">
+							{translateConsole('Create a dashboard to get started')}
+						</div>
 					)}
 				</div>
 
@@ -88,7 +94,7 @@ export default function Dashboards({
 									logEvent('Homepage: Create dashboard clicked', {});
 								}}
 							>
-								New Dashboard
+								{translateConsole('New Dashboard')}
 							</Button>
 						</AppLink>
 
@@ -105,7 +111,7 @@ export default function Dashboards({
 								);
 							}}
 						>
-							Learn more <ArrowUpRight size={12} />
+							{translateConsole('Learn more')} <ArrowUpRight size={12} />
 						</Button>
 					</div>
 				)}
@@ -206,7 +212,7 @@ export default function Dashboards({
 						className="dashboards-header home-data-card-header"
 						data-testid="home-section-dashboards"
 					>
-						Dashboards
+						{translateConsole('Dashboards')}
 					</div>
 				</Card.Header>
 			)}
@@ -225,7 +231,7 @@ export default function Dashboards({
 									logEvent('Homepage: All dashboards clicked', {});
 								}}
 							>
-								All Dashboards <ArrowRight size={12} />
+								{translateConsole('All Dashboards')} <ArrowRight size={12} />
 							</Button>
 						</AppLink>
 					</div>

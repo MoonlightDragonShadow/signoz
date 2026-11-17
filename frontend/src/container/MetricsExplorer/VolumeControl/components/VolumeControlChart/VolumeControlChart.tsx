@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Color } from '@signozhq/design-tokens';
 import { Typography } from '@signozhq/ui/typography';
 import { Spin } from 'antd';
@@ -26,6 +27,7 @@ interface VolumeControlChartProps {
 }
 
 function VolumeControlChart({ enabled }: VolumeControlChartProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const { data, isLoading, isError } = useGetMetricReductionRuleTimeseries({
 		query: { enabled },
 	});
@@ -70,10 +72,10 @@ function VolumeControlChart({ enabled }: VolumeControlChartProps): JSX.Element {
 		<div className={styles.chart} data-testid="volume-control-chart">
 			<div className={styles.chartHeader}>
 				<Typography.Text className={styles.chartTitle} size={'small'}>
-					Sample volume · ingested vs retained
+					{translate('Sample volume · ingested vs retained')}
 				</Typography.Text>
 				<Typography.Text size="small" color="muted">
-					Last 6 hours
+					{translate('Last 6 hours')}
 				</Typography.Text>
 			</div>
 			<div className={styles.chartBody} ref={graphRef}>
@@ -91,7 +93,7 @@ function VolumeControlChart({ enabled }: VolumeControlChartProps): JSX.Element {
 						data-testid="volume-control-chart-error"
 					>
 						<Typography.Text size="small" color="danger">
-							Failed to load chart
+							{translate('Failed to load chart')}
 						</Typography.Text>
 					</div>
 				)}

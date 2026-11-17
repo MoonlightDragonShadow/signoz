@@ -1,3 +1,5 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Button } from 'antd';
 import cx from 'classnames';
@@ -64,6 +66,7 @@ function QueryAddOns({
 	fieldsConfig?: QueryBuilderFieldsConfig;
 	isForTraceOperator?: boolean;
 }): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
 	const [selectedViews, setSelectedViews] = useState<AddOn[]>([]);
 
 	const initializedRef = useRef(false);
@@ -311,14 +314,16 @@ function QueryAddOns({
 									<Tooltip
 										title={
 											<TooltipContent
-												label="Group By"
-												description="Break down data by attributes like service name, endpoint, status code, or region. Essential for spotting patterns and comparing performance across different segments."
+												label={translateInterfaceCopy('Group By')}
+												description={translateInterfaceCopy(
+													'Break down data by attributes like service name, endpoint, status code, or region. Essential for spotting patterns and comparing performance across different segments.',
+												)}
 												docLink="https://signoz.io/docs/querying/aggregation-grouping/#grouping"
 											/>
 										}
 									>
 										<div className="label" style={{ cursor: 'help' }}>
-											Group By
+											<ConsoleText message={'Group By'} />
 										</div>
 									</Tooltip>
 									<div className="input">
@@ -348,14 +353,16 @@ function QueryAddOns({
 									<Tooltip
 										title={
 											<TooltipContent
-												label="Having"
-												description="Filter grouped results based on aggregate conditions. Show only groups meeting specific criteria, like error rates > 5% or p99 latency > 500"
+												label={translateInterfaceCopy('Having')}
+												description={translateInterfaceCopy(
+													'Filter grouped results based on aggregate conditions. Show only groups meeting specific criteria, like error rates > 5% or p99 latency > 500',
+												)}
 												docLink="https://signoz.io/docs/querying/result-manipulation/#conditional-filtering-with-having"
 											/>
 										}
 									>
 										<div className="label" style={{ cursor: 'help' }}>
-											Having
+											<ConsoleText message={'Having'} />
 										</div>
 									</Tooltip>
 									<div className="input">
@@ -372,7 +379,7 @@ function QueryAddOns({
 						{selectedViews.find((view) => view.key === QueryBuilderField.Limit) && (
 							<div className="add-on-content" data-testid="limit-content">
 								<InputWithLabel
-									label="Limit"
+									label={translateInterfaceCopy('Limit')}
 									type="number"
 									onChange={handleChangeLimit}
 									sanitize={sanitizeLimit}
@@ -389,14 +396,16 @@ function QueryAddOns({
 									<Tooltip
 										title={
 											<TooltipContent
-												label="Order By"
-												description="Sort results to surface what matters most. Quickly identify slowest operations, most frequent errors, or highest resource consumers."
+												label={translateInterfaceCopy('Order By')}
+												description={translateInterfaceCopy(
+													'Sort results to surface what matters most. Quickly identify slowest operations, most frequent errors, or highest resource consumers.',
+												)}
 												docLink="https://signoz.io/docs/querying/result-manipulation/#sorting--limiting"
 											/>
 										}
 									>
 										<div className="label" style={{ cursor: 'help' }}>
-											Order By
+											<ConsoleText message={'Order By'} />
 										</div>
 									</Tooltip>
 									<div className="input">
@@ -427,14 +436,16 @@ function QueryAddOns({
 										<Tooltip
 											title={
 												<TooltipContent
-													label="Reduce to"
-													description="Apply mathematical operations like sum, average, min, max, or percentiles to reduce multiple time series into a single value."
+													label={translateInterfaceCopy('Reduce to')}
+													description={translateInterfaceCopy(
+														'Apply mathematical operations like sum, average, min, max, or percentiles to reduce multiple time series into a single value.',
+													)}
 													docLink="https://signoz.io/docs/userguide/query-builder-v5/#result-manipulation"
 												/>
 											}
 										>
 											<div className="label" style={{ cursor: 'help' }}>
-												Reduce to
+												<ConsoleText message={'Reduce to'} />
 											</div>
 										</Tooltip>
 										<div className="input">
@@ -455,7 +466,7 @@ function QueryAddOns({
 						{selectedViews.find((view) => view.key === QueryBuilderField.Legend) && (
 							<div className="add-on-content" data-testid="legend-format-content">
 								<InputWithLabel
-									label="Legend format"
+									label={translateInterfaceCopy('Legend format')}
 									placeholder={placeholderOf(QueryBuilderField.Legend)}
 									onChange={handleChangeQueryLegend}
 									initialValue={isEmpty(query?.legend) ? undefined : query?.legend}

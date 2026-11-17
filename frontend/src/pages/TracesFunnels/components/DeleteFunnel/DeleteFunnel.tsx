@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useQueryClient } from 'react-query';
 import { navigate } from 'lib/router/navigation';
 import { useAppLocation } from 'lib/router/useAppLocation';
@@ -27,6 +28,7 @@ function DeleteFunnel({
 	funnelId,
 	shouldRedirectToTracesListOnDeleteSuccess,
 }: DeleteFunnelProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const deleteFunnelMutation = useDeleteFunnel();
 	const { notifications } = useNotifications();
 	const queryClient = useQueryClient();
@@ -77,12 +79,12 @@ function DeleteFunnel({
 	return (
 		<SignozModal
 			open={isOpen}
-			title="Delete this funnel"
+			title={translateConsole('Delete this funnel')}
 			width={390}
 			onCancel={handleCancel}
 			rootClassName="funnel-modal delete-funnel-modal"
-			cancelText="Cancel"
-			okText="Delete Funnel"
+			cancelText={translateConsole('Cancel')}
+			okText={translateConsole('Delete Funnel')}
 			okButtonProps={{
 				icon: <Trash2 size={14} />,
 				loading: deleteFunnelMutation.isLoading,
@@ -99,8 +101,9 @@ function DeleteFunnel({
 			destroyOnClose
 		>
 			<div className="delete-funnel-modal-content">
-				Deleting the funnel would stop further analytics using this funnel. This is
-				irreversible and cannot be undone.
+				{translateConsole(
+					'Deleting the funnel would stop further analytics using this funnel. This is irreversible and cannot be undone.',
+				)}
 			</div>
 		</SignozModal>
 	);

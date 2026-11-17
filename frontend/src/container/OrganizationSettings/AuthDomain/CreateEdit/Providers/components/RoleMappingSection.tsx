@@ -1,3 +1,5 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useState } from 'react';
 import { Color, Style } from '@signozhq/design-tokens';
 import {
@@ -30,6 +32,8 @@ function RoleMappingSection({
 	isExpanded,
 	onExpandChange,
 }: RoleMappingSectionProps): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
+	const translateConsole = useConsoleTranslation();
 	const form = Form.useFormInstance();
 	const useRoleAttribute = Form.useWatch(
 		[...fieldNamePrefix, 'useRoleAttribute'],
@@ -79,12 +83,14 @@ function RoleMappingSection({
 							{!expanded ? <ChevronRight size={16} /> : <ChevronDown size={16} />}
 							<div className="role-mapping-section__collapse-header-text">
 								<h4 className="role-mapping-section__section-title">
-									Role Mapping (Advanced)
+									{translateConsole('Role Mapping (Advanced)')}
 								</h4>
 								<p className="role-mapping-section__section-description">
-									Configure how user roles are determined from your Identity Provider.
-									You can either use a direct role attribute or map IDP groups to SigNoz
-									roles.
+									<ConsoleText
+										message={
+											'Configure how user roles are determined from your Identity Provider. You can either use a direct role attribute or map IDP groups to SigNoz roles.'
+										}
+									/>
 								</p>
 							</div>
 							{!expanded && hasErrors && (
@@ -106,8 +112,12 @@ function RoleMappingSection({
 					<div id="role-mapping-content" className="role-mapping-section__content">
 						<div className="role-mapping-section__field-group">
 							<label className="role-mapping-section__label" htmlFor="default-role">
-								Default Role
-								<Tooltip title='The default role assigned to new SSO users if no other role mapping applies. Default: "signoz-viewer"'>
+								{translateConsole('Default Role')}
+								<Tooltip
+									title={translateInterfaceCopy(
+										'The default role assigned to new SSO users if no other role mapping applies. Default: "signoz-viewer"',
+									)}
+								>
 									<CircleHelp size={14} color={Style.L3_FOREGROUND} cursor="help" />
 								</Tooltip>
 							</label>
@@ -145,10 +155,18 @@ function RoleMappingSection({
 										form.setFieldValue([...fieldNamePrefix, 'useRoleAttribute'], checked);
 									}}
 								>
-									Use Role Attribute Directly
+									{translateConsole('Use Role Attribute Directly')}
 								</Checkbox>
 							</Form.Item>
-							<Tooltip title="If enabled, the role claim/attribute from the IDP will be used directly instead of group mappings. The role value must match a SigNoz role name (e.g. signoz-viewer, signoz-editor, signoz-admin, or a custom role).">
+							<Tooltip
+								title={
+									<ConsoleText
+										message={
+											'If enabled, the role claim/attribute from the IDP will be used directly instead of group mappings. The role value must match a SigNoz role name (e.g. signoz-viewer, signoz-editor, signoz-admin, or a custom role).'
+										}
+									/>
+								}
+							>
 								<CircleHelp size={14} color={Style.L3_FOREGROUND} cursor="help" />
 							</Tooltip>
 						</div>
@@ -157,11 +175,14 @@ function RoleMappingSection({
 							<div className="role-mapping-section__group-mappings">
 								<div className="role-mapping-section__group-header">
 									<span className="role-mapping-section__group-title">
-										Group to Role Mappings
+										{translateConsole('Group to Role Mappings')}
 									</span>
 									<p className="role-mapping-section__group-description">
-										Map IDP group names to SigNoz roles. If a user belongs to multiple
-										groups, the highest privilege role will be assigned.
+										<ConsoleText
+											message={
+												'Map IDP group names to SigNoz roles. If a user belongs to multiple groups, the highest privilege role will be assigned.'
+											}
+										/>
 									</p>
 								</div>
 
@@ -177,10 +198,15 @@ function RoleMappingSection({
 													<Form.Item
 														name={[field.name, 'groupName']}
 														className="role-mapping-section__field role-mapping-section__field--group"
-														rules={[{ required: true, message: 'Group name is required' }]}
+														rules={[
+															{
+																required: true,
+																message: translateInterfaceCopy('Group name is required'),
+															},
+														]}
 													>
 														<Input
-															placeholder="IDP Group Name"
+															placeholder={translateConsole('IDP Group Name')}
 															testId="role-mapping-group-name"
 														/>
 													</Form.Item>
@@ -188,7 +214,12 @@ function RoleMappingSection({
 													<Form.Item
 														name={[field.name, 'role']}
 														className="role-mapping-section__field role-mapping-section__field--role"
-														rules={[{ required: true, message: 'Role is required' }]}
+														rules={[
+															{
+																required: true,
+																message: translateInterfaceCopy('Role is required'),
+															},
+														]}
 														initialValue={SIGNOZ_VIEWER_ROLE}
 													>
 														<RolesSelect
@@ -208,7 +239,7 @@ function RoleMappingSection({
 														variant="ghost"
 														color="secondary"
 														onClick={(): void => remove(field.name)}
-														aria-label="Remove mapping"
+														aria-label={translateConsole('Remove mapping')}
 														testId="role-mapping-remove"
 														icon
 													>
@@ -227,7 +258,7 @@ function RoleMappingSection({
 												prefix={<Plus size={14} />}
 												testId="role-mapping-add"
 											>
-												Add Group Mapping
+												{translateConsole('Add Group Mapping')}
 											</Button>
 										</div>
 									)}

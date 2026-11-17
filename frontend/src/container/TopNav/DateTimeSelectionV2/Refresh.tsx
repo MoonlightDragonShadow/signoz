@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Tooltip } from 'antd';
 import { Clock } from '@signozhq/icons';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
+import { localizeRelativeTime } from 'components/LocalizedRelativeTime/localizeRelativeTime';
 
 import { RefreshTextContainer } from './styles';
 
@@ -8,6 +10,7 @@ function RefreshText({
 	onLastRefreshHandler,
 	refreshButtonHidden,
 }: RefreshTextProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const [refreshText, setRefreshText] = useState<string>('');
 
 	// this is to update the refresh text
@@ -25,7 +28,7 @@ function RefreshText({
 
 	return (
 		<RefreshTextContainer refreshButtonHidden={refreshButtonHidden}>
-			<Tooltip title={refreshText}>
+			<Tooltip title={localizeRelativeTime(refreshText, translate)}>
 				<Clock size={12} />
 			</Tooltip>
 		</RefreshTextContainer>

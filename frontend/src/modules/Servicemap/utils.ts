@@ -117,23 +117,26 @@ const getRound2DigitsAfterDecimal = (num: number): number => {
 	return num.toFixed(20).match(/^-?\d*\.?0*\d{0,2}/)[0];
 };
 
-export const getTooltip = (link: {
-	p99: number;
-	errorRate: number;
-	callRate: number;
-	id: string;
-}): string => {
+export const getTooltip = (
+	link: {
+		p99: number;
+		errorRate: number;
+		callRate: number;
+		id: string;
+	},
+	translate: (message: string) => string = (message) => message,
+): string => {
 	return `<div style="color:#333333;padding:12px;background: white;border-radius: 2px;">
 								<div class="keyval">
-									<div class="key">P99 latency:</div>
+									<div class="key">${translate('P99 latency')}:</div>
 									<div class="val">${getRound2DigitsAfterDecimal(link.p99 / 1000000)}ms</div>
 								</div>
 								<div class="keyval">
-									<div class="key">Request:</div>
+									<div class="key">${translate('Request')}:</div>
 									<div class="val">${getRound2DigitsAfterDecimal(link.callRate)}/sec</div>
 								</div>
 								<div class="keyval">
-									<div class="key">Error Rate:</div>
+									<div class="key">${translate('Error Rate')}:</div>
 									<div class="val">${getRound2DigitsAfterDecimal(link.errorRate)}%</div>
 								</div>
 							</div>`;

@@ -1,3 +1,5 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import type { CSSProperties, MouseEvent, ReactNode } from 'react';
 import { memo, useCallback, useEffect, useMemo, useRef } from 'react';
 import { useCopyToClipboard } from 'react-use';
@@ -45,6 +47,7 @@ function LiveLogsList({
 	isLoading,
 	handleChangeSelectedView,
 }: LiveLogsListProps): JSX.Element {
+	const translateRuntimeCopy = useConsoleTranslation();
 	const ref = useRef<TanStackTableHandle | VirtuosoHandle | null>(null);
 	const [, setCopy] = useCopyToClipboard();
 	const isDarkMode = useIsDarkMode();
@@ -98,9 +101,11 @@ function LiveLogsList({
 					`${window.location.pathname}?${urlQuery.toString()}`,
 				);
 				setCopy(link);
-				toast.success('Copied to clipboard', { position: 'top-right' });
+				toast.success(translateRuntimeCopy('Copied to clipboard'), {
+					position: 'top-right',
+				});
 			},
-		[setCopy],
+		[setCopy, translateRuntimeCopy],
 	);
 
 	const handleScrollToLog = useScrollToLog({
@@ -179,7 +184,9 @@ function LiveLogsList({
 				<div className="loading-live-logs-content">
 					<img className="loading-gif" src={loadingPlaneUrl} alt="wait-icon" />
 
-					<Typography>Fetching live logs...</Typography>
+					<Typography>
+						<ConsoleText message={'Fetching live logs...'} />
+					</Typography>
 				</div>
 			</div>
 		),

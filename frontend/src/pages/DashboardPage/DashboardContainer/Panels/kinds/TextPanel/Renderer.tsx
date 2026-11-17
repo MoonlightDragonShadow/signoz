@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useMemo } from 'react';
 import { Pencil } from '@signozhq/icons';
 import cx from 'classnames';
@@ -23,16 +24,6 @@ const HORIZONTAL_ALIGN_CLASS: Record<DashboardtypesTextAlignDTO, string> = {
 	[DashboardtypesTextAlignDTO.right]: styles.alignRight,
 };
 
-// Static, so it is not rebuilt on every variable tick.
-const EMPTY_STATE = (
-	<PanelMessage
-		icon={<Pencil size={18} />}
-		title="Nothing written yet"
-		description="Add Markdown to this panel to show content."
-		data-testid="text-panel-empty"
-	/>
-);
-
 const VERTICAL_ALIGN_CLASS: Record<DashboardtypesVerticalAlignDTO, string> = {
 	[DashboardtypesVerticalAlignDTO.top]: styles.alignTop,
 	[DashboardtypesVerticalAlignDTO.center]: styles.alignMiddle,
@@ -49,6 +40,15 @@ function Renderer({
 	dashboardId,
 	onChangeText,
 }: StaticRendererProps<'signoz/TextPanel'>): JSX.Element {
+	const translate = useConsoleTranslation();
+	const emptyState = (
+		<PanelMessage
+			icon={<Pencil size={18} />}
+			title={translate('Nothing written yet')}
+			description={translate('Add Markdown to this panel to show content.')}
+			data-testid="text-panel-empty"
+		/>
+	);
 	const { text, presentation } = panel.spec.plugin.spec;
 
 	const variables = useDashboardStore(
@@ -89,7 +89,7 @@ function Renderer({
 				)}
 				data-testid="text-panel"
 			>
-				<MarkdownContent interactive={interactive} emptyState={EMPTY_STATE}>
+				<MarkdownContent interactive={interactive} emptyState={emptyState}>
 					{body}
 				</MarkdownContent>
 			</div>

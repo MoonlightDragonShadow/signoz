@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { Plus } from '@signozhq/icons';
 import { Callout } from '@signozhq/ui/callout';
 import { useQueryBuilder } from 'hooks/queryBuilder/useQueryBuilder';
@@ -28,11 +29,13 @@ function ClickHouseQueryContainer(): JSX.Element | null {
 								target="_blank"
 								rel="noopener"
 							>
-								Learn to write faster, optimized queries
+								<ConsoleText message={'Learn to write faster, optimized queries'} />
 							</a>
 							{' · Using AI? '}
 							<a href={DOCLINKS.AGENT_SKILL_INSTALL} target="_blank" rel="noopener">
-								Install the SigNoz ClickHouse query agent skill
+								<ConsoleText
+									message={'Install the SigNoz ClickHouse query agent skill'}
+								/>
 							</a>
 						</span>
 					}
@@ -52,7 +55,7 @@ function ClickHouseQueryContainer(): JSX.Element | null {
 				icon={<Plus size="md" />}
 				style={{ margin: '0.4rem 1rem' }}
 			>
-				Query
+				<ConsoleText message={'Query'} />
 			</QueryButton>
 		</>
 	);

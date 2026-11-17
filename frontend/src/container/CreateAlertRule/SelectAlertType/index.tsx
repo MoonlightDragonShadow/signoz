@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Row } from 'antd';
@@ -15,6 +16,7 @@ import { AlertTypeCard, SelectTypeContainer } from './styles';
 import { OptionType } from './types';
 
 function SelectAlertType({ onSelect }: SelectAlertTypeProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const { t } = useTranslation(['alerts']);
 
 	const isAnomalyDetectionEnabled = useIsAnomalyDetectionAvailable();
@@ -65,7 +67,7 @@ function SelectAlertType({ onSelect }: SelectAlertTypeProps): JSX.Element {
 						extra={
 							option.isBeta ? (
 								<Badge variant="solid" color="primary">
-									Beta
+									{translateConsole('Beta')}
 								</Badge>
 							) : undefined
 						}
@@ -82,13 +84,13 @@ function SelectAlertType({ onSelect }: SelectAlertTypeProps): JSX.Element {
 								handleRedirection(option.selection);
 							}}
 						>
-							Click here to see how to create a sample alert.
+							{translateConsole('Click here to see how to create a sample alert.')}
 						</Typography.Link>{' '}
 					</AlertTypeCard>
 				))}
 			</>
 		),
-		[onSelect, optionList],
+		[translateConsole, onSelect, optionList],
 	);
 
 	return (

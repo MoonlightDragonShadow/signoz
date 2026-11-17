@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback } from 'react';
 import { Button } from '@signozhq/ui/button';
 import { navigate } from 'lib/router/navigation';
@@ -12,6 +13,7 @@ import { useAIAssistantStore } from '../store/useAIAssistantStore';
 import { VariantContext } from '../VariantContext';
 
 export default function AIAssistantDrawer(): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const isDrawerOpen = useAIAssistantStore((s) => s.isDrawerOpen);
 	const activeConversationId = useAIAssistantStore(
 		(s) => s.activeConversationId,
@@ -51,42 +53,42 @@ export default function AIAssistantDrawer(): JSX.Element {
 					</div>
 
 					<div>
-						<Tooltip title="New conversation">
+						<Tooltip title={translateConsole('New conversation')}>
 							<Button
 								variant="ghost"
 								size="sm"
 								icon
 								color="secondary"
 								onClick={handleNewConversation}
-								aria-label="New conversation"
+								aria-label={translateConsole('New conversation')}
 							>
 								<Plus size={16} />
 							</Button>
 						</Tooltip>
 
-						<Tooltip title="Open full screen">
+						<Tooltip title={translateConsole('Open full screen')}>
 							<Button
-								disabledTooltip="Start a conversation first"
+								disabledTooltip={translateConsole('Start a conversation first')}
 								variant="ghost"
 								size="sm"
 								icon
 								color="secondary"
 								onClick={handleExpand}
 								disabled={!activeConversationId}
-								aria-label="Open full screen"
+								aria-label={translateConsole('Open full screen')}
 							>
 								<Maximize2 size={16} />
 							</Button>
 						</Tooltip>
 
-						<Tooltip title="Close">
+						<Tooltip title={translateConsole('Close')}>
 							<Button
 								variant="ghost"
 								size="sm"
 								icon
 								color="secondary"
 								onClick={closeDrawer}
-								aria-label="Close drawer"
+								aria-label={translateConsole('Close drawer')}
 							>
 								<X size={16} />
 							</Button>

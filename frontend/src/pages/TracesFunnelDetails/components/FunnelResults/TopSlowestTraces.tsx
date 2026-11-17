@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useFunnelSlowTraces } from 'hooks/TracesFunnels/useFunnels';
 import { FunnelStepData } from 'types/api/traceFunnels';
 
@@ -11,12 +12,13 @@ interface TopSlowestTracesProps {
 }
 
 function TopSlowestTraces(props: TopSlowestTracesProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	return (
 		<FunnelTopTracesTable
 			{...props}
-			title="Slowest 5 traces"
+			title={translateConsole('Slowest 5 traces')}
 			testId="funnel-slowest-traces"
-			tooltip="A list of the slowest traces in the funnel"
+			tooltip={translateConsole('A list of the slowest traces in the funnel')}
 			useQueryHook={useFunnelSlowTraces}
 		/>
 	);

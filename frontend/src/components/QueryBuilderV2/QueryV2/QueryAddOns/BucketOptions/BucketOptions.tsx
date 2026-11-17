@@ -1,3 +1,5 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { useCallback, useMemo, useState } from 'react';
 import { Tooltip } from 'antd';
 import cx from 'classnames';
@@ -43,6 +45,8 @@ function BucketOptions({
 	/** Omitted where the section isn't dismissable, as on a formula. */
 	onClose?: () => void;
 }): JSX.Element {
+	const translateRuntimeCopy = useConsoleTranslation();
+	const translateInterfaceCopy = useConsoleTranslation();
 	// A linear axis has no bounds to describe until it has a max value, so the picked
 	// kind is held here rather than read back off the emitted options: it has to survive
 	// the gap between choosing Linear and filling the field in.
@@ -176,7 +180,9 @@ function BucketOptions({
 		<div className={styles.bucketOptions} data-testid="bucket-options">
 			<div className={styles.controls}>
 				<div className={styles.field}>
-					<span className={styles.label}>Bucket by</span>
+					<span className={styles.label}>
+						<ConsoleText message={'Bucket by'} />
+					</span>
 					<ToggleGroup
 						variant="outlined"
 						color="secondary"
@@ -191,7 +197,9 @@ function BucketOptions({
 
 				{kind === Querybuildertypesv5BucketsKindDTO.log && (
 					<div className={styles.field}>
-						<span className={styles.label}>Scale</span>
+						<span className={styles.label}>
+							<ConsoleText message={'Scale'} />
+						</span>
 						<ToggleGroup
 							variant="outlined"
 							color="secondary"
@@ -208,19 +216,23 @@ function BucketOptions({
 				{kind === Querybuildertypesv5BucketsKindDTO.linear && (
 					<>
 						<div className={styles.field}>
-							<span className={styles.label}>Max value</span>
+							<span className={styles.label}>
+								<ConsoleText message={'Max value'} />
+							</span>
 							<InputNumber
 								className={styles.numberInput}
 								min={0}
 								value={maxValue}
 								onChange={handleMaxValueChange}
-								placeholder="Required"
+								placeholder={translateInterfaceCopy('Required')}
 								status={maxValue !== null && maxValue <= 0 ? 'error' : undefined}
 								data-testid="bucket-options-max-value"
 							/>
 						</div>
 						<div className={styles.field}>
-							<span className={styles.label}>Buckets</span>
+							<span className={styles.label}>
+								<ConsoleText message={'Buckets'} />
+							</span>
 							<InputNumber
 								className={styles.numberInput}
 								min={1}
@@ -228,7 +240,9 @@ function BucketOptions({
 								precision={0}
 								value={numBuckets}
 								onChange={handleNumBucketsChange}
-								placeholder={`Default ${DEFAULT_NUM_BUCKETS}`}
+								placeholder={translateRuntimeCopy('Default {{value1}}', {
+									value1: DEFAULT_NUM_BUCKETS,
+								})}
 								data-testid="bucket-options-num-buckets"
 							/>
 						</div>
@@ -241,7 +255,7 @@ function BucketOptions({
 						variant="ghost"
 						size="sm"
 						icon
-						aria-label="Close bucket options"
+						aria-label={translateInterfaceCopy('Close bucket options')}
 						onClick={onClose}
 						testId="bucket-options-close"
 					>
@@ -252,7 +266,7 @@ function BucketOptions({
 
 			<div className={styles.bounds} data-testid="bucket-options-bounds">
 				<span className={styles.label}>
-					Bounds
+					<ConsoleText message={'Bounds'} />
 					<Tooltip title={BUCKET_KIND_HINTS[kind]} placement="top">
 						<Info size={12} className={styles.hintIcon} />
 					</Tooltip>
@@ -270,7 +284,9 @@ function BucketOptions({
 						<span className={cx(styles.bound, styles.overflowBound)}>+Inf</span>
 					</>
 				) : (
-					<span className={styles.muted}>Set a max value to see the bounds</span>
+					<span className={styles.muted}>
+						<ConsoleText message={'Set a max value to see the bounds'} />
+					</span>
 				)}
 			</div>
 		</div>

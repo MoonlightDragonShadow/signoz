@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useState } from 'react';
 import cx from 'classnames';
 import { Button } from '@signozhq/ui/button';
@@ -33,6 +34,7 @@ export default function InteractiveQuestion({
 }: {
 	data: QuestionData;
 }): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const { question, type = 'radio', options } = data;
 	const normalized = options.map(normalizeOption);
 
@@ -115,14 +117,14 @@ export default function InteractiveQuestion({
 						))}
 					</div>
 					<Button
-						disabledTooltip="Select at least one option"
+						disabledTooltip={translateConsole('Select at least one option')}
 						color="primary"
 						variant="solid"
 						size="sm"
 						disabled={selected.length === 0}
 						onClick={(): void => handleSubmit(selected)}
 					>
-						Confirm
+						{translateConsole('Confirm')}
 					</Button>
 				</>
 			)}

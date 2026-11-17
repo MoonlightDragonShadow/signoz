@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Button } from '@signozhq/ui/button';
 import { Typography } from '@signozhq/ui/typography';
 import { ArrowUpRight, RotateCw } from '@signozhq/icons';
@@ -27,6 +28,7 @@ function ErrorState({
 	httpStatus,
 	errorMessage,
 }: Props): JSX.Element {
+	const translate = useConsoleTranslation();
 	// 4xx responses are client errors — the same request will keep failing.
 	// Surface the BE-provided detail (e.g. DSL parse errors) and skip Retry.
 	const isClientError =
@@ -55,7 +57,7 @@ function ErrorState({
 			{isClientError ? (
 				<>
 					<Typography.Text className={styles.errorText}>
-						Invalid query
+						{translate('Invalid query')}
 					</Typography.Text>
 					<Typography.Text className={styles.errorDetail}>
 						{cleanedDetail || INVALID_QUERY_FALLBACK}
@@ -77,7 +79,7 @@ function ErrorState({
 						onClick={handleRetry}
 						testId="dashboards-list-retry"
 					>
-						Retry
+						{translate('Retry')}
 					</Button>
 				)}
 				<Button
@@ -87,7 +89,7 @@ function ErrorState({
 					onClick={handleContactSupportClick}
 					testId="dashboards-list-contact-support"
 				>
-					Contact Support
+					{translate('Contact Support')}
 				</Button>
 				<ArrowUpRight size={16} className={styles.learnMoreArrow} />
 			</section>

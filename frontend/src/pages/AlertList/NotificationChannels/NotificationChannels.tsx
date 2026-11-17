@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Plus, Search } from '@signozhq/icons';
 import { Input } from '@signozhq/ui/input';
@@ -53,6 +54,8 @@ const DEFAULT_PAGE = 1;
 const DEFAULT_LIMIT = 10;
 
 function NotificationChannels(): JSX.Element {
+	const translateRuntimeCopy = useConsoleTranslation();
+	const translateConsole = useConsoleTranslation();
 	const { formatTimezoneAdjustedTimestamp } = useTimezone();
 	const formView = useChannelFormView();
 
@@ -126,8 +129,8 @@ function NotificationChannels(): JSX.Element {
 	);
 
 	const columns = useMemo(
-		() => getChannelColumns(formatTimezoneAdjustedTimestamp),
-		[formatTimezoneAdjustedTimestamp],
+		() => getChannelColumns(translateConsole, formatTimezoneAdjustedTimestamp),
+		[formatTimezoneAdjustedTimestamp, translateConsole],
 	);
 
 	const columnsWithActions = useMemo(
@@ -136,7 +139,7 @@ function NotificationChannels(): JSX.Element {
 			{
 				id: 'actions',
 				header: (): JSX.Element => (
-					<span className={styles.actionsHeader}>Actions</span>
+					<span className={styles.actionsHeader}>{translateConsole('Actions')}</span>
 				),
 				accessorKey: 'id',
 				width: { fixed: '96px', ignoreLastColumnFill: true },
@@ -155,7 +158,7 @@ function NotificationChannels(): JSX.Element {
 				),
 			},
 		],
-		[columns, handleEdit, deletion.request],
+		[translateConsole, columns, handleEdit, deletion.request],
 	);
 
 	const hasActiveFilters = searchText.length > 0 || kind !== KIND_FILTER_ALL;
@@ -177,7 +180,9 @@ function NotificationChannels(): JSX.Element {
 					<div className={styles.headingBlock}>
 						<Typography.Title className={styles.title}>
 							{filteredKind
-								? `All ${CHANNEL_KIND_LABEL[filteredKind]} channels`
+								? translateRuntimeCopy('All {{value1}} channels', {
+										value1: CHANNEL_KIND_LABEL[filteredKind],
+									})
 								: 'All notification channels'}
 						</Typography.Title>
 						<span className={styles.countPill}>{total}</span>
@@ -200,7 +205,9 @@ function NotificationChannels(): JSX.Element {
 						testId="channels-create"
 					>
 						{filteredKind
-							? `New ${CHANNEL_KIND_LABEL[filteredKind]} Channel`
+							? translateRuntimeCopy('New {{value1}} Channel', {
+									value1: CHANNEL_KIND_LABEL[filteredKind],
+								})
 							: 'New Channel'}
 					</AuthZButton>
 					<TextToolTip
@@ -213,7 +220,7 @@ function NotificationChannels(): JSX.Element {
 				<div className={styles.filtersRow}>
 					<Input
 						containerClassName={styles.searchInput}
-						placeholder="Search by channel name"
+						placeholder={translateConsole('Search by channel name')}
 						value={searchText}
 						onChange={handleSearchChange}
 						disabled={!canList}
@@ -249,13 +256,15 @@ function NotificationChannels(): JSX.Element {
 				>
 					{isError ? (
 						<ErrorEmptyState
-							title="Failed to load notification channels"
+							title={translateConsole('Failed to load notification channels')}
 							onRefresh={refetch}
 						/>
 					) : isEmpty && hasActiveFilters ? (
 						<NoResultsEmptyState
-							title="No matching channels"
-							subtitle="No notification channels match your search. Try adjusting your search criteria."
+							title={translateConsole('No matching channels')}
+							subtitle={translateConsole(
+								'No notification channels match your search. Try adjusting your search criteria.',
+							)}
 							onClear={handleClearFilters}
 							clearButtonText="Clear Search"
 						/>

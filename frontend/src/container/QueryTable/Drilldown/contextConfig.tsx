@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { ReactNode } from 'react';
 import { PANEL_TYPES } from 'constants/queryBuilder';
 import ContextMenu, { ClickedData } from 'periscope/components/ContextMenu';
@@ -57,7 +58,9 @@ export function getGroupContextMenuConfig({
 			items: (
 				<>
 					<ContextMenu.Header>
-						<div>Filter by {filterKey}</div>
+						<div>
+							<ConsoleText message={'Filter by'} /> {filterKey}
+						</div>
 					</ContextMenu.Header>
 					{filterOperators.map((operator) => (
 						<ContextMenu.Item

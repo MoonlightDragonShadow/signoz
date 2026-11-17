@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import React from 'react';
 import { AppLink } from 'lib/router/AppLink';
 import { Color } from '@signozhq/design-tokens';
@@ -22,6 +23,7 @@ function PopoverContent({
 	relatedTracesLink?: Props['relatedTracesLink'];
 	relatedLogsLink?: Props['relatedLogsLink'];
 }): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const isDarkMode = useIsDarkMode();
 	return (
 		<div className="contributor-row-popover-buttons">
@@ -34,7 +36,7 @@ function PopoverContent({
 					<div className="icon">
 						<LogsIcon />
 					</div>
-					<div className="text">View Logs</div>
+					<div className="text">{translateConsole('View Logs')}</div>
 				</AppLink>
 			)}
 			{!!relatedTracesLink && (
@@ -49,7 +51,7 @@ function PopoverContent({
 							color={isDarkMode ? Color.BG_VANILLA_400 : Color.TEXT_INK_400}
 						/>
 					</div>
-					<div className="text">View Traces</div>
+					<div className="text">{translateConsole('View Traces')}</div>
 				</AppLink>
 			)}
 		</div>

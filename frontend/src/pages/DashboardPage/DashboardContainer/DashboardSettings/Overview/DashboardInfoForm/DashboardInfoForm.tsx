@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Dispatch, SetStateAction } from 'react';
 import { Input } from '@signozhq/ui/input';
 import { Typography } from '@signozhq/ui/typography';
@@ -31,11 +32,14 @@ function DashboardInfoForm({
 	onImageChange,
 	onTagsChange,
 }: DashboardInfoFormProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	return (
 		<div className={settingsStyles.settingsCard}>
 			<div className={styles.formSpace}>
 				<div className={styles.infoItemContainer}>
-					<Typography className={styles.infoTitle}>Dashboard Name</Typography>
+					<Typography className={styles.infoTitle}>
+						{translate('Dashboard Name')}
+					</Typography>
 					<section className={styles.nameIconInput}>
 						<DashboardImagePicker
 							image={image}
@@ -54,7 +58,9 @@ function DashboardInfoForm({
 				</div>
 
 				<div className={styles.infoItemContainer}>
-					<Typography className={styles.infoTitle}>Description</Typography>
+					<Typography className={styles.infoTitle}>
+						{translate('Description')}
+					</Typography>
 					<AntdInput.TextArea
 						data-testid="dashboard-desc"
 						rows={6}
@@ -65,7 +71,7 @@ function DashboardInfoForm({
 				</div>
 
 				<div className={styles.infoItemContainer}>
-					<Typography className={styles.infoTitle}>Tags</Typography>
+					<Typography className={styles.infoTitle}>{translate('Tags')}</Typography>
 					<TagKeyValueInput tags={tags} onTagsChange={onTagsChange} />
 				</div>
 			</div>

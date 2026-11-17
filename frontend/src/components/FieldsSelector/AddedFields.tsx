@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { useMemo } from 'react';
 import {
 	closestCenter,
@@ -62,7 +63,7 @@ function SortableField({
 					size="sm"
 					onClick={(): void => onRemove(field)}
 				>
-					Remove
+					<ConsoleText message={'Remove'} />
 				</Button>
 			)}
 		</div>
@@ -115,10 +116,12 @@ function AddedFields({
 	return (
 		<div className={cx(styles.section, styles.sectionAdded)}>
 			<div className={styles.sectionHeader}>
-				<span>ADDED FIELDS</span>
+				<span>
+					<ConsoleText message={'ADDED FIELDS'} />
+				</span>
 				{maxFields !== undefined && (
 					<Typography.Text size="sm" weight="medium" color="muted">
-						Max Allowed: {maxFields}
+						<ConsoleText message={'Max Allowed:'} /> {maxFields}
 					</Typography.Text>
 				)}
 			</div>
@@ -130,7 +133,9 @@ function AddedFields({
 						onDragEnd={handleDragEnd}
 					>
 						{filteredFields.length === 0 ? (
-							<div className={styles.noValues}>No values found</div>
+							<div className={styles.noValues}>
+								<ConsoleText message={'No values found'} />
+							</div>
 						) : (
 							<SortableContext
 								items={fields.map((f) => f.key as string)}

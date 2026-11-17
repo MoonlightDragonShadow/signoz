@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useEffect, useRef, useState } from 'react';
 import { Button } from '@signozhq/ui/button';
 import { Typography } from '@signozhq/ui/typography';
@@ -26,6 +27,7 @@ function QueryVariableFields({
 	onPreview,
 	onError,
 }: QueryVariableFieldsProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const [isRunning, setIsRunning] = useState(false);
 	const hasAutoRun = useRef(false);
 
@@ -73,7 +75,9 @@ function QueryVariableFields({
 	return (
 		<div className={styles.queryContainer}>
 			<div className={styles.labelContainer}>
-				<Typography.Text className={styles.label}>Query</Typography.Text>
+				<Typography.Text className={styles.label}>
+					{translate('Query')}
+				</Typography.Text>
 			</div>
 			<div className={styles.editorWrap}>
 				<Editor
@@ -95,7 +99,7 @@ function QueryVariableFields({
 			</div>
 			<div className={styles.testRow}>
 				<Button
-					disabledTooltip="Enter a query first"
+					disabledTooltip={translate('Enter a query first')}
 					variant="solid"
 					color="primary"
 					size="sm"
@@ -104,7 +108,7 @@ function QueryVariableFields({
 					onClick={runTest}
 					testId="variable-test-run"
 				>
-					Test Run Query
+					{translate('Test Run Query')}
 				</Button>
 			</div>
 		</div>

@@ -1,3 +1,5 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import LocalizedRelativeTime from 'components/LocalizedRelativeTime/LocalizedRelativeTime';
 import { ReactNode } from 'react';
 import { Color } from '@signozhq/design-tokens';
 import { TableColumnType as ColumnType, Tooltip } from 'antd';
@@ -145,9 +147,13 @@ export const getLastUsedRelativeTime = (lastRefresh: number): string => {
 };
 
 // Rename this to a proper name
-export const columnsConfig: ColumnType<APIDomainsRowData>[] = [
+export const getDomainColumns = (
+	translate: (message: string) => string,
+): ColumnType<APIDomainsRowData>[] => [
 	{
-		title: <div className="domain-list-name-col-header">Domain</div>,
+		title: (
+			<div className="domain-list-name-col-header">{translate('Domain')}</div>
+		),
 		dataIndex: 'domainName',
 		key: 'domainName',
 		width: '23.7%',
@@ -160,7 +166,7 @@ export const columnsConfig: ColumnType<APIDomainsRowData>[] = [
 		),
 	},
 	{
-		title: <div>Endpoints in use</div>,
+		title: <div>{translate('Endpoints in use')}</div>,
 		dataIndex: 'endpointCount',
 		key: 'endpointCount',
 		width: '14.2%',
@@ -192,7 +198,11 @@ export const columnsConfig: ColumnType<APIDomainsRowData>[] = [
 		className: `column`,
 	},
 	{
-		title: <div>Last used</div>,
+		title: (
+			<div>
+				<ConsoleText message="Last used" />
+			</div>
+		),
 		dataIndex: 'lastUsed',
 		key: 'lastUsed',
 		width: '14.2%',
@@ -210,15 +220,19 @@ export const columnsConfig: ColumnType<APIDomainsRowData>[] = [
 
 			return new Date(dateB).getTime() - new Date(dateA).getTime();
 		},
-		render: (lastUsed: string): string =>
-			lastUsed === 'n/a' || lastUsed === '-'
-				? '-'
-				: getLastUsedRelativeTime(new Date(lastUsed).getTime()),
+		render: (lastUsed: string): ReactNode =>
+			lastUsed === 'n/a' || lastUsed === '-' ? (
+				'-'
+			) : (
+				<LocalizedRelativeTime
+					value={getLastUsedRelativeTime(new Date(lastUsed).getTime())}
+				/>
+			),
 	},
 	{
 		title: (
 			<div>
-				Rate <span className="round-metric-tag">ops/s</span>
+				{translate('Rate')} <span className="round-metric-tag">ops/s</span>
 			</div>
 		),
 		dataIndex: 'rate',
@@ -235,7 +249,7 @@ export const columnsConfig: ColumnType<APIDomainsRowData>[] = [
 	{
 		title: (
 			<div>
-				Error <span className="round-metric-tag">%</span>
+				<ConsoleText message="Error" /> <span className="round-metric-tag">%</span>
 			</div>
 		),
 		dataIndex: 'errorRate',
@@ -277,7 +291,10 @@ export const columnsConfig: ColumnType<APIDomainsRowData>[] = [
 	{
 		title: (
 			<div>
-				Avg. Latency <span className="round-metric-tag">ms</span>
+				{translate('Avg. Latency')}{' '}
+				<span className="round-metric-tag">
+					<ConsoleText message={'ms'} />
+				</span>
 			</div>
 		),
 		dataIndex: 'latency',
@@ -985,7 +1002,11 @@ export const getEndPointsColumnsConfig = (
 		},
 	},
 	{
-		title: <div className="column-header">Port</div>,
+		title: (
+			<div className="column-header">
+				<ConsoleText message={'Port'} />
+			</div>
+		),
 		dataIndex: 'port',
 		key: 'port',
 		width: 180,
@@ -997,7 +1018,7 @@ export const getEndPointsColumnsConfig = (
 	{
 		title: (
 			<div className="column-header">
-				Num of calls <ArrowUpDown size={14} />
+				<ConsoleText message={'Num of calls'} /> <ArrowUpDown size={14} />
 			</div>
 		),
 		dataIndex: 'callCount',
@@ -1010,7 +1031,7 @@ export const getEndPointsColumnsConfig = (
 	{
 		title: (
 			<div>
-				Error <span className="round-metric-tag">%</span>
+				<ConsoleText message="Error" /> <span className="round-metric-tag">%</span>
 			</div>
 		),
 		dataIndex: 'errorRate',
@@ -1045,7 +1066,10 @@ export const getEndPointsColumnsConfig = (
 	{
 		title: (
 			<div>
-				Latency <span className="round-metric-tag">ms</span>
+				<ConsoleText message={'Latency'} />{' '}
+				<span className="round-metric-tag">
+					<ConsoleText message={'ms'} />
+				</span>
 			</div>
 		),
 		dataIndex: 'latency',
@@ -1056,7 +1080,11 @@ export const getEndPointsColumnsConfig = (
 		className: `column`,
 	},
 	{
-		title: <div>Last used</div>,
+		title: (
+			<div>
+				<ConsoleText message="Last used" />
+			</div>
+		),
 		dataIndex: 'lastUsed',
 		key: 'lastUsed',
 		width: 120,
@@ -1064,10 +1092,21 @@ export const getEndPointsColumnsConfig = (
 		align: 'right',
 		className: `column`,
 		// eslint-disable-next-line sonarjs/no-identical-functions
-		render: (lastUsed: string): string =>
-			lastUsed === 'n/a' || lastUsed === '-'
-				? '-'
-				: getLastUsedRelativeTime(new Date(lastUsed).getTime()),
+		render: (lastUsed: string): ReactNode => {
+			if (lastUsed === 'n/a' || lastUsed === '-') {
+				return '-';
+			}
+			const timestamp = new Date(lastUsed).getTime();
+			return (
+				<LocalizedRelativeTime
+					value={
+						Number.isNaN(timestamp)
+							? lastUsed
+							: getLastUsedRelativeTime(timestamp)
+					}
+				/>
+			);
+		},
 	},
 ];
 
@@ -1288,7 +1327,11 @@ export const getTopErrorsCoRelationQueryFilters = (
 export const getTopErrorsColumnsConfig =
 	(): ColumnType<TopErrorsTableRowData>[] => [
 		{
-			title: <div className="endpoint-name-header">Endpoint</div>,
+			title: (
+				<div className="endpoint-name-header">
+					<ConsoleText message={'Endpoint'} />
+				</div>
+			),
 			dataIndex: 'endpointName',
 			key: 'endpointName',
 			width: 180,
@@ -1298,14 +1341,18 @@ export const getTopErrorsColumnsConfig =
 			render: (text: string, record: TopErrorsTableRowData): React.ReactNode => {
 				const { endpoint } = extractPortAndEndpoint(record.endpointName);
 				return (
-					<Tooltip title="Click to open traces">
+					<Tooltip title={<ConsoleText message="Click to open traces" />}>
 						<div className="endpoint-name-value">{endpoint}</div>
 					</Tooltip>
 				);
 			},
 		},
 		{
-			title: <div className="column-header">Status code</div>,
+			title: (
+				<div className="column-header">
+					<ConsoleText message={'Status code'} />
+				</div>
+			),
 			dataIndex: 'statusCode',
 			key: 'statusCode',
 			width: 180,
@@ -1315,7 +1362,11 @@ export const getTopErrorsColumnsConfig =
 			className: `column`,
 		},
 		{
-			title: <div className="column-header">Status message</div>,
+			title: (
+				<div className="column-header">
+					<ConsoleText message={'Status message'} />
+				</div>
+			),
 			dataIndex: 'statusMessage',
 			key: 'statusMessage',
 			width: 180,
@@ -1324,7 +1375,11 @@ export const getTopErrorsColumnsConfig =
 			className: `column`,
 		},
 		{
-			title: <div>Count</div>,
+			title: (
+				<div>
+					<ConsoleText message={'Count'} />
+				</div>
+			),
 			dataIndex: 'count',
 			key: 'count',
 			width: 120,
@@ -2301,7 +2356,11 @@ export const getFormattedEndPointStatusCodeData = (
 
 export const endPointStatusCodeColumns: ColumnType<EndPointStatusCodeData>[] = [
 	{
-		title: <div className="status-code-header">STATUS CODE</div>,
+		title: (
+			<div className="status-code-header">
+				<ConsoleText message={'STATUS CODE'} />
+			</div>
+		),
 		dataIndex: 'statusCode',
 		key: 'statusCode',
 		render: (text): JSX.Element => (
@@ -2318,7 +2377,7 @@ export const endPointStatusCodeColumns: ColumnType<EndPointStatusCodeData>[] = [
 	{
 		title: (
 			<div className="column-header">
-				NUMBER OF CALLS <ArrowUpDown size={14} />
+				<ConsoleText message={'NUMBER OF CALLS'} /> <ArrowUpDown size={14} />
 			</div>
 		),
 		dataIndex: 'count',
@@ -2445,7 +2504,11 @@ export const getFormattedDependentServicesData = (
 
 export const dependentServicesColumns: ColumnType<DependentServicesData>[] = [
 	{
-		title: <span className="title-wrapper col-title">Dependent Services</span>,
+		title: (
+			<span className="title-wrapper col-title">
+				<ConsoleText message={'Dependent Services'} />
+			</span>
+		),
 		dataIndex: 'serviceData',
 		key: 'serviceData',
 		render: (serviceData: ServiceData): ReactNode => (
@@ -2482,7 +2545,7 @@ export const dependentServicesColumns: ColumnType<DependentServicesData>[] = [
 	{
 		title: (
 			<span className="top-services-item-latency-title col-title">
-				AVG. LATENCY
+				<ConsoleText message={'AVG. LATENCY'} />
 			</span>
 		),
 		dataIndex: 'latency',
@@ -2503,7 +2566,7 @@ export const dependentServicesColumns: ColumnType<DependentServicesData>[] = [
 	{
 		title: (
 			<span className="top-services-item-error-percentage-title col-title">
-				ERROR %
+				<ConsoleText message={'ERROR %'} />
 			</span>
 		),
 		dataIndex: 'errorPercentage',
@@ -2546,7 +2609,9 @@ export const dependentServicesColumns: ColumnType<DependentServicesData>[] = [
 	},
 	{
 		title: (
-			<span className="top-services-item-rate-title col-title">AVG. RATE</span>
+			<span className="top-services-item-rate-title col-title">
+				<ConsoleText message={'AVG. RATE'} />
+			</span>
 		),
 		dataIndex: 'rate',
 		key: 'rate',
@@ -3010,11 +3075,15 @@ export const getAllEndpointsWidgetData = (
 		),
 		C: (lastUsed: any): ReactNode => (
 			<span>
-				{lastUsed === 'n/a' || lastUsed === undefined
-					? '-'
-					: getLastUsedRelativeTime(
-							new Date(new Date(lastUsed).toISOString()).getTime(),
-						)}
+				{lastUsed === 'n/a' || lastUsed === undefined ? (
+					'-'
+				) : (
+					<LocalizedRelativeTime
+							value={getLastUsedRelativeTime(
+								new Date(new Date(lastUsed).toISOString()).getTime(),
+							)}
+					/>
+				)}
 			</span>
 		),
 		F1: (errorRate: any): ReactNode => (
@@ -3065,8 +3134,12 @@ export const getAllEndpointsWidgetData = (
 				lineHeight: '18px',
 			}}
 		>
-			Endpoint Overview
-			<Tooltip title="Click on any row to get corresponding endpoint stats">
+			<ConsoleText message={'Endpoint Overview'} />
+			<Tooltip
+				title={
+					<ConsoleText message="Click on any row to get corresponding endpoint stats" />
+				}
+			>
 				<Info size={16} color="white" />
 			</Tooltip>
 		</div>

@@ -1,3 +1,5 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import {
 	useCallback,
 	useEffect,
@@ -242,6 +244,8 @@ export default function ChatInput({
 	autoContexts,
 	onDismissAutoContext,
 }: ChatInputProps): JSX.Element {
+	const translateRuntimeCopy = useConsoleTranslation();
+	const translateConsole = useConsoleTranslation();
 	const { selectedTime } = useSelector<AppState, GlobalReducer>(
 		(state) => state.globalTime,
 	);
@@ -592,19 +596,21 @@ export default function ChatInput({
 			});
 			if (error === 'network') {
 				markVoiceUnavailable();
-				toast.error('Voice input unavailable in this browser', {
+				toast.error(translateConsole('Voice input unavailable in this browser'), {
 					description:
 						'This browser cannot reach the speech recognition service. Try Google Chrome or Microsoft Edge.',
 				});
 			} else if (error === 'not-allowed') {
 				markVoiceUnavailable();
-				toast.error('Microphone access denied', {
+				toast.error(translateConsole('Microphone access denied'), {
 					description:
 						'Grant microphone permission in your browser settings to use voice input.',
 				});
 			} else if (error === 'not-supported') {
 				markVoiceUnavailable();
-				toast.error('Voice input is not supported in this browser.');
+				toast.error(
+					translateConsole('Voice input is not supported in this browser.'),
+				);
 			}
 			// `no-speech` is benign (just silence) — don't toast or hide.
 		},
@@ -908,7 +914,9 @@ export default function ChatInput({
 								size="sm"
 								icon
 								onClick={(): void => removeFile(f.uid)}
-								aria-label={`Remove ${f.name}`}
+								aria-label={translateRuntimeCopy('Remove {{value1}}', {
+									value1: f.name,
+								})}
 							>
 								<X size={11} />
 							</Button>
@@ -939,7 +947,10 @@ export default function ChatInput({
 										icon
 										color="secondary"
 										onClick={(): void => onDismissAutoContext(key)}
-										aria-label={`Remove ${category}: ${label} context`}
+										aria-label={translateRuntimeCopy(
+											'Remove {{value1}}: {{value2}} context',
+											{ value1: category, value2: label },
+										)}
 									>
 										<X size={10} />
 									</Button>
@@ -966,7 +977,10 @@ export default function ChatInput({
 								onClick={(): void =>
 									removeContext(contextItem.category, contextItem.entityId)
 								}
-								aria-label={`Remove ${contextItem.category}: ${contextItem.value} context`}
+								aria-label={translateRuntimeCopy(
+									'Remove {{value1}}: {{value2}} context',
+									{ value1: contextItem.category, value2: contextItem.value },
+								)}
 							>
 								<X size={10} />
 							</Button>
@@ -979,7 +993,7 @@ export default function ChatInput({
 				<textarea
 					ref={textareaRef}
 					className={styles.textarea}
-					placeholder="Ask anything… (Shift+Enter for new line)"
+					placeholder={translateConsole('Ask anything… (Shift+Enter for new line)')}
 					value={text}
 					onChange={(e): void => {
 						const next = capText(e.target.value);
@@ -998,8 +1012,8 @@ export default function ChatInput({
 				<div className={styles.charWarning} role="status">
 					<TriangleAlert size={12} />
 					<span>
-						{currentLength}/{MAX_INPUT_LENGTH} characters. Limit is {MAX_INPUT_LENGTH}
-						.
+						{currentLength}/{MAX_INPUT_LENGTH}{' '}
+						<ConsoleText message={'characters. Limit is'} /> {MAX_INPUT_LENGTH}.
 					</span>
 				</div>
 			)}
@@ -1029,7 +1043,7 @@ export default function ChatInput({
 								}}
 								prefix={<Plus size={10} />}
 							>
-								Add Context
+								{translateConsole('Add Context')}
 							</Button>
 						</PopoverTrigger>
 						<PopoverContent
@@ -1043,7 +1057,7 @@ export default function ChatInput({
 									className={styles.contextPopoverCategories}
 									role="tablist"
 									aria-orientation="vertical"
-									aria-label="Context categories"
+									aria-label={translateConsole('Context categories')}
 								>
 									{CONTEXT_CATEGORIES.map((category) => {
 										const CategoryIcon = CONTEXT_CATEGORY_ICONS[category];
@@ -1093,7 +1107,9 @@ export default function ChatInput({
 									<div className={styles.contextPopoverSearch}>
 										<Input
 											type="text"
-											placeholder={`Search ${activeContextCategory.toLowerCase()}…`}
+											placeholder={translateRuntimeCopy('Search {{value1}}…', {
+												value1: activeContextCategory.toLowerCase(),
+											})}
 											className={styles.contextPopoverSearchInput}
 											value={pickerSearchQuery}
 											onChange={(e): void => setPickerSearchQuery(e.target.value)}
@@ -1108,11 +1124,13 @@ export default function ChatInput({
 									<div className={styles.contextPopoverEntities}>
 										{isActiveContextLoading ? (
 											<div className={styles.contextPopoverEmpty}>
-												Loading {activeContextCategory.toLowerCase()}...
+												{translateConsole('Loading')} {activeContextCategory.toLowerCase()}
+												...
 											</div>
 										) : isActiveContextError ? (
 											<div className={styles.contextPopoverEmpty}>
-												Failed to load {activeContextCategory.toLowerCase()}.
+												{translateConsole('Failed to load')}{' '}
+												{activeContextCategory.toLowerCase()}.
 											</div>
 										) : filteredContextOptions.length === 0 ? (
 											<ContextPickerEmptyState
@@ -1168,9 +1186,9 @@ export default function ChatInput({
 								className={styles.micRecording}
 								role="status"
 								aria-live="polite"
-								aria-label="Recording voice input"
+								aria-label={translateConsole('Recording voice input')}
 							>
-								<Tooltip title="Discard recording">
+								<Tooltip title={translateConsole('Discard recording')}>
 									<Button
 										type="button"
 										variant="ghost"
@@ -1178,7 +1196,7 @@ export default function ChatInput({
 										icon
 										color="secondary"
 										onClick={handleDiscard}
-										aria-label="Discard recording"
+										aria-label={translateConsole('Discard recording')}
 									>
 										<X size={12} />
 									</Button>
@@ -1193,7 +1211,7 @@ export default function ChatInput({
 									<span />
 									<span />
 								</span>
-								<Tooltip title="Stop and send">
+								<Tooltip title={translateConsole('Stop and send')}>
 									<Button
 										type="button"
 										variant="ghost"
@@ -1201,14 +1219,14 @@ export default function ChatInput({
 										icon
 										color="secondary"
 										onClick={handleStopAndSend}
-										aria-label="Stop and send"
+										aria-label={translateConsole('Stop and send')}
 									>
 										<Square size={9} fill="currentColor" strokeWidth={0} />
 									</Button>
 								</Tooltip>
 							</div>
 						) : (
-							<Tooltip title="Voice input">
+							<Tooltip title={translateConsole('Voice input')}>
 								<Button
 									disabledTooltip={disabledTooltip}
 									color="secondary"
@@ -1217,7 +1235,7 @@ export default function ChatInput({
 									icon
 									onClick={(): void => startVoiceInput(VoiceInputSource.Button)}
 									disabled={disabled}
-									aria-label="Start voice input"
+									aria-label={translateConsole('Start voice input')}
 								>
 									<Mic size={14} />
 								</Button>
@@ -1225,20 +1243,20 @@ export default function ChatInput({
 						))}
 
 					{isStreaming && onCancel ? (
-						<Tooltip title="Stop generating">
+						<Tooltip title={translateConsole('Stop generating')}>
 							<Button
 								variant="solid"
 								size="md"
 								icon
 								color="danger"
 								onClick={onCancel}
-								aria-label="Stop generating"
+								aria-label={translateConsole('Stop generating')}
 							>
 								<Square size={10} fill="currentColor" strokeWidth={0} />
 							</Button>
 						</Tooltip>
 					) : (
-						<Tooltip title="Send message">
+						<Tooltip title={translateConsole('Send message')}>
 							<Button
 								disabledTooltip={disabled ? disabledTooltip : 'Type a message first'}
 								variant="solid"
@@ -1247,7 +1265,7 @@ export default function ChatInput({
 								color="primary"
 								onClick={isListening ? handleStopAndSend : handleSend}
 								disabled={disabled || (!text.trim() && pendingFiles.length === 0)}
-								aria-label="Send message"
+								aria-label={translateConsole('Send message')}
 							>
 								<Send size={14} />
 							</Button>

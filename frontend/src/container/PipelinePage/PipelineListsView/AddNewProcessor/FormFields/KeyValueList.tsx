@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Form, Select } from 'antd';
 
 import { PREDEFINED_MAPPING } from '../config';
@@ -11,6 +12,7 @@ function KeyValueList({
 	value = PREDEFINED_MAPPING,
 	onChange,
 }: KeyValueListProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const handleValueChange = (key: string, newValue: string[]): void => {
 		const newMapping = {
 			...value,
@@ -28,7 +30,7 @@ function KeyValueList({
 					<Select
 						mode="tags"
 						style={{ width: '100%' }}
-						placeholder="Values"
+						placeholder={translateConsole('Values')}
 						onChange={(newValue: string[]): void => handleValueChange(key, newValue)}
 						value={value[key]}
 						tokenSeparators={[',']}

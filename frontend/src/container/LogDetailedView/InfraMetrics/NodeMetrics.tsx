@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { useMemo, useRef } from 'react';
 import { useQueries, UseQueryResult } from 'react-query';
 import { Card, Skeleton } from 'antd';
@@ -152,7 +153,9 @@ function NodeMetrics({
 		<div className="infra-metrics-grid">
 			{queries.map((query, idx) => (
 				<div key={widgetInfo[idx].title}>
-					<Typography.Text>{widgetInfo[idx].title}</Typography.Text>
+					<Typography.Text>
+						<ConsoleText message={widgetInfo[idx].title} />
+					</Typography.Text>
 					<Card bordered className="infra-metrics-card" ref={graphRef}>
 						{renderCardContent(query, idx)}
 					</Card>

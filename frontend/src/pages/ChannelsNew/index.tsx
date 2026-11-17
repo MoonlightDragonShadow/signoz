@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Skeleton } from 'antd';
 import BackHeader from 'components/BackHeader/BackHeader';
 import ROUTES from 'constants/routes';
@@ -12,6 +13,7 @@ import { KIND_KEY } from 'pages/AlertList/NotificationChannels/constants';
 import styles from './styles.module.scss';
 
 function ChannelsNew(): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const requested = new URLSearchParams(useAppLocation().search).get('kind');
 	// an unknown kind in the URL falls back to the form's own default
 	const initialKind = (Object.values(ChannelKind) as string[]).includes(
@@ -31,7 +33,7 @@ function ChannelsNew(): JSX.Element {
 			<BackHeader
 				backLabel="All channels"
 				backRoute={listRoute}
-				title="New channel"
+				title={translateConsole('New channel')}
 				testId="channel-new-header"
 			/>
 			<ChannelForm

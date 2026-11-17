@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useMemo } from 'react';
 import type { TableColumnsType as ColumnsType } from 'antd';
 import { Card, Flex, Table } from 'antd';
@@ -14,6 +15,7 @@ function TableView({
 	isInspectMetricsRefetching,
 	metricInspectionAppliedOptions,
 }: TableViewProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const isSpaceAggregatedWithoutLabel = useMemo(
 		() =>
 			!!metricInspectionAppliedOptions.spaceAggregationOption &&
@@ -54,13 +56,13 @@ function TableView({
 				),
 			})),
 			{
-				title: 'Values',
+				title: translate('Values'),
 				dataIndex: 'values',
 				align: 'left',
 				sticky: 'right',
 			},
 		],
-		[labelKeys],
+		[translate, labelKeys],
 	);
 	const openExpandedView = useCallback(
 		(series: InspectMetricsSeries, value: string, timestamp: number): void => {

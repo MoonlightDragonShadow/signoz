@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { memo, MouseEventHandler } from 'react';
 import { Link, TextSelect } from '@signozhq/icons';
 import { Button, Tooltip } from 'antd';
@@ -15,9 +16,10 @@ function LogLinesActionButtons({
 	onLogCopy,
 	customClassName = '',
 }: LogLinesActionButtonsProps): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
 	return (
 		<div className={`log-line-action-buttons ${customClassName}`}>
-			<Tooltip title="Show in Context">
+			<Tooltip title={translateInterfaceCopy('Show in Context')}>
 				<Button
 					size="small"
 					icon={<TextSelect size={14} />}
@@ -26,7 +28,7 @@ function LogLinesActionButtons({
 					data-testid="log-line-show-context"
 				/>
 			</Tooltip>
-			<Tooltip title="Copy Link">
+			<Tooltip title={translateInterfaceCopy('Copy Link')}>
 				<Button
 					size="small"
 					icon={<Link size={14} />}

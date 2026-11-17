@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Dispatch, SetStateAction, useCallback, useState } from 'react';
 import { useQueryClient } from 'react-query';
 import { toast } from '@signozhq/ui/sonner';
@@ -41,6 +42,7 @@ interface UseAzureIntegrationModal {
 export function useIntegrationModal({
 	onClose,
 }: UseIntegrationModalProps): UseAzureIntegrationModal {
+	const translateRuntimeCopy = useConsoleTranslation();
 	const queryClient = useQueryClient();
 	const [form] = Form.useForm();
 	const [modalState, setModalState] = useState<ModalStateEnum>(
@@ -64,7 +66,7 @@ export function useIntegrationModal({
 				cloudAccountId: account.providerAccountId ?? account.id,
 				status: account.agentReport,
 			});
-			toast.success('Azure account connected successfully', {
+			toast.success(translateRuntimeCopy('Azure account connected successfully'), {
 				position: 'bottom-right',
 			});
 			void invalidateListAccounts(queryClient, {
@@ -72,7 +74,7 @@ export function useIntegrationModal({
 			});
 			handleClose();
 		},
-		[handleClose, queryClient],
+		[handleClose, queryClient, translateRuntimeCopy],
 	);
 
 	const handleConnectionTimeout = useCallback((): void => {
@@ -145,9 +147,12 @@ export function useIntegrationModal({
 						const command = response.data.connectionArtifact.azure?.cliCommand;
 						if (!command) {
 							setModalState(ModalStateEnum.ERROR);
-							toast.error('Failed to generate the Azure setup command', {
-								position: 'bottom-right',
-							});
+							toast.error(
+								translateRuntimeCopy('Failed to generate the Azure setup command'),
+								{
+									position: 'bottom-right',
+								},
+							);
 							return;
 						}
 
@@ -161,7 +166,7 @@ export function useIntegrationModal({
 					},
 					onError: () => {
 						setModalState(ModalStateEnum.ERROR);
-						toast.error('Failed to create account connection', {
+						toast.error(translateRuntimeCopy('Failed to create account connection'), {
 							position: 'bottom-right',
 						});
 					},
@@ -172,7 +177,7 @@ export function useIntegrationModal({
 		} finally {
 			setIsLoading(false);
 		}
-	}, [form, connectionParams, createAccount]);
+	}, [form, connectionParams, createAccount, translateRuntimeCopy]);
 
 	return {
 		form,

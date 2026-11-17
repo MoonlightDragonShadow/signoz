@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import type { ReactNode } from 'react';
 import { useCallback, useMemo } from 'react';
 import { Search } from '@signozhq/icons';
@@ -20,7 +21,7 @@ import {
 	useTriggeredAlertsFilters,
 	useTriggeredAlertsGroupBy,
 } from './hooks';
-import { getAlertColumns, groupedColumns } from './table.config';
+import { getAlertColumns, getGroupedColumns } from './table.config';
 import styles from './TriggeredAlerts.module.scss';
 import type { Alert, GroupedAlert } from './types';
 import { useTriggeredAlertsData } from './useTriggeredAlertsData';
@@ -59,6 +60,7 @@ const severyFilters: ComboboxSimpleItem[] = [
 ];
 
 function TriggeredAlerts(): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const [filterValues, setFilterValues] = useTriggeredAlertsFilters();
 	const [selectedGroupBy, setSelectedGroupBy] = useTriggeredAlertsGroupBy();
 	const { formatTimezoneAdjustedTimestamp } = useTimezone();
@@ -121,8 +123,8 @@ function TriggeredAlerts(): JSX.Element {
 		useTriggeredAlertsHandlers(setSelectedGroupBy);
 
 	const columns = useMemo(
-		() => getAlertColumns(formatTimezoneAdjustedTimestamp),
-		[formatTimezoneAdjustedTimestamp],
+		() => getAlertColumns(translateConsole, formatTimezoneAdjustedTimestamp),
+		[formatTimezoneAdjustedTimestamp, translateConsole],
 	);
 
 	const labelOptions: ComboboxSimpleItem[] = uniqueLabels.map((label) => ({
@@ -153,6 +155,10 @@ function TriggeredAlerts(): JSX.Element {
 		[columns, handleRowClick, handleRowClickNewTab, isFetching],
 	);
 
+	const groupedColumns = useMemo(
+		() => getGroupedColumns(translateConsole),
+		[translateConsole],
+	);
 	const hasActiveFilters = selectedFilter.length > 0 || searchText.length > 0;
 	const isEmptyDueToFilters =
 		!isFetching &&
@@ -171,7 +177,7 @@ function TriggeredAlerts(): JSX.Element {
 			<div className={styles.filtersRow}>
 				<Input
 					className={styles.searchInput}
-					placeholder="Search alerts by name"
+					placeholder={translateConsole('Search alerts by name')}
 					value={searchText}
 					onChange={handleSearchChange}
 					suffix={<Search size={14} className={styles.searchIcon} />}
@@ -182,10 +188,18 @@ function TriggeredAlerts(): JSX.Element {
 					multiple
 					value={selectedFilter.map((f) => f.value)}
 					onChange={handleFilterChange}
-					placeholder="Filter by tags"
-					inputPlaceholder="Create new filters with 'label:value'"
+					placeholder={translateConsole('Filter by tags')}
+					inputPlaceholder={translateConsole(
+						"Create new filters with 'label:value'",
+					)}
 					allowCreate
-					items={severyFilters}
+					items={severyFilters.map((filter) => ({
+						...filter,
+						label:
+							typeof filter.label === 'string'
+								? translateConsole(filter.label)
+								: filter.label,
+					}))}
 					maxDisplayedPills={2}
 					testId="triggered-alerts-filter-combobox"
 				/>
@@ -193,8 +207,8 @@ function TriggeredAlerts(): JSX.Element {
 					className={styles.filterSelect}
 					value={selectedGroupBy}
 					onChange={handleGroupByChange}
-					placeholder="Group by tag"
-					inputPlaceholder="Select one or more"
+					placeholder={translateConsole('Group by tag')}
+					inputPlaceholder={translateConsole('Select one or more')}
 					items={labelOptions}
 					multiple
 					maxDisplayedPills={2}
@@ -204,11 +218,16 @@ function TriggeredAlerts(): JSX.Element {
 
 			<div ref={containerRef} className={styles.tableContainer}>
 				{isError ? (
-					<ErrorEmptyState title="Failed to load alerts" onRefresh={refetch} />
+					<ErrorEmptyState
+						title={translateConsole('Failed to load alerts')}
+						onRefresh={refetch}
+					/>
 				) : isEmptyDueToFilters ? (
 					<NoResultsEmptyState
-						title="No matching alerts"
-						subtitle="No alerts match your current filters. Try adjusting your search criteria."
+						title={translateConsole('No matching alerts')}
+						subtitle={translateConsole(
+							'No alerts match your current filters. Try adjusting your search criteria.',
+						)}
 						onClear={handleClearFilters}
 					/>
 				) : isEmptyNoAlerts ? (

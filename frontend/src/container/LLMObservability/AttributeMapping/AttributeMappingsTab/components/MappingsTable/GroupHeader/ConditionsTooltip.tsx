@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Typography } from '@signozhq/ui/typography';
 
 import { ConditionKey } from 'container/LLMObservability/AttributeMapping/types';
@@ -13,12 +14,13 @@ function ConditionsTooltip({
 	attributes,
 	resource,
 }: ConditionsTooltipProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const hasConditions = attributes.length > 0 || resource.length > 0;
 
 	if (!hasConditions) {
 		return (
 			<Typography.Text as="span" size="small" color="muted">
-				No conditions set up
+				{translateConsole('No conditions set up')}
 			</Typography.Text>
 		);
 	}
@@ -31,7 +33,7 @@ function ConditionsTooltip({
 			{attributes.length > 0 && (
 				<div className={styles.section}>
 					<Typography.Text as="span" size="small" color="muted">
-						Runs when a span attribute key contains
+						{translateConsole('Runs when a span attribute key contains')}
 					</Typography.Text>
 					<div className={styles.keyList}>
 						{attributes.map((key) => (
@@ -45,7 +47,8 @@ function ConditionsTooltip({
 			{resource.length > 0 && (
 				<div className={styles.section}>
 					<Typography.Text as="span" size="sm" color="muted">
-						{attributes.length > 0 ? 'or when' : 'Runs when'} a resource key contains
+						{attributes.length > 0 ? 'or when' : 'Runs when'}{' '}
+						{translateConsole('a resource key contains')}
 					</Typography.Text>
 					<div className={styles.keyList}>
 						{resource.map((key) => (

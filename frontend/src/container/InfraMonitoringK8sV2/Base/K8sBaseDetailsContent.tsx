@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Fragment, useEffect, useMemo, useRef } from 'react';
 import {
 	BarChart,
@@ -72,6 +73,7 @@ export default function K8sBaseDetailsContent<T>({
 	entityAttributes,
 	entityName,
 }: K8sBaseDetailsContentProps<T>): JSX.Element {
+	const translate = useConsoleTranslation();
 	const { timeRange, selectedInterval, handleTimeChange } =
 		useEntityDetailsTime();
 
@@ -310,7 +312,7 @@ export default function K8sBaseDetailsContent<T>({
 											label: (
 												<div className={styles.viewTitle}>
 													<LayoutGrid size={14} />
-													Overview
+													{translate('Overview')}
 												</div>
 											),
 										},
@@ -323,7 +325,7 @@ export default function K8sBaseDetailsContent<T>({
 											label: (
 												<div className={styles.viewTitle}>
 													<BarChart size={14} />
-													Metrics
+													{translate('Metrics')}
 												</div>
 											),
 										},
@@ -336,7 +338,7 @@ export default function K8sBaseDetailsContent<T>({
 											label: (
 												<div className={styles.viewTitle}>
 													<ScrollText size={14} />
-													Logs
+													{translate('Logs')}
 												</div>
 											),
 										},
@@ -349,7 +351,7 @@ export default function K8sBaseDetailsContent<T>({
 											label: (
 												<div className={styles.viewTitle}>
 													<DraftingCompass size={14} />
-													Traces
+													{translate('Traces')}
 												</div>
 											),
 										},
@@ -362,7 +364,7 @@ export default function K8sBaseDetailsContent<T>({
 											label: (
 												<div className={styles.viewTitle}>
 													<ChevronsLeftRight size={14} />
-													Events
+													{translate('Events')}
 												</div>
 											),
 										},
@@ -381,9 +383,9 @@ export default function K8sBaseDetailsContent<T>({
 					/>
 
 					{effectiveView === VIEW_TYPES.LOGS && (
-						<Tooltip title="Go to Logs Explorer" side="left">
+						<Tooltip title={translate('Go to Logs Explorer')} side="left">
 							<Button
-								aria-label="Action"
+								aria-label={translate('Action')}
 								variant="ghost"
 								size="sm"
 								icon
@@ -396,9 +398,9 @@ export default function K8sBaseDetailsContent<T>({
 						</Tooltip>
 					)}
 					{effectiveView === VIEW_TYPES.TRACES && (
-						<Tooltip title="Go to Traces Explorer" side="left">
+						<Tooltip title={translate('Go to Traces Explorer')} side="left">
 							<Button
-								aria-label="Action"
+								aria-label={translate('Action')}
 								variant="ghost"
 								size="sm"
 								icon

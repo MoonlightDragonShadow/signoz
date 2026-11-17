@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import ErrorContent from 'components/ErrorModal/components/ErrorContent';
 
 import emptyStateUrl from '@/assets/Icons/emptyState.svg';
@@ -15,6 +16,7 @@ export function K8sEmptyState({
 	isLoading,
 	endTimeBeforeRetention,
 }: K8sEmptyStateProps): JSX.Element | null {
+	const translate = useConsoleTranslation();
 	if (isLoading) {
 		return null;
 	}
@@ -27,7 +29,7 @@ export function K8sEmptyState({
 						error={
 							error ?? {
 								code: 500,
-								message: 'An error occurred while fetching data.',
+								message: translate('An error occurred while fetching data.'),
 							}
 						}
 					/>
@@ -43,11 +45,12 @@ export function K8sEmptyState({
 					<img className={styles.eyesEmoji} src={eyesEmojiUrl} alt="eyes emoji" />
 					<div className={styles.noDataMessage}>
 						<h5 className={styles.title}>
-							Queried time range is before earliest K8s metrics
+							{translate('Queried time range is before earliest K8s metrics')}
 						</h5>
 						<span className={styles.message}>
-							Your requested end time is earlier than the earliest detected time of K8s
-							metrics data, please adjust your end time.
+							{translate(
+								'Your requested end time is earlier than the earliest detected time of K8s metrics data, please adjust your end time.',
+							)}
 						</span>
 					</div>
 				</div>
@@ -64,7 +67,7 @@ export function K8sEmptyState({
 					className={styles.emptyStateSvg}
 				/>
 				<span className={styles.message}>
-					This query had no results. Edit your query and try again!
+					{translate('This query had no results. Edit your query and try again!')}
 				</span>
 			</div>
 		</div>

@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Select, Skeleton } from 'antd';
 import { useListAccounts } from 'api/generated/services/cloudintegration';
@@ -24,6 +25,7 @@ function S3BucketsSelector({
 	initialBucketsByRegion = {},
 	disabled: isSelectorDisabled = false,
 }: S3BucketsSelectorProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const cloudAccountId = useUrlQuery().get('cloudAccountId');
 	const { data: listAccountsResponse, isLoading } = useListAccounts({
 		cloudProvider: INTEGRATION_TYPES.AWS,
@@ -102,7 +104,9 @@ function S3BucketsSelector({
 
 	return (
 		<div className="s3-buckets-selector">
-			<div className="s3-buckets-selector-title">Select S3 Buckets by Region</div>
+			<div className="s3-buckets-selector-title">
+				{translateConsole('Select S3 Buckets by Region')}
+			</div>
 			<div className="s3-buckets-selector-content">
 				{allRegions.map((region) => {
 					const isRegionUnavailable = isRegionDisabled(region);
@@ -113,8 +117,9 @@ function S3BucketsSelector({
 								<div className="s3-buckets-selector-region-label">{region}</div>
 								{isRegionUnavailable && (
 									<div className="s3-buckets-selector-region-help">
-										Region disabled in account settings; S3 buckets here will not be
-										synced.
+										{translateConsole(
+											'Region disabled in account settings; S3 buckets here will not be synced.',
+										)}
 									</div>
 								)}
 							</div>

@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { formatCost, hasValue, SpanAiUsage } from '../utils/aiTraceUtils';
 import TokenBreakdown from '../TokenBreakdown/TokenBreakdown';
 import TraceTooltipRow from '../TraceTooltip/TraceTooltipRow';
@@ -8,6 +9,7 @@ interface SpanUsageBreakdownProps {
 }
 
 function SpanUsageBreakdown({ usage }: SpanUsageBreakdownProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const {
 		inputTokens,
 		outputTokens,
@@ -28,7 +30,11 @@ function SpanUsageBreakdown({ usage }: SpanUsageBreakdownProps): JSX.Element {
 			/>
 			{hasValue(cost) && (
 				<TraceTooltipSection>
-					<TraceTooltipRow isHeading label="Cost" value={formatCost(cost)} />
+					<TraceTooltipRow
+						isHeading
+						label={translateConsole('Cost')}
+						value={formatCost(cost)}
+					/>
 				</TraceTooltipSection>
 			)}
 		</>

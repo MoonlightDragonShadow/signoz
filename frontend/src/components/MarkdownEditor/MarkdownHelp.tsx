@@ -1,3 +1,5 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { CircleHelp } from '@signozhq/icons';
 import { Button } from '@signozhq/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '@signozhq/ui/popover';
@@ -8,6 +10,7 @@ import { MARKDOWN_HELP_ITEMS } from './constants';
 import styles from './MarkdownEditor.module.scss';
 
 function MarkdownHelp(): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
 	return (
 		<Popover>
 			<PopoverTrigger asChild>
@@ -17,7 +20,7 @@ function MarkdownHelp(): JSX.Element {
 					color="secondary"
 					size="sm"
 					icon
-					aria-label="Markdown syntax help"
+					aria-label={translateInterfaceCopy('Markdown syntax help')}
 					testId="markdown-help-trigger"
 				>
 					<CircleHelp size={14} />
@@ -25,7 +28,7 @@ function MarkdownHelp(): JSX.Element {
 			</PopoverTrigger>
 			<PopoverContent align="end" className={styles.helpContent}>
 				<Typography.Text className={styles.helpTitle}>
-					Markdown syntax
+					<ConsoleText message={'Markdown syntax'} />
 				</Typography.Text>
 				<dl className={styles.helpList}>
 					{MARKDOWN_HELP_ITEMS.map((item) => (
@@ -33,7 +36,7 @@ function MarkdownHelp(): JSX.Element {
 							<dt>
 								<code>{item.syntax}</code>
 							</dt>
-							<dd>{item.label}</dd>
+							<dd>{translateInterfaceCopy(item.label)}</dd>
 						</div>
 					))}
 				</dl>

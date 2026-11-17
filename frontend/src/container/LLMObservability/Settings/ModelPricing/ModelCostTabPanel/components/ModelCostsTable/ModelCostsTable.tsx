@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useMemo } from 'react';
 import TanStackTable from 'components/TanStackTableView';
 
@@ -35,6 +36,7 @@ function ModelCostsTable({
 	onEdit,
 	onDelete,
 }: ModelCostsTableProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const columns = useMemo(
 		() => getModelCostsColumns({ canManage, onEdit, onDelete }),
 		[canManage, onEdit, onDelete],
@@ -43,7 +45,7 @@ function ModelCostsTable({
 	if (!isLoading && rules.length === 0) {
 		return (
 			<div className={styles.modelCostsEmpty} data-testid="model-costs-empty">
-				No model costs yet.
+				{translateConsole('No model costs yet.')}
 			</div>
 		);
 	}

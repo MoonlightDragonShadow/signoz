@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { useTranslation } from 'react-i18next';
 import Spinner from 'components/Spinner';
 import { Wrench } from '@signozhq/icons';
@@ -20,7 +21,7 @@ function Licenses(): JSX.Element {
 			<header className="licenses-page-header">
 				<div className="licenses-page-header-title">
 					<Wrench size={16} />
-					License
+					<ConsoleText message={'License'} />
 				</div>
 			</header>
 

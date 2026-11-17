@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { Container } from '@signozhq/icons';
 import {
 	InframonitoringtypesPodRecordDTO,
@@ -94,7 +95,7 @@ export const k8sPodColumnsConfig: PodTableColumnConfig[] = [
 		id: 'podStatus',
 		header: (): React.ReactNode => (
 			<ColumnHeader docPath="/infrastructure-monitoring/kubernetes/pods#pod-status">
-				Status
+				<ConsoleText message={'Status'} />
 			</ColumnHeader>
 		),
 		accessorFn: (row): string => row.podStatus,
@@ -126,7 +127,7 @@ export const k8sPodColumnsConfig: PodTableColumnConfig[] = [
 		id: 'podCountsByStatus',
 		header: (): React.ReactNode => (
 			<ColumnHeader docPath="/infrastructure-monitoring/kubernetes/pods#pod-status">
-				Status
+				<ConsoleText message={'Status'} />
 			</ColumnHeader>
 		),
 		accessorFn: (row): InframonitoringtypesPodRecordDTO['podCountsByStatus'] =>
@@ -152,7 +153,7 @@ export const k8sPodColumnsConfig: PodTableColumnConfig[] = [
 		id: 'podAge',
 		header: (): React.ReactNode => (
 			<ColumnHeader docPath="/infrastructure-monitoring/kubernetes/pods#pod-age">
-				Age
+				<ConsoleText message={'Age'} />
 			</ColumnHeader>
 		),
 		accessorFn: (row): number => row.podAge,
@@ -176,7 +177,7 @@ export const k8sPodColumnsConfig: PodTableColumnConfig[] = [
 		id: 'podRestarts',
 		header: (): React.ReactNode => (
 			<ColumnHeader docPath="/infrastructure-monitoring/kubernetes/pods#restarts">
-				Restarts
+				<ConsoleText message={'Restarts'} />
 			</ColumnHeader>
 		),
 		accessorFn: (row): number => row.podRestarts,
@@ -203,7 +204,7 @@ export const k8sPodColumnsConfig: PodTableColumnConfig[] = [
 				docPath="/infrastructure-monitoring/kubernetes/pods#cpu-req-usage-"
 				tooltip={<EntityProgressThresholds type="cpu-request" />}
 			>
-				CPU Request Usage (%)
+				<ConsoleText message={'CPU Request Usage (%)'} />
 			</ColumnHeader>
 		),
 		accessorFn: (row): number => row.podCPURequest,
@@ -231,7 +232,7 @@ export const k8sPodColumnsConfig: PodTableColumnConfig[] = [
 				docPath="/infrastructure-monitoring/kubernetes/pods#cpu-limit-usage-"
 				tooltip={<EntityProgressThresholds type="cpu-limit" />}
 			>
-				CPU Limit Usage (%)
+				<ConsoleText message={'CPU Limit Usage (%)'} />
 			</ColumnHeader>
 		),
 		accessorFn: (row): number => row.podCPULimit,
@@ -255,7 +256,7 @@ export const k8sPodColumnsConfig: PodTableColumnConfig[] = [
 		id: 'cpu',
 		header: (): React.ReactNode => (
 			<ColumnHeader docPath="/infrastructure-monitoring/kubernetes/pods#cpu-usage-cores">
-				CPU Usage (cores)
+				<ConsoleText message={'CPU Usage (cores)'} />
 			</ColumnHeader>
 		),
 		accessorFn: (row): number => row.podCPU,
@@ -282,7 +283,7 @@ export const k8sPodColumnsConfig: PodTableColumnConfig[] = [
 				docPath="/infrastructure-monitoring/kubernetes/pods#mem-req-usage-"
 				tooltip={<EntityProgressThresholds type="memory-request" />}
 			>
-				Memory Request Usage (%)
+				<ConsoleText message={'Memory Request Usage (%)'} />
 			</ColumnHeader>
 		),
 		accessorFn: (row): number => row.podMemoryRequest,
@@ -310,7 +311,7 @@ export const k8sPodColumnsConfig: PodTableColumnConfig[] = [
 				docPath="/infrastructure-monitoring/kubernetes/pods#mem-limit-usage-"
 				tooltip={<EntityProgressThresholds type="memory-limit" />}
 			>
-				Memory Limit Usage (%)
+				<ConsoleText message={'Memory Limit Usage (%)'} />
 			</ColumnHeader>
 		),
 		accessorFn: (row): number => row.podMemoryLimit,
@@ -334,7 +335,7 @@ export const k8sPodColumnsConfig: PodTableColumnConfig[] = [
 		id: 'memory',
 		header: (): React.ReactNode => (
 			<ColumnHeader docPath="/infrastructure-monitoring/kubernetes/pods#mem-usage-wss">
-				Memory Usage (WSS)
+				<ConsoleText message={'Memory Usage (WSS)'} />
 			</ColumnHeader>
 		),
 		accessorFn: (row): number => row.podMemory,
@@ -358,7 +359,7 @@ export const k8sPodColumnsConfig: PodTableColumnConfig[] = [
 		id: 'namespace',
 		header: (): React.ReactNode => (
 			<ColumnHeader docPath="/infrastructure-monitoring/kubernetes/pods#additional-columns">
-				Namespace
+				<ConsoleText message={'Namespace'} />
 			</ColumnHeader>
 		),
 		accessorFn: (row): string =>
@@ -374,7 +375,7 @@ export const k8sPodColumnsConfig: PodTableColumnConfig[] = [
 		id: 'node',
 		header: (): React.ReactNode => (
 			<ColumnHeader docPath="/infrastructure-monitoring/kubernetes/pods#additional-columns">
-				Node
+				<ConsoleText message={'Node'} />
 			</ColumnHeader>
 		),
 		accessorFn: (row): string =>
@@ -390,7 +391,7 @@ export const k8sPodColumnsConfig: PodTableColumnConfig[] = [
 		id: 'cluster',
 		header: (): React.ReactNode => (
 			<ColumnHeader docPath="/infrastructure-monitoring/kubernetes/pods#additional-columns">
-				Cluster
+				<ConsoleText message={'Cluster'} />
 			</ColumnHeader>
 		),
 		accessorFn: (row): string =>

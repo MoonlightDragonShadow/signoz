@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Copy } from '@signozhq/icons';
 import { Badge, type BadgeColorType } from '@signozhq/ui/badge';
 import { toast } from '@signozhq/ui/sonner';
@@ -19,6 +20,7 @@ function LabelTag({
 	color,
 	className,
 }: LabelTagProps): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
 	const [, copyToClipboard] = useCopyToClipboard();
 	const displayText = value ? `${label}: ${value}` : label;
 	const searchFormat = value ? `${label} ${value}` : label;
@@ -26,7 +28,9 @@ function LabelTag({
 	const handleCopy = (e: React.MouseEvent): void => {
 		e.stopPropagation();
 		copyToClipboard(searchFormat);
-		toast.success('Copied! Use in search to filter alerts.');
+		toast.success(
+			translateInterfaceCopy('Copied! Use in search to filter alerts.'),
+		);
 	};
 
 	return (
@@ -38,7 +42,7 @@ function LabelTag({
 						type="button"
 						className={styles.copyButton}
 						onClick={handleCopy}
-						aria-label="Copy to clipboard"
+						aria-label={translateInterfaceCopy('Copy to clipboard')}
 					>
 						<Copy size={12} />
 					</button>

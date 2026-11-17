@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Globe, RefreshCw, Trash } from '@signozhq/icons';
 import { Button } from '@signozhq/ui/button';
 
@@ -33,6 +34,7 @@ function PublicDashboardActions({
 	onUpdate,
 	onUnpublish,
 }: PublicDashboardActionsProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	return (
 		<div className={styles.footer}>
 			{isPublic ? (
@@ -47,7 +49,7 @@ function PublicDashboardActions({
 							testId="public-dashboard-unpublish"
 							onClick={onUnpublish}
 						>
-							Unpublish Dashboard
+							{translate('Unpublish Dashboard')}
 						</Button>
 					</AuthZTooltip>
 					<AuthZTooltip checks={checks}>
@@ -60,7 +62,7 @@ function PublicDashboardActions({
 							testId="public-dashboard-update"
 							onClick={onUpdate}
 						>
-							Update Dashboard
+							{translate('Update Dashboard')}
 						</Button>
 					</AuthZTooltip>
 				</>
@@ -75,7 +77,7 @@ function PublicDashboardActions({
 						testId="public-dashboard-publish"
 						onClick={onPublish}
 					>
-						Publish Dashboard
+						{translate('Publish Dashboard')}
 					</Button>
 				</AuthZTooltip>
 			)}

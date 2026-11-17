@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { useState } from 'react';
 import { AppLink } from 'lib/router/AppLink';
 import { Callout } from '@signozhq/ui/callout';
@@ -49,17 +50,21 @@ function LicenseRowDismissibleCallout(): JSX.Element | null {
 			className="license-key-callout"
 		>
 			<div className="license-key-callout__description">
-				This is <strong>NOT</strong> your ingestion or Service account key.
+				<ConsoleText message={'This is'} />{' '}
+				<strong>
+					<ConsoleText message={'NOT'} />
+				</strong>{' '}
+				<ConsoleText message={'your ingestion or Service account key.'} />
 				{(hasServiceAccountsAccess || hasIngestionAccess) && (
 					<>
 						{' '}
-						Find your{' '}
+						<ConsoleText message={'Find your'} />{' '}
 						{hasServiceAccountsAccess && (
 							<AppLink
 								to={ROUTES.SERVICE_ACCOUNTS_SETTINGS}
 								className="license-key-callout__link"
 							>
-								Service account here
+								<ConsoleText message={'Service account here'} />
 							</AppLink>
 						)}
 						{hasServiceAccountsAccess && hasIngestionAccess && ' and '}
@@ -68,7 +73,7 @@ function LicenseRowDismissibleCallout(): JSX.Element | null {
 								to={ROUTES.INGESTION_SETTINGS}
 								className="license-key-callout__link"
 							>
-								Ingestion key here
+								<ConsoleText message={'Ingestion key here'} />
 							</AppLink>
 						)}
 						.

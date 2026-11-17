@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useState } from 'react';
 import { RelativeDurationOptions } from 'container/TopNav/DateTimeSelectionV2/constants';
 import { PipelineData } from 'types/api/pipeline/def';
@@ -12,6 +13,7 @@ import './styles.scss';
 function PipelineProcessingPreview({
 	pipeline,
 }: PipelineProcessingPreviewProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const last1HourInterval = RelativeDurationOptions[3].value;
 	const [logsSampleQueryInterval, setLogsSampleQueryInterval] =
 		useState(last1HourInterval);
@@ -27,7 +29,7 @@ function PipelineProcessingPreview({
 	return (
 		<div>
 			<div className="pipeline-preview-section-header">
-				<div>Sample logs</div>
+				<div>{translateConsole('Sample logs')}</div>
 				<PreviewIntervalSelector
 					previewFilter={pipeline.filter}
 					value={logsSampleQueryInterval}
@@ -41,7 +43,7 @@ function PipelineProcessingPreview({
 				<SampleLogsResponseDisplay response={sampleLogsResponse} />
 			</div>
 			<div className="pipeline-preview-section-header">
-				<div>Processed Output</div>
+				<div>{translateConsole('Processed Output')}</div>
 			</div>
 			<div
 				className="pipeline-preview-logs-container"

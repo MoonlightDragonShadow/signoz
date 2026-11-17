@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback } from 'react';
 import QuerySearch from 'components/QueryBuilderV2/QueryV2/QuerySearch/QuerySearch';
 import RunQueryBtn from 'container/QueryBuilder/components/RunQueryBtn/RunQueryBtn';
@@ -16,6 +17,7 @@ function MetricsSearch({
 	handleCancelQuery,
 	onRunQuery,
 }: MetricsSearchProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const handleOnChange = useCallback(
 		(expression: string): void => {
 			setCurrentQueryFilterExpression(expression);
@@ -53,7 +55,9 @@ function MetricsSearch({
 					}}
 					onRun={handleRunQuery}
 					showFilterSuggestionsWithoutMetric
-					placeholder="Search your metrics. Try service.name='api' to see all API service metrics, or http.client for HTTP client metrics."
+					placeholder={translate(
+						"Search your metrics. Try service.name='api' to see all API service metrics, or http.client for HTTP client metrics.",
+					)}
 				/>
 			</div>
 			<RunQueryBtn

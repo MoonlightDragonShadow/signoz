@@ -1,3 +1,5 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useMemo } from 'react';
 import { Virtuoso } from 'react-virtuoso';
 import { Button } from '@signozhq/ui/button';
@@ -62,6 +64,7 @@ function SpanLogs({
 	handleExplorerPageRedirect,
 	emptyStateConfig,
 }: SpanLogsProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const { updateAllQueriesOperators } = useQueryBuilder();
 
 	// Create trace_id and span_id filters for logs explorer navigation
@@ -201,12 +204,20 @@ function SpanLogs({
 	const renderFooter = useCallback((): JSX.Element | null => {
 		if (isFetching) {
 			return (
-				<div className={styles.logsLoadingSkeleton}> Loading more logs ... </div>
+				<div className={styles.logsLoadingSkeleton}>
+					{' '}
+					<ConsoleText message={'Loading more logs ...'} />{' '}
+				</div>
 			);
 		}
 
 		if (hasReachedEndOfLogs) {
-			return <div className={styles.logsLoadingSkeleton}> *** End *** </div>;
+			return (
+				<div className={styles.logsLoadingSkeleton}>
+					{' '}
+					<ConsoleText message={'*** End ***'} />{' '}
+				</div>
+			);
 		}
 
 		return null;
@@ -239,7 +250,9 @@ function SpanLogs({
 			<section className={styles.description}>
 				<img src={noDataUrl} alt="no-data" className={styles.noDataImg} />
 				<Typography.Text className={styles.noDataDescription}>
-					No logs found for selected span. View logs for the current trace.
+					{translateConsole(
+						'No logs found for selected span. View logs for the current trace.',
+					)}
 				</Typography.Text>
 			</section>
 			<section className={styles.actionSection}>
@@ -250,7 +263,7 @@ function SpanLogs({
 					onClick={handleExplorerPageRedirect}
 					size="md"
 				>
-					View Logs
+					{translateConsole('View Logs')}
 				</Button>
 			</section>
 		</div>

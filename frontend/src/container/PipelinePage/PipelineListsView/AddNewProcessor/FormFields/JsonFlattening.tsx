@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useEffect, useState } from 'react';
 import { Info } from '@signozhq/icons';
 import { Input } from '@signozhq/ui/input';
@@ -19,6 +20,7 @@ function JsonFlattening({
 	selectedProcessorData,
 	isAdd,
 }: JsonFlatteningProps): JSX.Element | null {
+	const translateConsole = useConsoleTranslation();
 	const form = Form.useFormInstance();
 	const mappingValue = selectedProcessorData?.mapping || {};
 	const enableFlattening = Form.useWatch('enable_flattening', form);
@@ -66,17 +68,17 @@ function JsonFlattening({
 						value={!!enablePaths}
 						onChange={handleEnablePathsChange}
 					/>
-					Enable Paths
+					{translateConsole('Enable Paths')}
 				</Space>
 			</Form.Item>
 
 			{enablePaths && (
 				<Form.Item
 					name="path_prefix"
-					label="Path Prefix"
+					label={translateConsole('Path Prefix')}
 					initialValue={selectedProcessorData?.path_prefix}
 				>
-					<Input placeholder="Path Prefix" />
+					<Input placeholder={translateConsole('Path Prefix')} />
 				</Form.Item>
 			)}
 
@@ -89,8 +91,12 @@ function JsonFlattening({
 						onChange={handleEnableMappingChange}
 					/>
 					<Flex gap="8px" align="center">
-						Enable Mapping
-						<Tooltip title="The order of filled keys will determine the priority of keys i.e. earlier keys have higher precedence">
+						{translateConsole('Enable Mapping')}
+						<Tooltip
+							title={translateConsole(
+								'The order of filled keys will determine the priority of keys i.e. earlier keys have higher precedence',
+							)}
+						>
 							<Info size="md" />
 						</Tooltip>
 					</Flex>

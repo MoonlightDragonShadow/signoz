@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { ToggleGroup } from '@signozhq/ui/toggle-group';
 import { useAppParams } from 'lib/router/useAppParams';
 
@@ -22,6 +23,7 @@ const TAB_ITEMS = [
 ];
 
 function TraceDetailsTabs(): JSX.Element {
+	const translateCopy = useConsoleTranslation();
 	const { id: traceId = '' } = useAppParams<'id'>();
 	const [tab, setTab] = useTraceDetailsTab();
 	const logTraceEvent = useTraceDetailLogEvent('v3', traceId);
@@ -44,7 +46,10 @@ function TraceDetailsTabs(): JSX.Element {
 				value={tab}
 				onChange={handleChange}
 				size="sm"
-				items={TAB_ITEMS}
+				items={TAB_ITEMS.map((item) => ({
+					...item,
+					label: translateCopy(item.label),
+				}))}
 			/>
 		</div>
 	);

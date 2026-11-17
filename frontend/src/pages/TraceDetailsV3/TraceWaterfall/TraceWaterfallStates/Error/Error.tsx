@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Tooltip } from 'antd';
 import { Typography } from '@signozhq/ui/typography';
 import { AxiosError } from 'axios';
@@ -9,12 +10,13 @@ interface IErrorProps {
 }
 
 function Error(props: IErrorProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const { error } = props;
 
 	return (
 		<div className={styles.root}>
 			<Typography.Text className={styles.text}>
-				Something went wrong!
+				{translateConsole('Something went wrong!')}
 			</Typography.Text>
 			<Tooltip title={error?.message}>
 				<Typography.Text

@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { flushSync } from 'react-dom';
 import { AutoComplete, Spin } from 'antd';
@@ -284,7 +285,7 @@ export const MetricNameSelector = memo(function MetricNameSelector({
 					<Spin size="small" />
 				) : isError ? (
 					<Typography.Text color="danger" style={{ fontSize: 12 }}>
-						Failed to load metrics
+						<ConsoleText message={'Failed to load metrics'} />
 					</Typography.Text>
 				) : null
 			}

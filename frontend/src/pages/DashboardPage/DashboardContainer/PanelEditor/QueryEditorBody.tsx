@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useMemo } from 'react';
 import { toast } from '@signozhq/ui/sonner';
 import { ConfigProvider } from 'antd';
@@ -97,6 +98,7 @@ function QueryEditorBody({
 	originalPanelKind,
 	onChangeQueryMode,
 }: QueryEditorBodyProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	// Read here rather than taken as props: this renders inside a loaded dashboard
 	// subtree, so it resolves the same context every other consumer does.
 	const { isEditable, editChecks, editDisabledTooltip } =
@@ -241,7 +243,7 @@ function QueryEditorBody({
 			const savedPanelId = await save(buildSaveSpec(draft.spec));
 			// Reveal the saved panel once the dashboard re-renders.
 			setScrollTargetId(savedPanelId);
-			toast.success('Panel saved', {
+			toast.success(translate('Panel saved'), {
 				position: 'top-center',
 			});
 			onSaved();
@@ -249,6 +251,7 @@ function QueryEditorBody({
 			showErrorModal(err);
 		}
 	}, [
+		translate,
 		isEditable,
 		save,
 		buildSaveSpec,

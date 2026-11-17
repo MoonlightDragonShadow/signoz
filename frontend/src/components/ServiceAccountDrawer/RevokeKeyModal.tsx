@@ -1,3 +1,5 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { useQueryClient } from 'react-query';
 import { Trash2, X } from '@signozhq/icons';
 import { Button } from '@signozhq/ui/button';
@@ -48,7 +50,7 @@ export function RevokeKeyFooter({
 				onClick={onCancel}
 				prefix={<X size={12} />}
 			>
-				Cancel
+				<ConsoleText message={'Cancel'} />
 			</Button>
 			<AuthZButton
 				size="md"
@@ -64,13 +66,15 @@ export function RevokeKeyFooter({
 				testId="revoke-key-confirm-btn"
 				prefix={<Trash2 size={12} />}
 			>
-				Revoke Key
+				<ConsoleText message={'Revoke Key'} />
 			</AuthZButton>
 		</>
 	);
 }
 
 function RevokeKeyModal(): JSX.Element {
+	const translateRuntimeCopy = useConsoleTranslation();
+	const translateToast = useConsoleTranslation();
 	const queryClient = useQueryClient();
 	const { showErrorModal, isErrorModalVisible } = useErrorModal();
 	const [accountId] = useQueryState(SA_QUERY_PARAMS.ACCOUNT);
@@ -91,7 +95,7 @@ function RevokeKeyModal(): JSX.Element {
 		useRevokeServiceAccountKey({
 			mutation: {
 				onSuccess: async () => {
-					toast.success('Key revoked successfully');
+					toast.success(translateToast('Key revoked successfully'));
 					await setRevokeKeyId(null);
 					if (accountId) {
 						await invalidateListServiceAccountKeys(queryClient, { id: accountId });
@@ -126,7 +130,9 @@ function RevokeKeyModal(): JSX.Element {
 					handleCancel();
 				}
 			}}
-			title={`Revoke ${keyName ?? 'key'}?`}
+			title={translateRuntimeCopy('Revoke {{value1}}?', {
+				value1: keyName ?? 'key',
+			})}
 			width="narrow"
 			className="alert-dialog sa-delete-dialog"
 			showCloseButton={false}
@@ -141,8 +147,11 @@ function RevokeKeyModal(): JSX.Element {
 				/>
 			}
 		>
-			Revoking this key will permanently invalidate it. Any systems using this key
-			will lose access immediately.
+			<ConsoleText
+				message={
+					'Revoking this key will permanently invalidate it. Any systems using this key will lose access immediately.'
+				}
+			/>
 		</DialogWrapper>
 	);
 }

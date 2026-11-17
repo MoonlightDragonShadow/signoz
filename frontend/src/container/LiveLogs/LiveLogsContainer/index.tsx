@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useAppLocation } from 'lib/router/useAppLocation';
 import { Switch } from '@signozhq/ui/switch';
@@ -33,6 +34,8 @@ interface LiveLogsContainerProps {
 function LiveLogsContainer({
 	handleChangeSelectedView,
 }: LiveLogsContainerProps): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
+	const translateConsole = useConsoleTranslation();
 	const location = useAppLocation();
 	const [logs, setLogs] = useState<ILiveLogsLog[]>([]);
 	const { currentQuery, stagedQuery } = useQueryBuilder();
@@ -66,7 +69,7 @@ function LiveLogsContainer({
 			key: 'raw',
 			label: 'Raw',
 			data: {
-				title: 'max lines per row',
+				title: translateInterfaceCopy('max lines per row'),
 			},
 		},
 		{
@@ -75,7 +78,7 @@ function LiveLogsContainer({
 		},
 		{
 			key: 'table',
-			label: 'Column',
+			label: translateInterfaceCopy('Column'),
 			data: {
 				title: 'columns',
 			},
@@ -231,7 +234,7 @@ function LiveLogsContainer({
 			<div className="live-logs-content">
 				<div className="live-logs-settings-panel">
 					<div className="live-logs-frequency-chart-view-controller">
-						<Typography>Frequency chart</Typography>
+						<Typography>{translateConsole('Frequency chart')}</Typography>
 						<Switch
 							color="primary"
 							textPlacement="right"
@@ -271,7 +274,7 @@ function LiveLogsContainer({
 			{config.fieldsSelector && (
 				<FieldsSelector
 					isOpen={isFieldsSelectorOpen}
-					title="Edit columns"
+					title={translateConsole('Edit columns')}
 					fields={config.fieldsSelector.value}
 					onFieldsChange={config.fieldsSelector.onFieldsChange}
 					onClose={(): void => setIsFieldsSelectorOpen(false)}

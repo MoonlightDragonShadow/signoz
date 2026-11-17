@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useState } from 'react';
 import { X } from '@signozhq/icons';
 import { Card, InputNumber } from 'antd';
@@ -30,6 +31,8 @@ function ApDexSettings({
 	data,
 	refetchGetApDexSetting,
 }: ApDexSettingsProps): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
+	const translate = useConsoleTranslation();
 	const [thresholdValue, setThresholdValue] = useState(() => {
 		if (data) {
 			return data.data[0].threshold;
@@ -53,7 +56,7 @@ function ApDexSettings({
 	if (isLoading) {
 		return (
 			<Typography.Text style={{ color: themeColors.white }}>
-				<Spinner height="5vh" tip="Loading..." />
+				<Spinner height="5vh" tip={translateInterfaceCopy('Loading...')} />
 			</Typography.Text>
 		);
 	}
@@ -64,7 +67,7 @@ function ApDexSettings({
 			extra={<X size="lg" onClick={handlePopOverClose} />}
 			actions={[
 				<SaveAndCancelContainer key="SaveAndCancelContainer">
-					<Button onClick={handlePopOverClose}>Cancel</Button>
+					<Button onClick={handlePopOverClose}>{translate('Cancel')}</Button>
 					<SaveButton
 						onClick={onSaveApDexSettings({
 							handlePopOverClose,
@@ -77,14 +80,14 @@ function ApDexSettings({
 						type="primary"
 						loading={isApDexLoading}
 					>
-						Save
+						{translate('Save')}
 					</SaveButton>
 				</SaveAndCancelContainer>,
 			]}
 		>
 			<AppDexThresholdContainer>
 				<Typography>
-					Apdex threshold (in seconds){' '}
+					{translate('Apdex threshold (in seconds)')}{' '}
 					<TextToolTip
 						text={apDexToolTipText}
 						url={apDexToolTipUrl}

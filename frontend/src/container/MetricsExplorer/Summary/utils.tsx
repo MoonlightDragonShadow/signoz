@@ -16,11 +16,14 @@ import { MetricsListItemRowData, TreemapTile } from './types';
 export const getMetricsTableColumns = (
 	queryFilterExpression: Filter,
 	onFilterChange: (expression: string) => void,
+	translate: (message: string) => string = (message) => message,
 ): ColumnType<MetricsListItemRowData>[] => [
 	{
 		title: (
 			<div className="metric-name-column-header">
-				<span className="metric-name-column-header-text">METRIC</span>
+				<span className="metric-name-column-header-text">
+					{translate('METRIC')}
+				</span>
 				<MetricNameSearch
 					queryFilterExpression={queryFilterExpression}
 					onFilterChange={onFilterChange}
@@ -35,7 +38,7 @@ export const getMetricsTableColumns = (
 		),
 	},
 	{
-		title: 'DESCRIPTION',
+		title: translate('DESCRIPTION'),
 		dataIndex: 'description',
 		width: 400,
 		render: (value: string): React.ReactNode => (
@@ -45,7 +48,7 @@ export const getMetricsTableColumns = (
 	{
 		title: (
 			<div className="metric-type-column-header">
-				<span className="metric-type-column-header-text">TYPE</span>
+				<span className="metric-type-column-header-text">{translate('TYPE')}</span>
 				{/* <MetricTypeSearch
 					queryFilters={queryFilters}
 					onFilterChange={onFilterChange}
@@ -57,18 +60,18 @@ export const getMetricsTableColumns = (
 		width: 150,
 	},
 	{
-		title: 'UNIT',
+		title: translate('UNIT'),
 		dataIndex: 'unit',
 		width: 150,
 	},
 	{
-		title: 'SAMPLES',
+		title: translate('SAMPLES'),
 		dataIndex: MetricsexplorertypesTreemapModeDTO.samples,
 		width: 150,
 		sorter: true,
 	},
 	{
-		title: 'TIME SERIES',
+		title: translate('TIME SERIES'),
 		dataIndex: MetricsexplorertypesTreemapModeDTO.timeseries,
 		width: 150,
 		sorter: true,

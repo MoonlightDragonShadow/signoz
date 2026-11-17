@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Bell, Plus } from '@signozhq/icons';
 import { Typography } from '@signozhq/ui/typography';
 import AuthZButton from 'lib/authz/components/AuthZButton/AuthZButton';
@@ -15,15 +16,17 @@ interface ChannelsEmptyStateProps {
 function ChannelsEmptyState({
 	onCreate,
 }: ChannelsEmptyStateProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	return (
 		<div className={styles.emptyState} data-testid="channels-empty-state">
 			<Bell className={styles.icon} size={16} />
 			<Typography.Text className={styles.title}>
-				No notification channels yet
+				{translateConsole('No notification channels yet')}
 			</Typography.Text>
 			<Typography.Text className={styles.subtitle}>
-				A channel is where an alert ends up. Create one and your alert rules and
-				routing policies can point at it.
+				{translateConsole(
+					'A channel is where an alert ends up. Create one and your alert rules and routing policies can point at it.',
+				)}
 			</Typography.Text>
 			<div className={styles.actions}>
 				<AuthZButton
@@ -35,7 +38,7 @@ function ChannelsEmptyState({
 					onClick={onCreate}
 					testId="channels-empty-create"
 				>
-					New channel
+					{translateConsole('New channel')}
 				</AuthZButton>
 			</div>
 			<a
@@ -45,7 +48,7 @@ function ChannelsEmptyState({
 				rel="noopener noreferrer"
 				data-testid="channels-empty-docs"
 			>
-				Read the setup guide
+				{translateConsole('Read the setup guide')}
 			</a>
 		</div>
 	);

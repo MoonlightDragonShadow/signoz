@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { ArrowUpToLine, Filter } from '@signozhq/icons';
 import { Button, Tooltip } from 'antd';
 import cx from 'classnames';
@@ -31,10 +32,11 @@ export default function LeftToolbarActions({
 	showFilter,
 	handleFilterVisibilityChange,
 }: LeftToolbarActionsProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	return (
 		<div className="left-toolbar">
 			{!showFilter && (
-				<Tooltip title="Show Filters">
+				<Tooltip title={translateConsole('Show Filters')}>
 					<Button onClick={handleFilterVisibilityChange} className="filter-btn">
 						<Filter size={12} />
 						<ArrowUpToLine size={12} style={{ transform: 'rotate(90deg)' }} />

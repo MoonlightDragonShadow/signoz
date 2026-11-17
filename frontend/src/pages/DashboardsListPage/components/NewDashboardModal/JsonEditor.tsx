@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useState } from 'react';
 import MEditor, { Monaco } from '@monaco-editor/react';
 import { Color } from '@signozhq/design-tokens';
@@ -35,6 +36,7 @@ function JsonEditor({
 	readOnly = false,
 	height = '38vh',
 }: Props): JSX.Element {
+	const translate = useConsoleTranslation();
 	const isDarkMode = useIsDarkMode();
 	const [expanded, setExpanded] = useState(false);
 
@@ -64,7 +66,7 @@ function JsonEditor({
 					color="secondary"
 					size="sm"
 					icon
-					aria-label="Expand editor"
+					aria-label={translate('Expand editor')}
 					testId="json-editor-expand"
 					onClick={(): void => setExpanded(true)}
 				>
@@ -74,7 +76,7 @@ function JsonEditor({
 			<div className={styles.editor}>{renderEditor(height)}</div>
 
 			<DialogWrapper
-				title={readOnly ? 'Preview JSON' : 'Edit JSON'}
+				title={readOnly ? translate('Preview JSON') : translate('Edit JSON')}
 				open={expanded}
 				width="extra-wide"
 				onOpenChange={(next): void => {

@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useMemo } from 'react';
 import { Ellipsis, PenLine, Trash2 } from '@signozhq/icons';
 import { Button } from '@signozhq/ui/button';
@@ -17,12 +18,14 @@ function RoutingPolicyActionsMenu({
 	onEdit,
 	onDelete,
 }: RoutingPolicyActionsMenuProps): JSX.Element {
+	const translateRuntimeCopy = useConsoleTranslation();
+	const translateConsole = useConsoleTranslation();
 	const menuItems = useMemo<DropdownItemType[]>(
 		() => [
 			{
 				type: 'item',
 				value: 'edit',
-				label: 'Edit',
+				label: translateConsole('Edit'),
 				prefix: <PenLine size={14} />,
 				onClick: (): void => onEdit(routingPolicy),
 			},
@@ -30,13 +33,13 @@ function RoutingPolicyActionsMenu({
 			{
 				type: 'item',
 				value: 'delete',
-				label: 'Delete',
+				label: translateConsole('Delete'),
 				prefix: <Trash2 size={14} />,
 				danger: true,
 				onClick: (): void => onDelete(routingPolicy),
 			},
 		],
-		[routingPolicy, onEdit, onDelete],
+		[translateConsole, routingPolicy, onEdit, onDelete],
 	);
 
 	return (
@@ -53,7 +56,9 @@ function RoutingPolicyActionsMenu({
 					size="sm"
 					icon
 					testId={`routing-policy-actions-${routingPolicy.id}`}
-					aria-label={`Actions for ${routingPolicy.name}`}
+					aria-label={translateRuntimeCopy('Actions for {{value1}}', {
+						value1: routingPolicy.name,
+					})}
 				>
 					<Ellipsis size={16} />
 				</Button>

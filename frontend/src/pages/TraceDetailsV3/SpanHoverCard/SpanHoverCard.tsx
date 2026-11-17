@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Tooltip } from '@signozhq/ui/tooltip';
 import { Typography } from '@signozhq/ui/typography';
 import { convertTimeToRelevantUnit } from 'utils/traceUtils';
@@ -51,6 +52,8 @@ export function SpanTooltipContent({
 	previewRows,
 	ai,
 }: SpanTooltipContentProps): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
+	const translateConsole = useConsoleTranslation();
 	const { time: formattedDuration, timeUnitName } =
 		convertTimeToRelevantUnit(durationMs);
 
@@ -67,27 +70,42 @@ export function SpanTooltipContent({
 				</Typography.Text>
 				{ai?.usage && (
 					<Typography.Text size="small" weight="normal">
-						Usage Breakdown
+						{translateConsole('Usage Breakdown')}
 					</Typography.Text>
 				)}
 			</div>
 			{ai?.usage && <SpanUsageBreakdown usage={ai.usage} />}
 			<TraceTooltipSection>
-				{ai?.model && <TraceTooltipRow label="model" value={ai.model} />}
-				{ai?.toolName && <TraceTooltipRow label="tool" value={ai.toolName} />}
-				{ai?.agentName && <TraceTooltipRow label="agent" value={ai.agentName} />}
+				{ai?.model && (
+					<TraceTooltipRow
+						label={translateInterfaceCopy('model')}
+						value={ai.model}
+					/>
+				)}
+				{ai?.toolName && (
+					<TraceTooltipRow
+						label={translateInterfaceCopy('tool')}
+						value={ai.toolName}
+					/>
+				)}
+				{ai?.agentName && (
+					<TraceTooltipRow
+						label={translateInterfaceCopy('agent')}
+						value={ai.agentName}
+					/>
+				)}
 				<TraceTooltipRow
-					label="status"
+					label={translateInterfaceCopy('status')}
 					value={hasError ? 'error' : 'ok'}
 					testId="span-hover-card-status"
 				/>
 				<TraceTooltipRow
-					label="start"
+					label={translateInterfaceCopy('start')}
 					value={`${toFixed(relativeStartMs, 2)} ms`}
 					testId="span-hover-card-start"
 				/>
 				<TraceTooltipRow
-					label="duration"
+					label={translateInterfaceCopy('duration')}
 					value={`${toFixed(formattedDuration, 2)} ${timeUnitName}`}
 					testId="span-hover-card-duration"
 				/>

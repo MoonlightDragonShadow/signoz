@@ -1,4 +1,6 @@
 import { render, screen } from '@testing-library/react';
+import { createInstance } from 'i18next';
+import { I18nextProvider } from 'react-i18next';
 import * as metricsExplorerHooks from 'api/generated/services/metrics';
 import TimezoneProvider from 'providers/Timezone';
 
@@ -6,11 +8,22 @@ import Highlights from '../Highlights';
 import { formatTimestampToReadableDate } from '../utils';
 import { getMockMetricHighlightsData, MOCK_METRIC_NAME } from './testUtlls';
 
+const i18n = createInstance();
+void i18n.init({
+	lng: 'en',
+	fallbackLng: 'en',
+	initImmediate: false,
+	interpolation: { escapeValue: false },
+	resources: { en: { console: {} } },
+});
+
 function renderHighlights(metricName: string): ReturnType<typeof render> {
 	return render(
-		<TimezoneProvider>
-			<Highlights metricName={metricName} />
-		</TimezoneProvider>,
+		<I18nextProvider i18n={i18n}>
+			<TimezoneProvider>
+				<Highlights metricName={metricName} />
+			</TimezoneProvider>
+		</I18nextProvider>,
 	);
 }
 

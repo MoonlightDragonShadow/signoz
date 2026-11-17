@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Dispatch, SetStateAction, useEffect, useMemo, useState } from 'react';
 import { useAppNavigate } from 'lib/router/useAppNavigate';
 import { Color } from '@signozhq/design-tokens';
@@ -49,6 +50,7 @@ function AccountActionsRenderer({
 	onIntegrationModalOpen: () => void;
 	onAccountSettingsModalOpen: () => void;
 }): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	if (isLoading) {
 		return (
 			<div className="hero-section__actions-with-account">
@@ -65,12 +67,14 @@ function AccountActionsRenderer({
 						<Dot size={24} color={Color.BG_FOREST_500} />
 					</div>
 
-					<div className="account-selector-label">Account:</div>
+					<div className="account-selector-label">
+						{translateConsole('Account:')}
+					</div>
 
 					<span className="account-selector">
 						<Select
 							data-testid="cloud-account-selector"
-							aria-label="Cloud account"
+							aria-label={translateConsole('Cloud account')}
 							value={activeAccount?.providerAccountId}
 							options={selectOptions}
 							rootClassName={cx('cloud-account-selector', {
@@ -92,7 +96,7 @@ function AccountActionsRenderer({
 						onClick={onAccountSettingsModalOpen}
 						testId="cloud-edit-account-btn"
 					>
-						Edit Account
+						{translateConsole('Edit Account')}
 					</Button>
 
 					<Button
@@ -103,7 +107,7 @@ function AccountActionsRenderer({
 						prefix={<Plus size={14} />}
 						testId="cloud-add-account-btn"
 					>
-						Add New Account
+						{translateConsole('Add New Account')}
 					</Button>
 				</div>
 			</div>
@@ -118,7 +122,7 @@ function AccountActionsRenderer({
 			size="sm"
 			testId="cloud-integrate-now-btn"
 		>
-			Integrate Now
+			{translateConsole('Integrate Now')}
 		</Button>
 	);
 }

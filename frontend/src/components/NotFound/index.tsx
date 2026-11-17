@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import NotFoundImage from 'assets/NotFound';
 import ROUTES from 'constants/routes';
 
@@ -11,11 +12,13 @@ function NotFound({ text = defaultText }: Props): JSX.Element {
 
 			<TextContainer>
 				<Text>{text}</Text>
-				<Text>Page Not Found</Text>
+				<Text>
+					<ConsoleText message={'Page Not Found'} />
+				</Text>
 			</TextContainer>
 
 			<Button to={ROUTES.HOME} tabIndex={0}>
-				Return Home
+				<ConsoleText message={'Return Home'} />
 			</Button>
 		</Container>
 	);

@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { AlertDialog } from '@signozhq/ui/alert-dialog';
 import { Button } from '@signozhq/ui/button';
 import { Trash2, X } from '@signozhq/icons';
@@ -20,6 +21,7 @@ function DeleteConfirmDialog({
 	onConfirm,
 	onCancel,
 }: DeleteConfirmDialogProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	return (
 		<AlertDialog
 			open={open}
@@ -29,7 +31,7 @@ function DeleteConfirmDialog({
 				}
 			}}
 			width="narrow"
-			title="Delete Model Cost Data "
+			title={translateConsole('Delete Model Cost Data ')}
 			titleIcon={<Trash2 size={16} />}
 			footer={
 				<>
@@ -41,7 +43,7 @@ function DeleteConfirmDialog({
 						prefix={<X size={12} />}
 						testId="drawer-delete-cancel-btn"
 					>
-						Cancel
+						{translateConsole('Cancel')}
 					</Button>
 					<Button
 						size="md"
@@ -52,13 +54,14 @@ function DeleteConfirmDialog({
 						prefix={<Trash2 size={12} />}
 						testId="drawer-delete-confirm-btn"
 					>
-						Delete
+						{translateConsole('Delete')}
 					</Button>
 				</>
 			}
 		>
-			Are you sure you want to delete <strong>{modelName}</strong>? Once deleted,
-			this action cannot be undone.
+			{translateConsole('Are you sure you want to delete')}{' '}
+			<strong>{modelName}</strong>
+			{translateConsole('? Once deleted, this action cannot be undone.')}
 		</AlertDialog>
 	);
 }

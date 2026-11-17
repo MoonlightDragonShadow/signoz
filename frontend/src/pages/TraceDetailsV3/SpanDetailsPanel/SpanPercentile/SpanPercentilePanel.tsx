@@ -1,3 +1,5 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Select, Skeleton } from 'antd';
 import { Checkbox } from '@signozhq/ui/checkbox';
 import { Button } from '@signozhq/ui/button';
@@ -33,6 +35,7 @@ function SpanPercentilePanel({
 	selectedSpan,
 	percentile,
 }: SpanPercentilePanelProps): JSX.Element | null {
+	const translateConsole = useConsoleTranslation();
 	const {
 		isOpen,
 		toggleOpen,
@@ -66,11 +69,11 @@ function SpanPercentilePanel({
 					onClick={toggleOpen}
 					prefix={<ChevronDown size={16} />}
 				>
-					Span Percentile
+					{translateConsole('Span Percentile')}
 				</Button>
 
 				<Button
-					aria-label="Toggle resource attributes"
+					aria-label={translateConsole('Toggle resource attributes')}
 					variant="link"
 					color="secondary"
 					size="sm"
@@ -88,7 +91,7 @@ function SpanPercentilePanel({
 				>
 					<div className={styles.resourceSelectorHeader}>
 						<Input
-							placeholder="Search resource attributes"
+							placeholder={translateConsole('Search resource attributes')}
 							className={styles.resourceSelectorInput}
 							value={resourceAttributesSearchQuery}
 							onChange={(e): void =>
@@ -107,7 +110,9 @@ function SpanPercentilePanel({
 								<div className={styles.resourceSelectorItem} key={attr.key}>
 									<Checkbox
 										color="primary"
-										disabledTooltip="This attribute is always included"
+										disabledTooltip={translateConsole(
+											'This attribute is always included',
+										)}
 										value={attr.isSelected}
 										onChange={(checked): void => {
 											handleResourceAttributeChange(
@@ -131,7 +136,7 @@ function SpanPercentilePanel({
 
 			<div className={styles.content}>
 				<Typography.Text className={styles.contentTitle}>
-					This span duration is{' '}
+					<ConsoleText message={'This span duration is'} />{' '}
 					{!loading && spanPercentileData ? (
 						<span className={styles.contentHighlight}>
 							p{Math.floor(spanPercentileData.percentile || 0)}
@@ -141,14 +146,17 @@ function SpanPercentilePanel({
 							<Loader size={12} className="animate-spin" />
 						</span>
 					)}{' '}
-					out of the distribution for this resource evaluated for {selectedTimeRange}{' '}
-					hour(s) since the span start time.
+					<ConsoleText
+						message={'out of the distribution for this resource evaluated for'}
+					/>{' '}
+					{selectedTimeRange}{' '}
+					<ConsoleText message={'hour(s) since the span start time.'} />
 				</Typography.Text>
 
 				<div className={styles.timerange}>
 					<Select
 						labelInValue
-						placeholder="Select timerange"
+						placeholder={translateConsole('Select timerange')}
 						className={styles.timerangeSelect}
 						getPopupContainer={(trigger): HTMLElement =>
 							trigger.parentElement || document.body
@@ -171,10 +179,10 @@ function SpanPercentilePanel({
 				<div>
 					<div className={styles.tableHeader}>
 						<Typography.Text className={styles.tableHeaderText}>
-							Percentile
+							{translateConsole('Percentile')}
 						</Typography.Text>
 						<Typography.Text className={styles.tableHeaderText}>
-							Duration
+							{translateConsole('Duration')}
 						</Typography.Text>
 					</div>
 
@@ -207,7 +215,7 @@ function SpanPercentilePanel({
 									</Typography.Text>
 									<div className={styles.tableRowDash} />
 									<Typography.Text className={styles.tableRowValue}>
-										(this span){' '}
+										{translateConsole('(this span)')}{' '}
 										{getYAxisFormattedValue(
 											`${selectedSpan.duration_nano / 1000000}`,
 											'ms',

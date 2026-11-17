@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useState } from 'react';
 import { useQueryClient } from 'react-query';
 import { Filter } from '@signozhq/icons';
@@ -23,6 +24,7 @@ import { useAllErrorsQueryState } from './QueryStateContext';
 import './AllErrors.styles.scss';
 
 function AllErrors(): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const { pathname } = useAppLocation();
 	const handleRunQuery = useRunQueryWithFilterItems();
 	const queryClient = useQueryClient();
@@ -71,7 +73,7 @@ function AllErrors(): JSX.Element {
 				showAutoRefresh={false}
 				leftActions={
 					!showFilters ? (
-						<Tooltip title="Show Filters">
+						<Tooltip title={translateConsole('Show Filters')}>
 							<Button onClick={handleFilterVisibilityChange} className="filter-btn">
 								<Filter size="md" />
 							</Button>

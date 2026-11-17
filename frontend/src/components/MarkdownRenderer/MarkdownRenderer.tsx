@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 
 import ReactMarkdown from 'react-markdown';
@@ -92,7 +93,11 @@ const interpolateMarkdown = (
 };
 
 function CustomTag({ color }: { color: string }): JSX.Element {
-	return <h1 style={{ color }}>This is custom element</h1>;
+	return (
+		<h1 style={{ color }}>
+			<ConsoleText message={'This is custom element'} />
+		</h1>
+	);
 }
 
 function MarkdownRenderer({

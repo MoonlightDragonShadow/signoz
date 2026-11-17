@@ -11,6 +11,7 @@ import GridCard from 'container/WidgetCard/Card';
 import { Card } from 'container/WidgetCard/styles';
 import { getWidgetQueryBuilder } from 'container/MetricsApplication/MetricsApplication.factory';
 import { useIsDarkMode } from 'hooks/useDarkMode';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import useUrlQuery from 'hooks/useUrlQuery';
 import { UpdateTimeInterval } from 'store/actions';
 
@@ -22,6 +23,7 @@ import {
 
 function MessagingQueuesGraph(): JSX.Element {
 	const isDarkMode = useIsDarkMode();
+	const translate = useConsoleTranslation();
 
 	const urlQuery = useUrlQuery();
 	const consumerGrp = urlQuery.get(QueryParams.consumerGrp) || '';
@@ -33,17 +35,22 @@ function MessagingQueuesGraph(): JSX.Element {
 		[consumerGrp, topic, partition],
 	);
 
-	const widgetData = useMemo(
-		() => getWidgetQueryBuilder(getWidgetQuery({ filterItems })),
-		[filterItems],
-	);
+	const widgetData = useMemo(() => {
+		const widget = getWidgetQueryBuilder(getWidgetQuery({ filterItems }));
+		return {
+			...widget,
+			title:
+				typeof widget.title === 'string' ? translate(widget.title) : widget.title,
+			description: translate(widget.description),
+		};
+	}, [filterItems, translate]);
 
 	const location = useAppLocation();
 	const isLogEventCalled = useRef<boolean>(false);
 
 	const messagingQueueCustomTooltipText = (): HTMLDivElement => {
 		const customText = document.createElement('div');
-		customText.textContent = 'Click on co-ordinate to view details';
+		customText.textContent = translate('Click on co-ordinate to view details');
 		customText.style.paddingTop = '8px';
 		customText.style.paddingBottom = '2px';
 		customText.style.color = '#fff';

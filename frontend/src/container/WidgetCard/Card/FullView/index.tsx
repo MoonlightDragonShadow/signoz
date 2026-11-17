@@ -1,3 +1,5 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 /* eslint-disable sonarjs/cognitive-complexity */
 import React, {
 	useCallback,
@@ -65,6 +67,7 @@ function FullView({
 	setCurrentGraphRef,
 	enableDrillDown = false,
 }: FullViewProps): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
 	const {
 		selectedTime: globalSelectedTime,
 		minTime,
@@ -259,7 +262,13 @@ function FullView({
 	const [searchTerm, setSearchTerm] = useState<string>('');
 
 	if (response.isLoading && selectedPanelType !== PANEL_TYPES.LIST) {
-		return <Spinner height="100%" size="large" tip="Loading..." />;
+		return (
+			<Spinner
+				height="100%"
+				size="large"
+				tip={translateInterfaceCopy('Loading...')}
+			/>
+		);
 	}
 
 	return (
@@ -273,7 +282,7 @@ function FullView({
 									<div className="drildown-options-container">
 										{showResetQuery && (
 											<Button type="link" onClick={handleResetQuery}>
-												Reset Query
+												<ConsoleText message={'Reset Query'} />
 											</Button>
 										)}
 										<PanelTypeSelector
@@ -350,7 +359,7 @@ function FullView({
 								<Input
 									addonBefore={<Search size={14} />}
 									className="global-search"
-									placeholder="Search..."
+									placeholder={translateInterfaceCopy('Search...')}
 									allowClear
 									key={widget.id}
 									onChange={(e): void => {

@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Plus } from '@signozhq/icons';
@@ -63,7 +64,7 @@ function ChannelSelect({
 				<Select.Option key="add-new-channel" value="add-new-channel">
 					<StyledCreateChannelOption>
 						<Plus size="md" />
-						Create a new channel
+						<ConsoleText message={'Create a new channel'} />
 					</StyledCreateChannelOption>
 				</Select.Option>,
 			);

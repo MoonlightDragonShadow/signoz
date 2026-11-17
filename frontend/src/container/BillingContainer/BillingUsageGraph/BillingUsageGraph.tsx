@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useMemo, useRef } from 'react';
 import { Card, Flex } from 'antd';
 import { Typography } from '@signozhq/ui/typography';
@@ -32,6 +33,7 @@ interface BillingUsageGraphProps {
 const numberFormatter = new Intl.NumberFormat('en-US');
 
 export function BillingUsageGraph(props: BillingUsageGraphProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const { data, billAmount } = props;
 
 	const graphRef = useRef<HTMLDivElement>(null);
@@ -124,7 +126,7 @@ export function BillingUsageGraph(props: BillingUsageGraphProps): JSX.Element {
 			<Flex justify="space-between">
 				<Flex vertical gap={6}>
 					<Typography.Text className={styles.totalSpentTitle}>
-						TOTAL SPENT
+						{translateConsole('TOTAL SPENT')}
 					</Typography.Text>
 					<Typography.Text className={styles.totalSpent}>
 						${numberFormatter.format(billAmount)}

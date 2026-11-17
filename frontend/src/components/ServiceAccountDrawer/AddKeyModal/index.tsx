@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useQueryClient } from 'react-query';
@@ -28,6 +29,7 @@ import { DEFAULT_FORM_VALUES, ExpiryMode, Phase, PHASE_TITLES } from './types';
 import './AddKeyModal.styles.scss';
 
 function AddKeyModal(): JSX.Element {
+	const translateToast = useConsoleTranslation();
 	const queryClient = useQueryClient();
 	const { showErrorModal, isErrorModalVisible } = useErrorModal();
 	const [accountId] = useQueryState(SA_QUERY_PARAMS.ACCOUNT);
@@ -114,12 +116,12 @@ function AddKeyModal(): JSX.Element {
 		copyToClipboard(createdKey.key);
 		setHasCopied(true);
 		setTimeout(() => setHasCopied(false), 2000);
-		toast.success('Key copied to clipboard');
-	}, [copyToClipboard, createdKey?.key]);
+		toast.success(translateToast('Key copied to clipboard'));
+	}, [translateToast, copyToClipboard, createdKey?.key]);
 
 	useEffect(() => {
 		if (copyState.error) {
-			toast.error('Failed to copy key');
+			toast.error(translateToast('Failed to copy key'));
 		}
 	}, [copyState.error]);
 

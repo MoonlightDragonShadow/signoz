@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Dispatch, SetStateAction, useMemo } from 'react';
 import { Col, Row } from 'antd';
 import logEvent from 'api/common/logEvent';
@@ -37,10 +38,11 @@ function CeleryTaskStateGraphConfig({
 	setBarState: Dispatch<SetStateAction<CeleryTaskState>>;
 	barState: CeleryTaskState;
 }): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
 	const tabs: TabData[] = [
 		{ label: 'All Tasks', key: CeleryTaskState.All },
 		{ label: 'Failed', key: CeleryTaskState.Failed },
-		{ label: 'Retry', key: CeleryTaskState.Retry },
+		{ label: translateInterfaceCopy('Retry'), key: CeleryTaskState.Retry },
 		{ label: 'Successful', key: CeleryTaskState.Successful },
 	];
 

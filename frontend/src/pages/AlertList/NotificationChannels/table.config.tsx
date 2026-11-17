@@ -1,5 +1,6 @@
 import type { TableColumnDef } from 'components/TanStackTableView';
 import TanStackTable from 'components/TanStackTableView';
+import LocalizedRelativeTime from 'components/LocalizedRelativeTime/LocalizedRelativeTime';
 import { DATE_TIME_FORMATS } from 'constants/dateTimeFormats';
 
 import { CHANNEL_KIND_LABEL } from './constants';
@@ -8,6 +9,7 @@ import type { Channel } from './types';
 import { toRelativeTime } from './utils/relativeTime';
 
 export function getChannelColumns(
+	translateConsole: (message: string) => string,
 	formatTimezoneAdjustedTimestamp: (date: string, format: string) => string,
 ): TableColumnDef<Channel>[] {
 	const timestampCell = (row: Channel, value: string): JSX.Element => {
@@ -26,7 +28,9 @@ export function getChannelColumns(
 				{/* A plain inline-block hugs the text. TanStackTable.Text is a
 				    `-webkit-box` for line clamping, which fills the cell and leaves
 				    the arrow pointing at the cell's middle instead of the words. */}
-				<span className={styles.timeText}>{toRelativeTime(value)}</span>
+				<span className={styles.timeText}>
+					<LocalizedRelativeTime value={toRelativeTime(value)} />
+				</span>
 			</TanStackTable.HoverTooltip>
 		);
 	};
@@ -34,7 +38,7 @@ export function getChannelColumns(
 	return [
 		{
 			id: 'name',
-			header: 'Channel',
+			header: translateConsole('Channel'),
 			accessorKey: 'displayName',
 			width: { default: '100%', min: '220px' },
 			enableSort: true,
@@ -52,7 +56,7 @@ export function getChannelColumns(
 		},
 		{
 			id: 'kind',
-			header: 'Type',
+			header: translateConsole('Type'),
 			accessorKey: 'kind',
 			width: { default: '150px', min: '110px' },
 			enableSort: false,
@@ -66,7 +70,7 @@ export function getChannelColumns(
 		},
 		{
 			id: 'createdAt',
-			header: 'Created At',
+			header: translateConsole('Created At'),
 			accessorKey: 'createdAt',
 			width: { default: '150px', min: '120px' },
 			enableSort: true,
@@ -76,7 +80,7 @@ export function getChannelColumns(
 		},
 		{
 			id: 'updatedAt',
-			header: 'Updated At',
+			header: translateConsole('Updated At'),
 			accessorKey: 'updatedAt',
 			width: { default: '150px', min: '120px' },
 			enableSort: true,

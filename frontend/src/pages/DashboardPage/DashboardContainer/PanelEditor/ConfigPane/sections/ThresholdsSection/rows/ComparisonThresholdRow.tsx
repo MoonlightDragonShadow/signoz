@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import type { DashboardtypesComparisonThresholdDTO } from 'api/generated/services/sigNoz.schemas';
 import { formatPanelValue } from 'pages/DashboardPage/DashboardContainer/Panels/utils/formatPanelValue';
 
@@ -40,6 +41,7 @@ function ComparisonThresholdRow({
 	onDiscard,
 	onRemove,
 }: ComparisonThresholdRowProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const { draft, setDraft, setValue } = useThresholdDraft(
 		threshold,
 		isEditing,
@@ -74,7 +76,7 @@ function ComparisonThresholdRow({
 				onChange={(operator): void => setDraft((d) => ({ ...d, operator }))}
 			/>
 			<ThresholdAmountField
-				label="Value"
+				label={translate('Value')}
 				testIdPrefix="comparison-threshold"
 				index={index}
 				value={draft.value}

@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { FilePenLine } from '@signozhq/icons';
 import { InframonitoringtypesNamespaceRecordDTO } from 'api/generated/services/sigNoz.schemas';
 import TanStackTable, { TableColumnDef } from 'components/TanStackTableView';
@@ -86,7 +87,7 @@ export const k8sNamespacesColumnsConfig: NamespaceTableColumnConfig[] = [
 		id: 'clusterName',
 		header: (): React.ReactNode => (
 			<ColumnHeader docPath="/infrastructure-monitoring/kubernetes/namespaces#cluster-name">
-				Cluster Name
+				<ConsoleText message={'Cluster Name'} />
 			</ColumnHeader>
 		),
 		accessorFn: (row): string =>
@@ -101,7 +102,7 @@ export const k8sNamespacesColumnsConfig: NamespaceTableColumnConfig[] = [
 		id: 'podCountsByStatus',
 		header: (): React.ReactNode => (
 			<ColumnHeader docPath="/infrastructure-monitoring/kubernetes/namespaces#pod-counts-by-status">
-				Pod Status
+				<ConsoleText message={'Pod Status'} />
 			</ColumnHeader>
 		),
 		accessorFn: (
@@ -128,7 +129,7 @@ export const k8sNamespacesColumnsConfig: NamespaceTableColumnConfig[] = [
 		id: 'cpu',
 		header: (): React.ReactNode => (
 			<ColumnHeader docPath="/infrastructure-monitoring/kubernetes/namespaces#cpu-usage-cores">
-				CPU Usage (cores)
+				<ConsoleText message={'CPU Usage (cores)'} />
 			</ColumnHeader>
 		),
 		accessorFn: (row): number => row.namespaceCPU,
@@ -152,7 +153,7 @@ export const k8sNamespacesColumnsConfig: NamespaceTableColumnConfig[] = [
 		id: 'memory',
 		header: (): React.ReactNode => (
 			<ColumnHeader docPath="/infrastructure-monitoring/kubernetes/namespaces#mem-usage-wss">
-				Memory Usage (WSS)
+				<ConsoleText message={'Memory Usage (WSS)'} />
 			</ColumnHeader>
 		),
 		accessorFn: (row): number => row.namespaceMemory,

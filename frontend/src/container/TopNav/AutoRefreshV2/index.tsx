@@ -1,3 +1,5 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 // eslint-disable-next-line no-restricted-imports
 import { useDispatch, useSelector } from 'react-redux';
@@ -31,6 +33,7 @@ function AutoRefresh({
 	disabled = false,
 	showAutoRefreshBtnPrimary = true,
 }: AutoRefreshProps): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
 	const globalTime = useSelector<AppState, GlobalReducer>(
 		(state) => state.globalTime,
 	);
@@ -148,13 +151,15 @@ function AutoRefresh({
 							onChange={onChangeAutoRefreshHandler}
 							value={isAutoRefreshEnabled}
 							disabled={isDisabled}
-							disabledTooltip="Auto refresh is not available for a custom time range"
+							disabledTooltip={translateInterfaceCopy(
+								'Auto refresh is not available for a custom time range',
+							)}
 						>
-							Auto Refresh
+							<ConsoleText message={'Auto Refresh'} />
 						</Checkbox>
 					</div>
 					<Typography.Text disabled={isDisabled} className="refresh-interval-text">
-						Refresh Interval
+						<ConsoleText message={'Refresh Interval'} />
 					</Typography.Text>
 					{refreshIntervalOptions
 						.filter((e) => e.label !== 'off')
@@ -175,7 +180,7 @@ function AutoRefresh({
 			}
 		>
 			<ButtonContainer
-				title="Set auto refresh"
+				title={translateInterfaceCopy('Set auto refresh')}
 				type={showAutoRefreshBtnPrimary ? 'primary' : 'default'}
 			>
 				<ChevronDown size={14} />

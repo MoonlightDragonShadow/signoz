@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useMemo, useRef, useState } from 'react';
 import { useCopyToClipboard } from 'react-use';
 import { Button, Input, Menu, Popover, Tooltip } from 'antd';
@@ -14,6 +15,7 @@ export function AllAttributesEmptyText({
 	isErrorAttributes,
 	refetchAttributes,
 }: AllAttributesEmptyTextProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	if (isErrorAttributes) {
 		return (
 			<div className="all-attributes-error-state">
@@ -24,7 +26,7 @@ export function AllAttributesEmptyText({
 			</div>
 		);
 	}
-	return <Typography.Text>No attributes found</Typography.Text>;
+	return <Typography.Text>{translate('No attributes found')}</Typography.Text>;
 }
 
 export function AllAttributesValue({
@@ -32,6 +34,7 @@ export function AllAttributesValue({
 	filterValue,
 	goToMetricsExploreWithAppliedAttribute,
 }: AllAttributesValueProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const [attributePopoverKey, setAttributePopoverKey] = useState<string | null>(
 		null,
 	);
@@ -76,12 +79,12 @@ export function AllAttributesValue({
 				items={[
 					{
 						icon: <SquareArrowOutUpRight size={14} />,
-						label: 'Open in Metric Explorer',
+						label: translate('Open in Metric Explorer'),
 						key: 'open-in-explorer',
 					},
 					{
 						icon: <Copy size={14} />,
-						label: 'Copy Value',
+						label: translate('Copy Value'),
 						key: 'copy-value',
 					},
 				]}
@@ -90,7 +93,7 @@ export function AllAttributesValue({
 				}}
 			/>
 		),
-		[handleMenuItemClick],
+		[translate, handleMenuItemClick],
 	);
 
 	const filteredAllValues = useMemo(
@@ -106,7 +109,7 @@ export function AllAttributesValue({
 	const allValuesPopoverContent = (
 		<div className="all-values-popover">
 			<Input
-				placeholder="Search values"
+				placeholder={translate('Search values')}
 				size="small"
 				prefix={<Search size={12} />}
 				value={allValuesSearch}
@@ -134,7 +137,7 @@ export function AllAttributesValue({
 											}}
 										/>
 									</Tooltip>
-									<Tooltip title="Open in Metric Explorer">
+									<Tooltip title={translate('Open in Metric Explorer')}>
 										<Button
 											type="text"
 											size="small"
@@ -151,7 +154,7 @@ export function AllAttributesValue({
 					})}
 				{allValuesOpen && filteredAllValues.length === 0 && (
 					<Typography.Text color="muted" className="all-values-empty">
-						No values found
+						{translate('No values found')}
 					</Typography.Text>
 				)}
 			</div>
@@ -204,7 +207,8 @@ export function AllAttributesValue({
 					overlayClassName="metric-details-popover all-values-popover-overlay"
 				>
 					<Button type="text" className="all-values-button">
-						All values ({filterValue.length})
+						{translate('All values (')}
+						{filterValue.length})
 					</Button>
 				</Popover>
 			)}

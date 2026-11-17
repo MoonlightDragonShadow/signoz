@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Group, Info } from '@signozhq/icons';
 import { Tooltip } from '@signozhq/ui/tooltip';
 
@@ -19,6 +20,7 @@ function EntityGroupHeader({
 	docPath,
 	tooltip,
 }: EntityGroupHeaderProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const renderInfoIcon = (): React.ReactNode => {
 		if (docPath) {
 			const tooltipTitle = tooltip || 'Not sure what this means?';
@@ -26,14 +28,14 @@ function EntityGroupHeader({
 				<Tooltip
 					title={
 						<>
-							{tooltipTitle}{' '}
+							{translate(tooltipTitle)}{' '}
 							<a
 								href={`${DOCS_ROOT}${docPath}`}
 								target="_blank"
 								rel="noopener"
 								onClick={(e): void => e.stopPropagation()}
 							>
-								Learn more.
+								{translate('Learn more.')}
 							</a>
 						</>
 					}
@@ -47,7 +49,7 @@ function EntityGroupHeader({
 
 		if (tooltip) {
 			return (
-				<Tooltip title={tooltip}>
+				<Tooltip title={translate(tooltip)}>
 					<span className={styles.infoIcon}>
 						<Info size="md" />
 					</span>
@@ -63,7 +65,7 @@ function EntityGroupHeader({
 			<span data-slot="icon">
 				{icon || <Group size={14} data-hide-expanded="true" />}
 			</span>{' '}
-			{title}
+			{translate(title)}
 			{renderInfoIcon()}
 		</div>
 	);

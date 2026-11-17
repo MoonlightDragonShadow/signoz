@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { useMemo } from 'react';
 
 import JsonBlock from '../JsonBlock';
@@ -39,7 +40,9 @@ function ToolCallPart({
 				isPlain
 				value={
 					<>
-						<span className={styles.chipKey}>name :</span>
+						<span className={styles.chipKey}>
+							<ConsoleText message={'name :'} />
+						</span>
 						<span className={styles.toolName}>{name}</span>
 					</>
 				}

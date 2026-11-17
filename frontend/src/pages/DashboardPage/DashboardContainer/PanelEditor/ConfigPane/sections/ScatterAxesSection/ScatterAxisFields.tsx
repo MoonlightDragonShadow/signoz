@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Input } from '@signozhq/ui/input';
 import {
 	DashboardtypesAxisScaleDTO,
@@ -24,12 +25,13 @@ function ScatterAxisFields({
 	onChange,
 	columnName,
 }: ScatterAxisFieldsProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const scale = value?.scale ?? DashboardtypesAxisScaleDTO.auto;
 	const name = axis.toUpperCase();
 
 	return (
 		<AxisFields>
-			<ConfigInlineField label="Label">
+			<ConfigInlineField label={translate('Label')}>
 				<Input
 					testId={`panel-editor-v2-${axis}-label`}
 					aria-label={`${name}-axis label`}

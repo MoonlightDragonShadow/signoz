@@ -1,3 +1,5 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useMemo, useState } from 'react';
 import { Popover, Tooltip } from 'antd';
 import { Button } from '@signozhq/ui/button';
@@ -28,6 +30,7 @@ export default function DownloadOptionsMenu({
 	selectedColumns,
 	panelType,
 }: DownloadOptionsMenuProps): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
 	const [exportFormat, setExportFormat] = useState<string>(DownloadFormats.CSV);
 	const [rowLimit, setRowLimit] = useState<number>(DownloadRowCounts.TEN_K);
 	const [columnsScope, setColumnsScope] = useState<string>(
@@ -64,11 +67,13 @@ export default function DownloadOptionsMenu({
 			<div
 				className="export-options-container"
 				role="dialog"
-				aria-label="Export options"
+				aria-label={translateInterfaceCopy('Export options')}
 				aria-modal="true"
 			>
 				<div className="export-format">
-					<Typography.Text className="title">FORMAT</Typography.Text>
+					<Typography.Text className="title">
+						<ConsoleText message={'FORMAT'} />
+					</Typography.Text>
 					<RadioGroup
 						color="primary"
 						value={exportFormat}
@@ -83,7 +88,9 @@ export default function DownloadOptionsMenu({
 				<div className="horizontal-line" />
 
 				<div className="row-limit">
-					<Typography.Text className="title">Number of Rows</Typography.Text>
+					<Typography.Text className="title">
+						<ConsoleText message={'Number of Rows'} />
+					</Typography.Text>
 					<RadioGroup
 						color="primary"
 						value={String(rowLimit)}
@@ -101,14 +108,22 @@ export default function DownloadOptionsMenu({
 						<div className="horizontal-line" />
 
 						<div className="columns-scope">
-							<Typography.Text className="title">Columns</Typography.Text>
+							<Typography.Text className="title">
+								<ConsoleText message={'Columns'} />
+							</Typography.Text>
 							<RadioGroup
 								color="primary"
 								value={columnsScope}
 								onChange={setColumnsScope}
 								items={[
-									{ value: DownloadColumnsScopes.ALL, label: 'All' },
-									{ value: DownloadColumnsScopes.SELECTED, label: 'Selected' },
+									{
+										value: DownloadColumnsScopes.ALL,
+										label: translateInterfaceCopy('All'),
+									},
+									{
+										value: DownloadColumnsScopes.SELECTED,
+										label: translateInterfaceCopy('Selected'),
+									},
 								]}
 							/>
 						</div>
@@ -124,7 +139,7 @@ export default function DownloadOptionsMenu({
 					onClick={handleExport}
 					loading={isDownloading}
 				>
-					Export
+					<ConsoleText message={'Export'} />
 				</Button>
 			</div>
 		),
@@ -148,13 +163,13 @@ export default function DownloadOptionsMenu({
 			onOpenChange={setIsPopoverOpen}
 			rootClassName="download-popover"
 		>
-			<Tooltip title="Download" placement="top">
+			<Tooltip title={translateInterfaceCopy('Download')} placement="top">
 				<Button
 					variant="ghost"
 					color="secondary"
 					size="sm"
 					icon
-					aria-label="Download"
+					aria-label={translateInterfaceCopy('Download')}
 					testId={`periscope-btn-download-${dataSource}`}
 					loading={isDownloading}
 				>

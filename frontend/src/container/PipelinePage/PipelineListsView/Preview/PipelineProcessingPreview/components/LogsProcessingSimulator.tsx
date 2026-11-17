@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useState } from 'react';
 import { Button } from 'antd';
 import { ILog } from 'types/api/logs/log';
@@ -9,6 +10,7 @@ function LogsProcessingSimulator({
 	inputLogs,
 	pipeline,
 }: LogsProcessingSimulatorProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const [simulationInput, setSimulationInput] = useState<ILog[] | null>(null);
 
 	const simulate = (): void => setSimulationInput(inputLogs);
@@ -20,7 +22,7 @@ function LogsProcessingSimulator({
 					type="primary"
 					onClick={simulate}
 				>
-					Simulate Processing
+					{translateConsole('Simulate Processing')}
 				</Button>
 			</div>
 		);

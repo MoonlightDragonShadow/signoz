@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { RotateCcw } from '@signozhq/icons';
 import { Button } from '@signozhq/ui/button';
 import { DialogWrapper } from '@signozhq/ui/dialog';
@@ -18,6 +19,7 @@ function DashboardChangedDialog({
 	onReload,
 	onDismiss,
 }: DashboardChangedDialogProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const dashboardId = useDashboardStore((s) => s.dashboardId);
 
 	const handleReload = (): void => {
@@ -45,7 +47,7 @@ function DashboardChangedDialog({
 				onClick={handleDismiss}
 				testId="dashboard-changed-dismiss"
 			>
-				Dismiss
+				{translate('Dismiss')}
 			</Button>
 			<Button
 				size="md"
@@ -55,7 +57,7 @@ function DashboardChangedDialog({
 				onClick={handleReload}
 				testId="dashboard-changed-reload"
 			>
-				Reload
+				{translate('Reload')}
 			</Button>
 		</div>
 	);
@@ -68,14 +70,15 @@ function DashboardChangedDialog({
 					onDismiss();
 				}
 			}}
-			title="Dashboard updated elsewhere"
+			title={translate('Dashboard updated elsewhere')}
 			width="narrow"
 			showCloseButton={false}
 			footer={footer}
 		>
 			<div className={styles.body}>
-				This dashboard was changed in another tab or by another user. Reload to see
-				the latest version.
+				{translate(
+					'This dashboard was changed in another tab or by another user. Reload to see the latest version.',
+				)}
 			</div>
 		</DialogWrapper>
 	);

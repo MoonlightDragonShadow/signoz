@@ -1,3 +1,5 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { useMemo, useState } from 'react';
 import { ChevronDown, DollarSign } from '@signozhq/icons';
 import { Button } from '@signozhq/ui/button';
@@ -43,6 +45,7 @@ function InsertVariableMenu({
 	onSelect,
 	disabled,
 }: InsertVariableMenuProps): JSX.Element | null {
+	const translate = useConsoleTranslation();
 	const [search, setSearch] = useState('');
 
 	const matches = useMemo(() => {
@@ -71,7 +74,7 @@ function InsertVariableMenu({
 			disabled={disabled}
 			disabledTooltip={READ_ONLY_TOOLTIP}
 			searchInputProps={{
-				placeholder: 'Search variables',
+				placeholder: translate('Search variables'),
 				onChange: setSearch,
 			}}
 		>
@@ -84,7 +87,7 @@ function InsertVariableMenu({
 				suffix={<ChevronDown size={14} />}
 				testId="markdown-insert-variable"
 			>
-				Insert variable
+				<ConsoleText message={'Insert variable'} />
 			</Button>
 		</Dropdown>
 	);

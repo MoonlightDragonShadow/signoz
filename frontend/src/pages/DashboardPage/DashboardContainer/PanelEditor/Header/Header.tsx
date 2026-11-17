@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback } from 'react';
 import { SolidAlertTriangle, X } from '@signozhq/icons';
 import { Badge } from '@signozhq/ui/badge';
@@ -42,6 +43,7 @@ function Header({
 	onSwitchToView,
 	onClose,
 }: HeaderProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	useUnloadPrompt(isDirty);
 
 	const discard = useConfirmableAction(
@@ -67,7 +69,7 @@ function Header({
 		<div className={styles.header}>
 			<div className={styles.title}>
 				<Button
-					aria-label="Close"
+					aria-label={translate('Close')}
 					variant="ghost"
 					color="secondary"
 					size="sm"
@@ -78,14 +80,14 @@ function Header({
 					<X size={14} />
 				</Button>
 				<Divider type="vertical" />
-				<Typography.Text>Configure panel</Typography.Text>
+				<Typography.Text>{translate('Configure panel')}</Typography.Text>
 				{isDirty && (
 					<Badge
 						variant="solid"
 						color="warning"
 						testId="panel-editor-v2-unsaved-badge"
 					>
-						Unsaved Changes
+						{translate('Unsaved Changes')}
 					</Badge>
 				)}
 			</div>
@@ -103,7 +105,7 @@ function Header({
 						testId="panel-editor-v2-switch-to-view"
 						onClick={onSwitchToView}
 					>
-						Switch to View Mode
+						{translate('Switch to View Mode')}
 					</Button>
 				)}
 				<AuthZTooltip
@@ -120,7 +122,7 @@ function Header({
 						loading={!readOnly && isSaving}
 						onClick={readOnly ? undefined : onSave}
 					>
-						Save changes
+						{translate('Save changes')}
 					</Button>
 				</AuthZTooltip>
 			</div>
@@ -132,7 +134,7 @@ function Header({
 						discard.cancel();
 					}
 				}}
-				title="Discard changes?"
+				title={translate('Discard changes?')}
 				titleIcon={<SolidAlertTriangle size={14} color="#fdd600" />}
 				testId="panel-editor-v2-discard-modal"
 				footer={
@@ -146,7 +148,7 @@ function Header({
 							loading={discard.isPending}
 							onClick={discard.confirm}
 						>
-							Discard
+							{translate('Discard')}
 						</Button>
 						<Button
 							size="md"
@@ -156,12 +158,14 @@ function Header({
 							testId="panel-editor-v2-discard-cancel"
 							onClick={discard.cancel}
 						>
-							Keep editing
+							{translate('Keep editing')}
 						</Button>
 					</>
 				}
 			>
-				<Typography>Your unsaved edits to this panel will be lost.</Typography>
+				<Typography>
+					{translate('Your unsaved edits to this panel will be lost.')}
+				</Typography>
 			</DialogWrapper>
 		</div>
 	);

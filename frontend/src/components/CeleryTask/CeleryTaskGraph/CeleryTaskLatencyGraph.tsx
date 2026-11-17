@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { useCallback, useMemo, useState } from 'react';
 // eslint-disable-next-line no-restricted-imports
 import { useDispatch, useSelector } from 'react-redux';
@@ -194,7 +195,7 @@ function CeleryTaskLatencyGraph({
 							id="Celery_p99_latency_button"
 							onClick={goToTraces}
 						>
-							View Traces
+							<ConsoleText message={'View Traces'} />
 						</Button>
 						<GridCard
 							widget={updatedWidgetData}
@@ -215,7 +216,7 @@ function CeleryTaskLatencyGraph({
 							id="Celery_p95_latency_button"
 							onClick={goToTraces}
 						>
-							View Traces
+							<ConsoleText message={'View Traces'} />
 						</Button>
 						<GridCard
 							widget={updatedWidgetData}
@@ -235,7 +236,7 @@ function CeleryTaskLatencyGraph({
 							id="Celery_p90_latency_button"
 							onClick={goToTraces}
 						>
-							View Traces
+							<ConsoleText message={'View Traces'} />
 						</Button>
 						<GridCard
 							widget={updatedWidgetData}

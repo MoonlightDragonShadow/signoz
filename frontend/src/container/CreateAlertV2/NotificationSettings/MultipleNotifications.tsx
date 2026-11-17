@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useMemo } from 'react';
 import { Select, Tooltip } from 'antd';
 import { Typography } from '@signozhq/ui/typography';
@@ -8,6 +9,7 @@ import { ALL_SELECTED_VALUE } from '../constants';
 import { useCreateAlertState } from '../context';
 
 function MultipleNotifications(): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const { notificationSettings, setNotificationSettings } =
 		useCreateAlertState();
 	const { currentQuery } = useQueryBuilder();
@@ -36,7 +38,7 @@ function MultipleNotifications(): JSX.Element {
 		if (options.length > 0) {
 			return [
 				{
-					label: 'All',
+					label: translateConsole('All'),
 					value: ALL_SELECTED_VALUE,
 					'data-testid': 'multiple-notifications-select-option',
 				},
@@ -44,7 +46,7 @@ function MultipleNotifications(): JSX.Element {
 			];
 		}
 		return options;
-	}, [currentQuery.builder.queryData, isAllOptionSelected]);
+	}, [translateConsole, currentQuery.builder.queryData, isAllOptionSelected]);
 
 	const isMultipleNotificationsEnabled = spaceAggregationOptions.length > 0;
 
@@ -125,13 +127,19 @@ function MultipleNotifications(): JSX.Element {
 		<div className="multiple-notifications-container">
 			<div className="multiple-notifications-header">
 				<Typography.Text className="multiple-notifications-header-title">
-					Group alerts by{' '}
-					<Tooltip title="Group similar alerts together to reduce notification volume. Leave empty to combine all matching alerts into one notification without grouping.">
+					{translateConsole('Group alerts by')}{' '}
+					<Tooltip
+						title={translateConsole(
+							'Group similar alerts together to reduce notification volume. Leave empty to combine all matching alerts into one notification without grouping.',
+						)}
+					>
 						<Info size={16} />
 					</Tooltip>
 				</Typography.Text>
 				<Typography.Text className="multiple-notifications-header-description">
-					Combine alerts with the same field values into a single notification.
+					{translateConsole(
+						'Combine alerts with the same field values into a single notification.',
+					)}
 				</Typography.Text>
 			</div>
 			{multipleNotificationsInput}

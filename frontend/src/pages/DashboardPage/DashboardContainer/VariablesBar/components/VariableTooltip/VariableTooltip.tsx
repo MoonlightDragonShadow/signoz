@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import styles from './VariableTooltip.module.scss';
 import TooltipRefSection from './TooltipRefSection';
 
@@ -15,6 +16,7 @@ function VariableTooltip({
 	dependsOn,
 	usedBy,
 }: VariableTooltipProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const hasDependencies = dependsOn.length > 0 || usedBy.length > 0;
 
 	return (
@@ -28,7 +30,7 @@ function VariableTooltip({
 					{description ? <div className={styles.tooltipDivider} /> : null}
 					{dependsOn.length > 0 ? (
 						<TooltipRefSection
-							label="Depends on"
+							label={translate('Depends on')}
 							refs={dependsOn}
 							direction="up"
 							colorClassName={styles.dependsColor}
@@ -36,7 +38,7 @@ function VariableTooltip({
 					) : null}
 					{usedBy.length > 0 ? (
 						<TooltipRefSection
-							label="Used by"
+							label={translate('Used by')}
 							refs={usedBy}
 							direction="down"
 							colorClassName={styles.usedByColor}

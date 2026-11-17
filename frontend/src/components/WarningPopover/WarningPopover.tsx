@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { ReactNode, useMemo } from 'react';
 import { Color } from '@signozhq/design-tokens';
 import { Button, Popover, PopoverProps } from 'antd';
@@ -54,7 +55,7 @@ export function WarningContent({ warning }: WarningContentProps): JSX.Element {
 								data-testid="warning-docs-button"
 							>
 								<BookOpenText size={14} />
-								Open Docs
+								<ConsoleText message={'Open Docs'} />
 							</Button>
 						</div>
 					)}
@@ -67,7 +68,7 @@ export function WarningContent({ warning }: WarningContentProps): JSX.Element {
 								<div className="warning-content__message-badge-label">
 									<div className="warning-content__message-badge-label-dot" />
 									<div className="warning-content__message-badge-label-text">
-										MESSAGES
+										<ConsoleText message={'MESSAGES'} />
 									</div>
 								</div>
 							}
@@ -98,7 +99,7 @@ export function WarningContent({ warning }: WarningContentProps): JSX.Element {
 								className="warning-content__scroll-hint-icon"
 							/>
 							<span className="warning-content__scroll-hint-text">
-								Scroll for more
+								<ConsoleText message={'Scroll for more'} />
 							</span>
 						</div>
 					)}

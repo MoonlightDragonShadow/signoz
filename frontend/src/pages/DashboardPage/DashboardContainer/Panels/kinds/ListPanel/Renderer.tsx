@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useMemo, useRef } from 'react';
 import { Select, Skeleton, Table } from 'antd';
 import cx from 'classnames';
@@ -39,6 +40,7 @@ function ListPanelRenderer({
 	pagination,
 	isPreviousData = false,
 }: PanelRendererProps<'signoz/ListPanel'>): JSX.Element {
+	const translate = useConsoleTranslation();
 	// Pin the header while the body scrolls (shared with the Table kind).
 	const containerRef = useRef<HTMLDivElement>(null);
 	const { height } = useResizeObserver(containerRef);
@@ -167,13 +169,13 @@ function ListPanelRenderer({
 					{showPager && pagination && (
 						<div className={styles.pager} data-testid="list-panel-pager">
 							<Button
-								disabledTooltip="You are on the first page"
+								disabledTooltip={translate('You are on the first page')}
 								type="button"
 								variant="ghost"
 								color="secondary"
 								size="sm"
 								icon
-								aria-label="Previous page"
+								aria-label={translate('Previous page')}
 								testId="list-panel-prev"
 								disabled={!pagination.canPrev}
 								onClick={pagination.goPrev}
@@ -181,16 +183,16 @@ function ListPanelRenderer({
 								<ChevronLeft size={14} />
 							</Button>
 							<span className={styles.pagerLabel} data-testid="list-panel-page">
-								Page {pagination.pageIndex + 1}
+								{translate('Page')} {pagination.pageIndex + 1}
 							</span>
 							<Button
-								disabledTooltip="You are on the last page"
+								disabledTooltip={translate('You are on the last page')}
 								type="button"
 								variant="ghost"
 								color="secondary"
 								size="sm"
 								icon
-								aria-label="Next page"
+								aria-label={translate('Next page')}
 								testId="list-panel-next"
 								disabled={!pagination.canNext}
 								onClick={pagination.goNext}

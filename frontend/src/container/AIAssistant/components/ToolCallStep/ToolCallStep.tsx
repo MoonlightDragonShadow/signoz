@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useState } from 'react';
 import cx from 'classnames';
 import { ChevronDown, ChevronRight, LoaderCircle } from '@signozhq/icons';
@@ -32,20 +33,21 @@ export function ToolCallContent({
 }: {
 	toolCall: StreamingToolCall;
 }): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const { toolName, input, result, done } = toolCall;
 	return (
 		<div className={styles.body}>
 			<div className={styles.section}>
-				<span className={styles.sectionLabel}>Tool</span>
+				<span className={styles.sectionLabel}>{translateConsole('Tool')}</span>
 				<span className={styles.toolName}>{toolName}</span>
 			</div>
 			<div className={styles.section}>
-				<span className={styles.sectionLabel}>Input</span>
+				<span className={styles.sectionLabel}>{translateConsole('Input')}</span>
 				<pre className={styles.json}>{JSON.stringify(input, null, 2)}</pre>
 			</div>
 			{done && result !== undefined && (
 				<div className={styles.section}>
-					<span className={styles.sectionLabel}>Output</span>
+					<span className={styles.sectionLabel}>{translateConsole('Output')}</span>
 					<pre className={styles.json}>
 						{typeof result === 'string' ? result : JSON.stringify(result, null, 2)}
 					</pre>

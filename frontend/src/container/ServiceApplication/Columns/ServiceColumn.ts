@@ -9,6 +9,7 @@ import { getColumnSearchProps } from './GetColumnSearchProps';
 export const getColumns = (
 	search: string,
 	isMetricData: boolean,
+	translate: (message: string) => string = (message) => message,
 ): ColumnsType<ServicesList> => {
 	const dynamicColumnOption: {
 		key: string;
@@ -17,14 +18,14 @@ export const getColumns = (
 		{
 			key: ColumnKey.Application,
 			columnOption: {
-				...getColumnSearchProps('serviceName', search),
+				...getColumnSearchProps('serviceName', search, translate),
 			},
 		},
 		{
 			key: ColumnKey.P99,
 			columnOption: {
-				title: `${ColumnTitle[ColumnKey.P99]}${
-					isMetricData ? ' (in ns)' : ' (in ms)'
+				title: `${translate(ColumnTitle[ColumnKey.P99])}${
+					isMetricData ? translate(' (in ns)') : translate(' (in ms)')
 				}`,
 				sorter: (a: ServicesList, b: ServicesList): number => a.p99 - b.p99,
 				render: (value: number): string => {
@@ -54,7 +55,11 @@ export const getColumns = (
 	];
 
 	return generatorResizeTableColumns<ServicesList>({
-		baseColumnOptions,
+		baseColumnOptions: baseColumnOptions.map((column) => ({
+			...column,
+			title:
+				typeof column.title === 'string' ? translate(column.title) : column.title,
+		})),
 		dynamicColumnOption,
 	});
 };

@@ -1,3 +1,5 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useMemo, useState } from 'react';
 import { ConfirmDialog } from '@signozhq/ui/dialog';
 import { Divider } from '@signozhq/ui/divider';
@@ -40,6 +42,8 @@ function ActionToggle({
 	onSelectedIdsChange,
 	hasError = false,
 }: ActionToggleProps): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
+	const translate = useConsoleTranslation();
 	const panel = getResourcePanel(resource);
 
 	const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
@@ -157,19 +161,26 @@ function ActionToggle({
 						handleCancelScopeChange();
 					}
 				}}
-				title="Change permission scope?"
+				title={translate('Change permission scope?')}
 				confirmText="Change scope"
-				cancelText="Cancel"
+				cancelText={translateInterfaceCopy('Cancel')}
 				onConfirm={handleConfirmScopeChange}
 				onCancel={handleCancelScopeChange}
 			>
 				<Typography>
-					You have {selectedIds.length} item{selectedIds.length > 1 ? 's' : ''}{' '}
-					selected. Changing the scope will clear your current items.
+					<ConsoleText message={'You have'} /> {selectedIds.length}{' '}
+					<ConsoleText message={'item'} />
+					{selectedIds.length > 1 ? 's' : ''}{' '}
+					<ConsoleText
+						message={'selected. Changing the scope will clear your current items.'}
+					/>
 					<br />
 					<br />
-					Don&apos;t worry, this doesn&apos;t update this role yet, it only confirms
-					that you want to clear the items.
+					<ConsoleText
+						message={
+							"Don't worry, this doesn't update this role yet, it only confirms that you want to clear the items."
+						}
+					/>
 				</Typography>
 			</ConfirmDialog>
 		</>

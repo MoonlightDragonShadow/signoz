@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Plus } from '@signozhq/icons';
 import { Button } from '@signozhq/ui/button';
 import { Tooltip } from '@signozhq/ui/tooltip';
@@ -25,6 +26,7 @@ function AddVariableIcon({
 	disabledTooltip,
 	isEditable,
 }: AddVariableIconProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const requestSettings = useDashboardStore((s) => s.requestSettings);
 
 	const onClick = (): void =>
@@ -34,13 +36,13 @@ function AddVariableIcon({
 	// explained by the authz button itself.
 	if (isEditable) {
 		return (
-			<Tooltip side="top" title="Add variable">
+			<Tooltip side="top" title={translate('Add variable')}>
 				<Button
 					variant="outlined"
 					color="secondary"
 					size="md"
 					icon
-					aria-label="Add variable"
+					aria-label={translate('Add variable')}
 					testId="dashboard-variables-add"
 					onClick={onClick}
 				>
@@ -58,7 +60,7 @@ function AddVariableIcon({
 			color="secondary"
 			size="sm"
 			icon
-			aria-label="Add variable"
+			aria-label={translate('Add variable')}
 			testId="dashboard-variables-add"
 			onClick={onClick}
 		>

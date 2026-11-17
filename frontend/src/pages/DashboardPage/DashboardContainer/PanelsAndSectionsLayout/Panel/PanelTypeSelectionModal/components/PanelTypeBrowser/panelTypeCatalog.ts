@@ -82,11 +82,14 @@ export interface PanelTypeGroup {
 }
 
 /** Every group with the items matching `query` (name, description or group label); empty groups included. */
-export function filterPanelTypeGroups(query: string): PanelTypeGroup[] {
+export function filterPanelTypeGroups(
+	query: string,
+	translate: (message: string) => string = (message) => message,
+): PanelTypeGroup[] {
 	const q = query.trim().toLowerCase();
 	return PANEL_TYPE_GROUPS.map(({ id, label }) => ({
 		id,
-		label,
+		label: translate(label),
 		items: PANEL_OPTIONS.filter(({ kind }) => PANEL_TYPE_META[kind].group === id)
 			.map((option) => ({ ...option, ...PANEL_TYPE_META[option.kind] }))
 			.filter(
@@ -94,7 +97,10 @@ export function filterPanelTypeGroups(query: string): PanelTypeGroup[] {
 					!q ||
 					item.displayName.toLowerCase().includes(q) ||
 					item.description.toLowerCase().includes(q) ||
-					label.toLowerCase().includes(q),
+					label.toLowerCase().includes(q) ||
+					translate(item.displayName).toLowerCase().includes(q) ||
+					translate(item.description).toLowerCase().includes(q) ||
+					translate(label).toLowerCase().includes(q),
 			),
 	}));
 }

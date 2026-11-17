@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useEffect, useRef } from 'react';
 import { Button, Input, InputRef, Modal } from 'antd';
 import { Typography } from '@signozhq/ui/typography';
@@ -22,6 +23,7 @@ function RenameModal({
 	intermediateName,
 	setIntermediateName,
 }: Props): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const inputRef = useRef<InputRef>(null);
 
 	useEffect(() => {
@@ -53,7 +55,7 @@ function RenameModal({
 	return (
 		<Modal
 			open={isOpen}
-			title="Rename Alert"
+			title={translateConsole('Rename Alert')}
 			onOk={onNameChangeHandler}
 			onCancel={handleClose}
 			rootClassName="rename-alert"
@@ -66,7 +68,7 @@ function RenameModal({
 						onClick={onNameChangeHandler}
 						disabled={isLoading}
 					>
-						Rename Alert
+						{translateConsole('Rename Alert')}
 					</Button>
 					<Button
 						type="text"
@@ -74,13 +76,15 @@ function RenameModal({
 						className="cancel-btn"
 						onClick={handleClose}
 					>
-						Cancel
+						{translateConsole('Cancel')}
 					</Button>
 				</div>
 			}
 		>
 			<div className="alert-content">
-				<Typography.Text className="name-text">Enter a new name</Typography.Text>
+				<Typography.Text className="name-text">
+					{translateConsole('Enter a new name')}
+				</Typography.Text>
 				<Input
 					ref={inputRef}
 					data-testid="alert-name"

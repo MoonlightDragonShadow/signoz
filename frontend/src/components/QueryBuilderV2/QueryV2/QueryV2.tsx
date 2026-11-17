@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 /* eslint-disable sonarjs/cognitive-complexity */
 import {
 	ForwardedRef,
@@ -59,6 +60,7 @@ export const QueryV2 = forwardRef(function QueryV2(
 	},
 	ref: ForwardedRef<HTMLDivElement>,
 ): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
 	const { cloneQuery, panelType } = useQueryBuilder();
 
 	const hasQueryFunctions = query?.functions?.length > 0;
@@ -94,7 +96,7 @@ export const QueryV2 = forwardRef(function QueryV2(
 	const queryActionItems: DropdownItemType[] = [
 		{
 			type: 'item',
-			label: 'Clone',
+			label: translateInterfaceCopy('Clone'),
 			value: 'clone-query',
 			prefix: <Copy size={14} />,
 			onClick: handleCloneEntity,
@@ -104,7 +106,7 @@ export const QueryV2 = forwardRef(function QueryV2(
 	if (queriesCount && queriesCount > 1) {
 		queryActionItems.push({
 			type: 'item',
-			label: 'Delete',
+			label: translateInterfaceCopy('Delete'),
 			value: 'delete-query',
 			prefix: <Trash size={14} />,
 			onClick: handleDeleteQuery,

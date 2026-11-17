@@ -1,3 +1,5 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Info } from '@signozhq/icons';
 import { Typography } from '@signozhq/ui/typography';
 import {
@@ -36,6 +38,7 @@ interface RelatedAssetsWarningProps {
 function RelatedAssetsWarning({
 	affectedAssets,
 }: RelatedAssetsWarningProps): JSX.Element | null {
+	const translate = useConsoleTranslation();
 	const impacted = (affectedAssets ?? []).filter(
 		(asset) =>
 			asset.type === AssetType.alert_rule ||
@@ -54,13 +57,18 @@ function RelatedAssetsWarning({
 			<Info size={14} />
 			<div className={styles.warningBody}>
 				<Typography.Text as="div" size="base" weight="semibold" color="warning">
-					This rule affects {impacted.length} related asset
+					{translate('This rule affects')} {impacted.length}{' '}
+					{translate('related asset')}
 					{impacted.length > 1 ? 's' : ''}.
 				</Typography.Text>
 				{impactedLabels.length > 0 && (
 					<Typography.Text as="div" size="base" color="muted">
-						{impactedLabels.join(', ')} will no longer be queryable; affected panels
-						fall back to aggregated data once the rule applies.
+						{impactedLabels.join(', ')}{' '}
+						<ConsoleText
+							message={
+								'will no longer be queryable; affected panels fall back to aggregated data once the rule applies.'
+							}
+						/>
 					</Typography.Text>
 				)}
 				<ul className={styles.assetList}>

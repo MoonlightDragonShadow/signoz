@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { useTranslation } from 'react-i18next';
 import {
 	Checkbox,
@@ -213,7 +214,9 @@ function RuleOptions({
 			value={alertDef.condition.algorithm}
 			onChange={onChangeAlgorithm}
 		>
-			<Select.Option value="standard">Standard</Select.Option>
+			<Select.Option value="standard">
+				<ConsoleText message={'Standard'} />
+			</Select.Option>
 		</InlineSelect>
 	);
 
@@ -247,9 +250,15 @@ function RuleOptions({
 			value={alertDef.condition.seasonality}
 			onChange={onChangeSeasonality}
 		>
-			<Select.Option value="hourly">Hourly</Select.Option>
-			<Select.Option value="daily">Daily</Select.Option>
-			<Select.Option value="weekly">Weekly</Select.Option>
+			<Select.Option value="hourly">
+				<ConsoleText message={'Hourly'} />
+			</Select.Option>
+			<Select.Option value="daily">
+				<ConsoleText message={'Daily'} />
+			</Select.Option>
+			<Select.Option value="weekly">
+				<ConsoleText message={'Weekly'} />
+			</Select.Option>
 		</InlineSelect>
 	);
 
@@ -339,12 +348,17 @@ function RuleOptions({
 				{t('text_condition3')} {renderEvalWindows()}
 				<Typography.Text>is</Typography.Text>
 				{renderDeviationOpts()}
-				<Typography.Text>deviations</Typography.Text>
+				<Typography.Text>
+					<ConsoleText message={'deviations'} />
+				</Typography.Text>
 				{renderCompareOps()}
-				<Typography.Text>the predicted data</Typography.Text>
+				<Typography.Text>
+					<ConsoleText message={'the predicted data'} />
+				</Typography.Text>
 				{renderMatchOpts()}
-				using the {renderAlgorithms()} algorithm with {renderSeasonality()}{' '}
-				seasonality
+				<ConsoleText message={'using the'} /> {renderAlgorithms()}{' '}
+				<ConsoleText message={'algorithm with'} /> {renderSeasonality()}{' '}
+				<ConsoleText message={'seasonality'} />
 			</Typography.Text>
 		</Form.Item>
 	);

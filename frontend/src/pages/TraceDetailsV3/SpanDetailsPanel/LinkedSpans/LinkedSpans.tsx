@@ -1,3 +1,5 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useMemo, useState } from 'react';
 import { AppLink } from 'lib/router/AppLink';
 import { buildRoutePath } from 'lib/router/buildRoutePath';
@@ -56,14 +58,18 @@ export function LinkedSpansToggle({
 	isOpen: boolean;
 	toggleOpen: () => void;
 }): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	if (count === 0) {
-		return <span className={styles.label}>0 linked spans</span>;
+		return (
+			<span className={styles.label}>{translateConsole('0 linked spans')}</span>
+		);
 	}
 
 	return (
 		<button type="button" className={styles.toggle} onClick={toggleOpen}>
 			<span className={styles.label}>
-				{count} linked span{count !== 1 ? 's' : ''}
+				{count} <ConsoleText message={'linked span'} />
+				{count !== 1 ? 's' : ''}
 			</span>
 			{isOpen ? <ChevronDown size={12} /> : <ChevronRight size={12} />}
 		</button>

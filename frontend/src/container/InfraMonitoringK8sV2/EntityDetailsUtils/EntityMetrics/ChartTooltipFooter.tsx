@@ -1,3 +1,5 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { MousePointerClick, X } from '@signozhq/icons';
 import { Button } from '@signozhq/ui/button';
 import { Kbd } from '@signozhq/ui/kbd';
@@ -23,6 +25,7 @@ export default function ChartTooltipFooter({
 	canSelectTimeRange = true,
 	dismiss,
 }: ChartTooltipFooterProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const handleUnpinClick = (): void => {
 		void logEvent(Events.TOOLTIP_UNPINNED, {
 			id,
@@ -35,11 +38,15 @@ export default function ChartTooltipFooter({
 			<div>
 				{isPinned ? (
 					<Typography.Text className={styles.hint} size="small">
-						<span>Press</span>
+						<span>
+							<ConsoleText message={'Press'} />
+						</span>
 						<Kbd active>{pinKey.toUpperCase()}</Kbd>
 						<span>or</span>
 						<Kbd active>Esc</Kbd>
-						<span>to unpin</span>
+						<span>
+							<ConsoleText message={'to unpin'} />
+						</span>
 					</Typography.Text>
 				) : (
 					<div className={styles.hintList}>
@@ -52,13 +59,17 @@ export default function ChartTooltipFooter({
 								<Kbd>
 									<MousePointerClick size={12} />
 								</Kbd>
-								<span>Click and drag to zoom into a time range</span>
+								<span>{translate('Click and drag to zoom into a time range')}</span>
 							</Typography.Text>
 						)}
 						<Typography.Text className={styles.hint} size="small" data-active="false">
-							<span>Press</span>
+							<span>
+								<ConsoleText message={'Press'} />
+							</span>
 							<Kbd>{pinKey.toUpperCase()}</Kbd>
-							<span>to pin the tooltip</span>
+							<span>
+								<ConsoleText message={'to pin the tooltip'} />
+							</span>
 						</Typography.Text>
 					</div>
 				)}
@@ -70,11 +81,11 @@ export default function ChartTooltipFooter({
 					color="secondary"
 					size="sm"
 					onClick={handleUnpinClick}
-					aria-label="Unpin tooltip"
+					aria-label={translate('Unpin tooltip')}
 					testId="entity-chart-tooltip-unpin"
 					prefix={<X size={10} />}
 				>
-					<span>Unpin</span>
+					<span>{translate('Unpin')}</span>
 				</Button>
 			)}
 		</output>

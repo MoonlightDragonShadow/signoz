@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { TableColumnsType as ColumnsType } from 'antd';
 import { Badge } from '@signozhq/ui/badge';
 import { Typography } from '@signozhq/ui/typography';
@@ -158,7 +159,8 @@ export const getTraceListColumns = (
 					return (
 						<BlockLink to={getTraceLink(itemData)} openInNewTab>
 							<Typography data-testid={key} className={styles.cellText}>
-								{getMs(durationNano)}ms
+								{getMs(durationNano)}
+								<ConsoleText message={'ms'} />
 							</Typography>
 						</BlockLink>
 					);

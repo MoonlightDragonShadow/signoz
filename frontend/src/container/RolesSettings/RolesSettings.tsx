@@ -1,3 +1,5 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { useState } from 'react';
 import { Plus } from '@signozhq/icons';
 import { useAppNavigate } from 'lib/router/useAppNavigate';
@@ -16,6 +18,7 @@ import RolesListingTable from './RolesComponents/RolesListingTable';
 import styles from './RolesSettings.module.scss';
 
 function RolesSettings(): JSX.Element {
+	const translate = useConsoleTranslation();
 	const [searchQuery, setSearchQuery] = useState('');
 	const navigate = useAppNavigate();
 	const { isRolesEnabled } = useRolesFeatureGate();
@@ -23,7 +26,9 @@ function RolesSettings(): JSX.Element {
 	return (
 		<div data-testid="roles-settings">
 			<div className={styles.rolesSettingsHeader}>
-				<h3 className={styles.rolesSettingsHeaderTitle}>Roles</h3>
+				<h3 className={styles.rolesSettingsHeaderTitle}>
+					<ConsoleText message={'Roles'} />
+				</h3>
 				<p className={styles.rolesSettingsHeaderDescription}>
 					<span className="translate-safe">
 						{isRolesEnabled
@@ -36,7 +41,7 @@ function RolesSettings(): JSX.Element {
 						rel="noopener noreferrer"
 						className={styles.rolesSettingsHeaderLearnMore}
 					>
-						Learn more
+						<ConsoleText message={'Learn more'} />
 					</a>
 				</p>
 			</div>
@@ -48,7 +53,7 @@ function RolesSettings(): JSX.Element {
 					>
 						<Input
 							type="search"
-							placeholder="Search for roles..."
+							placeholder={translate('Search for roles...')}
 							value={searchQuery}
 							onChange={(e): void => setSearchQuery(e.target.value)}
 							testId="roles-search-input"
@@ -65,7 +70,7 @@ function RolesSettings(): JSX.Element {
 							prefix={<Plus size={14} />}
 							testId="create-custom-role-btn"
 						>
-							Custom role
+							<ConsoleText message={'Custom role'} />
 						</AuthZButton>
 					)}
 				</div>

@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useEffect, useRef, useState } from 'react';
 import cx from 'classnames';
 import { Button } from '@signozhq/ui/button';
@@ -35,6 +36,8 @@ export default function ActionBlock({
 }: {
 	data: AIActionBlock;
 }): JSX.Element {
+	const translateRuntimeCopy = useConsoleTranslation();
+	const translateConsole = useConsoleTranslation();
 	const { messageId } = useMessageContext();
 	const answeredBlocks = useAIAssistantStore((s) => s.answeredBlocks);
 	const markBlockAnswered = useAIAssistantStore((s) => s.markBlockAnswered);
@@ -66,7 +69,10 @@ export default function ActionBlock({
 		const action = PageActionRegistry.get(actionId);
 
 		if (!action) {
-			const msg = `Action "${actionId}" is not available on the current page.`;
+			const msg = translateRuntimeCopy(
+				'Action "{{value1}}" is not available on the current page.',
+				{ value1: actionId },
+			);
 			setErrorMessage(msg);
 			setLocalState('error');
 			if (messageId) {
@@ -137,7 +143,7 @@ export default function ActionBlock({
 		return (
 			<div className={cx(blockStyles.block, styles.dismissed)}>
 				<X size={13} className={cx(styles.statusIcon, styles.no)} />
-				<span className={styles.statusText}>Dismissed.</span>
+				<span className={styles.statusText}>{translateConsole('Dismissed.')}</span>
 			</div>
 		);
 	}
@@ -170,7 +176,9 @@ export default function ActionBlock({
 		<div className={blockStyles.block}>
 			<div className={styles.header}>
 				<Zap size={13} className={styles.zapIcon} />
-				<span className={styles.headerLabel}>Suggested Action</span>
+				<span className={styles.headerLabel}>
+					{translateConsole('Suggested Action')}
+				</span>
 			</div>
 
 			<p className={styles.description}>{description}</p>
@@ -196,7 +204,7 @@ export default function ActionBlock({
 					onClick={execute}
 					prefix={<Check size={12} />}
 				>
-					Apply
+					{translateConsole('Apply')}
 				</Button>
 				<Button
 					color="secondary"
@@ -205,7 +213,7 @@ export default function ActionBlock({
 					onClick={handleDismiss}
 					prefix={<X size={12} />}
 				>
-					Dismiss
+					{translateConsole('Dismiss')}
 				</Button>
 			</div>
 		</div>

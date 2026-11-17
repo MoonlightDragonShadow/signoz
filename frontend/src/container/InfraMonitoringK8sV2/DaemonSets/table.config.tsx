@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { Color } from '@signozhq/design-tokens';
 import { InframonitoringtypesDaemonSetRecordDTO } from 'api/generated/services/sigNoz.schemas';
 import TanStackTable, { TableColumnDef } from 'components/TanStackTableView';
@@ -95,7 +96,7 @@ export const k8sDaemonSetsColumnsConfig: DaemonSetTableColumnConfig[] = [
 		id: 'namespaceName',
 		header: (): React.ReactNode => (
 			<ColumnHeader docPath="/infrastructure-monitoring/kubernetes/daemonsets#namespace-name">
-				Namespace
+				<ConsoleText message={'Namespace'} />
 			</ColumnHeader>
 		),
 		accessorFn: (row): string =>
@@ -111,7 +112,7 @@ export const k8sDaemonSetsColumnsConfig: DaemonSetTableColumnConfig[] = [
 		id: 'pod_counts_by_status',
 		header: (): React.ReactNode => (
 			<ColumnHeader docPath="/infrastructure-monitoring/kubernetes/daemonsets#pod-counts-by-status">
-				Pod Status
+				<ConsoleText message={'Pod Status'} />
 			</ColumnHeader>
 		),
 		accessorFn: (
@@ -139,7 +140,7 @@ export const k8sDaemonSetsColumnsConfig: DaemonSetTableColumnConfig[] = [
 		id: 'scheduled_nodes',
 		header: (): React.ReactNode => (
 			<ColumnHeader docPath="/infrastructure-monitoring/kubernetes/daemonsets#scheduled-nodes">
-				Scheduled Nodes
+				<ConsoleText message={'Scheduled Nodes'} />
 			</ColumnHeader>
 		),
 		accessorFn: (row): number => row.currentNodes,
@@ -181,7 +182,7 @@ export const k8sDaemonSetsColumnsConfig: DaemonSetTableColumnConfig[] = [
 				docPath="/infrastructure-monitoring/kubernetes/daemonsets#cpu-req-usage-"
 				tooltip={<EntityProgressThresholds type="cpu-request" />}
 			>
-				CPU Request Usage (%)
+				<ConsoleText message={'CPU Request Usage (%)'} />
 			</ColumnHeader>
 		),
 		accessorFn: (row): number => row.daemonSetCPURequest,
@@ -210,7 +211,7 @@ export const k8sDaemonSetsColumnsConfig: DaemonSetTableColumnConfig[] = [
 				docPath="/infrastructure-monitoring/kubernetes/daemonsets#cpu-limit-usage-"
 				tooltip={<EntityProgressThresholds type="cpu-limit" />}
 			>
-				CPU Limit Usage (%)
+				<ConsoleText message={'CPU Limit Usage (%)'} />
 			</ColumnHeader>
 		),
 		accessorFn: (row): number => row.daemonSetCPULimit,
@@ -235,7 +236,7 @@ export const k8sDaemonSetsColumnsConfig: DaemonSetTableColumnConfig[] = [
 		id: 'cpu',
 		header: (): React.ReactNode => (
 			<ColumnHeader docPath="/infrastructure-monitoring/kubernetes/daemonsets#cpu-usage-cores">
-				CPU Usage (cores)
+				<ConsoleText message={'CPU Usage (cores)'} />
 			</ColumnHeader>
 		),
 		accessorFn: (row): number => row.daemonSetCPU,
@@ -264,7 +265,7 @@ export const k8sDaemonSetsColumnsConfig: DaemonSetTableColumnConfig[] = [
 				docPath="/infrastructure-monitoring/kubernetes/daemonsets#mem-req-usage-"
 				tooltip={<EntityProgressThresholds type="memory-request" />}
 			>
-				Memory Request Usage (%)
+				<ConsoleText message={'Memory Request Usage (%)'} />
 			</ColumnHeader>
 		),
 		accessorFn: (row): number => row.daemonSetMemoryRequest,
@@ -293,7 +294,7 @@ export const k8sDaemonSetsColumnsConfig: DaemonSetTableColumnConfig[] = [
 				docPath="/infrastructure-monitoring/kubernetes/daemonsets#mem-limit-usage-"
 				tooltip={<EntityProgressThresholds type="memory-limit" />}
 			>
-				Memory Limit Usage (%)
+				<ConsoleText message={'Memory Limit Usage (%)'} />
 			</ColumnHeader>
 		),
 		accessorFn: (row): number => row.daemonSetMemoryLimit,
@@ -318,7 +319,7 @@ export const k8sDaemonSetsColumnsConfig: DaemonSetTableColumnConfig[] = [
 		id: 'memory',
 		header: (): React.ReactNode => (
 			<ColumnHeader docPath="/infrastructure-monitoring/kubernetes/daemonsets#mem-usage-wss">
-				Memory Usage (WSS)
+				<ConsoleText message={'Memory Usage (WSS)'} />
 			</ColumnHeader>
 		),
 		accessorFn: (row): number => row.daemonSetMemory,
@@ -343,7 +344,7 @@ export const k8sDaemonSetsColumnsConfig: DaemonSetTableColumnConfig[] = [
 		id: 'ready_nodes',
 		header: (): React.ReactNode => (
 			<ColumnHeader docPath="/infrastructure-monitoring/kubernetes/daemonsets#ready">
-				Ready Nodes
+				<ConsoleText message={'Ready Nodes'} />
 			</ColumnHeader>
 		),
 		accessorFn: (row): number => row.readyNodes,
@@ -368,7 +369,7 @@ export const k8sDaemonSetsColumnsConfig: DaemonSetTableColumnConfig[] = [
 		id: 'current_nodes',
 		header: (): React.ReactNode => (
 			<ColumnHeader docPath="/infrastructure-monitoring/kubernetes/daemonsets#current">
-				Current Nodes
+				<ConsoleText message={'Current Nodes'} />
 			</ColumnHeader>
 		),
 		accessorFn: (row): number => row.currentNodes,
@@ -393,7 +394,7 @@ export const k8sDaemonSetsColumnsConfig: DaemonSetTableColumnConfig[] = [
 		id: 'desired_nodes',
 		header: (): React.ReactNode => (
 			<ColumnHeader docPath="/infrastructure-monitoring/kubernetes/daemonsets#desired">
-				Desired Nodes
+				<ConsoleText message={'Desired Nodes'} />
 			</ColumnHeader>
 		),
 		accessorFn: (row): number => row.desiredNodes,
@@ -418,7 +419,7 @@ export const k8sDaemonSetsColumnsConfig: DaemonSetTableColumnConfig[] = [
 		id: 'misscheduled_nodes',
 		header: (): React.ReactNode => (
 			<ColumnHeader docPath="/infrastructure-monitoring/kubernetes/daemonsets#misscheduled">
-				Misscheduled Nodes
+				<ConsoleText message={'Misscheduled Nodes'} />
 			</ColumnHeader>
 		),
 		accessorFn: (row): number => row.misscheduledNodes,

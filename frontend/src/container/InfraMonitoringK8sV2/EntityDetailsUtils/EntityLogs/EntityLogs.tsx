@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import React, { useCallback, useMemo, useRef } from 'react';
 import { Virtuoso, VirtuosoHandle } from 'react-virtuoso';
 import { Card } from 'antd';
@@ -63,6 +64,7 @@ function EntityLogsContent({
 	queryKey,
 	category,
 }: Omit<Props, 'initialExpression'>): JSX.Element {
+	const translate = useConsoleTranslation();
 	const { timeRange } = useEntityDetailsTime();
 	const virtuosoRef = useRef<VirtuosoHandle>(null);
 	const logDetailContainerRef = useRef<HTMLDivElement>(null);
@@ -235,13 +237,19 @@ function EntityLogsContent({
 		(): JSX.Element | null => (
 			<>
 				{isFetchingNextPage ? (
-					<div className={styles.logsLoadingSkeleton}> Loading more logs ... </div>
+					<div className={styles.logsLoadingSkeleton}>
+						{' '}
+						{translate('Loading more logs ...')}{' '}
+					</div>
 				) : !hasNextPage && logs.length > 0 ? (
-					<div className={styles.logsLoadingSkeleton}> *** End *** </div>
+					<div className={styles.logsLoadingSkeleton}>
+						{' '}
+						{translate('*** End ***')}{' '}
+					</div>
 				) : null}
 			</>
 		),
-		[isFetchingNextPage, hasNextPage, logs.length],
+		[translate, isFetchingNextPage, hasNextPage, logs.length],
 	);
 
 	const renderContent = useMemo(

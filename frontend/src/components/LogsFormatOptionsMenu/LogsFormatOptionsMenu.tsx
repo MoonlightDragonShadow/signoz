@@ -1,3 +1,5 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useEffect, useState } from 'react';
 import { Button, InputNumber, Popover, Tooltip } from 'antd';
 import { Typography } from '@signozhq/ui/typography';
@@ -116,7 +118,9 @@ function OptionsMenu({
 						type="text"
 					>
 						<ChevronLeft size={14} className="icon" />
-						<Typography.Text className="text">Select font size</Typography.Text>
+						<Typography.Text className="text">
+							<ConsoleText message={'Select font size'} />
+						</Typography.Text>
 					</Button>
 					<div className="horizontal-line" />
 					<div className="content">
@@ -161,7 +165,9 @@ function OptionsMenu({
 			) : (
 				<div>
 					<div className="font-size-container">
-						<div className="title">Font Size</div>
+						<div className="title">
+							<ConsoleText message={'Font Size'} />
+						</div>
 						<Button
 							className="value"
 							type="text"
@@ -175,7 +181,9 @@ function OptionsMenu({
 					</div>
 					<div className="horizontal-line" />
 					<div className="menu-container">
-						<div className="title">FORMAT</div>
+						<div className="title">
+							<ConsoleText message={'FORMAT'} />
+						</div>
 
 						<div className="menu-items">
 							{items.map((item: any): JSX.Element => (
@@ -199,7 +207,10 @@ function OptionsMenu({
 						<>
 							<div className="horizontal-line" />
 							<div className="max-lines-per-row">
-								<div className="title"> max lines per row </div>
+								<div className="title">
+									{' '}
+									<ConsoleText message={'max lines per row'} />{' '}
+								</div>
 								<div className="raw-format max-lines-per-row-input">
 									<button
 										type="button"
@@ -239,7 +250,7 @@ function OptionsMenu({
 									data-testid="periscope-btn-edit-columns"
 								>
 									<Typography.Text className="edit-columns-text">
-										Edit columns
+										<ConsoleText message={'Edit columns'} />
 									</Typography.Text>
 									<ChevronRight size={14} className="icon" />
 								</Button>
@@ -258,6 +269,7 @@ function LogsFormatOptionsMenu({
 	config,
 	onOpenColumns,
 }: LogsFormatOptionsMenuProps): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
 	const [isPopoverOpen, setIsPopoverOpen] = useState<boolean>(false);
 	return (
 		<Popover
@@ -278,7 +290,7 @@ function LogsFormatOptionsMenu({
 			rootClassName="format-options-popover"
 			destroyTooltipOnHide
 		>
-			<Tooltip title="Options">
+			<Tooltip title={translateInterfaceCopy('Options')}>
 				<Button
 					className="periscope-btn ghost"
 					icon={<SlidersVertical size="md" />}

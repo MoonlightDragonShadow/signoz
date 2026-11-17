@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { ChangeEvent, KeyboardEvent, useState } from 'react';
 import { navigate } from 'lib/router/navigation';
 import { Button } from '@signozhq/ui/button';
@@ -20,6 +21,7 @@ interface IntegrationsHeaderProps {
 }
 
 function IntegrationsHeader(props: IntegrationsHeaderProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const { user } = useAppContext();
 
 	const { searchQuery, onSearchChange } = props;
@@ -48,21 +50,21 @@ function IntegrationsHeader(props: IntegrationsHeaderProps): JSX.Element {
 			});
 
 			if (response.statusCode === 200) {
-				toast.success('Integration Request Submitted', {
+				toast.success(translateConsole('Integration Request Submitted'), {
 					position: 'top-right',
 				});
 				setRequestedIntegrationName('');
 				setIsRequestIntegrationDialogOpen(false);
 				setIsSubmittingRequestForIntegration(false);
 			} else {
-				toast.error(response.error || 'Something went wrong', {
+				toast.error(response.error || translateConsole('Something went wrong'), {
 					position: 'top-right',
 				});
 
 				setIsSubmittingRequestForIntegration(false);
 			}
 		} catch (error) {
-			toast.error('Something went wrong', {
+			toast.error(translateConsole('Something went wrong'), {
 				position: 'top-right',
 			});
 			setIsSubmittingRequestForIntegration(false);
@@ -71,20 +73,22 @@ function IntegrationsHeader(props: IntegrationsHeaderProps): JSX.Element {
 
 	return (
 		<div className="integrations-header">
-			<Typography.Title className="title">Integrations</Typography.Title>
+			<Typography.Title className="title">
+				{translateConsole('Integrations')}
+			</Typography.Title>
 			<Flex
 				justify="space-between"
 				align="center"
 				className="integrations-header__subrow"
 			>
 				<Typography.Text className="subtitle">
-					Manage integrations for this workspace.
+					{translateConsole('Manage integrations for this workspace.')}
 				</Typography.Text>
 			</Flex>
 
 			<div className="integrations-search-request-container">
 				<Input
-					placeholder="Search for an integration..."
+					placeholder={translateConsole('Search for an integration...')}
 					value={searchQuery}
 					onChange={(e: ChangeEvent<HTMLInputElement>): void =>
 						onSearchChange(e.target.value)
@@ -98,21 +102,21 @@ function IntegrationsHeader(props: IntegrationsHeaderProps): JSX.Element {
 					prefix={<Cable size={14} />}
 					onClick={(): void => setIsRequestIntegrationDialogOpen(true)}
 				>
-					Request Integration
+					{translateConsole('Request Integration')}
 				</Button>
 
 				<DialogWrapper
 					className="request-integration-dialog"
-					title="Request New Integration"
+					title={translateConsole('Request New Integration')}
 					open={isRequestIntegrationDialogOpen}
 					onOpenChange={setIsRequestIntegrationDialogOpen}
 				>
 					<div className="request-integration-form">
 						<div className="request-integration-form-title">
-							Which integration are you looking for?
+							{translateConsole('Which integration are you looking for?')}
 						</div>
 						<Input
-							placeholder="Enter integration name..."
+							placeholder={translateConsole('Enter integration name...')}
 							value={requestedIntegrationName}
 							onChange={(e: ChangeEvent<HTMLInputElement>): void => {
 								setRequestedIntegrationName(e.target.value);
@@ -128,7 +132,7 @@ function IntegrationsHeader(props: IntegrationsHeaderProps): JSX.Element {
 
 					<div className="request-integration-form-footer">
 						<Button
-							disabledTooltip="Enter an integration name first"
+							disabledTooltip={translateConsole('Enter an integration name first')}
 							size="md"
 							variant="solid"
 							color="primary"
@@ -140,7 +144,7 @@ function IntegrationsHeader(props: IntegrationsHeaderProps): JSX.Element {
 								requestedIntegrationName?.trim().length === 0
 							}
 						>
-							Submit
+							{translateConsole('Submit')}
 						</Button>
 					</div>
 				</DialogWrapper>
@@ -154,7 +158,7 @@ function IntegrationsHeader(props: IntegrationsHeaderProps): JSX.Element {
 						suffix={<ArrowRight size={14} />}
 						width="200px"
 					>
-						View 150+ Data Sources
+						{translateConsole('View 150+ Data Sources')}
 					</Button>
 				)}
 			</div>

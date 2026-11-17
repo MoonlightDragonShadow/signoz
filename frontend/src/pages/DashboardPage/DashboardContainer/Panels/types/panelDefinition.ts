@@ -132,6 +132,7 @@ export interface QueryPanelDefinition<
 	getDataWarning?: (
 		panel: PanelOfKind<K>,
 		data: PanelQueryData,
+		translate?: (message: string) => string,
 	) => PanelStatusDetail | null;
 	/** Reconciles the kind's options with the queries a save carries. */
 	reconcileWithQueries?: (
@@ -170,6 +171,7 @@ export interface RenderableQueryPanelDefinition extends Omit<
 	getDataWarning?: (
 		panel: DashboardtypesPanelDTO,
 		data: PanelQueryData,
+		translate?: (message: string) => string,
 	) => PanelStatusDetail | null;
 }
 export type RenderableStaticPanelDefinition = StaticPanelDefinition<PanelKind>;

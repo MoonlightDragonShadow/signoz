@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { CalendarClock, Coins, Landmark, Server, Timer } from '@signozhq/icons';
 import { Badge } from '@signozhq/ui/badge';
 import cx from 'classnames';
@@ -45,6 +46,7 @@ function EntityMetadataRow({
 	tokens,
 	cost,
 }: EntityMetadataRowProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const entityLabel = entity === 'trace' ? 'Trace' : 'Span';
 	const totalInput = tokens && getTotalInputTokens(tokens);
 	const durationTooltip =
@@ -59,7 +61,7 @@ function EntityMetadataRow({
 		<div className={cx(styles.row, className)}>
 			{service && (
 				<EntityMetadataItem
-					tooltip="Root service and entry-point span"
+					tooltip={translateConsole('Root service and entry-point span')}
 					icon={<Server size={ICON_SIZE} />}
 				>
 					{service.name}
@@ -100,7 +102,7 @@ function EntityMetadataRow({
 			)}
 
 			{statusCode && (
-				<EntityMetadataItem tooltip="Root span status code">
+				<EntityMetadataItem tooltip={translateConsole('Root span status code')}>
 					<HttpStatusBadge statusCode={statusCode} />
 				</EntityMetadataItem>
 			)}
@@ -110,16 +112,17 @@ function EntityMetadataRow({
 					tooltip={<TokenUsageTooltip tokens={tokens} />}
 					icon={<Coins size={ICON_SIZE} />}
 				>
-					Tokens: {formatTokens(totalInput)} → {formatTokens(tokens.output)}
+					{translateConsole('Tokens:')} {formatTokens(totalInput)} →{' '}
+					{formatTokens(tokens.output)}
 				</EntityMetadataItem>
 			)}
 
 			{hasValue(cost) && (
 				<EntityMetadataItem
-					tooltip="Total cost"
+					tooltip={translateConsole('Total cost')}
 					icon={<Landmark size={ICON_SIZE} />}
 				>
-					Cost — {formatCost(cost)}
+					{translateConsole('Cost —')} {formatCost(cost)}
 				</EntityMetadataItem>
 			)}
 		</div>

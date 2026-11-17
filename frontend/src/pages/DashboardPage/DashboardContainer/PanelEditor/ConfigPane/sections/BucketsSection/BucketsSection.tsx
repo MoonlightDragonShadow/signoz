@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import type {
 	SectionEditorProps,
 	SectionKind,
@@ -21,13 +22,14 @@ function BucketsSection({
 	controls,
 	onChange,
 }: SectionEditorProps<SectionKind.Buckets>): JSX.Element {
+	const translate = useConsoleTranslation();
 	const reset = createFieldResetter(value, savedValue, onChange);
 
 	return (
 		<>
 			{(controls.count || controls.width) && (
 				<ConfigField
-					label="Buckets"
+					label={translate('Buckets')}
 					help="How values are grouped into bars. Leave on Auto to size buckets from the data."
 					{...reset('bucketCount', 'bucketWidth')}
 				>
@@ -35,7 +37,7 @@ function BucketsSection({
 						{controls.count && (
 							<ConfigNumberInput
 								testId="panel-editor-v2-bucket-count"
-								label="Count"
+								label={translate('Count')}
 								value={value?.bucketCount}
 								onChange={(bucketCount): void => onChange({ ...value, bucketCount })}
 							/>
@@ -43,7 +45,7 @@ function BucketsSection({
 						{controls.width && (
 							<ConfigNumberInput
 								testId="panel-editor-v2-bucket-width"
-								label="Width"
+								label={translate('Width')}
 								value={value?.bucketWidth}
 								onChange={(bucketWidth): void => onChange({ ...value, bucketWidth })}
 							/>
@@ -55,8 +57,10 @@ function BucketsSection({
 			{controls.mergeQueries && (
 				<ConfigSwitch
 					testId="panel-editor-v2-merge-queries"
-					title="Combine queries"
-					description="Merges all active queries into one distribution. Hides the legend."
+					title={translate('Combine queries')}
+					description={translate(
+						'Merges all active queries into one distribution. Hides the legend.',
+					)}
 					sketch={SWITCH_SKETCHES.combine}
 					changed={reset('mergeAllActiveQueries').changed}
 					value={value?.mergeAllActiveQueries ?? false}

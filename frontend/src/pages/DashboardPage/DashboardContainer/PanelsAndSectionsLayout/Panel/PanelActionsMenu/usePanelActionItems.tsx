@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useMemo } from 'react';
 import {
 	Bell,
@@ -62,6 +63,7 @@ export function usePanelActionItems({
 	data,
 	panelActions,
 }: UsePanelActionItemsArgs): PanelActionItems {
+	const translate = useConsoleTranslation();
 	const panelKind = panel.spec.plugin.kind;
 	const blocked = useMemo(() => getBlockedPanelActions(panel), [panel]);
 	const { isEditable, editChecks, editDisabledTooltip } =
@@ -107,7 +109,7 @@ export function usePanelActionItems({
 			panelGroup.push({
 				type: 'item',
 				value: 'view-panel',
-				label: 'View',
+				label: translate('View'),
 				prefix: <Fullscreen size={14} />,
 				onClick: (): void => openView(panelId, panel),
 			});
@@ -116,7 +118,7 @@ export function usePanelActionItems({
 			panelGroup.push({
 				type: 'item',
 				value: 'edit-panel',
-				label: 'Edit panel',
+				label: translate('Edit panel'),
 				prefix: <PenLine size={14} />,
 				...editGate,
 				onClick: (): void => openPanelEditor(panelId, { panel }),
@@ -127,7 +129,7 @@ export function usePanelActionItems({
 			panelGroup.push({
 				type: 'item',
 				value: 'clone-panel',
-				label: 'Clone',
+				label: translate('Clone'),
 				prefix: <Copy size={14} />,
 				...editGate,
 				onClick: (): void => {
@@ -152,7 +154,7 @@ export function usePanelActionItems({
 			dataGroup.push({
 				type: 'item',
 				value: 'create-alert',
-				label: 'Create Alerts',
+				label: translate('Create Alerts'),
 				prefix: <Bell size={14} />,
 				...blockedBy(blocked.createAlert ?? ''),
 				onClick: (): void => createAlert(panel, panelId),
@@ -166,12 +168,13 @@ export function usePanelActionItems({
 						currentLayoutIndex: panelActions.currentLayoutIndex,
 						panelId,
 						movePanel,
+						translate,
 					})
 				: [
 						{
 							type: 'item',
 							value: 'move',
-							label: 'Move to section',
+							label: translate('Move to section'),
 							prefix: <FolderInput size={14} />,
 							...editGate,
 						},
@@ -181,7 +184,7 @@ export function usePanelActionItems({
 			{
 				type: 'item',
 				value: 'delete-panel',
-				label: 'Delete panel',
+				label: translate('Delete panel'),
 				prefix: <Trash2 size={14} />,
 				danger: true,
 				...editGate,
@@ -197,6 +200,7 @@ export function usePanelActionItems({
 					: [{ type: 'separator', value: `separator-${index}` }, ...group],
 			);
 	}, [
+		translate,
 		isEditable,
 		editChecks,
 		editDisabledTooltip,

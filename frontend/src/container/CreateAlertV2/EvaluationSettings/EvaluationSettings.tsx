@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useState } from 'react';
 import { Button, Popover } from 'antd';
 import { ChevronDown, ChevronUp } from '@signozhq/icons';
@@ -12,6 +13,7 @@ import './styles.scss';
 function EvaluationSettings({
 	rollingOnly = false,
 }: IEvaluationSettingsProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const { evaluationWindow, setEvaluationWindow } = useCreateAlertState();
 
 	const [isEvaluationWindowPopoverOpen, setIsEvaluationWindowPopoverOpen] =
@@ -35,11 +37,13 @@ function EvaluationSettings({
 		>
 			<Button data-testid="evaluation-settings-button">
 				<div className="evaluate-alert-conditions-button-left">
-					{getTimeframeText(evaluationWindow)}
+					{getTimeframeText(evaluationWindow, translateConsole)}
 				</div>
 				<div className="evaluate-alert-conditions-button-right">
 					<div className="evaluate-alert-conditions-button-right-text">
-						{getEvaluationWindowTypeText(evaluationWindow.windowType)}
+						{translateConsole(
+							getEvaluationWindowTypeText(evaluationWindow.windowType),
+						)}
 					</div>
 					{isEvaluationWindowPopoverOpen ? (
 						<ChevronUp size={16} />

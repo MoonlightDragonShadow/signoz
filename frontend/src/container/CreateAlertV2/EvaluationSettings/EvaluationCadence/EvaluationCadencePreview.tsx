@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useMemo } from 'react';
 import { Modal } from 'antd';
 import { Typography } from '@signozhq/ui/typography';
@@ -15,13 +16,14 @@ export function ScheduleList({
 	schedule,
 	currentTimezone,
 }: IScheduleListProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	if (schedule && schedule.length > 0) {
 		return (
 			<div className="schedule-preview" data-testid="schedule-preview">
 				<div className="schedule-preview-header">
 					<Calendar size={16} />
 					<Typography.Text className="schedule-preview-title">
-						Schedule Preview
+						{translateConsole('Schedule Preview')}
 					</Typography.Text>
 				</div>
 				<div className="schedule-preview-list">
@@ -64,7 +66,9 @@ export function ScheduleList({
 		<div className="no-schedule" data-testid="no-schedule">
 			<Info size={32} />
 			<Typography.Text>
-				Please fill the relevant information to generate a schedule
+				{translateConsole(
+					'Please fill the relevant information to generate a schedule',
+				)}
 			</Typography.Text>
 		</div>
 	);

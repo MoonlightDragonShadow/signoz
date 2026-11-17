@@ -1,3 +1,5 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Lock } from '@signozhq/icons';
 import { Input } from '@signozhq/ui/input';
 import { toast } from '@signozhq/ui/sonner';
@@ -71,6 +73,8 @@ function ConnectionSecretsFields({
 	isLoading,
 	connectionParams,
 }: ConnectionSecretsFieldsProps): JSX.Element {
+	const translateRuntimeCopy = useConsoleTranslation();
+	const translateConsole = useConsoleTranslation();
 	const hasMissingValue = FIELDS.some(
 		(field) => !connectionParams?.[field.name],
 	);
@@ -79,13 +83,13 @@ function ConnectionSecretsFields({
 		<div className={styles.drawerSurface}>
 			<div className={styles.drawerSurfaceHead}>
 				<Typography.Text weight="bold" size="base">
-					Deployment details &amp; ingestion secrets
+					<ConsoleText message={'Deployment details & ingestion secrets'} />
 				</Typography.Text>
 				{!hasMissingValue && (
 					<div className={styles.headLabel}>
 						<Lock size={12} />
 						<Typography.Text as="span" size="small" className={styles.headLabel}>
-							Auto-filled by SigNoz
+							{translateConsole('Auto-filled by SigNoz')}
 						</Typography.Text>
 					</div>
 				)}
@@ -128,7 +132,9 @@ function ConnectionSecretsFields({
 										<CopyButton
 											value={providedValue}
 											size={12}
-											ariaLabel={`Copy ${field.label}`}
+											ariaLabel={translateRuntimeCopy('Copy {{value1}}', {
+												value1: field.label,
+											})}
 											testId={`${field.testId}-copy`}
 											onCopy={(): void => {
 												toast.success(`${field.label} copied to clipboard`, {

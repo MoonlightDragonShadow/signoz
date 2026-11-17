@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Button } from '@signozhq/ui/button';
 import { DrawerWrapper } from '@signozhq/ui/drawer';
 import { Input } from '@signozhq/ui/input';
@@ -38,6 +39,8 @@ function ModelCostDrawer({
 	saveError,
 	canManage,
 }: ModelCostDrawerProps): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
+	const translateConsole = useConsoleTranslation();
 	// Default mode validates on submit, then re-validates on change — so we don't
 	// flag empty fields before the user has tried to save, but errors clear live
 	// once they start fixing them.
@@ -86,11 +89,11 @@ function ModelCostDrawer({
 					color="primary"
 					onClick={handleSubmit(onSave)}
 					disabled={!isDirty}
-					disabledTooltip="No changes to save"
+					disabledTooltip={translateConsole('No changes to save')}
 					loading={isSaving}
 					testId="drawer-save-btn"
 				>
-					Save
+					{translateConsole('Save')}
 				</Button>
 			)}
 		</div>
@@ -113,7 +116,7 @@ function ModelCostDrawer({
 		>
 			<div className={styles.drawerSection}>
 				<label htmlFor="billing-model-id" className={styles.fieldLabel}>
-					Billing Model ID{' '}
+					{translateConsole('Billing Model ID')}{' '}
 					<span className={styles.required} aria-hidden="true">
 						*
 					</span>
@@ -128,7 +131,7 @@ function ModelCostDrawer({
 						<>
 							<Input
 								id="billing-model-id"
-								placeholder="e.g. openai:gpt-4o"
+								placeholder={translateInterfaceCopy('e.g. openai:gpt-4o')}
 								required
 								value={field.value}
 								disabled={mode === 'edit' || metadataReadOnly}
@@ -148,7 +151,7 @@ function ModelCostDrawer({
 
 			<div className={styles.drawerSection}>
 				<label htmlFor="provider-select" className={styles.fieldLabel}>
-					Provider
+					{translateConsole('Provider')}
 				</label>
 				<Controller
 					name="provider"

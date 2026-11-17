@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Copy, ExternalLink, Link2 } from '@signozhq/icons';
 import { Button } from '@signozhq/ui/button';
 import { Typography } from '@signozhq/ui/typography';
@@ -17,9 +18,12 @@ function PublicDashboardUrl({
 	onCopy,
 	onOpen,
 }: PublicDashboardUrlProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	return (
 		<div className={styles.fieldGroup}>
-			<Typography.Text className={styles.fieldLabel}>Public link</Typography.Text>
+			<Typography.Text className={styles.fieldLabel}>
+				{translate('Public link')}
+			</Typography.Text>
 
 			{isPublic ? (
 				<div className={styles.linkField}>
@@ -30,7 +34,7 @@ function PublicDashboardUrl({
 						variant="ghost"
 						size="sm"
 						icon
-						aria-label="Copy link"
+						aria-label={translate('Copy link')}
 						testId="public-dashboard-copy-url"
 						onClick={onCopy}
 					>
@@ -41,7 +45,7 @@ function PublicDashboardUrl({
 						variant="ghost"
 						size="sm"
 						icon
-						aria-label="Open link"
+						aria-label={translate('Open link')}
 						testId="public-dashboard-open-url"
 						onClick={onOpen}
 					>
@@ -52,7 +56,7 @@ function PublicDashboardUrl({
 				<div className={styles.linkPlaceholder}>
 					<Link2 size={15} className={styles.linkPlaceholderIcon} />
 					<Typography.Text className={styles.linkPlaceholderText}>
-						Your shareable link will appear here once published
+						{translate('Your shareable link will appear here once published')}
 					</Typography.Text>
 				</div>
 			)}

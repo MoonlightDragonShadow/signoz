@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { Color } from '@signozhq/design-tokens';
 import { Tooltip } from 'antd';
 import type { DefaultOptionType } from 'antd/es/select';
@@ -10,14 +11,14 @@ export function ComingSoon(): JSX.Element {
 		<Tooltip
 			title={
 				<div>
-					Join our Slack community for more details:{' '}
+					<ConsoleText message={'Join our Slack community for more details:'} />{' '}
 					<a
 						href="https://signoz.io/slack"
 						rel="noopener noreferrer"
 						target="_blank"
 						onClick={(e): void => e.stopPropagation()}
 					>
-						SigNoz Community
+						<ConsoleText message={'SigNoz Community'} />
 					</a>
 				</div>
 			}
@@ -25,7 +26,9 @@ export function ComingSoon(): JSX.Element {
 			overlayClassName="tooltip-overlay"
 		>
 			<div className="coming-soon">
-				<div className="coming-soon__text">Coming Soon</div>
+				<div className="coming-soon__text">
+					<ConsoleText message={'Coming Soon'} />
+				</div>
 				<div className="coming-soon__icon">
 					<Info size={10} color={Color.BG_SIENNA_400} />
 				</div>

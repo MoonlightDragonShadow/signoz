@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Button } from '@signozhq/ui/button';
 import { Skeleton } from '@signozhq/ui/skeleton';
@@ -35,6 +36,7 @@ function SavedViewsList({
 	source: SavedviewtypesSourceDTO;
 	search: string;
 }): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const { viewKey } = useGetSavedViewParams();
 	const { selectView, clearView, resetView, createView, isSaving } =
 		useSavedViewActions(source);
@@ -122,7 +124,7 @@ function SavedViewsList({
 		return (
 			<div className={styles.state} data-testid="saved-views-list-error">
 				<Typography.Text className={styles.stateText}>
-					Could not load views
+					{translateConsole('Could not load views')}
 				</Typography.Text>
 				<Button
 					variant="outlined"
@@ -131,7 +133,7 @@ function SavedViewsList({
 					onClick={refetch}
 					testId="saved-views-list-retry"
 				>
-					Retry
+					{translateConsole('Retry')}
 				</Button>
 			</div>
 		);
@@ -158,7 +160,7 @@ function SavedViewsList({
 		>
 			{createdByMe.length > 0 && (
 				<SavedViewsListSection
-					title="Created by me"
+					title={translateConsole('Created by me')}
 					views={createdByMe}
 					activeViewId={viewKey}
 					onSelect={selectView}
@@ -170,7 +172,7 @@ function SavedViewsList({
 			)}
 			{createdByOthers.length > 0 && (
 				<SavedViewsListSection
-					title="Created by others"
+					title={translateConsole('Created by others')}
 					views={createdByOthers}
 					activeViewId={viewKey}
 					onSelect={selectView}

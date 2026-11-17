@@ -1,3 +1,5 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
+import { localizeRelativeTime } from 'components/LocalizedRelativeTime/localizeRelativeTime';
 import { useMemo } from 'react';
 import { UseQueryResult } from 'react-query';
 import { Color } from '@signozhq/design-tokens';
@@ -18,6 +20,7 @@ function EndPointMetrics({
 }: {
 	endPointMetricsDataQuery: UseQueryResult<SuccessResponse<any>, unknown>;
 }): JSX.Element {
+	const translate = useConsoleTranslation();
 	const { isLoading, isRefetching, isError, data, refetch } =
 		endPointMetricsDataQuery;
 
@@ -40,16 +43,16 @@ function EndPointMetrics({
 			<div className="domain-details-grid">
 				<div className="labels-row">
 					<Typography.Text color="muted" className="domain-details-metadata-label">
-						Rate
+						{translate('Rate')}
 					</Typography.Text>
 					<Typography.Text color="muted" className="domain-details-metadata-label">
-						AVERAGE LATENCY
+						{translate('AVERAGE LATENCY')}
 					</Typography.Text>
 					<Typography.Text color="muted" className="domain-details-metadata-label">
-						ERROR %
+						{translate('ERROR %')}
 					</Typography.Text>
 					<Typography.Text color="muted" className="domain-details-metadata-label">
-						LAST USED
+						{translate('LAST USED')}
 					</Typography.Text>
 				</div>
 
@@ -108,8 +111,16 @@ function EndPointMetrics({
 						{isLoading || isRefetching ? (
 							<Skeleton.Button active size="small" />
 						) : (
-							<Tooltip title={metricsData?.lastUsed}>
-								{getDisplayValue(metricsData?.lastUsed)}
+							<Tooltip
+								title={localizeRelativeTime(
+									getDisplayValue(metricsData?.lastUsed),
+									translate,
+								)}
+							>
+								{localizeRelativeTime(
+									getDisplayValue(metricsData?.lastUsed),
+									translate,
+								)}
 							</Tooltip>
 						)}
 					</Typography.Text>

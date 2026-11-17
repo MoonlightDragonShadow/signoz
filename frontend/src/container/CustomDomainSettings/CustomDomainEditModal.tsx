@@ -1,3 +1,5 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useEffect, useState } from 'react';
 import { Color } from '@signozhq/design-tokens';
 import { CircleAlert, CircleCheck, LoaderCircle } from '@signozhq/icons';
@@ -30,6 +32,7 @@ export default function CustomDomainEditModal({
 	onClearError,
 	onSubmit,
 }: CustomDomainEditModalProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const initialSubdomain = customDomainSubdomain ?? '';
 	const [value, setValue] = useState(initialSubdomain);
 	const [validationError, setValidationError] = useState<string | null>(null);
@@ -109,7 +112,7 @@ export default function CustomDomainEditModal({
 	return (
 		<DialogWrapper
 			className="edit-workspace-modal"
-			title="Edit Workspace Link"
+			title={translate('Edit Workspace Link')}
 			open={isOpen}
 			onOpenChange={(open: boolean): void => {
 				if (!open) {
@@ -120,15 +123,18 @@ export default function CustomDomainEditModal({
 		>
 			<div className="edit-workspace-modal-content">
 				<p className="edit-modal-description">
-					Enter your preferred subdomain to create a unique URL for your team. Need
-					help?{' '}
+					<ConsoleText
+						message={
+							'Enter your preferred subdomain to create a unique URL for your team. Need help?'
+						}
+					/>{' '}
 					<a
 						href="https://signoz.io/support"
 						target="_blank"
 						rel="noreferrer"
 						className="edit-modal-link"
 					>
-						Contact support.
+						<ConsoleText message={'Contact support.'} />
 					</a>
 				</p>
 
@@ -139,7 +145,7 @@ export default function CustomDomainEditModal({
 							hasError ? ' edit-modal-label--error' : ''
 						}`}
 					>
-						Workspace URL
+						<ConsoleText message={'Workspace URL'} />
 					</label>
 
 					<div
@@ -177,8 +183,11 @@ export default function CustomDomainEditModal({
 				<div className="edit-modal-note">
 					<span className="edit-modal-note-emoji">🚧</span>
 					<span className="edit-modal-note-text">
-						Note that your previous URL still remains accessible. Your access
-						credentials for the new URL remain the same.
+						<ConsoleText
+							message={
+								'Note that your previous URL still remains accessible. Your access credentials for the new URL remain the same.'
+							}
+						/>
 					</span>
 				</div>
 
@@ -192,7 +201,7 @@ export default function CustomDomainEditModal({
 						/>
 					) : (
 						<Button
-							disabledTooltip="Change the workspace URL first"
+							disabledTooltip={translate('Change the workspace URL first')}
 							variant="solid"
 							size="md"
 							color="primary"
@@ -201,7 +210,7 @@ export default function CustomDomainEditModal({
 							disabled={value === initialSubdomain}
 							loading={isLoading}
 						>
-							Apply Changes
+							<ConsoleText message={'Apply Changes'} />
 						</Button>
 					)}
 				</div>

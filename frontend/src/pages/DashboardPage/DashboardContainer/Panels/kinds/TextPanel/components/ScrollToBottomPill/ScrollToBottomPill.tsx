@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { ChevronsDown } from '@signozhq/icons';
 
 import styles from './ScrollToBottomPill.module.scss';
@@ -7,6 +8,7 @@ interface ScrollToBottomPillProps {
 }
 
 function ScrollToBottomPill({ onClick }: ScrollToBottomPillProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	return (
 		<button
 			type="button"
@@ -15,7 +17,7 @@ function ScrollToBottomPill({ onClick }: ScrollToBottomPillProps): JSX.Element {
 			data-testid="text-panel-scroll-more"
 		>
 			<ChevronsDown size={14} />
-			<span>Scroll for more</span>
+			<span>{translate('Scroll for more')}</span>
 		</button>
 	);
 }

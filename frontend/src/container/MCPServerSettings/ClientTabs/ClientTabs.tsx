@@ -1,3 +1,5 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { useMemo } from 'react';
 import { Button } from '@signozhq/ui/button';
 import { Tabs } from '@signozhq/ui/tabs';
@@ -29,6 +31,7 @@ function ClientTabs({
 	onInstallClick,
 	onDocsLinkClick,
 }: ClientTabsProps): JSX.Element {
+	const translateRuntimeCopy = useConsoleTranslation();
 	const items = useMemo(
 		() =>
 			MCP_CLIENTS.map((client: McpClient) => {
@@ -49,7 +52,9 @@ function ClientTabs({
 								<div className="mcp-client-tabs__endpoint-value mcp-client-tabs__snippet">
 									<pre className="mcp-client-tabs__snippet-pre">{snippet}</pre>
 									<CopyIconButton
-										ariaLabel={`Copy ${client.label} config`}
+										ariaLabel={translateRuntimeCopy('Copy {{value1}} config', {
+											value1: client.label,
+										})}
 										disabled={!endpoint}
 										disabledTooltip={ENTER_REGION_FIRST}
 										onCopy={(): void => onCopySnippet(client.key, snippet)}
@@ -102,7 +107,7 @@ function ClientTabs({
 										</Button>
 									)}
 									<span className="mcp-client-tabs__helper-text">
-										Or copy the config below for manual setup.
+										<ConsoleText message={'Or copy the config below for manual setup.'} />
 									</span>
 								</div>
 							)}
@@ -117,7 +122,13 @@ function ClientTabs({
 				};
 			}),
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[endpoint, onCopySnippet, onInstallClick, onDocsLinkClick],
+		[
+			endpoint,
+			onCopySnippet,
+			onInstallClick,
+			onDocsLinkClick,
+			translateRuntimeCopy,
+		],
 	);
 
 	return (

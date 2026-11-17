@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { memo, useState } from 'react';
 import { Button, Tooltip } from 'antd';
 import { Divider } from '@signozhq/ui/divider';
@@ -35,6 +36,7 @@ function FunnelConfiguration({
 	triggerAutoSave,
 	showNotifications,
 }: FunnelConfigurationProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const { hasEditPermission } = useAppContext();
 	const { triggerSave } = useFunnelContext();
 	const { isPopoverOpen, setIsPopoverOpen, steps, isSaving } =
@@ -72,7 +74,7 @@ function FunnelConfiguration({
 								className="funnel-item__action-btn funnel-configuration__rename-btn"
 								icon={<PencilLine size={14} />}
 								onClick={(): void => setIsDescriptionModalOpen(true)}
-								aria-label="Edit Funnel Description"
+								aria-label={translateConsole('Edit Funnel Description')}
 								disabled={!hasEditPermission}
 							/>
 						</Tooltip>

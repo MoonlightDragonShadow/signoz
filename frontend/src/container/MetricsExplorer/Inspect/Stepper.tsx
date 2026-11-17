@@ -1,3 +1,5 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Color } from '@signozhq/design-tokens';
 import { Button } from 'antd';
 import { Typography } from '@signozhq/ui/typography';
@@ -13,13 +15,14 @@ function Stepper({
 	inspectionStep,
 	resetInspection,
 }: StepperProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	return (
 		<div className="home-checklist-container">
 			<div className="home-checklist-title">
 				<Typography.Text>
-					👋 Hello, welcome to the Metrics Inspector
+					{translate('👋 Hello, welcome to the Metrics Inspector')}
 				</Typography.Text>
-				<Typography.Text>Let’s get you started...</Typography.Text>
+				<Typography.Text>{translate('Let’s get you started...')}</Typography.Text>
 			</div>
 			<div className="completed-checklist-container whats-next-checklist-container">
 				<div
@@ -38,9 +41,9 @@ function Stepper({
 								inspectionStep <= InspectionStep.TIME_AGGREGATION,
 						})}
 					>
-						First, align the data by selecting a{' '}
+						<ConsoleText message={'First, align the data by selecting a'} />{' '}
 						<Typography.Link href={TEMPORAL_AGGREGATION_LINK} target="_blank">
-							Temporal Aggregation{' '}
+							{translate('Temporal Aggregation')}{' '}
 							<SquareArrowOutUpRight color={Color.BG_ROBIN_500} size={10} />
 						</Typography.Link>
 					</div>
@@ -62,9 +65,9 @@ function Stepper({
 								inspectionStep <= InspectionStep.SPACE_AGGREGATION,
 						})}
 					>
-						Add a{' '}
+						<ConsoleText message={'Add a'} />{' '}
 						<Typography.Link href={SPACE_AGGREGATION_LINK} target="_blank">
-							Spatial Aggregation{' '}
+							{translate('Spatial Aggregation')}{' '}
 							<SquareArrowOutUpRight color={Color.BG_ROBIN_500} size={10} />
 						</Typography.Link>
 					</div>
@@ -75,13 +78,13 @@ function Stepper({
 				{inspectionStep === InspectionStep.COMPLETED && (
 					<>
 						<Typography.Text>
-							🎉 Ta-da! You have completed your metric query tutorial.
+							{translate('🎉 Ta-da! You have completed your metric query tutorial.')}
 						</Typography.Text>
 						<Typography.Text>
-							You can inspect a new metric or reset the query builder.
+							{translate('You can inspect a new metric or reset the query builder.')}
 						</Typography.Text>
 						<Button icon={<RefreshCcw size={12} />} onClick={resetInspection}>
-							Reset query
+							{translate('Reset query')}
 						</Button>
 					</>
 				)}

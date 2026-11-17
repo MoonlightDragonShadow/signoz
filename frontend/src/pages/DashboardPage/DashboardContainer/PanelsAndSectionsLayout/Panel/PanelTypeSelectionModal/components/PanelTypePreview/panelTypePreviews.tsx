@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import type { PanelKind } from '../../../../../Panels/types/panelKind';
 import PreviewBars from './PreviewBars';
 import PreviewRows, { type PreviewCell } from './PreviewRows';
@@ -158,7 +159,9 @@ export const PANEL_TYPE_PREVIEWS: Record<PanelKind, JSX.Element> = {
 			<span className={styles.numberValue}>
 				99.7<span className={styles.numberUnit}>%</span>
 			</span>
-			<span className={styles.numberLabel}>Availability</span>
+			<span className={styles.numberLabel}>
+				<ConsoleText message="Availability" />
+			</span>
 		</div>
 	),
 	'signoz/TablePanel': (

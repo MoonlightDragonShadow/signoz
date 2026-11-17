@@ -1,3 +1,5 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { MutableRefObject } from 'react';
 import { Callout } from '@signozhq/ui/callout';
 import { back, hasInAppHistory } from 'lib/router/navigation';
@@ -35,6 +37,7 @@ interface TraceDetailsThreadProps {
 function TraceDetailsThread({
 	dataLoadedFiredForRef,
 }: TraceDetailsThreadProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const { id: traceId } = useAppParams<'id'>();
 	const [, setTab] = useTraceDetailsTab();
 	const [view, setView] = useThreadView();
@@ -137,7 +140,9 @@ function TraceDetailsThread({
 						type="info"
 						size="small"
 						className={styles.notice}
-						title="The requested span has no input or output messages. Showing the rest of the thread."
+						title={translateConsole(
+							'The requested span has no input or output messages. Showing the rest of the thread.',
+						)}
 						testId="thread-anchor-no-messages"
 					/>
 				)}
@@ -178,7 +183,12 @@ function TraceDetailsThread({
 								void setView(next);
 							}}
 						/>
-						{spans.length > 0 && <span>Showing {spans.length} spans</span>}
+						{spans.length > 0 && (
+							<span>
+								<ConsoleText message={'Showing'} /> {spans.length}{' '}
+								<ConsoleText message={'spans'} />
+							</span>
+						)}
 					</div>
 				)}
 				{renderBody()}

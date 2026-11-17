@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { type ChangeEvent, type KeyboardEvent, useState } from 'react';
 import { Check, LayoutDashboard, SquareArrowOutUpRight } from '@signozhq/icons';
 import { Button } from '@signozhq/ui/button';
@@ -16,6 +17,7 @@ const TEMPLATES_DOCS_URL =
 // placeholder: link out to the published template library, and let cloud users
 // request one we haven't built.
 function TemplatesPanel(): JSX.Element {
+	const translate = useConsoleTranslation();
 	const { isCloudUser } = useGetTenantLicense();
 	const [name, setName] = useState('');
 	const [submitting, setSubmitting] = useState(false);
@@ -33,13 +35,13 @@ function TemplatesPanel(): JSX.Element {
 				dashboard: requestName,
 			});
 			if (response.statusCode === 200) {
-				toast.success('Dashboard request submitted');
+				toast.success(translate('Dashboard request submitted'));
 				setName('');
 			} else {
 				toast.error(response.error || 'Something went wrong');
 			}
 		} catch {
-			toast.error('Something went wrong');
+			toast.error(translate('Something went wrong'));
 		} finally {
 			setSubmitting(false);
 		}
@@ -51,7 +53,7 @@ function TemplatesPanel(): JSX.Element {
 				<LayoutDashboard size={20} />
 			</span>
 			<Typography variant="title" size="lg" weight="semibold">
-				Dashboard templates
+				{translate('Dashboard templates')}
 			</Typography>
 			<Typography
 				variant="text"
@@ -59,8 +61,9 @@ function TemplatesPanel(): JSX.Element {
 				color="muted"
 				className={styles.templatesDesc}
 			>
-				Browse our library of ready-made dashboards, or request a new one and
-				we&apos;ll build it for you.
+				{translate(
+					"Browse our library of ready-made dashboards, or request a new one and we'll build it for you.",
+				)}
 			</Typography>
 
 			<a
@@ -69,7 +72,7 @@ function TemplatesPanel(): JSX.Element {
 				target="_blank"
 				rel="noopener noreferrer"
 			>
-				Browse dashboard templates
+				{translate('Browse dashboard templates')}
 				<SquareArrowOutUpRight size={14} />
 			</a>
 
@@ -81,12 +84,12 @@ function TemplatesPanel(): JSX.Element {
 						weight="semibold"
 						className={styles.requestHeader}
 					>
-						Request a new template
+						{translate('Request a new template')}
 					</Typography>
 					<div className={styles.requestRow}>
 						<Input
 							className={styles.requestInput}
-							placeholder="Enter dashboard name..."
+							placeholder={translate('Enter dashboard name...')}
 							value={name}
 							testId="request-dashboard-name"
 							onChange={(e: ChangeEvent<HTMLInputElement>): void =>
@@ -99,7 +102,7 @@ function TemplatesPanel(): JSX.Element {
 							}}
 						/>
 						<Button
-							disabledTooltip="Enter a dashboard name first"
+							disabledTooltip={translate('Enter a dashboard name first')}
 							variant="solid"
 							color="primary"
 							size="md"
@@ -111,7 +114,7 @@ function TemplatesPanel(): JSX.Element {
 								void handleRequest();
 							}}
 						>
-							Submit
+							{translate('Submit')}
 						</Button>
 					</div>
 				</div>

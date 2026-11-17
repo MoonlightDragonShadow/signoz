@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useTranslation } from 'react-i18next';
 import { useQueries } from 'react-query';
 import { Typography } from '@signozhq/ui/typography';
@@ -22,6 +23,7 @@ type TRetentionAPIReturnV2<T extends TTTLType> = Promise<
 >;
 
 function GeneralSettings(): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
 	const { t } = useTranslation('common');
 	const { user } = useAppContext();
 
@@ -96,7 +98,7 @@ function GeneralSettings(): JSX.Element {
 		getRetentionPeriodLogsApiResponse.isLoading ||
 		!getRetentionPeriodLogsApiResponse.data?.data
 	) {
-		return <Spinner tip="Loading.." height="70vh" />;
+		return <Spinner tip={translateInterfaceCopy('Loading..')} height="70vh" />;
 	}
 
 	return (

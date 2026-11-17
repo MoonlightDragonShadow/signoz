@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useRef, useState } from 'react';
 import { Check, X } from '@signozhq/icons';
 import { Button } from '@signozhq/ui/button';
@@ -35,6 +36,7 @@ function VariableForm({
 	onClose,
 	onSave,
 }: VariableFormProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	// The "apply to panels" selection is transient form state, seeded from the
 	// panels that already reference this variable. Held in a ref so the save
 	// callback (owned by useVariableForm) reads the latest value.
@@ -116,11 +118,11 @@ function VariableForm({
 								<div className={styles.row}>
 									<div className={styles.labelContainer}>
 										<Typography.Text className={styles.label}>
-											Apply to panels
+											{translate('Apply to panels')}
 										</Typography.Text>
 									</div>
 									<CustomMultiSelect
-										placeholder="Select panels"
+										placeholder={translate('Select panels')}
 										options={panelOptions}
 										value={selectedPanelIds}
 										onChange={(value): void => setSelectedPanelIds(value as string[])}
@@ -154,11 +156,11 @@ function VariableForm({
 										items={[
 											{
 												key: '1',
-												label: 'Options',
+												label: translate('Options'),
 												children: (
 													<AntdInput.TextArea
 														value={model.customValue}
-														placeholder="Enter options separated by commas."
+														placeholder={translate('Enter options separated by commas.')}
 														rootClassName="comma-input"
 														onChange={(e): void => onCustomChange(e.target.value)}
 														data-testid="variable-custom-input"
@@ -176,13 +178,13 @@ function VariableForm({
 								<div className={cx(styles.row, styles.textboxSection)}>
 									<div className={styles.labelContainer}>
 										<Typography.Text className={styles.label}>
-											Default Value
+											{translate('Default Value')}
 										</Typography.Text>
 									</div>
 									<Input
 										className={styles.defaultInput}
 										value={model.textValue}
-										placeholder="Enter a default value (if any)..."
+										placeholder={translate('Enter a default value (if any)...')}
 										onChange={(e): void => set({ textValue: e.target.value })}
 										testId="variable-text-input"
 									/>
@@ -207,7 +209,7 @@ function VariableForm({
 						onClick={onClose}
 						testId="variable-discard"
 					>
-						Discard
+						{translate('Discard')}
 					</Button>
 					<Button
 						disabledTooltip={nameError || attributeError}
@@ -220,7 +222,7 @@ function VariableForm({
 						onClick={handleSave}
 						testId="variable-save"
 					>
-						Save Variable
+						{translate('Save Variable')}
 					</Button>
 				</div>
 			</div>

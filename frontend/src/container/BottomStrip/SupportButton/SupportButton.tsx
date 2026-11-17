@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { useState } from 'react';
 import { Button } from '@signozhq/ui/button';
 import logEvent from 'api/common/logEvent';
@@ -44,7 +45,7 @@ function SupportButton(): JSX.Element | null {
 				onClick={handleClick}
 				testId="bottom-strip-support"
 			>
-				Support
+				<ConsoleText message={'Support'} />
 			</Button>
 
 			<AddCreditCardModal

@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import React, { useEffect, useMemo } from 'react';
 import { Divider } from '@signozhq/ui/divider';
 import logEvent from 'api/common/logEvent';
@@ -26,6 +27,7 @@ import { useGetAlertRuleDetails, useRouteTabUtils } from './hooks';
 import './AlertDetails.styles.scss';
 
 function AlertDetails(): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const { pathname } = useAppLocation();
 	const { routes } = useRouteTabUtils();
 	const params = useUrlQuery();
@@ -44,13 +46,19 @@ function AlertDetails(): JSX.Element {
 			return alertTitle;
 		}
 		if (isTestAlert) {
-			return 'Test Alert';
+			return translateConsole('Test Alert');
 		}
 		if (isLoading) {
 			return document.title;
 		}
-		return 'Alert Not Found';
-	}, [alertRuleName, alertDetailsResponse?.data?.alert, isTestAlert, isLoading]);
+		return translateConsole('Alert Not Found');
+	}, [
+		alertRuleName,
+		alertDetailsResponse?.data?.alert,
+		isTestAlert,
+		isLoading,
+		translateConsole,
+	]);
 
 	useEffect(() => {
 		document.title = getDocumentTitle;
@@ -101,7 +109,7 @@ function AlertDetails(): JSX.Element {
 				<AlertBreadcrumb
 					className="alert-details__breadcrumb"
 					items={[
-						{ title: 'Alert Rules', route: ROUTES.LIST_ALL_ALERT },
+						{ title: translateConsole('Alert Rules'), route: ROUTES.LIST_ALL_ALERT },
 						{ title: ruleId, isLast: true },
 					]}
 				/>

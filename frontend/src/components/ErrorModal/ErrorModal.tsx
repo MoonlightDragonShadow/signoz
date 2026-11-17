@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import React from 'react';
 import { Color } from '@signozhq/design-tokens';
 import { Button, Modal } from 'antd';
@@ -54,7 +55,8 @@ function ErrorModal({
 					onKeyDown={undefined}
 				>
 					<Badge variant="solid" color="danger">
-						<CircleAlert size={14} color={Color.BG_CHERRY_500} /> error
+						<CircleAlert size={14} color={Color.BG_CHERRY_500} />{' '}
+						<ConsoleText message={'error'} />
 					</Badge>
 				</span>
 			) : (

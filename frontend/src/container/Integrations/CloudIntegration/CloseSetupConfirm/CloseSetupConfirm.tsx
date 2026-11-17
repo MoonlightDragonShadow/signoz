@@ -1,3 +1,5 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Button } from '@signozhq/ui/button';
 import { DialogWrapper } from '@signozhq/ui/dialog';
 import { Typography } from '@signozhq/ui/typography';
@@ -19,6 +21,7 @@ function CloseSetupConfirm({
 	onOpenChange,
 	onConfirm,
 }: CloseSetupConfirmProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	return (
 		<DialogWrapper
 			open={open}
@@ -34,7 +37,7 @@ function CloseSetupConfirm({
 						onClick={onConfirm}
 						testId={`${testIdPrefix}-close-setup-btn`}
 					>
-						Close Setup
+						{translateConsole('Close Setup')}
 					</Button>
 					<Button
 						size="md"
@@ -43,14 +46,17 @@ function CloseSetupConfirm({
 						onClick={(): void => onOpenChange(false)}
 						testId={`${testIdPrefix}-continue-setup-btn`}
 					>
-						Continue Setup
+						{translateConsole('Continue Setup')}
 					</Button>
 				</>
 			}
 		>
 			<Typography>
-				The agent has not connected yet. If you close now, you will have to start
-				the installation process again with a new setup command.
+				<ConsoleText
+					message={
+						'The agent has not connected yet. If you close now, you will have to start the installation process again with a new setup command.'
+					}
+				/>
 			</Typography>
 		</DialogWrapper>
 	);

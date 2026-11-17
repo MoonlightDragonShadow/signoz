@@ -1,3 +1,5 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Color } from '@signozhq/design-tokens';
 import { Tooltip } from 'antd';
 import { QueryParams } from 'constants/query';
@@ -24,6 +26,7 @@ function ChangePercentage({
 	direction,
 	duration,
 }: ChangePercentageProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	if (direction > 0) {
 		return (
 			<div
@@ -34,7 +37,8 @@ function ChangePercentage({
 					<ArrowDownLeft size={14} color={Color.BG_FOREST_500} />
 				</div>
 				<div className="change-percentage__label">
-					{percentage}% vs Last {duration}
+					{percentage}
+					<ConsoleText message={'% vs Last'} /> {duration}
 				</div>
 			</div>
 		);
@@ -49,7 +53,8 @@ function ChangePercentage({
 					<ArrowUpRight size={14} color={Color.BG_CHERRY_500} />
 				</div>
 				<div className="change-percentage__label">
-					{percentage}% vs Last {duration}
+					{percentage}
+					<ConsoleText message={'% vs Last'} /> {duration}
 				</div>
 			</div>
 		);
@@ -60,7 +65,9 @@ function ChangePercentage({
 			className="change-percentage change-percentage--no-previous-data"
 			data-testid="stats-card-change"
 		>
-			<div className="change-percentage__label">no previous data</div>
+			<div className="change-percentage__label">
+				{translateConsole('no previous data')}
+			</div>
 		</div>
 	);
 }
@@ -84,6 +91,7 @@ function StatsCard({
 	emptyMessage,
 	timeSeries = [],
 }: StatsCardProps): JSX.Element {
+	const translateRuntimeCopy = useConsoleTranslation();
 	const urlQuery = useUrlQuery();
 
 	const relativeTime = urlQuery.get('relativeTime');
@@ -128,7 +136,10 @@ function StatsCard({
 						title={
 							relativeTime
 								? undefined
-								: `From ${formattedStartTimeForTooltip} to ${formattedEndTimeForTooltip}`
+								: translateRuntimeCopy('From {{value1}} to {{value2}}', {
+										value1: formattedStartTimeForTooltip,
+										value2: formattedEndTimeForTooltip,
+									})
 						}
 					>
 						<div className="text">{displayTime}</div>

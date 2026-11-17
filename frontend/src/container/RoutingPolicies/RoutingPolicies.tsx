@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { ChangeEvent, useCallback, useMemo } from 'react';
 import { Plus, Search } from '@signozhq/icons';
 import { Button } from '@signozhq/ui/button';
@@ -23,6 +24,7 @@ import './styles.scss';
 const COLUMNS_STORAGE_KEY = 'routing-policies-columns';
 
 function RoutingPolicies(): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const { user } = useAppContext();
 	const { formatTimezoneAdjustedTimestamp } = useTimezone();
 	const {
@@ -61,8 +63,9 @@ function RoutingPolicies(): JSX.Element {
 	const canEdit = user?.role !== USER_ROLES.VIEWER;
 
 	const columns = useMemo(
-		() => getRoutingPolicyColumns(formatTimezoneAdjustedTimestamp),
-		[formatTimezoneAdjustedTimestamp],
+		() =>
+			getRoutingPolicyColumns(formatTimezoneAdjustedTimestamp, translateConsole),
+		[formatTimezoneAdjustedTimestamp, translateConsole],
 	);
 
 	const handleSearch = (e: ChangeEvent<HTMLInputElement>): void => {
@@ -102,7 +105,7 @@ function RoutingPolicies(): JSX.Element {
 				<div className={styles.commandHeader}>
 					<div className={styles.headingBlock}>
 						<Typography.Title className={styles.title}>
-							All routing policies
+							{translateConsole('All routing policies')}
 						</Typography.Title>
 						<span className={styles.countPill}>{routingPoliciesData.length}</span>
 					</div>
@@ -121,10 +124,12 @@ function RoutingPolicies(): JSX.Element {
 						prefix={<Plus size={14} />}
 						onClick={handleCreate}
 						disabled={!canEdit}
-						disabledTooltip="You need edit permissions to create a routing policy"
+						disabledTooltip={translateConsole(
+							'You need edit permissions to create a routing policy',
+						)}
 						testId="routing-policies-create"
 					>
-						New Routing Policy
+						{translateConsole('New Routing Policy')}
 					</Button>
 					<TextToolTip
 						text="More details on how to configure routing policies"
@@ -136,7 +141,7 @@ function RoutingPolicies(): JSX.Element {
 				<div className={styles.filtersRow}>
 					<Input
 						containerClassName={styles.searchInput}
-						placeholder="Search by name or description"
+						placeholder={translateConsole('Search by name or description')}
 						value={searchTerm}
 						onChange={handleSearch}
 						suffix={<Search size={14} className={styles.searchIcon} />}

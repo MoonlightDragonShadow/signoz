@@ -1,3 +1,5 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useEffect, useMemo, useState } from 'react';
 import { Button, Skeleton } from 'antd';
 import { AppLink } from 'lib/router/AppLink';
@@ -34,6 +36,7 @@ export default function SavedViews({
 	onUpdateChecklistDoneItem: (itemKey: string) => void;
 	loadingUserPreferences: boolean;
 }): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const { user } = useAppContext();
 	const [selectedEntity, setSelectedEntity] = useState<string>('logs');
 	const [selectedEntityViews, setSelectedEntityViews] = useState<
@@ -137,11 +140,13 @@ export default function SavedViews({
 						className="empty-state-icon"
 					/>
 
-					<div className="empty-title">You have not saved any views yet.</div>
+					<div className="empty-title">
+						{translateConsole('You have not saved any views yet.')}
+					</div>
 
 					{user?.role !== USER_ROLES.VIEWER && (
 						<div className="empty-description">
-							Explore your data and save them as views.
+							{translateConsole('Explore your data and save them as views.')}
 						</div>
 					)}
 				</div>
@@ -159,7 +164,7 @@ export default function SavedViews({
 									});
 								}}
 							>
-								Get Started &nbsp; <ArrowRight size={16} />
+								<ConsoleText message={'Get Started  '} /> <ArrowRight size={16} />
 							</Button>
 						</AppLink>
 
@@ -179,7 +184,7 @@ export default function SavedViews({
 								);
 							}}
 						>
-							Learn more <ArrowUpRight size={12} />
+							{translateConsole('Learn more')} <ArrowUpRight size={12} />
 						</Button>
 					</div>
 				)}
@@ -229,7 +234,7 @@ export default function SavedViews({
 				{selectedEntityViews.length === 0 && (
 					<div className="saved-views-list-empty-state">
 						<div className="saved-views-list-empty-state-message">
-							No saved views found.
+							{translateConsole('No saved views found.')}
 						</div>
 					</div>
 				)}
@@ -237,7 +242,9 @@ export default function SavedViews({
 				{selectedEntity === 'logs' && logsViewsError && (
 					<div className="logs-saved-views-error-container">
 						<div className="logs-saved-views-error-message">
-							Oops, something went wrong while loading your saved views.
+							{translateConsole(
+								'Oops, something went wrong while loading your saved views.',
+							)}
 						</div>
 					</div>
 				)}
@@ -245,7 +252,9 @@ export default function SavedViews({
 				{selectedEntity === 'traces' && tracesViewsError && (
 					<div className="traces-saved-views-error-container">
 						<div className="traces-saved-views-error-message">
-							Oops, something went wrong while loading your saved views.
+							{translateConsole(
+								'Oops, something went wrong while loading your saved views.',
+							)}
 						</div>
 					</div>
 				)}
@@ -253,7 +262,9 @@ export default function SavedViews({
 				{selectedEntity === 'metrics' && metricsViewsError && (
 					<div className="metrics-saved-views-error-container">
 						<div className="metrics-saved-views-error-message">
-							Oops, something went wrong while loading your saved views.
+							{translateConsole(
+								'Oops, something went wrong while loading your saved views.',
+							)}
 						</div>
 					</div>
 				)}
@@ -305,7 +316,7 @@ export default function SavedViews({
 						className="saved-views-header home-data-card-header"
 						data-testid="home-section-saved-views"
 					>
-						Saved Views
+						{translateConsole('Saved Views')}
 						<div className="saved-views-header-actions">
 							<Button.Group className="views-tabs">
 								<Button
@@ -314,21 +325,21 @@ export default function SavedViews({
 									onClick={(): void => handleTabChange('logs')}
 								>
 									<ScrollText size={14} />
-									Logs
+									{translateConsole('Logs')}
 								</Button>
 								<Button
 									value="traces"
 									className={selectedEntity === 'traces' ? 'selected tab' : 'tab'}
 									onClick={(): void => handleTabChange('traces')}
 								>
-									<DraftingCompass size={14} /> Traces
+									<DraftingCompass size={14} /> {translateConsole('Traces')}
 								</Button>
 								<Button
 									value="metrics"
 									className={selectedEntity === 'metrics' ? 'selected tab' : 'tab'}
 									onClick={(): void => handleTabChange('metrics')}
 								>
-									<BarChart size={14} /> Metrics
+									<BarChart size={14} /> {translateConsole('Metrics')}
 								</Button>
 							</Button.Group>
 						</div>

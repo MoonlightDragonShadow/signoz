@@ -1,0 +1,20 @@
+# This Dockerfile-specific ignore file replaces, rather than extends, .dockerignore.
+.git
+.github
+.vscode
+.devenv
+README.md
+deploy
+sample-apps
+**/node_modules
+**/.env
+**/.env.*
+
+# Rebuild frontend assets and binaries from source inside Docker.
+frontend/build
+frontend/coverage
+frontend/storybook-static
+target
+dist
+**/.cache
+**/.pnpm-store

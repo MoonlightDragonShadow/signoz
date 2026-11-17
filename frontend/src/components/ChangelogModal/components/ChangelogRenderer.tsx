@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import ReactMarkdown from 'react-markdown';
 import dayjs from 'dayjs';
 import {
@@ -49,7 +50,7 @@ function renderMedia(media: Media): JSX.Element | null {
 			>
 				<source src={media.url} type={media.mime} />
 				<track kind="captions" src="" label="No captions available" default />
-				Your browser does not support the video tag.
+				<ConsoleText message={'Your browser does not support the video tag.'} />
 			</video>
 		);
 	}
@@ -84,7 +85,9 @@ function ChangelogRenderer({ changelog }: Props): JSX.Element {
 				)}
 				{changelog.bug_fixes && changelog.bug_fixes.length > 0 && (
 					<div className="changelog-renderer-bug-fixes">
-						<div className="changelog-renderer-section-title">Bug Fixes</div>
+						<div className="changelog-renderer-section-title">
+							<ConsoleText message={'Bug Fixes'} />
+						</div>
 						{changelog.bug_fixes && (
 							<ReactMarkdown components={{ a: Link }}>
 								{changelog.bug_fixes}
@@ -94,7 +97,9 @@ function ChangelogRenderer({ changelog }: Props): JSX.Element {
 				)}
 				{changelog.maintenance && changelog.maintenance.length > 0 && (
 					<div className="changelog-renderer-maintenance">
-						<div className="changelog-renderer-section-title">Maintenance</div>
+						<div className="changelog-renderer-section-title">
+							<ConsoleText message={'Maintenance'} />
+						</div>
 						{changelog.maintenance && (
 							<ReactMarkdown components={{ a: Link }}>
 								{changelog.maintenance}

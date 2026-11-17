@@ -1,3 +1,5 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { useCallback } from 'react';
 import { X } from '@signozhq/icons';
 import { Button } from '@signozhq/ui/button';
@@ -18,20 +20,26 @@ function InviteMembersModal({
 	onClose,
 	onComplete,
 }: InviteMembersModalProps): JSX.Element {
+	const translateRuntimeCopy = useConsoleTranslation();
+	const translate = useConsoleTranslation();
 	const handleSuccess = useCallback((): void => {
-		toast.success('Invites sent successfully', { position: 'top-right' });
+		toast.success(translateRuntimeCopy('Invites sent successfully'), {
+			position: 'top-right',
+		});
 		onClose();
 		onComplete?.();
-	}, [onClose, onComplete]);
+	}, [onClose, onComplete, translateRuntimeCopy]);
 
 	const handlePartialSuccess = useCallback((): void => {
-		toast.warning('Some invites failed', { position: 'top-right' });
+		toast.warning(translateRuntimeCopy('Some invites failed'), {
+			position: 'top-right',
+		});
 		onComplete?.();
-	}, [onComplete]);
+	}, [onComplete, translateRuntimeCopy]);
 
 	return (
 		<DialogWrapper
-			title="Invite Team Members"
+			title={translate('Invite Team Members')}
 			open={open}
 			onOpenChange={(isOpen): void => {
 				if (!isOpen) {
@@ -55,7 +63,7 @@ function InviteMembersModal({
 							onClick={onClose}
 							prefix={<X size={12} />}
 						>
-							Cancel
+							<ConsoleText message={'Cancel'} />
 						</Button>
 
 						<Button
@@ -64,7 +72,7 @@ function InviteMembersModal({
 							color="primary"
 							onClick={submit}
 							disabled={!canSubmit}
-							disabledTooltip="Add at least one team member to invite"
+							disabledTooltip={translate('Add at least one team member to invite')}
 							loading={isSubmitting}
 							testId="invite-submit-btn"
 						>

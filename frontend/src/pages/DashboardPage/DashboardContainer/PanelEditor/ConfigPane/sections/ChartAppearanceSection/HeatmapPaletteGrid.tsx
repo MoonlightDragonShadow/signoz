@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import cx from 'classnames';
 import type { DashboardtypesHeatmapPaletteDTO } from 'api/generated/services/sigNoz.schemas';
 import { useIsDarkMode } from 'hooks/useDarkMode';
@@ -16,6 +17,7 @@ function HeatmapPaletteGrid({
 	value,
 	onChange,
 }: HeatmapPaletteGridProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const isDarkMode = useIsDarkMode();
 
 	return (
@@ -36,7 +38,7 @@ function HeatmapPaletteGrid({
 							className={styles.cardRamp}
 							style={{ background: paletteGradient(option.value, isDarkMode) }}
 						/>
-						<span className={styles.cardName}>{option.label}</span>
+						<span className={styles.cardName}>{translate(option.label)}</span>
 					</button>
 				))}
 			</div>

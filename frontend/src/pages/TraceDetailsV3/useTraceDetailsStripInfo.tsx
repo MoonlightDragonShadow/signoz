@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useMemo } from 'react';
 import { ChartNoAxesGantt, TriangleAlert } from '@signozhq/icons';
 import { useBottomStrip } from 'container/BottomStrip/useBottomStrip';
@@ -20,17 +21,18 @@ export function useTraceDetailsStripInfo({
 	totalSpansCount,
 	totalErrorSpansCount,
 }: UseTraceDetailsStripInfoArgs): void {
+	const translateInterfaceCopy = useConsoleTranslation();
 	const items = useMemo<StripItem[]>(
 		() => [
 			{
 				kind: StripItemKind.KeyValue,
-				label: 'Spans',
+				label: translateInterfaceCopy('Spans'),
 				value: totalSpansCount,
 				prefix: <ChartNoAxesGantt size={13} />,
 			},
 			{
 				kind: StripItemKind.KeyValue,
-				label: 'Errors',
+				label: translateInterfaceCopy('Errors'),
 				value: totalErrorSpansCount,
 				prefix: <TriangleAlert size={13} />,
 				tone: totalErrorSpansCount > 0 ? StripTone.Error : StripTone.Default,

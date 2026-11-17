@@ -11,6 +11,7 @@ const COLUMN_WIDTH = { default: 'auto', min: '120px' };
 
 export function getRoutingPolicyColumns(
 	formatTimezoneAdjustedTimestamp: (date: string, format: string) => string,
+	translateConsole: (message: string) => string = (message) => message,
 ): TableColumnDef<RoutingPolicy>[] {
 	const textCell = (value: string | null | undefined): JSX.Element => (
 		<TanStackTable.Text title={value ?? undefined}>
@@ -42,7 +43,7 @@ export function getRoutingPolicyColumns(
 	return [
 		{
 			id: 'name',
-			header: 'Routing Policy',
+			header: translateConsole('Routing Policy'),
 			accessorKey: 'name',
 			width: COLUMN_WIDTH,
 			enableSort: true,
@@ -60,7 +61,7 @@ export function getRoutingPolicyColumns(
 		},
 		{
 			id: 'channels',
-			header: 'Channels',
+			header: translateConsole('Channels'),
 			accessorKey: 'channels',
 			width: COLUMN_WIDTH,
 			enableSort: false,
@@ -80,7 +81,7 @@ export function getRoutingPolicyColumns(
 		},
 		{
 			id: 'expression',
-			header: 'Expression',
+			header: translateConsole('Expression'),
 			accessorKey: 'expression',
 			width: COLUMN_WIDTH,
 			enableSort: false,
@@ -94,7 +95,7 @@ export function getRoutingPolicyColumns(
 		},
 		{
 			id: 'createdBy',
-			header: 'Created By',
+			header: translateConsole('Created By'),
 			accessorKey: 'createdBy',
 			width: COLUMN_WIDTH,
 			defaultVisibility: false,
@@ -105,7 +106,7 @@ export function getRoutingPolicyColumns(
 		},
 		{
 			id: 'createdAt',
-			header: 'Created At',
+			header: translateConsole('Created At'),
 			accessorKey: 'createdAt',
 			width: COLUMN_WIDTH,
 			defaultVisibility: false,
@@ -116,7 +117,7 @@ export function getRoutingPolicyColumns(
 		},
 		{
 			id: 'updatedBy',
-			header: 'Updated By',
+			header: translateConsole('Updated By'),
 			accessorKey: 'updatedBy',
 			width: COLUMN_WIDTH,
 			defaultVisibility: false,
@@ -127,7 +128,7 @@ export function getRoutingPolicyColumns(
 		},
 		{
 			id: 'updatedAt',
-			header: 'Updated At',
+			header: translateConsole('Updated At'),
 			accessorKey: 'updatedAt',
 			width: COLUMN_WIDTH,
 			defaultVisibility: false,

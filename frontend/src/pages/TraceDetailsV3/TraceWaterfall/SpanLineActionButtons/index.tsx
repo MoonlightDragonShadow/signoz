@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Button } from '@signozhq/ui/button';
 import { Tooltip } from '@signozhq/ui/tooltip';
 import { useCopySpanLink } from 'hooks/trace/useCopySpanLink';
@@ -12,13 +13,14 @@ export interface SpanLineActionButtonsProps {
 export default function SpanLineActionButtons({
 	span,
 }: SpanLineActionButtonsProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const { onSpanCopy } = useCopySpanLink(span);
 
 	return (
 		<div className={styles.root}>
-			<Tooltip title="Copy Span Link">
+			<Tooltip title={translateConsole('Copy Span Link')}>
 				<Button
-					aria-label="Action"
+					aria-label={translateConsole('Action')}
 					variant="ghost"
 					size="sm"
 					icon

@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import type { MouseEvent } from 'react';
 import type {
 	DropdownActionItemType,
@@ -435,7 +436,9 @@ export const helpSupportDropdownMenuItems: SidebarItem[] = [
 		key: 'documentation',
 		label: (
 			<div className="nav-item-label-container">
-				<span>Documentation</span>
+				<span>
+					<ConsoleText message={'Documentation'} />
+				</span>
 				<ArrowUpRight size={14} />
 			</div>
 		),
@@ -462,7 +465,9 @@ export const helpSupportDropdownMenuItems: SidebarItem[] = [
 		key: 'slack',
 		label: (
 			<div className="nav-item-label-container">
-				<span>Community Slack</span>
+				<span>
+					<ConsoleText message={'Community Slack'} />
+				</span>
 				<ArrowUpRight size={14} />
 			</div>
 		),
@@ -565,7 +570,9 @@ export const getUserSettingsDropdownMenuItems = ({
 			value: 'logged-in-as',
 			label: (
 				<div className="user-settings-dropdown-logged-in-section">
-					<span className="user-settings-dropdown-label-text">LOGGED IN AS</span>
+					<span className="user-settings-dropdown-label-text">
+						<ConsoleText message={'LOGGED IN AS'} />
+					</span>
 					<span className="user-settings-dropdown-label-email">{userEmail}</span>
 				</div>
 			),

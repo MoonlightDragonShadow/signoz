@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Tooltip } from '@signozhq/ui/tooltip';
 import cx from 'classnames';
 
@@ -20,6 +21,7 @@ function PanelTypeTile({
 	disabledReason,
 	onSelect,
 }: PanelTypeTileProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const tile = (
 		<button
 			type="button"
@@ -36,10 +38,12 @@ function PanelTypeTile({
 			<PanelTypePreview kind={item.kind} />
 			<span className={styles.tileText}>
 				<span className={styles.tileTitle}>
-					<span className={styles.tileName}>{item.displayName}</span>
-					{item.isNew && <span className={styles.newBadge}>New</span>}
+					<span className={styles.tileName}>{translate(item.displayName)}</span>
+					{item.isNew && <span className={styles.newBadge}>{translate('New')}</span>}
 				</span>
-				<span className={styles.tileDescription}>{item.description}</span>
+				<span className={styles.tileDescription}>
+					{translate(item.description)}
+				</span>
 			</span>
 		</button>
 	);

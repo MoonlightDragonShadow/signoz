@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import React, { useCallback, useState } from 'react';
 import { Divider } from '@signozhq/ui/divider';
 import { Plus, RefreshCw } from '@signozhq/icons';
@@ -39,6 +40,7 @@ interface AlertsEmptyStateProps {
 export function AlertsEmptyState({
 	onRefresh,
 }: AlertsEmptyStateProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const { user } = useAppContext();
 	const { safeNavigate } = useSafeNavigate();
 	const [addNewAlert] = useComponentPermission(
@@ -60,9 +62,11 @@ export function AlertsEmptyState({
 		<div className={styles.alertListContainer}>
 			<div className={styles.alertListViewContent}>
 				<div>
-					<Typography.Title className={styles.title}>Alert Rules</Typography.Title>
+					<Typography.Title className={styles.title}>
+						{translateConsole('Alert Rules')}
+					</Typography.Title>
 					<Typography.Text className={styles.subtitle}>
-						Create and manage alert rules for your resources.
+						{translateConsole('Create and manage alert rules for your resources.')}
 					</Typography.Text>
 				</div>
 				<section className={styles.emptyAlertInfoContainer}>
@@ -75,11 +79,11 @@ export function AlertsEmptyState({
 							/>
 							<div>
 								<Typography.Text className={styles.emptyInfo}>
-									No Alert rules yet.{' '}
+									{translateConsole('No Alert rules yet.')}{' '}
 								</Typography.Text>
 								<br />
 								<Typography.Text className={styles.emptyAlertAction}>
-									Create an Alert Rule to get started
+									{translateConsole('Create an Alert Rule to get started')}
 								</Typography.Text>
 							</div>
 						</section>
@@ -91,13 +95,15 @@ export function AlertsEmptyState({
 									color="primary"
 									onClick={onClickNewAlertHandler}
 									disabled={!addNewAlert}
-									disabledTooltip="You need permission to create alert rules"
+									disabledTooltip={translateConsole(
+										'You need permission to create alert rules',
+									)}
 									loading={loading}
 									testId="add-alert"
 									prefix={<Plus size="md" />}
 									width="150px"
 								>
-									New Alert Rule
+									{translateConsole('New Alert Rule')}
 								</Button>
 								{onRefresh && (
 									<Button
@@ -109,7 +115,7 @@ export function AlertsEmptyState({
 										testId="list-alerts-empty-refresh-button"
 										width="150px"
 									>
-										Refresh
+										{translateConsole('Refresh')}
 									</Button>
 								)}
 							</div>
@@ -149,7 +155,9 @@ export function AlertsEmptyState({
 				</section>
 				<div className={styles.getStartedText}>
 					<Divider className="get-started-text__divider">
-						<Typography.Text>Or get started with these sample alerts</Typography.Text>
+						<Typography.Text>
+							{translateConsole('Or get started with these sample alerts')}
+						</Typography.Text>
 					</Divider>
 				</div>
 

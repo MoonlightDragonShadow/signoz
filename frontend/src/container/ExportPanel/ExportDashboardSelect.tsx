@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useMemo } from 'react';
 // eslint-disable-next-line signoz/no-antd-components
 import { Select, SelectProps } from 'antd';
@@ -32,6 +33,7 @@ function ExportDashboardSelect({
 	onChange,
 	onSearch,
 }: ExportDashboardSelectProps): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
 	const options = useMemo<SelectProps['options']>(() => {
 		const base = getSelectOptions(dashboards) ?? [];
 		if (
@@ -49,7 +51,7 @@ function ExportDashboardSelect({
 	return (
 		<Select
 			className={styles.dashboardSelect}
-			placeholder="Select a dashboard"
+			placeholder={translateInterfaceCopy('Select a dashboard')}
 			showSearch
 			filterOption={false}
 			loading={loading}

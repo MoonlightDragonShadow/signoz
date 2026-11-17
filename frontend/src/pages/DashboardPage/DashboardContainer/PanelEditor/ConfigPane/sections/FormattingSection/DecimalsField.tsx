@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import type { DashboardtypesPrecisionOptionDTO } from 'api/generated/services/sigNoz.schemas';
 import { resolveDecimalPrecision } from 'pages/DashboardPage/DashboardContainer/Panels/utils/chartAppearance/resolvers';
 import { formatPanelValue } from 'pages/DashboardPage/DashboardContainer/Panels/utils/formatPanelValue';
@@ -26,18 +27,23 @@ function DecimalsField({
 	onReset,
 	onChange,
 }: DecimalsFieldProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	return (
-		<ConfigField label="Decimal places" changed={changed} onReset={onReset}>
+		<ConfigField
+			label={translate('Decimal places')}
+			changed={changed}
+			onReset={onReset}
+		>
 			<ConfigTiles
 				compact
 				testId="panel-editor-v2-decimals"
-				aria-label="Decimal places"
+				aria-label={translate('Decimal places')}
 				value={value}
 				items={DECIMAL_OPTIONS}
 				onChange={onChange}
 			/>
 			<div className={styles.preview}>
-				<span className={styles.previewLabel}>Shows as</span>
+				<span className={styles.previewLabel}>{translate('Shows as')}</span>
 				<span className={styles.previewValue} data-testid="decimals-preview">
 					{formatPanelValue(
 						DECIMALS_PREVIEW_VALUE,

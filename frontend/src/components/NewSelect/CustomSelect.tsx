@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 /* eslint-disable sonarjs/cognitive-complexity */
 import React, {
 	useCallback,
@@ -583,7 +584,9 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
 							<section className="navigate">
 								<ArrowDown size={8} className="icons" />
 								<ArrowUp size={8} className="icons" />
-								<span className="keyboard-text">to navigate</span>
+								<span className="keyboard-text">
+									<ConsoleText message={'to navigate'} />
+								</span>
 							</section>
 						)}
 					{loading && (
@@ -591,7 +594,9 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
 							<div className="navigation-icons">
 								<Loader size="md" className="animate-spin" />
 							</div>
-							<div className="navigation-text">Refreshing values...</div>
+							<div className="navigation-text">
+								<ConsoleText message={'Refreshing values...'} />
+							</div>
 						</div>
 					)}
 					{!loading && waitingMessage && (
@@ -631,7 +636,7 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
 						!waitingMessage &&
 						!errorMessage && (
 							<div className="navigation-text-incomplete">
-								Don&apos;t see the value? Use search
+								<ConsoleText message={"Don't see the value? Use search"} />
 							</div>
 						)}
 

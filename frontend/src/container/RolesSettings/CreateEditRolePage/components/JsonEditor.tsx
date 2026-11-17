@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import {
 	forwardRef,
 	useCallback,
@@ -200,7 +201,7 @@ const JsonEditor = forwardRef<JsonEditorRef, JsonEditorProps>(
 					{parseError && (
 						<div className={styles.jsonEditorError} data-testid="json-editor-error">
 							<Typography as="span" size="base" weight="medium">
-								Parse Error:
+								<ConsoleText message={'Parse Error:'} />
 							</Typography>
 							<Typography
 								as="span"
@@ -217,7 +218,7 @@ const JsonEditor = forwardRef<JsonEditorRef, JsonEditorProps>(
 							data-testid="json-editor-schema-error"
 						>
 							<Typography as="span" size="base" weight="medium">
-								Schema Error:
+								<ConsoleText message={'Schema Error:'} />
 							</Typography>
 							<Typography
 								as="span"

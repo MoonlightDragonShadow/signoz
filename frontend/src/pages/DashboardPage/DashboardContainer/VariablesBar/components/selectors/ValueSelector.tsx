@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useMemo, useState } from 'react';
 import logEvent from 'api/common/logEvent';
 import { CustomMultiSelect, CustomSelect } from 'components/NewSelect';
@@ -47,12 +48,13 @@ function ValueSelector({
 	isRetryable = true,
 	dynamic,
 }: ValueSelectorProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const optionData = useMemo<OptionData[]>(
 		() =>
 			dynamic
-				? dynamicVariableOptions(dynamic.values, dynamic.relatedValues)
+				? dynamicVariableOptions(dynamic.values, dynamic.relatedValues, translate)
 				: options.map((option) => ({ label: option, value: option })),
-		[options, dynamic],
+		[options, dynamic, translate],
 	);
 
 	// All-selected → the full option set so CustomMultiSelect engages its "all"
@@ -136,7 +138,9 @@ function ValueSelector({
 				// appear on hover, in a row of variable pills, for an action whose result is
 				// not visible.
 				allowClear={isOpen && !draftIsAll}
-				placeholder={isAllPendingOptions ? 'ALL' : 'Select value'}
+				placeholder={
+					isAllPendingOptions ? translate('ALL') : translate('Select value')
+				}
 				maxTagCount={1}
 				maxTagTextLength={10}
 				maxTagPlaceholder={(omitted): JSX.Element => (
@@ -200,7 +204,7 @@ function ValueSelector({
 			onRetry={onRetry}
 			showRetryButton={isRetryable}
 			showSearch
-			placeholder="Select value"
+			placeholder={translate('Select value')}
 			isDynamicVariable={!!dynamic}
 			onSearch={dynamic?.onSearch}
 			showIncompleteDataMessage={

@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Badge } from '@signozhq/ui/badge';
 import { SpantypesSpanMapperTestSpanDTO } from 'api/generated/services/sigNoz.schemas';
 import { useMemo } from 'react';
@@ -46,6 +47,7 @@ function TestResult({
 	inputAttributes,
 	inputResource,
 }: TestResultProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const attributeEntries = useMemo(
 		() => diffAttributeMaps(inputAttributes, span.attributes ?? {}),
 		[inputAttributes, span.attributes],
@@ -81,7 +83,9 @@ function TestResult({
 					<div className={styles.resultTitle}>{section.title}</div>
 
 					{section.entries.length === 0 ? (
-						<div className={styles.resultEmpty}>No keys in this map.</div>
+						<div className={styles.resultEmpty}>
+							{translateConsole('No keys in this map.')}
+						</div>
 					) : (
 						<div className={styles.attrRows}>
 							{section.entries.map((entry) => {

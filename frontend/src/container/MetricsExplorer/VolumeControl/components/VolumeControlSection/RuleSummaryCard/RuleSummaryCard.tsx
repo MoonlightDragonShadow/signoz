@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Button } from '@signozhq/ui/button';
 import { Typography } from '@signozhq/ui/typography';
 import { MetricreductionruletypesGettableReductionRuleDTO } from 'api/generated/services/sigNoz.schemas';
@@ -17,6 +18,7 @@ function RuleSummaryCard({
 	canManage,
 	onEdit,
 }: RuleSummaryCardProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	return (
 		<div className={styles.card} data-testid="volume-control-active">
 			<div className={styles.cardRow}>
@@ -39,7 +41,7 @@ function RuleSummaryCard({
 						onClick={onEdit}
 						testId="volume-control-edit"
 					>
-						Edit
+						{translate('Edit')}
 					</Button>
 				)}
 			</div>

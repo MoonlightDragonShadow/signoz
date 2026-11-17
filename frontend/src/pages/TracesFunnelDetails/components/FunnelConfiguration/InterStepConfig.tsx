@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Divider } from '@signozhq/ui/divider';
 import SignozRadioGroup from 'components/SignozRadioGroup/SignozRadioGroup';
 import { useFunnelContext } from 'pages/TracesFunnels/FunnelContext';
@@ -13,6 +14,7 @@ function InterStepConfig({
 	index: number;
 	step: FunnelStepData;
 }): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const { handleStepChange: onStepChange } = useFunnelContext();
 	const { hasEditPermission } = useAppContext();
 	const options = Object.entries(LatencyOptions).map(([key, value]) => ({
@@ -22,7 +24,9 @@ function InterStepConfig({
 
 	return (
 		<div className="inter-step-config">
-			<div className="inter-step-config__label">Latency type</div>
+			<div className="inter-step-config__label">
+				{translateConsole('Latency type')}
+			</div>
 			<div className="inter-step-config__divider">
 				<Divider dashed />
 			</div>
@@ -31,7 +35,9 @@ function InterStepConfig({
 					value={step.latency_type ?? LatencyOptions.P99}
 					options={options}
 					disabled={!hasEditPermission}
-					disabledTooltip="You need edit permissions to change the latency type"
+					disabledTooltip={translateConsole(
+						'You need edit permissions to change the latency type',
+					)}
 					onChange={
 						hasEditPermission
 							? (value): void =>

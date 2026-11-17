@@ -1,3 +1,5 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Plus } from '@signozhq/icons';
@@ -37,6 +39,7 @@ function ExportPanelContainer({
 	open,
 	onClose,
 }: ExportPanelProps): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
 	const { t } = useTranslation(['dashboard']);
 
 	// Track the object, not just the id, so export survives a search that narrows it out.
@@ -87,7 +90,7 @@ function ExportPanelContainer({
 					onClose();
 				}
 			}}
-			title="Add to dashboard"
+			title={translateInterfaceCopy('Add to dashboard')}
 			testId="export-panel-dialog"
 			footer={
 				<div className={styles.footer}>
@@ -98,7 +101,7 @@ function ExportPanelContainer({
 						onClick={onClose}
 						testId="export-panel-cancel"
 					>
-						Cancel
+						<ConsoleText message={'Cancel'} />
 					</Button>
 					<Button
 						disabledTooltip={
@@ -114,7 +117,7 @@ function ExportPanelContainer({
 						onClick={handleExportClick}
 						testId="export-panel-export"
 					>
-						Add to dashboard
+						<ConsoleText message={'Add to dashboard'} />
 					</Button>
 				</div>
 			}
@@ -122,7 +125,7 @@ function ExportPanelContainer({
 			<div className={styles.body}>
 				<div className={styles.field}>
 					<Typography.Text className={styles.label}>
-						Select a dashboard
+						<ConsoleText message={'Select a dashboard'} />
 					</Typography.Text>
 					<ExportDashboardSelect
 						dashboards={dashboards}
@@ -137,7 +140,7 @@ function ExportPanelContainer({
 
 				<div className={styles.newDashboard}>
 					<Typography.Text className={styles.hint}>
-						Or create a new dashboard with this panel
+						<ConsoleText message={'Or create a new dashboard with this panel'} />
 					</Typography.Text>
 					<Button
 						variant="outlined"
@@ -148,7 +151,7 @@ function ExportPanelContainer({
 						onClick={createNewDashboard}
 						testId="export-panel-new-dashboard"
 					>
-						New dashboard
+						<ConsoleText message={'New dashboard'} />
 					</Button>
 				</div>
 			</div>

@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { CalendarClock, Plus } from '@signozhq/icons';
 import { Button } from '@signozhq/ui/button';
 import { Typography } from '@signozhq/ui/typography';
@@ -16,15 +17,17 @@ function PlannedDowntimeEmptyState({
 	canCreate,
 	onCreate,
 }: PlannedDowntimeEmptyStateProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	return (
 		<div className={styles.emptyState} data-testid="planned-downtime-empty-state">
 			<CalendarClock className={styles.emptyIcon} size={16} />
 			<Typography.Text className={styles.emptyTitle}>
-				No planned downtime yet
+				{translateConsole('No planned downtime yet')}
 			</Typography.Text>
 			<Typography.Text className={styles.emptySubtitle}>
-				A planned downtime silences alert rules for a window you schedule, once or
-				on repeat, so maintenance does not page anyone.
+				{translateConsole(
+					'A planned downtime silences alert rules for a window you schedule, once or on repeat, so maintenance does not page anyone.',
+				)}
 			</Typography.Text>
 			{canCreate && (
 				<Button
@@ -35,7 +38,7 @@ function PlannedDowntimeEmptyState({
 					onClick={onCreate}
 					testId="planned-downtime-empty-create"
 				>
-					New downtime
+					{translateConsole('New downtime')}
 				</Button>
 			)}
 			<a
@@ -44,7 +47,7 @@ function PlannedDowntimeEmptyState({
 				target="_blank"
 				rel="noopener noreferrer"
 			>
-				Read the planned downtime guide
+				{translateConsole('Read the planned downtime guide')}
 			</a>
 		</div>
 	);

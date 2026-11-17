@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Tooltip } from '@signozhq/ui/tooltip';
 import { Typography } from '@signozhq/ui/typography';
 import type { DashboardtypesPanelDTO } from 'api/generated/services/sigNoz.schemas';
@@ -10,12 +11,13 @@ interface ViewPanelModalTitleProps {
 }
 
 function ViewPanelModalTitle({ panel }: ViewPanelModalTitleProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const name = usePanelTitle(panel);
 
 	return (
 		<Tooltip title={name}>
 			<Typography.Text className={styles.title}>
-				{name ? `${name} - (View mode)` : 'View mode'}
+				{name ? `${name} - (View mode)` : translate('View mode')}
 			</Typography.Text>
 		</Tooltip>
 	);

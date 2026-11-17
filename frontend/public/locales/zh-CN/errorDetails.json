@@ -1,0 +1,9 @@
+{
+  "see_trace_graph": "在链路图中查看此异常前后发生的操作",
+  "see_error_in_trace_graph": "在链路图中查看异常",
+  "stack_trace": "堆栈跟踪",
+  "older": "较早",
+  "newer": "较新",
+  "something_went_wrong": "出了点问题",
+  "contact_if_issue_exists": "若问题持续，请联系支持团队。"
+}

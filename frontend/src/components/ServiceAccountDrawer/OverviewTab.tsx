@@ -1,3 +1,5 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useEffect, useState } from 'react';
 import { Check, Copy, LockKeyhole } from '@signozhq/icons';
 import { Badge } from '@signozhq/ui/badge';
@@ -50,6 +52,7 @@ function OverviewTab({
 	onRefetchRoles,
 	saveErrors = [],
 }: OverviewTabProps): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
 	const { formatTimezoneAdjustedTimestamp } = useTimezone();
 	const [, copyToClipboard] = useCopyToClipboard();
 	const [hasCopiedId, setHasCopiedId] = useState(false);
@@ -87,7 +90,7 @@ function OverviewTab({
 		<>
 			<div className="sa-drawer__field">
 				<label className="sa-drawer__label" htmlFor="sa-name">
-					Name
+					<ConsoleText message={'Name'} />
 				</label>
 				{isDisabled ? (
 					<AuthZTooltip
@@ -108,7 +111,7 @@ function OverviewTab({
 							id="sa-name"
 							value={localName}
 							onChange={(e): void => onNameChange(e.target.value)}
-							placeholder="Enter name"
+							placeholder={translateInterfaceCopy('Enter name')}
 						/>
 					</AuthZTooltip>
 				)}
@@ -139,7 +142,7 @@ function OverviewTab({
 
 			<div className="sa-drawer__field">
 				<label className="sa-drawer__label" htmlFor="sa-email">
-					Email Address
+					<ConsoleText message={'Email Address'} />
 				</label>
 				<div className="sa-drawer__input-wrapper sa-drawer__input-wrapper--disabled">
 					<span className="sa-drawer__input-text">{account.email || '—'}</span>
@@ -149,7 +152,7 @@ function OverviewTab({
 
 			<div className="sa-drawer__field">
 				<label className="sa-drawer__label" htmlFor="sa-roles">
-					Roles
+					<ConsoleText message={'Roles'} />
 				</label>
 				{isDisabled ? (
 					<div className="sa-drawer__input-wrapper sa-drawer__input-wrapper--disabled">
@@ -185,21 +188,23 @@ function OverviewTab({
 						onRefetch={onRefetchRoles}
 						value={localRoles}
 						onChange={onRolesChange}
-						placeholder="Select roles"
+						placeholder={translateInterfaceCopy('Select roles')}
 					/>
 				)}
 			</div>
 
 			<div className="sa-drawer__meta">
 				<div className="sa-drawer__meta-item">
-					<span className="sa-drawer__meta-label">Status</span>
+					<span className="sa-drawer__meta-label">
+						<ConsoleText message={'Status'} />
+					</span>
 					{account.status?.toUpperCase() === 'ACTIVE' ? (
 						<Badge color="success" variant="outlined">
-							ACTIVE
+							<ConsoleText message={'ACTIVE'} />
 						</Badge>
 					) : account.status?.toUpperCase() === 'DELETED' ? (
 						<Badge color="danger" variant="outlined">
-							DELETED
+							<ConsoleText message={'DELETED'} />
 						</Badge>
 					) : (
 						<Badge color="secondary" variant="outlined">
@@ -209,14 +214,18 @@ function OverviewTab({
 				</div>
 
 				<div className="sa-drawer__meta-item">
-					<span className="sa-drawer__meta-label">Created At</span>
+					<span className="sa-drawer__meta-label">
+						<ConsoleText message={'Created At'} />
+					</span>
 					<Badge textTransform="none" variant="solid" color="secondary">
 						{formatTimestamp(account.createdAt)}
 					</Badge>
 				</div>
 
 				<div className="sa-drawer__meta-item">
-					<span className="sa-drawer__meta-label">Updated At</span>
+					<span className="sa-drawer__meta-label">
+						<ConsoleText message={'Updated At'} />
+					</span>
 					<Badge textTransform="none" variant="solid" color="secondary">
 						{formatTimestamp(account.updatedAt)}
 					</Badge>

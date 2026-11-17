@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useMemo } from 'react';
 import { Check } from '@signozhq/icons';
 import AuthZDropdown from 'lib/authz/components/AuthZDropdown/AuthZDropdown';
@@ -16,12 +17,14 @@ function SaveChangesMenu({
 	onSaveAsNew,
 	onUpdate,
 }: SaveChangesMenuProps): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
+	const translateConsole = useConsoleTranslation();
 	const items = useMemo<AuthZDropdownItemType[]>(
 		() => [
 			{
 				type: 'item',
 				value: 'save-as-new',
-				label: 'Save as new view',
+				label: translateInterfaceCopy('Save as new view'),
 				checks: [SavedViewCreatePermission],
 				onClick: onSaveAsNew,
 			},
@@ -43,11 +46,11 @@ function SaveChangesMenu({
 			align="end"
 			side="bottom"
 			disabled={disabled}
-			disabledTooltip="Saving the view"
+			disabledTooltip={translateConsole('Saving the view')}
 			testId="saved-views-save-changes"
 		>
 			<SavedViewsIconButton
-				title="Save changes"
+				title={translateConsole('Save changes')}
 				icon={<Check size={14} />}
 				color="warning"
 				testId="saved-views-save-changes"

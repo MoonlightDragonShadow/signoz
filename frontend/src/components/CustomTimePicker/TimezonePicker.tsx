@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import {
 	Dispatch,
 	SetStateAction,
@@ -41,6 +42,7 @@ function SearchBar({
 	setActiveView,
 	isOpenedFromFooter = false,
 }: SearchBarProps): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
 	const handleKeyDown = useCallback(
 		(e: React.KeyboardEvent): void => {
 			if (e.key === 'Escape') {
@@ -66,7 +68,7 @@ function SearchBar({
 				<Input
 					type="text"
 					className="timezone-picker__input"
-					placeholder="Search timezones..."
+					placeholder={translateInterfaceCopy('Search timezones...')}
 					value={value}
 					onChange={(e): void => onChange(e.target.value)}
 					onKeyDown={handleKeyDown}

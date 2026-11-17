@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Input } from 'antd';
 
 import styles from './VolumeControlToolbar.module.scss';
@@ -11,11 +12,12 @@ function VolumeControlToolbar({
 	value,
 	onChange,
 }: VolumeControlToolbarProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	return (
 		<div className={styles.toolbar}>
 			<Input
 				className={styles.search}
-				placeholder="Search metrics"
+				placeholder={translate('Search metrics')}
 				allowClear
 				value={value}
 				onChange={(e): void => onChange(e.target.value)}

@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useState } from 'react';
 import { Plus } from '@signozhq/icons';
 import { Button } from '@signozhq/ui/button';
@@ -21,6 +22,7 @@ function AddSectionControl({
 	layouts,
 	isSectioned,
 }: AddSectionControlProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const [isMigrationOpen, setIsMigrationOpen] = useState(false);
 	const { addSection } = useAddSection({ layouts });
 	const { migrate, isSaving } = useFirstSectionMigration({ sections });
@@ -54,7 +56,7 @@ function AddSectionControl({
 				testId="add-section"
 				prefix={<Plus size={14} />}
 			>
-				Add section
+				{translate('Add section')}
 			</Button>
 			<FirstSectionMigrationModal
 				open={isMigrationOpen}

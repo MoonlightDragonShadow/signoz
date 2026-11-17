@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useQuery } from 'react-query';
 import { Skeleton, Table, TableColumnsType as ColumnsType } from 'antd';
 import { Typography } from '@signozhq/ui/typography';
@@ -8,6 +9,8 @@ import { IngestionDataType } from 'types/api/settings/ingestion';
 import './IngestionSettings.styles.scss';
 
 export default function IngestionSettings(): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
+	const translateConsole = useConsoleTranslation();
 	const { user } = useAppContext();
 
 	const { data: ingestionData, isFetching } = useQuery({
@@ -17,7 +20,7 @@ export default function IngestionSettings(): JSX.Element {
 
 	const columns: ColumnsType<IngestionDataType> = [
 		{
-			title: 'Name',
+			title: translateInterfaceCopy('Name'),
 			dataIndex: 'name',
 			key: 'name',
 			render: (text): JSX.Element => <Typography.Text> {text} </Typography.Text>,
@@ -71,8 +74,9 @@ export default function IngestionSettings(): JSX.Element {
 					margin: '16px 0px',
 				}}
 			>
-				You can use the following ingestion credentials to start sending your
-				telemetry data to SigNoz
+				{translateConsole(
+					'You can use the following ingestion credentials to start sending your telemetry data to SigNoz',
+				)}
 			</Typography>
 
 			<Table

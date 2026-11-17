@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Flame } from '@signozhq/icons';
 import type { DashboardtypesPanelDTO } from 'api/generated/services/sigNoz.schemas';
 import { useQueryBuilder } from 'hooks/queryBuilder/useQueryBuilder';
@@ -24,6 +25,7 @@ function ConfigActions({
 	panel,
 	panelId,
 }: ConfigActionsProps): JSX.Element | null {
+	const translate = useConsoleTranslation();
 	const createAlert = useCreateAlertFromPanel();
 	const { currentQuery } = useQueryBuilder();
 	const { actions } = getPanelDefinition(panel.spec.plugin.kind);
@@ -42,12 +44,12 @@ function ConfigActions({
 		<>
 			<div className={styles.divider} />
 			<div className={styles.container}>
-				<span className={styles.eyebrow}>Actions</span>
+				<span className={styles.eyebrow}>{translate('Actions')}</span>
 				<div className={styles.list}>
 					<ConfigActionRow
 						testId="panel-editor-v2-create-alert"
 						icon={<Flame size={14} />}
-						label="Create alert"
+						label={translate('Create alert')}
 						onClick={(): void => createAlert(panel, panelId)}
 					/>
 				</div>

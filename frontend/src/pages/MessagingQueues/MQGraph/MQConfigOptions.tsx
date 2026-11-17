@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useState } from 'react';
 import { useCopyToClipboard } from 'react-use';
 import { Color } from '@signozhq/design-tokens';
@@ -75,6 +76,7 @@ function getConfigValuesFromQueryParams(
 }
 
 function MessagingQueuesConfigOptions(): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const urlQuery = useUrlQuery();
 	const location = useAppLocation();
 
@@ -123,10 +125,10 @@ function MessagingQueuesConfigOptions(): JSX.Element {
 					notFoundContent={
 						isFetchingConsumerGrp ? (
 							<span>
-								<Spin size="small" /> Loading...
+								<Spin size="small" /> {translateConsole('Loading...')}
 							</span>
 						) : (
-							<span>No Consumer Groups found</span>
+							<span>{translateConsole('No Consumer Groups found')}</span>
 						)
 					}
 					onChange={(value): void => {
@@ -154,10 +156,10 @@ function MessagingQueuesConfigOptions(): JSX.Element {
 					notFoundContent={
 						isFetchingTopic ? (
 							<span>
-								<Spin size="small" /> Loading...
+								<Spin size="small" /> {translateConsole('Loading...')}
 							</span>
 						) : (
-							<span>No Topics found</span>
+							<span>{translateConsole('No Topics found')}</span>
 						)
 					}
 					onChange={(value): void => {
@@ -187,10 +189,10 @@ function MessagingQueuesConfigOptions(): JSX.Element {
 					notFoundContent={
 						isFetchingPartition ? (
 							<span>
-								<Spin size="small" /> Loading...
+								<Spin size="small" /> {translateConsole('Loading...')}
 							</span>
 						) : (
-							<span>No Partitions found</span>
+							<span>{translateConsole('No Partitions found')}</span>
 						)
 					}
 					onChange={(value): void => {
@@ -205,7 +207,7 @@ function MessagingQueuesConfigOptions(): JSX.Element {
 					}}
 				/>
 			</div>
-			<Tooltip title="Share This" arrow={false}>
+			<Tooltip title={translateConsole('Share This')} arrow={false}>
 				<Button
 					className="periscope-btn copy-url-btn"
 					onClick={(): void => {

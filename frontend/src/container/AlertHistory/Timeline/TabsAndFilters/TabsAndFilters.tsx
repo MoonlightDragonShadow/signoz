@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useMemo } from 'react';
 import { Color } from '@signozhq/design-tokens';
 import { TimelineFilter, TimelineTab } from 'container/AlertHistory/types';
@@ -9,9 +10,10 @@ import Tabs2 from 'periscope/components/Tabs2';
 import './TabsAndFilters.styles.scss';
 
 function ComingSoon(): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	return (
 		<div className="coming-soon">
-			<div className="coming-soon__text">Coming Soon</div>
+			<div className="coming-soon__text">{translateConsole('Coming Soon')}</div>
 			<div className="coming-soon__icon">
 				<Info size={10} color={Color.BG_SIENNA_400} />
 			</div>
@@ -19,17 +21,18 @@ function ComingSoon(): JSX.Element {
 	);
 }
 function TimelineTabs(): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const tabs = [
 		{
 			value: TimelineTab.OVERALL_STATUS,
-			label: 'Overall Status',
+			label: translateConsole('Overall Status'),
 			testId: 'timeline-tab-overall-status',
 		},
 		{
 			value: TimelineTab.TOP_5_CONTRIBUTORS,
 			label: (
 				<div className="top-5-contributors">
-					Top 5 Contributors
+					{translateConsole('Top 5 Contributors')}
 					<ComingSoon />
 				</div>
 			),
@@ -42,6 +45,7 @@ function TimelineTabs(): JSX.Element {
 }
 
 function TimelineFilters(): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const { search } = useAppLocation();
 	const searchParams = useMemo(() => new URLSearchParams(search), [search]);
 
@@ -58,17 +62,17 @@ function TimelineFilters(): JSX.Element {
 	const tabs = [
 		{
 			value: TimelineFilter.ALL,
-			label: 'All',
+			label: translateConsole('All'),
 			testId: 'timeline-filter-all',
 		},
 		{
 			value: TimelineFilter.FIRED,
-			label: 'Fired',
+			label: translateConsole('Fired'),
 			testId: 'timeline-filter-fired',
 		},
 		{
 			value: TimelineFilter.RESOLVED,
-			label: 'Resolved',
+			label: translateConsole('Resolved'),
 			testId: 'timeline-filter-resolved',
 		},
 	];

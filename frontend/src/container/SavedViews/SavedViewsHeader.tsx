@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useState } from 'react';
 import cx from 'classnames';
 import { ArrowUpToLine, List, Plus, Undo2, X } from '@signozhq/icons';
@@ -47,6 +48,7 @@ function SavedViewsHeader({
 	onToggleViews?: () => void;
 	onCollapse?: () => void;
 }): JSX.Element {
+	const translate = useConsoleTranslation();
 	const {
 		view,
 		isLoading,
@@ -81,18 +83,20 @@ function SavedViewsHeader({
 
 	const handleUpdate = useCallback(async (): Promise<void> => {
 		if (view && (await updateView(view))) {
-			toast.success('View updated', { position: SAVED_VIEW_TOAST_POSITION });
+			toast.success(translate('View updated'), {
+				position: SAVED_VIEW_TOAST_POSITION,
+			});
 		}
-	}, [view, updateView]);
+	}, [translate, view, updateView]);
 
 	const openSaveAsNew = useCallback((): void => setModalMode('saveAsNew'), []);
 	const closeModal = useCallback((): void => setModalMode(null), []);
 
-	let name = view?.spec.displayName ?? MY_VIEW_NAME;
+	let name = view?.spec.displayName ?? translate(MY_VIEW_NAME);
 	if (isReadDenied) {
-		name = SAVED_VIEW_FORBIDDEN_NAME;
+		name = translate(SAVED_VIEW_FORBIDDEN_NAME);
 	} else if (isError) {
-		name = SAVED_VIEW_LOAD_FAILED_NAME;
+		name = translate(SAVED_VIEW_LOAD_FAILED_NAME);
 	}
 	const isDirty = !isError && !!view && hasUnsavedChanges;
 	// Same gates as the All views button; an open panel can always be closed.
@@ -124,7 +128,7 @@ function SavedViewsHeader({
 			<div className={styles.viewTitle}>
 				{!isDirty && onOpenViews && (
 					<SavedViewsIconButton
-						title="All views"
+						title={translate('All views')}
 						icon={<List size={14} />}
 						checks={[SavedViewListPermission]}
 						onClick={onOpenViews}
@@ -155,10 +159,10 @@ function SavedViewsHeader({
 			<div className={styles.actions}>
 				{!view && (
 					<SavedViewsIconButton
-						title="Create new view"
+						title={translate('Create new view')}
 						icon={<Plus size={14} />}
 						disabled={isLoading}
-						disabledTooltip="Loading views"
+						disabledTooltip={translate('Loading views')}
 						checks={[SavedViewCreatePermission]}
 						onClick={(): void => setModalMode('create')}
 						testId="saved-views-create"
@@ -166,7 +170,7 @@ function SavedViewsHeader({
 				)}
 				{(isError || (view && !isDirty)) && (
 					<SavedViewsIconButton
-						title="Clear view"
+						title={translate('Clear view')}
 						icon={<Undo2 size={14} />}
 						onClick={clearView}
 						testId="saved-views-clear"
@@ -183,11 +187,11 @@ function SavedViewsHeader({
 							}}
 						/>
 						<SavedViewsIconButton
-							title="Discard changes"
+							title={translate('Discard changes')}
 							icon={<X size={14} />}
 							color="warning"
 							disabled={isSaving}
-							disabledTooltip="Saving the view"
+							disabledTooltip={translate('Saving the view')}
 							onClick={(): void => revertView(view)}
 							testId="saved-views-discard"
 						/>
@@ -195,7 +199,7 @@ function SavedViewsHeader({
 				)}
 				{onCollapse && (
 					<SavedViewsIconButton
-						title="Collapse Filters"
+						title={translate('Collapse Filters')}
 						icon={<ArrowUpToLine size={14} className={styles.collapseIcon} />}
 						onClick={onCollapse}
 						testId="saved-views-collapse"

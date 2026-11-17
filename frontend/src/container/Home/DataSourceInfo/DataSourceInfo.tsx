@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useMemo } from 'react';
 import { Button } from '@signozhq/ui/button';
 import { Skeleton } from 'antd';
@@ -24,6 +25,7 @@ function DataSourceInfo({
 	dataSentToSigNoz: boolean;
 	isLoading: boolean;
 }): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const { activeLicense } = useAppContext();
 
 	const notSendingData = !dataSentToSigNoz;
@@ -60,13 +62,14 @@ function DataSourceInfo({
 	const renderNotSendingData = (): JSX.Element => (
 		<>
 			<h2 className="welcome-title">
-				Hello there, Welcome to your SigNoz workspace
+				{translateConsole('Hello there, Welcome to your SigNoz workspace')}
 			</h2>
 
 			<p className="welcome-description">
-				You’re not sending any data yet. <br />
-				SigNoz is so much better with your data ⎯ start by sending your telemetry
-				data to SigNoz.
+				{translateConsole('You’re not sending any data yet.')} <br />
+				{translateConsole(
+					'SigNoz is so much better with your data ⎯ start by sending your telemetry data to SigNoz.',
+				)}
 			</p>
 
 			<Card className="welcome-card">
@@ -75,7 +78,7 @@ function DataSourceInfo({
 						<div className="workspace-ready-header">
 							<span className="workspace-ready-title">
 								<img src={hurrayUrl} alt="hurray" />
-								Your workspace is ready
+								{translateConsole('Your workspace is ready')}
 							</span>
 
 							<Button
@@ -86,7 +89,7 @@ function DataSourceInfo({
 								onClick={handleConnect}
 								// TODO - Support tabindex, keyboard events - @H4ad
 							>
-								Connect Data Source
+								{translateConsole('Connect Data Source')}
 							</Button>
 						</div>
 
@@ -108,7 +111,7 @@ function DataSourceInfo({
 	const renderDataReceived = (): JSX.Element => (
 		<>
 			<h2 className="welcome-title">
-				Hello there, Welcome to your SigNoz workspace
+				{translateConsole('Hello there, Welcome to your SigNoz workspace')}
 			</h2>
 
 			{!isError && hostsData && (

@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useAppParams } from 'lib/router/useAppParams';
 import {
 	PublicDashboardSchema,
@@ -11,6 +12,7 @@ import PublicDashboardView from './PublicDashboardView/PublicDashboardView';
 import './PublicDashboard.styles.scss';
 
 function PublicDashboardPage(): JSX.Element {
+	const translate = useConsoleTranslation();
 	// read the dashboard id from the url
 	const { dashboardId } = useAppParams<'dashboardId'>();
 
@@ -33,8 +35,10 @@ function PublicDashboardPage(): JSX.Element {
 				<PublicDashboardMessage
 					testId="public-dashboard-legacy"
 					icon={<TriangleAlert size={36} />}
-					title="This dashboard isn't available in the new experience"
-					description="It hasn't been migrated to the new dashboard experience yet, so it can't be shown here. Reach out to the owner of the dashboard — they can migrate it and re-share the link."
+					title={translate("This dashboard isn't available in the new experience")}
+					description={translate(
+						"It hasn't been migrated to the new dashboard experience yet, so it can't be shown here. Reach out to the owner of the dashboard — they can migrate it and re-share the link.",
+					)}
 				/>
 			)}
 
@@ -42,8 +46,12 @@ function PublicDashboardPage(): JSX.Element {
 				<PublicDashboardMessage
 					testId="public-dashboard-unavailable"
 					icon={<Frown size={36} />}
-					title="The public dashboard you are looking for does not exist or has been unpublished."
-					description="Please reach out to the owner of the dashboard to get access."
+					title={translate(
+						'The public dashboard you are looking for does not exist or has been unpublished.',
+					)}
+					description={translate(
+						'Please reach out to the owner of the dashboard to get access.',
+					)}
 				/>
 			)}
 		</div>

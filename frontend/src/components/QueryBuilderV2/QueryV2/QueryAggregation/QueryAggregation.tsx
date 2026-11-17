@@ -1,3 +1,5 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useMemo } from 'react';
 import { Tooltip } from 'antd';
 import InputWithLabel from 'components/InputWithLabel/InputWithLabel';
@@ -38,6 +40,7 @@ function QueryAggregationOptions({
 	queryData: IBuilderQuery | IBuilderTraceOperator;
 	fieldsConfig?: QueryBuilderFieldsConfig;
 }): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
 	const stepInterval = useMemo<ResolvedQueryBuilderField>(() => {
 		if (panelType === PANEL_TYPES.VALUE) {
 			return { hidden: true, disabled: false, pinned: false };
@@ -79,7 +82,7 @@ function QueryAggregationOptions({
 							title={
 								stepInterval.reason ?? (
 									<div>
-										Set the time interval for aggregation
+										<ConsoleText message={'Set the time interval for aggregation'} />
 										<br />
 										<a
 											href="https://signoz.io/docs/userguide/query-builder-v5/#temporal-aggregation-within-each-time-series"
@@ -87,7 +90,7 @@ function QueryAggregationOptions({
 											rel="noopener noreferrer"
 											style={{ color: '#1890ff', textDecoration: 'underline' }}
 										>
-											Learn about step intervals
+											<ConsoleText message={'Learn about step intervals'} />
 										</a>
 									</div>
 								)
@@ -98,7 +101,7 @@ function QueryAggregationOptions({
 								className="metrics-aggregation-section-content-item-label"
 								style={{ cursor: 'help' }}
 							>
-								every
+								<ConsoleText message={'every'} />
 							</div>
 						</Tooltip>
 
@@ -106,7 +109,7 @@ function QueryAggregationOptions({
 							<InputWithLabel
 								initialValue={queryData?.stepInterval ? queryData?.stepInterval : null}
 								className="query-aggregation-interval-input"
-								label="Seconds"
+								label={translateInterfaceCopy('Seconds')}
 								placeholder={stepInterval.placeholder ?? STEP_INTERVAL_PLACEHOLDER}
 								type="number"
 								onChange={handleAggregationIntervalChange}

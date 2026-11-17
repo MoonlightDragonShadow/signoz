@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback } from 'react';
 import { CircleCheck, Plus, RefreshCw } from '@signozhq/icons';
 import { Button } from '@signozhq/ui/button';
@@ -12,6 +13,7 @@ interface EmptyStateProps {
 }
 
 export function EmptyState({ onRefresh }: EmptyStateProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const { safeNavigate } = useSafeNavigate();
 
 	const handleCreateAlert = useCallback(
@@ -24,9 +26,13 @@ export function EmptyState({ onRefresh }: EmptyStateProps): JSX.Element {
 	return (
 		<div className={styles.emptyState}>
 			<CircleCheck className={styles.emptyStateIcon} size={16} />
-			<div className={styles.emptyStateTitle}>No alerts firing</div>
+			<div className={styles.emptyStateTitle}>
+				{translateConsole('No alerts firing')}
+			</div>
 			<div className={styles.emptyStateSubtitle}>
-				All systems are healthy. No alerts are currently triggered.
+				{translateConsole(
+					'All systems are healthy. No alerts are currently triggered.',
+				)}
 			</div>
 			<div className={styles.emptyStateActions}>
 				<Button
@@ -37,7 +43,7 @@ export function EmptyState({ onRefresh }: EmptyStateProps): JSX.Element {
 					onClick={handleCreateAlert}
 					testId="triggered-alerts-empty-create-button"
 				>
-					Create Alert Rule
+					{translateConsole('Create Alert Rule')}
 				</Button>
 				{onRefresh && (
 					<Button
@@ -48,7 +54,7 @@ export function EmptyState({ onRefresh }: EmptyStateProps): JSX.Element {
 						onClick={onRefresh}
 						testId="triggered-alerts-empty-refresh-button"
 					>
-						Refresh
+						{translateConsole('Refresh')}
 					</Button>
 				)}
 			</div>

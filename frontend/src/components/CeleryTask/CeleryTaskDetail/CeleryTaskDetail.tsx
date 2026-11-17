@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useState } from 'react';
 import { Color, Spacing } from '@signozhq/design-tokens';
 import { Drawer } from 'antd';
@@ -41,6 +42,7 @@ export default function CeleryTaskDetail({
 	onClose,
 	drawerOpen,
 }: CeleryTaskDetailProps): JSX.Element {
+	const translateRuntimeCopy = useConsoleTranslation();
 	const isDarkMode = useIsDarkMode();
 
 	const shouldShowDrawer =
@@ -65,7 +67,11 @@ export default function CeleryTaskDetail({
 			width="45%"
 			title={
 				<div>
-					<Typography.Text className="title">{`Details - ${taskData.entity}`}</Typography.Text>
+					<Typography.Text className="title">
+						{translateRuntimeCopy('Details - {{value1}}', {
+							value1: taskData.entity,
+						})}
+					</Typography.Text>
 					<div>
 						<Typography.Text className="subtitle">
 							{`${formatTimestamp(startTime)} ${
@@ -88,7 +94,9 @@ export default function CeleryTaskDetail({
 			destroyOnClose
 			closeIcon={<X size={16} style={{ marginTop: Spacing.MARGIN_1 }} />}
 			footer={
-				<Typography.Text className="footer-text">{`Total Task: ${totalTask}`}</Typography.Text>
+				<Typography.Text className="footer-text">
+					{translateRuntimeCopy('Total Task: {{value1}}', { value1: totalTask })}
+				</Typography.Text>
 			}
 		>
 			<CeleryTaskGraph

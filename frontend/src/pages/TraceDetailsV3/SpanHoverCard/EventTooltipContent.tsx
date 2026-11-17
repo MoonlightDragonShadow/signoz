@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { convertTimeToRelevantUnit } from 'utils/traceUtils';
 import { Diamond } from '@signozhq/icons';
 import cx from 'classnames';
@@ -18,19 +19,20 @@ export function EventTooltipContent({
 	isError,
 	attributeMap,
 }: EventTooltipContentProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const { time, timeUnitName } = convertTimeToRelevantUnit(timeOffsetMs);
 
 	return (
 		<div className={styles.root}>
 			<div className={styles.header}>
 				<Diamond size={10} />
-				<span>EVENT DETAILS</span>
+				<span>{translateConsole('EVENT DETAILS')}</span>
 			</div>
 			<div className={cx(styles.name, isError && styles.hasError)}>
 				{eventName}
 			</div>
 			<div className={styles.time}>
-				{toFixed(time, 2)} {timeUnitName} since span start
+				{toFixed(time, 2)} {timeUnitName} {translateConsole('since span start')}
 			</div>
 			{Object.keys(attributeMap).length > 0 && (
 				<>

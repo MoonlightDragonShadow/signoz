@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { ArrowLeft } from '@signozhq/icons';
 import BreakoutOptions from 'container/QueryTable/Drilldown/BreakoutOptions';
 import type { BreakoutAttributeType } from 'container/QueryTable/Drilldown/types';
@@ -24,6 +25,7 @@ function DrilldownBreakoutMenu({
 	onBreakout,
 	onBack,
 }: DrilldownBreakoutMenuProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	return (
 		<>
 			<ContextMenu.Header>
@@ -34,7 +36,7 @@ function DrilldownBreakoutMenu({
 						onClick={onBack}
 						data-testid="drilldown-breakout-back"
 					/>
-					<span>Breakout by</span>
+					<span>{translate('Breakout by')}</span>
 				</div>
 			</ContextMenu.Header>
 			<BreakoutOptions queryData={queryData} onColumnClick={onBreakout} />

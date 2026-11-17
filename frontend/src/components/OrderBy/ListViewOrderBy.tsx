@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useEffect, useRef, useState } from 'react';
 import { Select, Spin } from 'antd';
 import { FieldKeysConfigProp } from 'api/querySuggestions/types';
@@ -22,9 +23,10 @@ interface ListViewOrderByProps {
 
 // Loader component for the dropdown when loading or no results
 function Loader({ isLoading }: { isLoading: boolean }): JSX.Element {
+	const translate = useConsoleTranslation();
 	return (
 		<div className="order-by-loading-container">
-			{isLoading ? <Spin size="default" /> : 'No results found'}
+			{isLoading ? <Spin size="default" /> : translate('No results found')}
 		</div>
 	);
 }
@@ -37,6 +39,7 @@ function ListViewOrderBy({
 	builderQueryType,
 	extraFields = DEFAULT_EXTRA_FIELDS,
 }: ListViewOrderByProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const [searchInput, setSearchInput] = useState('');
 	const [debouncedInput, setDebouncedInput] = useState('');
 	const [selectOptions, setSelectOptions] = useState<
@@ -63,6 +66,9 @@ function ListViewOrderBy({
 	);
 
 	const extraKeysSignature = extraFields.map((field) => field.name).join(',');
+	const timestampLabel = translate('timestamp');
+	const ascending = translate('asc');
+	const descending = translate('desc');
 
 	// Update options when API data changes
 	useEffect(() => {
@@ -70,16 +76,31 @@ function ListViewOrderBy({
 		const search = searchInput.trim().toLowerCase();
 		const extraMatches = extraKeysSignature
 			.split(',')
-			.filter((key) => key.length > 0 && key.toLowerCase().includes(search));
+			.filter(
+				(key) =>
+					key.length > 0 &&
+					(key.toLowerCase().includes(search) ||
+						(key === 'timestamp' && timestampLabel.toLowerCase().includes(search))),
+			);
 		const uniqueKeys = [...new Set([...extraMatches, ...keyNames])];
 
 		setSelectOptions(
-			uniqueKeys.flatMap((key) => [
-				{ label: `${key} (desc)`, value: `${key}:desc` },
-				{ label: `${key} (asc)`, value: `${key}:asc` },
-			]),
+			uniqueKeys.flatMap((key) => {
+				const label = key === 'timestamp' ? timestampLabel : key;
+				return [
+					{ label: `${label} (${descending})`, value: `${key}:desc` },
+					{ label: `${label} (${ascending})`, value: `${key}:asc` },
+				];
+			}),
 		);
-	}, [data, searchInput, extraKeysSignature]);
+	}, [
+		data,
+		searchInput,
+		extraKeysSignature,
+		timestampLabel,
+		ascending,
+		descending,
+	]);
 
 	// Handle search input with debounce
 	const handleSearch = (input: string): void => {
@@ -109,13 +130,16 @@ function ListViewOrderBy({
 			onChange={onChange}
 			onSearch={handleSearch}
 			notFoundContent={<Loader isLoading={isLoading} />}
-			placeholder="Select a field"
+			placeholder={translate('Select a field')}
 			style={{ width: 200 }}
 			options={selectOptions}
 			data-testid="list-view-order-by"
-			filterOption={(input, option): boolean =>
-				(option?.value ?? '').toLowerCase().includes(input.trim().toLowerCase())
-			}
+			filterOption={(input, option): boolean => {
+				const search = input.trim().toLowerCase();
+				return [option?.value, option?.label].some((text) =>
+					text?.toLowerCase().includes(search),
+				);
+			}}
 		/>
 	);
 }

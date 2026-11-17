@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Modal } from 'antd';
 import { Typography } from '@signozhq/ui/typography';
 
@@ -19,20 +20,21 @@ function FirstSectionMigrationModal({
 	onClose,
 	onConfirm,
 }: FirstSectionMigrationModalProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	return (
 		<Modal
 			open={open}
-			title="Group panels into sections?"
+			title={translate('Group panels into sections?')}
 			onCancel={onClose}
 			onOk={onConfirm}
-			okText="Continue"
+			okText={translate('Continue')}
 			okButtonProps={{ disabled: isSaving, 'data-testid': 'confirm-migration' }}
 			destroyOnClose
 		>
 			<Typography.Text>
-				This dashboard&apos;s panels are currently free-flowing. Adding a section
-				will move the existing panels into their own section, and a new empty
-				section will be added below. You can rename sections afterwards.
+				{translate(
+					"This dashboard's panels are currently free-flowing. Adding a section will move the existing panels into their own section, and a new empty section will be added below. You can rename sections afterwards.",
+				)}
 			</Typography.Text>
 		</Modal>
 	);

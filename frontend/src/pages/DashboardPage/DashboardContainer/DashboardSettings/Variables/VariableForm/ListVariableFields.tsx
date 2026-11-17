@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Badge } from '@signozhq/ui/badge';
 import { Switch } from '@signozhq/ui/switch';
 import { Typography } from '@signozhq/ui/typography';
@@ -38,11 +39,12 @@ function ListVariableFields({
 	onDefaultValueChange,
 	showAllOptionField,
 }: ListVariableFieldsProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	return (
 		<>
 			<div className={cx(styles.row, styles.previewSection)}>
 				<Typography.Text className={styles.previewLabel}>
-					Preview of Values
+					{translate('Preview of Values')}
 				</Typography.Text>
 				<div className={styles.previewValues}>
 					{previewError ? (
@@ -67,7 +69,9 @@ function ListVariableFields({
 
 			<div className={cx(styles.row, styles.sortSection)}>
 				<div className={styles.labelContainer}>
-					<Typography.Text className={styles.label}>Sort Values</Typography.Text>
+					<Typography.Text className={styles.label}>
+						{translate('Sort Values')}
+					</Typography.Text>
 				</div>
 				<Select
 					className={styles.sortSelect}
@@ -84,7 +88,7 @@ function ListVariableFields({
 
 			<div className={cx(styles.row, styles.multiSection)}>
 				<Typography.Text className={styles.rowLabel}>
-					Enable multiple values to be checked
+					{translate('Enable multiple values to be checked')}
 				</Typography.Text>
 				<Switch
 					color="primary"
@@ -103,7 +107,7 @@ function ListVariableFields({
 			{model.multiSelect && showAllOptionField ? (
 				<div className={cx(styles.row, styles.allOptionSection)}>
 					<Typography.Text className={styles.rowLabel}>
-						Include an option for ALL values
+						{translate('Include an option for ALL values')}
 					</Typography.Text>
 					<Switch
 						color="primary"
@@ -117,18 +121,22 @@ function ListVariableFields({
 
 			<div className={cx(styles.row, styles.defaultValueSection)}>
 				<div className={styles.labelContainer}>
-					<Typography.Text className={styles.label}>Default Value</Typography.Text>
+					<Typography.Text className={styles.label}>
+						{translate('Default Value')}
+					</Typography.Text>
 					<Typography.Text className={styles.defaultValueDesc}>
 						{model.type === 'QUERY'
-							? 'Click Test Run Query to see the values or add custom value'
-							: 'Select a value from the preview values or add custom value'}
+							? translate('Click Test Run Query to see the values or add custom value')
+							: translate(
+									'Select a value from the preview values or add custom value',
+								)}
 					</Typography.Text>
 				</div>
 				<CustomSelect
 					className={styles.searchSelect}
 					showSearch
 					allowClear
-					placeholder="Select a default value"
+					placeholder={translate('Select a default value')}
 					value={defaultValue || undefined}
 					onChange={(value): void => onDefaultValueChange((value as string) ?? '')}
 					options={previewValues.map((value) => ({

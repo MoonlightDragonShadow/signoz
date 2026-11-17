@@ -1,3 +1,5 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useMemo, useState } from 'react';
 import { Button } from '@signozhq/ui/button';
 import { Callout } from '@signozhq/ui/callout';
@@ -30,6 +32,7 @@ type FormValues = {
 };
 
 function SignUp(): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const [loading, setLoading] = useState(false);
 	const [confirmPasswordTouched, setConfirmPasswordTouched] = useState(false);
 
@@ -79,7 +82,7 @@ function SignUp(): JSX.Element {
 				setLoading(false);
 			} catch (error) {
 				notifications.error({
-					message: 'Something went wrong',
+					message: translateConsole('Something went wrong'),
 				});
 				setLoading(false);
 			}
@@ -115,11 +118,14 @@ function SignUp(): JSX.Element {
 						<img src={tvUrl} alt="TV" width="32" height="32" />
 					</div>
 					<Typography.Title level={4} className="signup-header-title">
-						Create your account
+						{translateConsole('Create your account')}
 					</Typography.Title>
 					<Typography.Text className="signup-header-subtitle">
-						You&apos;re almost in. Create a password to start monitoring your
-						applications with SigNoz.
+						<ConsoleText
+							message={
+								"You're almost in. Create a password to start monitoring your applications with SigNoz."
+							}
+						/>
 					</Typography.Text>
 				</div>
 
@@ -127,10 +133,10 @@ function SignUp(): JSX.Element {
 					<div className="signup-form-container">
 						<div className="signup-form-fields">
 							<div className="signup-field-container">
-								<Label htmlFor="signupEmail">Email address</Label>
+								<Label htmlFor="signupEmail">{translateConsole('Email address')}</Label>
 								<FormContainer.Item noStyle name="email">
 									<Input
-										placeholder="e.g. john@signoz.io"
+										placeholder={translateConsole('e.g. john@signoz.io')}
 										type="email"
 										autoFocus
 										required
@@ -141,16 +147,23 @@ function SignUp(): JSX.Element {
 							</div>
 
 							<div className="signup-field-container">
-								<Label htmlFor="currentPassword">Set your password</Label>
+								<Label htmlFor="currentPassword">
+									{translateConsole('Set your password')}
+								</Label>
 								<FormContainer.Item
 									name="password"
 									validateTrigger="onBlur"
-									rules={[{ required: true, message: 'Please enter password!' }]}
+									rules={[
+										{
+											required: true,
+											message: translateConsole('Please enter password!'),
+										},
+									]}
 								>
 									<AntdInput.Password
 										required
 										id="currentPassword"
-										placeholder="Enter new password"
+										placeholder={translateConsole('Enter new password')}
 										disabled={loading}
 										className="signup-antd-input"
 									/>
@@ -158,7 +171,9 @@ function SignUp(): JSX.Element {
 							</div>
 
 							<div className="signup-field-container">
-								<Label htmlFor="confirmPassword">Confirm your new password</Label>
+								<Label htmlFor="confirmPassword">
+									{translateConsole('Confirm your new password')}
+								</Label>
 								<FormContainer.Item
 									name="confirmPassword"
 									validateTrigger="onBlur"
@@ -168,12 +183,17 @@ function SignUp(): JSX.Element {
 											? "Passwords don't match. Please try again."
 											: undefined
 									}
-									rules={[{ required: true, message: 'Please enter confirm password!' }]}
+									rules={[
+										{
+											required: true,
+											message: translateConsole('Please enter confirm password!'),
+										},
+									]}
 								>
 									<AntdInput.Password
 										required
 										id="confirmPassword"
-										placeholder="Confirm your new password"
+										placeholder={translateConsole('Confirm your new password')}
 										disabled={loading}
 										className="signup-antd-input"
 										onBlur={() => setConfirmPasswordTouched(true)}
@@ -184,8 +204,9 @@ function SignUp(): JSX.Element {
 					</div>
 
 					<Callout type="info" size="small" showIcon className="signup-info-callout">
-						This will create an admin account. If you are not an admin, please ask
-						your admin for an invite link
+						{translateConsole(
+							'This will create an admin account. If you are not an admin, please ask your admin for an invite link',
+						)}
 					</Callout>
 
 					{formError && <AuthError error={formError} />}
@@ -203,7 +224,7 @@ function SignUp(): JSX.Element {
 							width="100%"
 							suffix={<ArrowRight size={16} />}
 						>
-							Access My Workspace
+							{translateConsole('Access My Workspace')}
 						</Button>
 					</div>
 				</FormContainer>

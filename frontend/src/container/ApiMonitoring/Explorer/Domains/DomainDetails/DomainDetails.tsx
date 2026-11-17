@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 // eslint-disable-next-line no-restricted-imports
 import { useSelector } from 'react-redux';
@@ -43,6 +44,7 @@ function DomainDetails({
 	domainListLength: number;
 	domainListFilters: IBuilderQuery['filters'];
 }): JSX.Element {
+	const translate = useConsoleTranslation();
 	const [params, setParams] = useApiMonitoringParams();
 	const [selectedView, setSelectedView] = useState<VIEWS>(
 		(params.selectedView as VIEWS) || VIEWS.ALL_ENDPOINTS,
@@ -188,7 +190,7 @@ function DomainDetails({
 								}}
 								icon={<ArrowUp size={16} />}
 								disabled={selectedDomainIndex === 0}
-								title="Previous domain"
+								title={translate('Previous domain')}
 							/>
 							<Button
 								className="domain-navigate-cta"
@@ -200,7 +202,7 @@ function DomainDetails({
 								}}
 								icon={<ArrowDown size={16} />}
 								disabled={selectedDomainIndex === domainListLength - 1}
-								title="Next domain"
+								title={translate('Next domain')}
 							/>
 						</Button.Group>
 					</div>
@@ -236,17 +238,17 @@ function DomainDetails({
 							items={[
 								{
 									value: VIEW_TYPES.ALL_ENDPOINTS,
-									label: 'All Endpoints',
+									label: translate('All Endpoints'),
 									testId: `domain-view-${VIEW_TYPES.ALL_ENDPOINTS}`,
 								},
 								{
 									value: VIEW_TYPES.ENDPOINT_STATS,
-									label: 'Endpoint(s) Stats',
+									label: translate('Endpoint(s) Stats'),
 									testId: `domain-view-${VIEW_TYPES.ENDPOINT_STATS}`,
 								},
 								{
 									value: VIEW_TYPES.TOP_ERRORS,
-									label: 'Top 10 Errors',
+									label: translate('Top 10 Errors'),
 									testId: `domain-view-${VIEW_TYPES.TOP_ERRORS}`,
 								},
 							]}

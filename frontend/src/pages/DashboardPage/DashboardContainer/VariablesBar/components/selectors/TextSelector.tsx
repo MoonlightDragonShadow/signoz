@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { InputRef } from 'antd';
 // eslint-disable-next-line signoz/no-antd-components -- match V1 textbox behaviour (commit on blur/Enter, borderless)
@@ -26,6 +27,7 @@ function TextSelector({
 	onChange,
 	testId,
 }: TextSelectorProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const inputRef = useRef<InputRef>(null);
 	const [value, setValue] = useState<string>(
 		typeof selection.value === 'string' ? selection.value : (defaultValue ?? ''),
@@ -77,7 +79,7 @@ function TextSelector({
 			ref={inputRef}
 			className={styles.control}
 			bordered={false}
-			placeholder="Enter value"
+			placeholder={translate('Enter value')}
 			value={value}
 			title={value}
 			onChange={(e): void => setValue(e.target.value)}

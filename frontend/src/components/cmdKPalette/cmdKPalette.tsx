@@ -1,3 +1,5 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import React, { useEffect } from 'react';
 import cx from 'classnames';
 import {
@@ -74,6 +76,7 @@ export function CmdKPalette({
 }: {
 	userRole: UserRole;
 }): JSX.Element | null {
+	const translateInterfaceCopy = useConsoleTranslation();
 	const { open, setOpen } = useCmdK();
 
 	const { setAutoSwitch, setTheme, theme } = useThemeMode();
@@ -182,9 +185,14 @@ export function CmdKPalette({
 				position="top"
 				offset={110}
 			>
-				<CommandInput placeholder="Search…" className="cmdk-input-wrapper" />
+				<CommandInput
+					placeholder={translateInterfaceCopy('Search…')}
+					className="cmdk-input-wrapper"
+				/>
 				<CommandList className="cmdk-list-scroll">
-					<CommandEmpty>No results</CommandEmpty>
+					<CommandEmpty>
+						<ConsoleText message={'No results'} />
+					</CommandEmpty>
 					{grouped.map(([section, items]) => (
 						<CommandGroup
 							key={section}

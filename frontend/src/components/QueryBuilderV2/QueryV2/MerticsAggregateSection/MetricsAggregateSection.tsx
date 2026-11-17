@@ -1,3 +1,5 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { memo, useCallback, useEffect, useMemo } from 'react';
 import { Tooltip } from 'antd';
 import cx from 'classnames';
@@ -33,6 +35,7 @@ const MetricsAggregateSection = memo(function MetricsAggregateSection({
 	panelType: PANEL_TYPES | null;
 	fieldsConfig?: QueryBuilderFieldsConfig;
 }): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
 	const { setAggregationOptions } = useQueryBuilderV2Context();
 	const placeholderOf = (key: keyof typeof BUILT_IN_PLACEHOLDERS): string =>
 		resolveQueryBuilderField(key, fieldsConfig).placeholder ??
@@ -115,12 +118,12 @@ const MetricsAggregateSection = memo(function MetricsAggregateSection({
 											rel="noopener noreferrer"
 											style={{ color: '#1890ff', textDecoration: 'underline' }}
 										>
-											Learn more about temporal aggregation
+											<ConsoleText message={'Learn more about temporal aggregation'} />
 										</a>
 									}
 								>
 									<div className="metrics-aggregation-section-content-item-label main-label">
-										AGGREGATE WITHIN TIME SERIES{' '}
+										<ConsoleText message={'AGGREGATE WITHIN TIME SERIES'} />{' '}
 									</div>
 								</Tooltip>
 								<div className="metrics-aggregation-section-content-item-value">
@@ -139,7 +142,7 @@ const MetricsAggregateSection = memo(function MetricsAggregateSection({
 									<Tooltip
 										title={
 											<div>
-												Set the time interval for aggregation
+												<ConsoleText message={'Set the time interval for aggregation'} />
 												<br />
 												<a
 													href="https://signoz.io/docs/userguide/query-builder-v5/#temporal-aggregation-within-each-time-series"
@@ -147,7 +150,7 @@ const MetricsAggregateSection = memo(function MetricsAggregateSection({
 													rel="noopener noreferrer"
 													style={{ color: '#1890ff', textDecoration: 'underline' }}
 												>
-													Learn about step intervals
+													<ConsoleText message={'Learn about step intervals'} />
 												</a>
 											</div>
 										}
@@ -157,14 +160,14 @@ const MetricsAggregateSection = memo(function MetricsAggregateSection({
 											className="metrics-aggregation-section-content-item-label"
 											style={{ cursor: 'help' }}
 										>
-											every
+											<ConsoleText message={'every'} />
 										</div>
 									</Tooltip>
 
 									<div className="metrics-aggregation-section-content-item-value">
 										<InputWithLabel
 											onChange={handleChangeAggregateEvery}
-											label="Seconds"
+											label={translateInterfaceCopy('Seconds')}
 											placeholder={placeholderOf(QueryBuilderField.StepInterval)}
 											labelAfter
 											initialValue={query?.stepInterval ?? null}
@@ -185,12 +188,12 @@ const MetricsAggregateSection = memo(function MetricsAggregateSection({
 											rel="noopener noreferrer"
 											style={{ color: '#1890ff', textDecoration: 'underline' }}
 										>
-											Learn more about spatial aggregation
+											<ConsoleText message={'Learn more about spatial aggregation'} />
 										</a>
 									}
 								>
 									<div className="metrics-aggregation-section-content-item-label main-label">
-										AGGREGATE ACROSS TIME SERIES
+										<ConsoleText message={'AGGREGATE ACROSS TIME SERIES'} />
 									</div>
 								</Tooltip>
 								<div
@@ -268,7 +271,7 @@ const MetricsAggregateSection = memo(function MetricsAggregateSection({
 							<Tooltip
 								title={
 									<div>
-										Set the time interval for aggregation
+										<ConsoleText message={'Set the time interval for aggregation'} />
 										<br />
 										<a
 											href="https://signoz.io/docs/userguide/query-builder-v5/#temporal-aggregation-within-each-time-series"
@@ -276,7 +279,7 @@ const MetricsAggregateSection = memo(function MetricsAggregateSection({
 											rel="noopener noreferrer"
 											style={{ color: '#1890ff', textDecoration: 'underline' }}
 										>
-											Learn about step intervals
+											<ConsoleText message={'Learn about step intervals'} />
 										</a>
 									</div>
 								}
@@ -286,14 +289,14 @@ const MetricsAggregateSection = memo(function MetricsAggregateSection({
 									className="metrics-aggregation-section-content-item-label"
 									style={{ cursor: 'help' }}
 								>
-									every
+									<ConsoleText message={'every'} />
 								</div>
 							</Tooltip>
 
 							<div className="metrics-aggregation-section-content-item-value">
 								<InputWithLabel
 									onChange={handleChangeAggregateEvery}
-									label="Seconds"
+									label={translateInterfaceCopy('Seconds')}
 									placeholder={placeholderOf(QueryBuilderField.StepInterval)}
 									labelAfter
 									initialValue={query?.stepInterval ?? null}

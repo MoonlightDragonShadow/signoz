@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import type { CSSProperties, MouseEvent, ReactNode } from 'react';
 import { memo, useCallback, useEffect, useMemo, useRef } from 'react';
 import { useCopyToClipboard } from 'react-use';
@@ -51,7 +52,8 @@ import {
 import './LogsExplorerList.style.scss';
 
 function Footer(): JSX.Element {
-	return <Spinner height={20} tip="Getting Logs" />;
+	const translateInterfaceCopy = useConsoleTranslation();
+	return <Spinner height={20} tip={translateInterfaceCopy('Getting Logs')} />;
 }
 function LogsExplorerList({
 	isLoading,
@@ -64,6 +66,7 @@ function LogsExplorerList({
 	isFilterApplied,
 	handleChangeSelectedView,
 }: LogsExplorerListProps): JSX.Element {
+	const translateRuntimeCopy = useConsoleTranslation();
 	const ref = useRef<TanStackTableHandle | VirtuosoHandle | null>(null);
 	const [, setCopy] = useCopyToClipboard();
 	const isDarkMode = useIsDarkMode();
@@ -121,9 +124,11 @@ function LogsExplorerList({
 					`${window.location.pathname}?${urlQuery.toString()}`,
 				);
 				setCopy(link);
-				toast.success('Copied to clipboard', { position: 'top-right' });
+				toast.success(translateRuntimeCopy('Copied to clipboard'), {
+					position: 'top-right',
+				});
 			},
-		[setCopy],
+		[setCopy, translateRuntimeCopy],
 	);
 
 	const handleScrollToLog = useScrollToLog({

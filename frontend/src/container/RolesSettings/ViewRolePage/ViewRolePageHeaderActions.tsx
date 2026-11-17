@@ -1,3 +1,5 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import styles from 'container/RolesSettings/ViewRolePage/ViewRolePage.module.scss';
 import { Button } from '@signozhq/ui/button';
 import { Divider } from '@signozhq/ui/divider';
@@ -21,6 +23,7 @@ export function ViewRolePageHeaderActions({
 	handleOpenDeleteModal: () => void;
 	handleRedirectToUpdate: () => void;
 }): JSX.Element {
+	const translate = useConsoleTranslation();
 	const renderDeleteButton = (): JSX.Element => {
 		if (isRoleLoading) {
 			return (
@@ -31,7 +34,7 @@ export function ViewRolePageHeaderActions({
 					loading
 					testId="delete-button"
 				>
-					Delete
+					<ConsoleText message={'Delete'} />
 				</Button>
 			);
 		}
@@ -43,10 +46,10 @@ export function ViewRolePageHeaderActions({
 					variant="link"
 					color="danger"
 					disabled
-					disabledTooltip="Managed roles cannot be deleted"
+					disabledTooltip={translate('Managed roles cannot be deleted')}
 					testId="delete-button"
 				>
-					Delete
+					<ConsoleText message={'Delete'} />
 				</Button>
 			);
 		}
@@ -61,7 +64,7 @@ export function ViewRolePageHeaderActions({
 				onClick={handleOpenDeleteModal}
 				data-testid="delete-button"
 			>
-				Delete
+				<ConsoleText message={'Delete'} />
 			</AuthZButton>
 		);
 	};
@@ -76,7 +79,7 @@ export function ViewRolePageHeaderActions({
 					loading
 					testId="save-button"
 				>
-					Update
+					<ConsoleText message={'Update'} />
 				</Button>
 			);
 		}
@@ -88,10 +91,10 @@ export function ViewRolePageHeaderActions({
 					variant="solid"
 					color="primary"
 					disabled
-					disabledTooltip="Managed roles cannot be updated"
+					disabledTooltip={translate('Managed roles cannot be updated')}
 					testId="save-button"
 				>
-					Update
+					<ConsoleText message={'Update'} />
 				</Button>
 			);
 		}
@@ -109,7 +112,7 @@ export function ViewRolePageHeaderActions({
 				data-testid="save-button"
 				onClick={handleRedirectToUpdate}
 			>
-				Update
+				<ConsoleText message={'Update'} />
 			</AuthZButton>
 		);
 	};

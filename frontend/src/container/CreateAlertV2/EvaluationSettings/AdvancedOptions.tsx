@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Input } from '@signozhq/ui/input';
 import { Collapse } from 'antd';
 import { Typography } from '@signozhq/ui/typography';
@@ -7,6 +8,7 @@ import AdvancedOptionItem from './AdvancedOptionItem';
 import EvaluationCadence from './EvaluationCadence';
 
 function AdvancedOptions(): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const { advancedOptions, setAdvancedOptions } = useCreateAlertState();
 
 	return (
@@ -15,13 +17,15 @@ function AdvancedOptions(): JSX.Element {
 				<Collapse.Panel header="ADVANCED OPTIONS" key="1">
 					<EvaluationCadence />
 					<AdvancedOptionItem
-						title="Alert when data stops coming"
-						description="Send notification if no data is received for a specified time period."
+						title={translateConsole('Alert when data stops coming')}
+						description={translateConsole(
+							'Send notification if no data is received for a specified time period.',
+						)}
 						tooltipText="Useful for monitoring data pipelines or services that should continuously send data. For example, alert if no logs are received for 10 minutes"
 						input={
 							<div className="advanced-option-item-input-group">
 								<Input
-									placeholder="Enter tolerance limit..."
+									placeholder={translateConsole('Enter tolerance limit...')}
 									type="number"
 									style={{ width: 100 }}
 									onChange={(e): void =>
@@ -36,7 +40,7 @@ function AdvancedOptions(): JSX.Element {
 									value={advancedOptions.sendNotificationIfDataIsMissing.toleranceLimit}
 									testId="send-notification-if-data-is-missing-input"
 								/>
-								<Typography.Text>Minutes</Typography.Text>
+								<Typography.Text>{translateConsole('Minutes')}</Typography.Text>
 							</div>
 						}
 						onToggle={(): void =>
@@ -49,13 +53,15 @@ function AdvancedOptions(): JSX.Element {
 						data-testid="send-notification-if-data-is-missing-container"
 					/>
 					<AdvancedOptionItem
-						title="Minimum data required"
-						description="Only trigger alert when there are enough data points to make a reliable decision."
+						title={translateConsole('Minimum data required')}
+						description={translateConsole(
+							'Only trigger alert when there are enough data points to make a reliable decision.',
+						)}
 						tooltipText="Prevents false alarms when there's insufficient data. For example, require at least 5 data points before checking if CPU usage is above 80%."
 						input={
 							<div className="advanced-option-item-input-group">
 								<Input
-									placeholder="Enter minimum datapoints..."
+									placeholder={translateConsole('Enter minimum datapoints...')}
 									style={{ width: 100 }}
 									type="number"
 									onChange={(e): void =>
@@ -69,7 +75,7 @@ function AdvancedOptions(): JSX.Element {
 									value={advancedOptions.enforceMinimumDatapoints.minimumDatapoints}
 									testId="enforce-minimum-datapoints-input"
 								/>
-								<Typography.Text>Datapoints</Typography.Text>
+								<Typography.Text>{translateConsole('Datapoints')}</Typography.Text>
 							</div>
 						}
 						onToggle={(): void =>

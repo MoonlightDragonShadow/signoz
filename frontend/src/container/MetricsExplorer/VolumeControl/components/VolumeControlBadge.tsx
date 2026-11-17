@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Gauge } from '@signozhq/icons';
 import { Tooltip } from 'antd';
 import { MetricreductionruletypesGettableReductionRuleDTO } from 'api/generated/services/sigNoz.schemas';
@@ -9,6 +10,7 @@ interface VolumeControlBadgeProps {
 }
 
 function VolumeControlBadge({ rule }: VolumeControlBadgeProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const badge = (
 		<Badge
 			testId={rule.active ? 'vc-badge-active' : 'vc-badge-pending'}
@@ -25,7 +27,7 @@ function VolumeControlBadge({ rule }: VolumeControlBadgeProps): JSX.Element {
 	}
 
 	return (
-		<Tooltip title="Takes about 5 minutes to take effect">
+		<Tooltip title={translate('Takes about 5 minutes to take effect')}>
 			<span>{badge}</span>
 		</Tooltip>
 	);

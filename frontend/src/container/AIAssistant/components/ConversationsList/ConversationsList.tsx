@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useEffect, useMemo, useState } from 'react';
 import cx from 'classnames';
 import { Button } from '@signozhq/ui/button';
@@ -62,8 +63,13 @@ function groupByDate(
  * load — visible signal of in-flight work without any layout shift.
  */
 function HeaderLoadingDots(): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	return (
-		<span className={styles.loadingDots} role="status" aria-label="Loading">
+		<span
+			className={styles.loadingDots}
+			role="status"
+			aria-label={translateConsole('Loading')}
+		>
 			<span className={styles.loadingDot} />
 			<span className={styles.loadingDot} />
 			<span className={styles.loadingDot} />
@@ -76,6 +82,7 @@ export default function ConversationsList({
 	onNewConversation,
 	showAddNewConversation = false,
 }: ConversationsListProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const variant = useVariant();
 	const conversations = useAIAssistantStore((s) => s.conversations);
 	const activeConversationId = useAIAssistantStore(
@@ -167,17 +174,17 @@ export default function ConversationsList({
 	return (
 		<div className={cx(styles.conversationsList, variantClass)}>
 			<div className={styles.header}>
-				<span className={styles.heading}>Conversations</span>
+				<span className={styles.heading}>{translateConsole('Conversations')}</span>
 				{isLoadingThreads && <HeaderLoadingDots />}
 
 				{!isLoadingThreads && showAddNewConversation && (
-					<Tooltip title="New conversation">
+					<Tooltip title={translateConsole('New conversation')}>
 						<Button
 							variant="solid"
 							size="sm"
 							color="secondary"
 							onClick={onNewConversation}
-							aria-label="New conversation"
+							aria-label={translateConsole('New conversation')}
 							icon
 						>
 							<Plus size={12} />
@@ -191,7 +198,7 @@ export default function ConversationsList({
 					type="text"
 					value={searchQuery}
 					onChange={(e): void => setSearchQuery(e.target.value)}
-					placeholder="Search conversations…"
+					placeholder={translateConsole('Search conversations…')}
 					prefix={<Search size={12} />}
 					className={styles.search}
 				/>
@@ -200,7 +207,7 @@ export default function ConversationsList({
 			<div className={styles.list} aria-busy={isLoadingThreads}>
 				{isLoadingThreads && (
 					<span className={styles.srOnly} role="status">
-						Loading conversations
+						{translateConsole('Loading conversations')}
 					</span>
 				)}
 
@@ -229,7 +236,9 @@ export default function ConversationsList({
 
 				{sortedArchived.length > 0 && (
 					<div className={cx(styles.group, styles.archived)}>
-						<span className={styles.groupLabel}>Archived Conversations</span>
+						<span className={styles.groupLabel}>
+							{translateConsole('Archived Conversations')}
+						</span>
 						{sortedArchived.map((conv) => (
 							<ConversationItem
 								key={conv.id}

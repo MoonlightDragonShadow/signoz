@@ -1,3 +1,5 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Button, Modal } from 'antd';
 import { Typography } from '@signozhq/ui/typography';
 import { Loader, Trash2, X } from '@signozhq/icons';
@@ -10,6 +12,7 @@ function DeleteRoutingPolicy({
 	routingPolicy,
 	isDeletingRoutingPolicy,
 }: DeleteRoutingPolicyProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const deleteButtonIcon = isDeletingRoutingPolicy ? (
 		<Loader size={16} />
 	) : (
@@ -19,7 +22,9 @@ function DeleteRoutingPolicy({
 	return (
 		<Modal
 			className="delete-policy-modal"
-			title={<span className="title">Delete Routing Policy</span>}
+			title={
+				<span className="title">{translateConsole('Delete Routing Policy')}</span>
+			}
 			open
 			closable={false}
 			onCancel={handleClose}
@@ -31,7 +36,7 @@ function DeleteRoutingPolicy({
 					icon={<X size={16} />}
 					disabled={isDeletingRoutingPolicy}
 				>
-					Cancel
+					{translateConsole('Cancel')}
 				</Button>,
 				<Button
 					key="submit"
@@ -41,14 +46,18 @@ function DeleteRoutingPolicy({
 					className="delete-btn"
 					disabled={isDeletingRoutingPolicy}
 				>
-					Delete Routing Policy
+					{translateConsole('Delete Routing Policy')}
 				</Button>,
 			]}
 		>
 			<Typography.Text className="delete-text">
-				Are you sure you want to delete <strong>{routingPolicy?.name}</strong>{' '}
-				routing policy? Deleting a routing policy is irreversible and cannot be
-				undone.
+				<ConsoleText message={'Are you sure you want to delete'} />{' '}
+				<strong>{routingPolicy?.name}</strong>{' '}
+				<ConsoleText
+					message={
+						'routing policy? Deleting a routing policy is irreversible and cannot be undone.'
+					}
+				/>
 			</Typography.Text>
 		</Modal>
 	);

@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useTranslation } from 'react-i18next';
 import { Search } from '@signozhq/icons';
 import { Input, Spin } from 'antd';
@@ -15,6 +16,7 @@ import {
 } from './styles';
 
 function AddColumnField({ config }: AddColumnFieldProps): JSX.Element | null {
+	const translateInterfaceCopy = useConsoleTranslation();
 	const { t } = useTranslation(['trace']);
 	const isDarkMode = useIsDarkMode();
 
@@ -31,7 +33,7 @@ function AddColumnField({ config }: AddColumnFieldProps): JSX.Element | null {
 					loading={config.isFetching}
 					size="small"
 					mode="multiple"
-					placeholder="Search"
+					placeholder={translateInterfaceCopy('Search')}
 					options={config.options}
 					value={[]}
 					onSelect={config.onSelect}

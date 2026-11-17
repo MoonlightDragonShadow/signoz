@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { memo, useEffect } from 'react';
 import { useAppParams } from 'lib/router/useAppParams';
 import Spinner from 'components/Spinner';
@@ -13,6 +14,7 @@ function ApDexApplication({
 	topLevelOperationsRoute,
 	tagFilterItems,
 }: ApDexApplicationProps): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
 	const { servicename: encodedServiceName } = useAppParams<'servicename'>();
 	const servicename = decodeURIComponent(encodedServiceName || '');
 	const { notifications } = useNotifications();
@@ -32,7 +34,7 @@ function ApDexApplication({
 	if (isLoading || isRefetching) {
 		return (
 			<Card>
-				<Spinner height="40vh" tip="Loading..." />
+				<Spinner height="40vh" tip={translateInterfaceCopy('Loading...')} />
 			</Card>
 		);
 	}

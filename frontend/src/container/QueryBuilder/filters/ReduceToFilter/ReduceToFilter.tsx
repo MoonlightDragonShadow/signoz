@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { memo, useEffect, useState } from 'react';
 import { Select } from 'antd';
 import { REDUCE_TO_VALUES } from 'constants/queryBuilder';
@@ -12,6 +13,7 @@ export const ReduceToFilter = memo(function ReduceToFilter({
 	query,
 	onChange,
 }: ReduceToFilterProps): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
 	const [currentValue, setCurrentValue] = useState<
 		SelectOption<ReduceOperators, string>
 	>(REDUCE_TO_VALUES[2]);
@@ -39,7 +41,7 @@ export const ReduceToFilter = memo(function ReduceToFilter({
 
 	return (
 		<Select
-			placeholder="Reduce to"
+			placeholder={translateInterfaceCopy('Reduce to')}
 			style={{ width: '100%' }}
 			options={REDUCE_TO_VALUES}
 			value={currentValue}

@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import {
 	type ChangeEvent,
 	type ReactElement,
@@ -64,6 +65,7 @@ function ViewsRail({
 	onDelete,
 	onRename,
 }: Props): JSX.Element {
+	const translate = useConsoleTranslation();
 	const [saveOpen, setSaveOpen] = useState(false);
 	const [renamingId, setRenamingId] = useState<string | null>(null);
 	const [query, setQuery] = useState('');
@@ -88,12 +90,14 @@ function ViewsRail({
 			confirmDelete({
 				title: (
 					<Typography.Title level={5}>
-						Delete the{' '}
+						{translate('Delete the')}{' '}
 						<Typography.Text className={styles.deleteName}>{label}</Typography.Text>{' '}
-						view?
+						{translate('view?')}
 					</Typography.Title>
 				),
-				content: 'This removes the saved view. Your dashboards are not affected.',
+				content: translate(
+					'This removes the saved view. Your dashboards are not affected.',
+				),
 				// Return the delete promise so the modal's Delete button stays loading
 				// until the backend call settles, then closes — matching dashboard delete.
 				onConfirm: (): Promise<void> => {
@@ -102,7 +106,7 @@ function ViewsRail({
 				},
 			});
 		},
-		[confirmDelete, onDelete],
+		[confirmDelete, onDelete, translate],
 	);
 
 	const handleSaveAsView = (name: string): void => {
@@ -130,7 +134,7 @@ function ViewsRail({
 					prefix={<Icon size={16} className={styles.itemIcon} />}
 					suffix={
 						active && isModified ? (
-							<div className={styles.dirtyDot} title="Unsaved changes" />
+							<div className={styles.dirtyDot} title={translate('Unsaved changes')} />
 						) : undefined
 					}
 				>
@@ -145,31 +149,31 @@ function ViewsRail({
 								void logEvent(DashboardListEvents.ViewRenamed, {});
 								onRename(row.id, name);
 							}}
-							title="Rename view"
+							title={translate('Rename view')}
 							confirmLabel="Rename"
 							initialName={row.label}
 							testIdPrefix="rename-view"
-							tooltip="Rename view"
+							tooltip={translate('Rename view')}
 							trigger={
 								<Button
 									variant="ghost"
 									color="secondary"
 									size="sm"
 									icon
-									aria-label="Rename view"
+									aria-label={translate('Rename view')}
 									onClick={(e): void => e.stopPropagation()}
 								>
 									<PenLine size={12} />
 								</Button>
 							}
 						/>
-						<Tooltip title="Delete view">
+						<Tooltip title={translate('Delete view')}>
 							<Button
 								variant="ghost"
 								color="secondary"
 								size="sm"
 								icon
-								aria-label="Delete view"
+								aria-label={translate('Delete view')}
 								onClick={(e): void => {
 									e.stopPropagation();
 									onConfirmDelete(row.id, row.label);
@@ -197,18 +201,18 @@ function ViewsRail({
 			>
 				<>
 					<div className={styles.header}>
-						<h4 className={styles.headerTitle}>Views</h4>
+						<h4 className={styles.headerTitle}>{translate('Views')}</h4>
 						<ViewNamePopover
 							open={saveOpen}
 							onOpenChange={setSaveOpen}
 							onSubmit={handleSaveAsView}
-							title="Save as view"
+							title={translate('Save as view')}
 							confirmLabel="Save view"
 							testIdPrefix="save-view"
-							tooltip="Save current filters as a view"
+							tooltip={translate('Save current filters as a view')}
 							trigger={
 								<Button
-									aria-label="Save current filters as a view"
+									aria-label={translate('Save current filters as a view')}
 									variant="ghost"
 									color="secondary"
 									size="sm"
@@ -224,7 +228,7 @@ function ViewsRail({
 					<div className={styles.search}>
 						<Input
 							value={query}
-							placeholder="Filter views by name"
+							placeholder={translate('Filter views by name')}
 							prefix={<Search size={12} />}
 							testId="dashboards-view-search"
 							onChange={(e: ChangeEvent<HTMLInputElement>): void =>
@@ -236,7 +240,7 @@ function ViewsRail({
 					<div className={styles.scroll}>
 						{personal.length > 0 && (
 							<>
-								<div className={styles.groupLabel}>Personal</div>
+								<div className={styles.groupLabel}>{translate('Personal')}</div>
 								{personal.map((v) => renderItem(v))}
 							</>
 						)}
@@ -244,7 +248,7 @@ function ViewsRail({
 						{system.length > 0 && (
 							<>
 								<div className={cx(styles.groupLabel, styles.groupLabelSpaced)}>
-									System
+									{translate('System')}
 								</div>
 								{system.map((v) => renderItem(v))}
 							</>
@@ -253,16 +257,18 @@ function ViewsRail({
 						{(!q || custom.length > 0) && (
 							<>
 								<div className={cx(styles.groupLabel, styles.groupLabelSpaced)}>
-									My views
+									{translate('My views')}
 									<Typography.Text className={styles.groupCount}>
 										{customViews.length}
 									</Typography.Text>
 								</div>
 								{customViewsLoading ? (
-									<div className={styles.empty}>Loading views…</div>
+									<div className={styles.empty}>{translate('Loading views…')}</div>
 								) : customViews.length === 0 ? (
 									<div className={styles.empty}>
-										No saved views yet. Filter the list, then save it as a view.
+										{translate(
+											'No saved views yet. Filter the list, then save it as a view.',
+										)}
 									</div>
 								) : (
 									custom.map((v) =>
@@ -279,14 +285,14 @@ function ViewsRail({
 
 						{noMatches && (
 							<div className={styles.searchEmpty}>
-								No views match &ldquo;{query}&rdquo;
+								{translate('No views match')} &ldquo;{query}&rdquo;
 							</div>
 						)}
 					</div>
 
 					{isCustomActive && isModified && (
 						<div className={styles.dirtyPanel}>
-							<div className={styles.dirtyTitle}>Unsaved changes</div>
+							<div className={styles.dirtyTitle}>{translate('Unsaved changes')}</div>
 							<div className={styles.dirtyActions}>
 								<Button
 									variant="solid"
@@ -295,7 +301,7 @@ function ViewsRail({
 									onClick={handleSaveViewChanges}
 									testId="dashboards-view-save-changes"
 								>
-									Save
+									{translate('Save')}
 								</Button>
 								<Button
 									variant="outlined"
@@ -303,10 +309,10 @@ function ViewsRail({
 									size="sm"
 									onClick={(): void => setSaveOpen(true)}
 								>
-									Save as…
+									{translate('Save as…')}
 								</Button>
 								<Button variant="ghost" color="secondary" size="sm" onClick={onReset}>
-									Reset
+									{translate('Reset')}
 								</Button>
 							</div>
 						</div>
@@ -314,7 +320,7 @@ function ViewsRail({
 
 					{!isCustomActive && isModified && (
 						<div className={cx(styles.dirtyPanel, styles.dirtyPanelDefault)}>
-							<div className={styles.dirtyTitle}>Filters active</div>
+							<div className={styles.dirtyTitle}>{translate('Filters active')}</div>
 							<div className={styles.dirtyActions}>
 								<Button
 									variant="solid"
@@ -324,10 +330,10 @@ function ViewsRail({
 									onClick={(): void => setSaveOpen(true)}
 									testId="dashboards-view-save-as-new"
 								>
-									Save as new view
+									{translate('Save as new view')}
 								</Button>
 								<Button variant="ghost" color="secondary" size="sm" onClick={onReset}>
-									Reset
+									{translate('Reset')}
 								</Button>
 							</div>
 						</div>

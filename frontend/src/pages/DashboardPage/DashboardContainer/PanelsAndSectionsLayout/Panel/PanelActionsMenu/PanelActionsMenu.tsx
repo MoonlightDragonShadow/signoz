@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { EllipsisVertical } from '@signozhq/icons';
 import { Button } from '@signozhq/ui/button';
 import type { DashboardtypesPanelDTO } from 'api/generated/services/sigNoz.schemas';
@@ -29,6 +30,7 @@ function PanelActionsMenu({
 	data,
 	panelActions,
 }: PanelActionsMenuProps): JSX.Element | null {
+	const translate = useConsoleTranslation();
 	const { items, deleteConfirm } = usePanelActionItems({
 		panelId,
 		panel,
@@ -55,15 +57,17 @@ function PanelActionsMenu({
 					color="secondary"
 					size="sm"
 					icon
-					aria-label="Panel actions"
+					aria-label={translate('Panel actions')}
 				>
 					<EllipsisVertical size={14} />
 				</Button>
 			</AuthZDropdown>
 			<ConfirmDeleteDialog
 				open={deleteConfirm.open}
-				title="Delete panel?"
-				description="This panel will be removed from the dashboard. This action cannot be undone."
+				title={translate('Delete panel?')}
+				description={translate(
+					'This panel will be removed from the dashboard. This action cannot be undone.',
+				)}
 				isLoading={deleteConfirm.isPending}
 				onConfirm={deleteConfirm.confirm}
 				onClose={deleteConfirm.cancel}

@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useMemo, useRef } from 'react';
 import { ChartScatter } from '@signozhq/icons';
 import {
@@ -53,6 +54,7 @@ function ScatterPlotPanelRenderer({
 }: PanelRendererProps<'signoz/ScatterPlotPanel'>): JSX.Element {
 	const graphRef = useRef<HTMLDivElement>(null);
 	const containerDimensions = useResizeObserver(graphRef);
+	const translate = useConsoleTranslation();
 	const isDarkMode = useIsDarkMode();
 
 	const spec = useMemo<DashboardtypesScatterPlotPanelSpecDTO>(
@@ -85,7 +87,11 @@ function ScatterPlotPanelRenderer({
 		[builderQueries],
 	);
 
-	const emptyMessage = getScatterPlotEmptyMessage(scatterData, groupByMismatch);
+	const emptyMessage = getScatterPlotEmptyMessage(
+		scatterData,
+		groupByMismatch,
+		translate,
+	);
 
 	const readyData =
 		scatterData.status === ScatterPlotDataStatus.Ready &&

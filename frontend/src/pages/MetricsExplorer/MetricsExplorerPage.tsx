@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useMemo } from 'react';
 import { useLocation } from 'react-use';
 import cx from 'classnames';
@@ -10,17 +11,26 @@ import { useQueryBuilder } from 'hooks/queryBuilder/useQueryBuilder';
 import { useShareBuilderUrl } from 'hooks/queryBuilder/useShareBuilderUrl';
 import { DataSource } from 'types/common/queryBuilder';
 
-import { Explorer, Summary, VolumeControl } from './constants';
+import {
+	getExplorerRoute,
+	getSummaryRoute,
+	getVolumeControlRoute,
+} from './constants';
 
 import './MetricsExplorerPage.styles.scss';
 
 function MetricsExplorerPage(): JSX.Element {
+	const translate = useConsoleTranslation();
 	const { pathname } = useLocation();
 	const { isVolumeControlEnabled } = useVolumeControlFeatureGate();
 
 	const routes: TabRoutes[] = useMemo(
-		() => [Summary, ...(isVolumeControlEnabled ? [VolumeControl] : []), Explorer],
-		[isVolumeControlEnabled],
+		() => [
+			getSummaryRoute(translate),
+			...(isVolumeControlEnabled ? [getVolumeControlRoute(translate)] : []),
+			getExplorerRoute(translate),
+		],
+		[isVolumeControlEnabled, translate],
 	);
 
 	const { updateAllQueriesOperators } = useQueryBuilder();

@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@signozhq/ui/button';
 import { Check, X } from '@signozhq/icons';
@@ -18,6 +19,7 @@ function UnsavedChangesFooter({
 	onDiscard,
 	onSave,
 }: UnsavedChangesFooterProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const { t } = useTranslation('common');
 
 	return (
@@ -25,8 +27,7 @@ function UnsavedChangesFooter({
 			<div className={styles.unsaved}>
 				<div className={styles.unsavedDot} />
 				<Typography.Text className={styles.unsavedChanges}>
-					{count} unsaved change
-					{count > 1 && 's'}
+					{count} {translate(count > 1 ? 'unsaved changes' : 'unsaved change')}
 				</Typography.Text>
 			</div>
 			<div className={styles.footerActionButtons}>
@@ -38,7 +39,7 @@ function UnsavedChangesFooter({
 					prefix={<X size={14} />}
 					onClick={onDiscard}
 				>
-					Discard
+					{translate('Discard')}
 				</Button>
 				<Button
 					size="md"

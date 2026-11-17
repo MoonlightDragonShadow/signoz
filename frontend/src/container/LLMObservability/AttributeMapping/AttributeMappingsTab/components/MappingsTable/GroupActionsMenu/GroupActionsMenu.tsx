@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useMemo } from 'react';
 import { EllipsisVertical, Pencil, Trash2 } from '@signozhq/icons';
 import { Button } from '@signozhq/ui/button';
@@ -16,19 +17,21 @@ function GroupActionsMenu({
 	onEdit,
 	onRemove,
 }: GroupActionsMenuProps): JSX.Element {
+	const translateInterfaceCopy = useConsoleTranslation();
+	const translateConsole = useConsoleTranslation();
 	const menuItems = useMemo<DropdownItemType[]>(
 		() => [
 			{
 				type: 'item',
 				value: 'edit',
-				label: 'Edit',
+				label: translateInterfaceCopy('Edit'),
 				prefix: <Pencil size={14} />,
 				onClick: (): void => onEdit(group),
 			},
 			{
 				type: 'item',
 				value: 'delete',
-				label: 'Delete',
+				label: translateInterfaceCopy('Delete'),
 				danger: true,
 				prefix: <Trash2 size={14} />,
 				onClick: (): void => onRemove(group.localId),
@@ -44,7 +47,7 @@ function GroupActionsMenu({
 				color="secondary"
 				size="sm"
 				icon
-				aria-label="Group actions"
+				aria-label={translateConsole('Group actions')}
 				testId={`group-actions-${group.localId}`}
 			>
 				<EllipsisVertical size={16} />

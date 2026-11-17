@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useMemo } from 'react';
 import { ChevronUp, Plus } from '@signozhq/icons';
 import { Button } from '@signozhq/ui/button';
@@ -26,12 +27,13 @@ function AddPanelSplitButton({
 	onConfirm,
 	disabled,
 }: AddPanelSplitButtonProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const items = useMemo<DropdownItemType[]>(
 		() => [
 			{
 				type: 'group',
 				value: 'sections',
-				label: 'Add to section',
+				label: translate('Add to section'),
 				items: [
 					{
 						type: 'radio-group',
@@ -40,7 +42,7 @@ function AddPanelSplitButton({
 						onChange,
 						items: options.map((option) => ({
 							value: option.value,
-							label: option.label,
+							label: option.isRoot ? translate(option.label) : option.label,
 							testId: `panel-section-option-${option.value}`,
 						})),
 					},
@@ -50,13 +52,13 @@ function AddPanelSplitButton({
 			{
 				type: 'item',
 				value: 'create',
-				label: 'New section',
+				label: translate('New section'),
 				prefix: <Plus size={14} />,
 				onClick: onCreate,
 				testId: 'panel-section-create',
 			},
 		],
-		[options, value, onChange, onCreate],
+		[translate, options, value, onChange, onCreate],
 	);
 
 	return (
@@ -67,7 +69,7 @@ function AddPanelSplitButton({
 				size="md"
 				onClick={onConfirm}
 				disabled={disabled}
-				disabledTooltip="Name the new section first"
+				disabledTooltip={translate('Name the new section first')}
 				testId="panel-type-confirm"
 			>
 				{label}
@@ -84,7 +86,7 @@ function AddPanelSplitButton({
 					color="primary"
 					size="md"
 					icon
-					aria-label="Choose section"
+					aria-label={translate('Choose section')}
 				>
 					<ChevronUp size={16} />
 				</Button>

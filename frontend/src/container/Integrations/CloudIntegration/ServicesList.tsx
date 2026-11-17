@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useEffect, useMemo } from 'react';
 import { useAppNavigate } from 'lib/router/useAppNavigate';
 import { Skeleton } from 'antd';
@@ -22,6 +23,7 @@ function ServicesList({
 	cloudAccountId,
 	type,
 }: ServicesListProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const urlQuery = useUrlQuery();
 	const navigate = useAppNavigate();
 	const isAccountConnected = Boolean(cloudAccountId);
@@ -120,7 +122,7 @@ function ServicesList({
 					alt="no-services-found"
 					className="empty-state-svg"
 				/>{' '}
-				No services found
+				{translateConsole('No services found')}
 			</div>
 		);
 	}
@@ -158,13 +160,13 @@ function ServicesList({
 				<div className="aws-services-list-view-sidebar-content">
 					<div className="aws-services-enabled" data-testid="cloud-services-enabled">
 						<div className="aws-services-list-view-sidebar-content-header">
-							Enabled
+							{translateConsole('Enabled')}
 						</div>
 						{enabledServices.map((service) => renderServiceItem(service))}
 
 						{isEnabledServicesEmpty && (
 							<div className="aws-services-list-view-sidebar-content-item-empty-message">
-								No enabled services
+								{translateConsole('No enabled services')}
 							</div>
 						)}
 					</div>
@@ -175,7 +177,7 @@ function ServicesList({
 							data-testid="cloud-services-not-enabled"
 						>
 							<div className="aws-services-list-view-sidebar-content-header">
-								Not Enabled
+								{translateConsole('Not Enabled')}
 							</div>
 							{notEnabledServices.map((service) => renderServiceItem(service))}
 						</div>

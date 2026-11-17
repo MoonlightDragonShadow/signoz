@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { useEffect, useState } from 'react';
 import { Select } from 'antd';
 import { getCurrentLocation, navigate } from 'lib/router/navigation';
@@ -5,6 +6,7 @@ import logEvent from 'api/common/logEvent';
 import { QueryParams } from 'constants/query';
 import ROUTES from 'constants/routes';
 import DateTimeSelectionV2 from 'container/TopNav/DateTimeSelectionV2';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import useUrlQuery from 'hooks/useUrlQuery';
 import { isModifierKeyPressed } from 'utils/app';
 import { openInNewTab } from 'utils/navigation';
@@ -24,6 +26,7 @@ import MessagingQueuesGraph from '../MQGraph/MQGraph';
 import '../MessagingQueues.styles.scss';
 
 function MQDetailPage(): JSX.Element {
+	const translate = useConsoleTranslation();
 	const [selectedView, setSelectedView] =
 		useState<MessagingQueuesViewTypeOptions>(
 			MessagingQueuesViewType.consumerLag.value,
@@ -85,7 +88,7 @@ function MQDetailPage(): JSX.Element {
 						role="button"
 						tabIndex={0}
 					>
-						Kafka / views /
+						<ConsoleText message={'Kafka / views /'} />
 					</div>
 					<Select
 						data-testid="mq-view-select"
@@ -99,23 +102,23 @@ function MQDetailPage(): JSX.Element {
 						value={selectedView}
 						options={[
 							{
-								label: MessagingQueuesViewType.consumerLag.label,
+								label: translate(MessagingQueuesViewType.consumerLag.label),
 								value: MessagingQueuesViewType.consumerLag.value,
 							},
 							{
-								label: MessagingQueuesViewType.partitionLatency.label,
+								label: translate(MessagingQueuesViewType.partitionLatency.label),
 								value: MessagingQueuesViewType.partitionLatency.value,
 							},
 							{
-								label: MessagingQueuesViewType.producerLatency.label,
+								label: translate(MessagingQueuesViewType.producerLatency.label),
 								value: MessagingQueuesViewType.producerLatency.value,
 							},
 							{
-								label: MessagingQueuesViewType.dropRate.label,
+								label: translate(MessagingQueuesViewType.dropRate.label),
 								value: MessagingQueuesViewType.dropRate.value,
 							},
 							{
-								label: MessagingQueuesViewType.metricPage.label,
+								label: translate(MessagingQueuesViewType.metricPage.label),
 								value: MessagingQueuesViewType.metricPage.value,
 							},
 						]}

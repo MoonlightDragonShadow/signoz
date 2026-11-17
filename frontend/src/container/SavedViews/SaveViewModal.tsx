@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { FormEvent, useState } from 'react';
 import { Check, X } from '@signozhq/icons';
 import { Button } from '@signozhq/ui/button';
@@ -19,6 +20,7 @@ function SaveViewModal({
 	onClose,
 	onSave,
 }: SaveViewModalProps): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const [name, setName] = useState(initialName);
 	const displayName = name.trim();
 
@@ -56,7 +58,7 @@ function SaveViewModal({
 						onClick={onClose}
 						testId="save-view-cancel"
 					>
-						Cancel
+						{translateConsole('Cancel')}
 					</Button>
 					<Button
 						variant="solid"
@@ -65,24 +67,26 @@ function SaveViewModal({
 						prefix={<Check size={14} />}
 						loading={isSaving}
 						disabled={!displayName}
-						disabledTooltip="Enter a view name"
+						disabledTooltip={translateConsole('Enter a view name')}
 						onClick={(): void => {
 							void handleSave();
 						}}
 						testId="save-view-submit"
 					>
-						Save view
+						{translateConsole('Save view')}
 					</Button>
 				</div>
 			}
 		>
 			<form className={styles.field} onSubmit={handleSubmit}>
 				<label htmlFor={NAME_INPUT_ID}>
-					<Typography.Text className={styles.label}>Enter view name</Typography.Text>
+					<Typography.Text className={styles.label}>
+						{translateConsole('Enter view name')}
+					</Typography.Text>
 				</label>
 				<Input
 					id={NAME_INPUT_ID}
-					placeholder="Eg. payments-view"
+					placeholder={translateConsole('Eg. payments-view')}
 					value={name}
 					onChange={(event): void => setName(event.target.value)}
 					autoFocus

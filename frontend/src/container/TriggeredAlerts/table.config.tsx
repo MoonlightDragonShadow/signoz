@@ -11,12 +11,13 @@ import type { Alert, GroupedAlert } from './types';
 import { GroupTagsCell } from 'container/TriggeredAlerts/components/GroupTagsCell';
 
 export function getAlertColumns(
+	translateConsole: (message: string) => string,
 	formatTimezoneAdjustedTimestamp: (date: string, format: string) => string,
 ): TableColumnDef<Alert>[] {
 	return [
 		{
 			id: 'status',
-			header: 'Status',
+			header: translateConsole('Status'),
 			accessorFn: (row) => row.status?.state,
 			width: { fixed: '130px' },
 			enableSort: false,
@@ -30,7 +31,7 @@ export function getAlertColumns(
 		},
 		{
 			id: 'alertName',
-			header: 'Alert Name',
+			header: translateConsole('Alert Name'),
 			accessorFn: (row) => row.labels?.alertname ?? '',
 			width: { default: '100%' },
 			enableSort: true,
@@ -46,7 +47,7 @@ export function getAlertColumns(
 		},
 		{
 			id: 'severity',
-			header: 'Severity',
+			header: translateConsole('Severity'),
 			accessorFn: (row) => row.labels?.severity ?? '',
 			width: { fixed: '120px' },
 			enableSort: true,
@@ -71,7 +72,7 @@ export function getAlertColumns(
 		},
 		{
 			id: 'firingSince',
-			header: 'Firing Since',
+			header: translateConsole('Firing Since'),
 			accessorKey: 'startsAt',
 			width: { min: 280, default: 280 },
 			enableSort: true,
@@ -86,7 +87,7 @@ export function getAlertColumns(
 		},
 		{
 			id: 'labels',
-			header: 'Labels',
+			header: translateConsole('Labels'),
 			accessorKey: 'labels',
 			width: { default: '100%' },
 			enableMove: false,
@@ -109,13 +110,15 @@ export function getAlertColumns(
 	];
 }
 
-export const groupedColumns: TableColumnDef<GroupedAlert>[] = [
+export const getGroupedColumns = (
+	translateConsole: (message: string) => string,
+): TableColumnDef<GroupedAlert>[] => [
 	{
 		id: 'groupTags',
 		header: (): JSX.Element => (
 			<div className={styles.groupHeader}>
 				<BellDot size={14} />
-				<span>Group</span>
+				<span>{translateConsole('Group')}</span>
 			</div>
 		),
 		accessorFn: (row) => row.groupKey,
@@ -135,7 +138,7 @@ export const groupedColumns: TableColumnDef<GroupedAlert>[] = [
 	},
 	{
 		id: 'alertCount',
-		header: 'Alerts',
+		header: translateConsole('Alerts'),
 		accessorFn: (row) => row.alerts.length,
 		width: { min: 80, default: 100 },
 		enableMove: false,

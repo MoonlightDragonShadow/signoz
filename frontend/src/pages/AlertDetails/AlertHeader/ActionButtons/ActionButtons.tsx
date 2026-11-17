@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback, useEffect, useState } from 'react';
 import { Color } from '@signozhq/design-tokens';
 import { Button, Tooltip } from 'antd';
@@ -29,6 +30,7 @@ function AlertActionButtons({
 	ruleId: string;
 	alertDetails: AlertHeaderProps['alertDetails'];
 }): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const { alertRuleState, setAlertRuleState, alertRuleName, setAlertRuleName } =
 		useAlertRule();
 	const [intermediateName, setIntermediateName] = useState<string>(
@@ -62,7 +64,7 @@ function AlertActionButtons({
 		menuItems.push({
 			type: 'item',
 			value: 'rename-rule',
-			label: 'Rename',
+			label: translateConsole('Rename'),
 			prefix: <PenLine size={16} color={Color.BG_VANILLA_400} />,
 			onClick: handleRename,
 		});
@@ -71,14 +73,14 @@ function AlertActionButtons({
 		{
 			type: 'item',
 			value: 'clone-rule',
-			label: 'Clone',
+			label: translateConsole('Clone'),
 			prefix: <Copy size={16} color={Color.BG_VANILLA_400} />,
 			onClick: handleAlertClone,
 		},
 		{
 			type: 'item',
 			value: 'delete-rule',
-			label: 'Delete',
+			label: translateConsole('Delete'),
 			prefix: <Trash2 size={16} color={Color.BG_CHERRY_400} />,
 			onClick: handleAlertDelete,
 			danger: true,
@@ -130,7 +132,7 @@ function AlertActionButtons({
 
 				<Divider type="vertical" className="alert-action-buttons__divider" />
 
-				<Tooltip title="More options">
+				<Tooltip title={translateConsole('More options')}>
 					<span className="dropdown-trigger-wrapper">
 						<Dropdown items={menuItems} nativeButton align="end" side="bottom">
 							<Button

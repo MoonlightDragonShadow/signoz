@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { useCallback } from 'react';
 import { Button } from 'antd';
 import ROUTES from 'constants/routes';
@@ -31,11 +32,16 @@ function ErrorBoundaryFallback(): JSX.Element {
 				<div className="error-icon">
 					<img src={cloudUrl} alt="error-cloud-icon" />
 				</div>
-				<div className="title">Something went wrong :/</div>
+				<div className="title">
+					<ConsoleText message={'Something went wrong :/'} />
+				</div>
 
 				<div className="description">
-					Our team is getting on top to resolve this. Please reach out to support if
-					the issue persists.
+					<ConsoleText
+						message={
+							'Our team is getting on top to resolve this. Please reach out to support if the issue persists.'
+						}
+					/>
 				</div>
 
 				<div className="actions">
@@ -45,7 +51,7 @@ function ErrorBoundaryFallback(): JSX.Element {
 						icon={<Home size={16} />}
 						className="periscope-btn primary"
 					>
-						Go to Home
+						<ConsoleText message={'Go to Home'} />
 					</Button>
 
 					<Button
@@ -54,7 +60,7 @@ function ErrorBoundaryFallback(): JSX.Element {
 						onClick={handleSupport}
 						icon={<LifeBuoy size={16} />}
 					>
-						Contact Support
+						<ConsoleText message={'Contact Support'} />
 					</Button>
 				</div>
 			</div>

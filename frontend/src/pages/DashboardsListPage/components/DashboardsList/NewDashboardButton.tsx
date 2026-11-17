@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { Plus } from '@signozhq/icons';
 import AuthZButton from 'lib/authz/components/AuthZButton/AuthZButton';
 import { DashboardCreatePermission } from 'lib/authz/hooks/useAuthZ/permissions/dashboard.permissions';
@@ -9,6 +10,7 @@ interface Props {
 }
 
 function NewDashboardButton({ onClick }: Props): JSX.Element {
+	const translate = useConsoleTranslation();
 	return (
 		<AuthZButton
 			size="md"
@@ -19,7 +21,7 @@ function NewDashboardButton({ onClick }: Props): JSX.Element {
 			onClick={onClick}
 			testId="new-dashboard-cta"
 		>
-			New dashboard
+			{translate('New dashboard')}
 		</AuthZButton>
 	);
 }

@@ -9,14 +9,16 @@ import { AlertRuleTimelineTableResponse } from 'types/api/alerts/def';
 
 export const timelineTableColumns = ({
 	formatTimezoneAdjustedTimestamp,
+	translateConsole,
 }: {
+	translateConsole: (message: string) => string;
 	formatTimezoneAdjustedTimestamp: (
 		input: TimestampInput,
 		format?: string,
 	) => string;
 }): ColumnsType<AlertRuleTimelineTableResponse> => [
 	{
-		title: 'STATE',
+		title: translateConsole('STATE'),
 		dataIndex: 'state',
 		sorter: true,
 		width: 140,
@@ -25,14 +27,14 @@ export const timelineTableColumns = ({
 		),
 	},
 	{
-		title: 'LABELS',
+		title: translateConsole('LABELS'),
 		dataIndex: 'labels',
 		render: (labels): JSX.Element => (
 			<AlertLabels labels={labels} testId="timeline-row-labels" />
 		),
 	},
 	{
-		title: 'CREATED AT',
+		title: translateConsole('CREATED AT'),
 		dataIndex: 'unixMilli',
 		width: 200,
 		render: (value): JSX.Element => (
@@ -45,13 +47,13 @@ export const timelineTableColumns = ({
 		),
 	},
 	{
-		title: 'ACTIONS',
+		title: translateConsole('ACTIONS'),
 		width: 140,
 		align: 'right',
 		render: (_, record): JSX.Element => {
 			if (!record.relatedTracesLink && !record.relatedLogsLink) {
 				return (
-					<Tooltip title="No links available for this item">
+					<Tooltip title={translateConsole('No links available for this item')}>
 						<Button type="text" ghost disabled data-testid="timeline-row-actions">
 							<Ellipsis className="dropdown-icon" size="md" />
 						</Button>

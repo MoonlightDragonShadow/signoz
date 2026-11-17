@@ -1,0 +1,13 @@
+{
+  "workspaceSuspended": "工作区已锁定",
+  "gotQuestions": "有疑问？",
+  "contactUs": "联系我们",
+  "actionHeader": "支付后继续",
+  "actionDescription": "立即支付以继续使用现有功能。",
+  "yourDataIsSafe": "数据将安全保留至",
+  "actNow": "请尽快处理以免服务中断，并继续之前的工作。",
+  "contactAdmin": "请联系管理员完成升级。",
+  "continueMyJourney": "结清账单后继续",
+  "somethingWentWrong": "出了点问题",
+  "refreshPaymentStatus": "刷新状态"
+}

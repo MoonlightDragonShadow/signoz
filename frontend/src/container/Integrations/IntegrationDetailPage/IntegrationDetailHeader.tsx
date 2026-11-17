@@ -1,3 +1,5 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useState } from 'react';
 import { useMutation } from 'react-query';
 import { Button, Modal, Skeleton, Tooltip } from 'antd';
@@ -33,6 +35,7 @@ interface IntegrationDetailHeaderProps {
 function IntegrationDetailHeader(
 	props: IntegrationDetailHeaderProps,
 ): JSX.Element {
+	const translateConsole = useConsoleTranslation();
 	const {
 		id,
 		title,
@@ -246,7 +249,7 @@ function IntegrationDetailHeader(
 						<>
 							<div className="data-info">
 								<Typography.Text className="last-data">
-									Last recieved from
+									{translateConsole('Last recieved from')}
 								</Typography.Text>
 								<div className="connection-line" />
 								<Tooltip
@@ -261,7 +264,7 @@ function IntegrationDetailHeader(
 							</div>
 							<div className="data-info">
 								<Typography.Text className="last-data">
-									Last recieved at
+									{translateConsole('Last recieved at')}
 								</Typography.Text>
 								<div className="connection-line" />
 								<Tooltip
@@ -294,26 +297,30 @@ function IntegrationDetailHeader(
 					) : connectionState === ConnectionStates.TestingConnection ? (
 						<div className="data-test-connection">
 							<div className="last-data">
-								We have not received data from your {title} Instance yet. You need to
-								manually configure your {title} instance to start sending data to
-								SigNoz.
+								<ConsoleText message={'We have not received data from your'} /> {title}{' '}
+								<ConsoleText
+									message={'Instance yet. You need to manually configure your'}
+								/>{' '}
+								{title}{' '}
+								<ConsoleText message={'instance to start sending data to SigNoz.'} />
 							</div>
 							<div className="last-data">
-								If you have already configured your resources to send data, sit tight
-								and wait for the data to flow in, Or else, see the steps to configure
-								your resources to start sending data.
+								{translateConsole(
+									'If you have already configured your resources to send data, sit tight and wait for the data to flow in, Or else, see the steps to configure your resources to start sending data.',
+								)}
 							</div>
 						</div>
 					) : isConnectionStateNotInstalled ? (
 						<div className="data-test-connection">
 							<div className="last-data">
-								You would need to manually configure your {title} instance to start
-								sending data to SigNoz.
+								<ConsoleText message={'You would need to manually configure your'} />{' '}
+								{title}{' '}
+								<ConsoleText message={'instance to start sending data to SigNoz.'} />
 							</div>
 							<div className="last-data">
-								If you have already configured your resources to send data, sit tight
-								and wait for the data to flow in, Or else, see the steps to configure
-								your resources to start sending data.
+								{translateConsole(
+									'If you have already configured your resources to send data, sit tight and wait for the data to flow in, Or else, see the steps to configure your resources to start sending data.',
+								)}
 							</div>
 						</div>
 					) : null}

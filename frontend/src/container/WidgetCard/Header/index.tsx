@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { ReactNode, useCallback, useMemo, useState } from 'react';
 import { UseQueryResult } from 'react-query';
 import {
@@ -87,6 +88,7 @@ function WidgetHeader({
 	tableProcessedDataRef,
 	setSearchTerm,
 }: IWidgetHeaderProps): JSX.Element | null {
+	const translateInterfaceCopy = useConsoleTranslation();
 	const urlQuery = useUrlQuery();
 	const { safeNavigate } = useSafeNavigate();
 	const onEditHandler = useCallback((): void => {
@@ -225,7 +227,7 @@ function WidgetHeader({
 			{showGlobalSearch ? (
 				<Input
 					addonBefore={<Search size={14} />}
-					placeholder="Search..."
+					placeholder={translateInterfaceCopy('Search...')}
 					bordered={false}
 					data-testid="widget-header-search-input"
 					addonAfter={

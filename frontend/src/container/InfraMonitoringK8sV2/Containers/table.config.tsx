@@ -1,3 +1,4 @@
+import ConsoleText from 'components/ConsoleText/ConsoleText';
 import { Box } from '@signozhq/icons';
 import { Badge } from '@signozhq/ui/badge';
 import {
@@ -118,7 +119,7 @@ export const k8sContainerColumnsConfig: ContainerTableColumnConfig[] = [
 		id: 'podName',
 		header: (): React.ReactNode => (
 			<ColumnHeader docPath={`${CONTAINERS_DOC_PATH}#pod-name`}>
-				Pod Name
+				<ConsoleText message={'Pod Name'} />
 			</ColumnHeader>
 		),
 		accessorFn: (row): string =>
@@ -137,7 +138,7 @@ export const k8sContainerColumnsConfig: ContainerTableColumnConfig[] = [
 		id: 'namespace',
 		header: (): React.ReactNode => (
 			<ColumnHeader docPath={`${CONTAINERS_DOC_PATH}#additional-columns`}>
-				Namespace
+				<ConsoleText message={'Namespace'} />
 			</ColumnHeader>
 		),
 		accessorFn: (row): string =>
@@ -152,7 +153,7 @@ export const k8sContainerColumnsConfig: ContainerTableColumnConfig[] = [
 		id: 'image',
 		header: (): React.ReactNode => (
 			<ColumnHeader docPath={`${CONTAINERS_DOC_PATH}#imagetag`}>
-				Image:Tag
+				<ConsoleText message={'Image:Tag'} />
 			</ColumnHeader>
 		),
 		accessorFn: (row): string => getContainerImageWithTag(row),
@@ -169,7 +170,9 @@ export const k8sContainerColumnsConfig: ContainerTableColumnConfig[] = [
 	{
 		id: 'containerStatus',
 		header: (): React.ReactNode => (
-			<ColumnHeader docPath={`${CONTAINERS_DOC_PATH}#status`}>Status</ColumnHeader>
+			<ColumnHeader docPath={`${CONTAINERS_DOC_PATH}#status`}>
+				<ConsoleText message={'Status'} />
+			</ColumnHeader>
 		),
 		accessorFn: (row): string => row.status,
 		width: { min: STATUS_COLUMN_WIDTH },
@@ -197,7 +200,9 @@ export const k8sContainerColumnsConfig: ContainerTableColumnConfig[] = [
 	{
 		id: 'containerCountsByStatus',
 		header: (): React.ReactNode => (
-			<ColumnHeader docPath={`${CONTAINERS_DOC_PATH}#status`}>Status</ColumnHeader>
+			<ColumnHeader docPath={`${CONTAINERS_DOC_PATH}#status`}>
+				<ConsoleText message={'Status'} />
+			</ColumnHeader>
 		),
 		accessorFn: (
 			row,
@@ -222,7 +227,9 @@ export const k8sContainerColumnsConfig: ContainerTableColumnConfig[] = [
 	{
 		id: 'containerReady',
 		header: (): React.ReactNode => (
-			<ColumnHeader docPath={`${CONTAINERS_DOC_PATH}#ready`}>Ready</ColumnHeader>
+			<ColumnHeader docPath={`${CONTAINERS_DOC_PATH}#ready`}>
+				<ConsoleText message={'Ready'} />
+			</ColumnHeader>
 		),
 		accessorFn: (row): string => row.ready,
 		width: { min: 130 },
@@ -246,7 +253,9 @@ export const k8sContainerColumnsConfig: ContainerTableColumnConfig[] = [
 	{
 		id: 'containerCountsByReady',
 		header: (): React.ReactNode => (
-			<ColumnHeader docPath={`${CONTAINERS_DOC_PATH}#ready`}>Ready</ColumnHeader>
+			<ColumnHeader docPath={`${CONTAINERS_DOC_PATH}#ready`}>
+				<ConsoleText message={'Ready'} />
+			</ColumnHeader>
 		),
 		accessorFn: (
 			row,
@@ -271,7 +280,7 @@ export const k8sContainerColumnsConfig: ContainerTableColumnConfig[] = [
 		id: 'containerRestarts',
 		header: (): React.ReactNode => (
 			<ColumnHeader docPath={`${CONTAINERS_DOC_PATH}#restarts`}>
-				Restarts
+				<ConsoleText message={'Restarts'} />
 			</ColumnHeader>
 		),
 		accessorFn: (row): number => row.restarts,
@@ -295,7 +304,7 @@ export const k8sContainerColumnsConfig: ContainerTableColumnConfig[] = [
 				docPath={`${CONTAINERS_DOC_PATH}#cpu-req-usage-`}
 				tooltip={<EntityProgressThresholds type="cpu-request" />}
 			>
-				CPU Request Usage (%)
+				<ConsoleText message={'CPU Request Usage (%)'} />
 			</ColumnHeader>
 		),
 		accessorFn: (row): number => row.cpuRequestUtilization,
@@ -319,7 +328,7 @@ export const k8sContainerColumnsConfig: ContainerTableColumnConfig[] = [
 				docPath={`${CONTAINERS_DOC_PATH}#cpu-limit-usage-`}
 				tooltip={<EntityProgressThresholds type="cpu-limit" />}
 			>
-				CPU Limit Usage (%)
+				<ConsoleText message={'CPU Limit Usage (%)'} />
 			</ColumnHeader>
 		),
 		accessorFn: (row): number => row.cpuLimitUtilization,
@@ -340,7 +349,7 @@ export const k8sContainerColumnsConfig: ContainerTableColumnConfig[] = [
 		id: 'cpu',
 		header: (): React.ReactNode => (
 			<ColumnHeader docPath={`${CONTAINERS_DOC_PATH}#cpu-usage-cores`}>
-				CPU Usage (cores)
+				<ConsoleText message={'CPU Usage (cores)'} />
 			</ColumnHeader>
 		),
 		accessorFn: (row): number => row.cpu,
@@ -364,7 +373,7 @@ export const k8sContainerColumnsConfig: ContainerTableColumnConfig[] = [
 				docPath={`${CONTAINERS_DOC_PATH}#mem-req-usage-`}
 				tooltip={<EntityProgressThresholds type="memory-request" />}
 			>
-				Memory Request Usage (%)
+				<ConsoleText message={'Memory Request Usage (%)'} />
 			</ColumnHeader>
 		),
 		accessorFn: (row): number => row.memoryRequestUtilization,
@@ -388,7 +397,7 @@ export const k8sContainerColumnsConfig: ContainerTableColumnConfig[] = [
 				docPath={`${CONTAINERS_DOC_PATH}#mem-limit-usage-`}
 				tooltip={<EntityProgressThresholds type="memory-limit" />}
 			>
-				Memory Limit Usage (%)
+				<ConsoleText message={'Memory Limit Usage (%)'} />
 			</ColumnHeader>
 		),
 		accessorFn: (row): number => row.memoryLimitUtilization,
@@ -409,7 +418,7 @@ export const k8sContainerColumnsConfig: ContainerTableColumnConfig[] = [
 		id: 'memory',
 		header: (): React.ReactNode => (
 			<ColumnHeader docPath={`${CONTAINERS_DOC_PATH}#mem-usage-wss`}>
-				Memory Usage (WSS)
+				<ConsoleText message={'Memory Usage (WSS)'} />
 			</ColumnHeader>
 		),
 		accessorFn: (row): number => row.memory,
@@ -430,7 +439,7 @@ export const k8sContainerColumnsConfig: ContainerTableColumnConfig[] = [
 		id: 'node',
 		header: (): React.ReactNode => (
 			<ColumnHeader docPath={`${CONTAINERS_DOC_PATH}#additional-columns`}>
-				Node
+				<ConsoleText message={'Node'} />
 			</ColumnHeader>
 		),
 		accessorFn: (row): string =>
@@ -446,7 +455,7 @@ export const k8sContainerColumnsConfig: ContainerTableColumnConfig[] = [
 		id: 'cluster',
 		header: (): React.ReactNode => (
 			<ColumnHeader docPath={`${CONTAINERS_DOC_PATH}#additional-columns`}>
-				Cluster
+				<ConsoleText message={'Cluster'} />
 			</ColumnHeader>
 		),
 		accessorFn: (row): string =>
@@ -462,7 +471,7 @@ export const k8sContainerColumnsConfig: ContainerTableColumnConfig[] = [
 		id: 'deployment',
 		header: (): React.ReactNode => (
 			<ColumnHeader docPath={`${CONTAINERS_DOC_PATH}#additional-columns`}>
-				Deployment
+				<ConsoleText message={'Deployment'} />
 			</ColumnHeader>
 		),
 		accessorFn: (row): string =>

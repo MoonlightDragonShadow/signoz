@@ -10,9 +10,11 @@ import { getScatterPlotWarning } from './messages';
 export function getScatterPlotDataWarning(
 	panel: PanelOfKind<'signoz/ScatterPlotPanel'>,
 	data: PanelQueryData,
+	translate?: (message: string) => string,
 ): PanelStatusDetail | null {
 	return getScatterPlotWarning(
 		getScatterPlotData(data, panel.spec.plugin.spec),
 		findGroupByMismatch(getBuilderQueries(panel.spec.queries)),
+		translate,
 	);
 }

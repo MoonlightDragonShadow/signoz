@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useCallback } from 'react';
 import { toast } from '@signozhq/ui/sonner';
 import { PanelMode } from 'lib/visualization/panels/types';
@@ -46,6 +47,7 @@ function StaticEditorBody({
 	onChangePanelKind,
 	originalPanelKind,
 }: StaticEditorBodyProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	// Read here rather than taken as props: this renders inside a loaded dashboard
 	// subtree, so it resolves the same context every other consumer does.
 	const { isEditable, editChecks, editDisabledTooltip } =
@@ -72,14 +74,22 @@ function StaticEditorBody({
 			// `queries: []` is the only shape the API accepts for a static kind.
 			const savedPanelId = await save({ ...draft.spec, queries: [] });
 			setScrollTargetId(savedPanelId);
-			toast.success('Panel saved', {
+			toast.success(translate('Panel saved'), {
 				position: 'top-center',
 			});
 			onSaved();
 		} catch (err) {
 			showErrorModal(err);
 		}
-	}, [isEditable, save, draft.spec, setScrollTargetId, onSaved, showErrorModal]);
+	}, [
+		translate,
+		isEditable,
+		save,
+		draft.spec,
+		setScrollTargetId,
+		onSaved,
+		showErrorModal,
+	]);
 
 	const onChangeText = useCallback(
 		(text: string): void => setSpec(withPanelText(spec, text)),

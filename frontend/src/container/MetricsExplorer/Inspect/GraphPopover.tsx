@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import { useMemo } from 'react';
 import { Button, Card } from 'antd';
 import { Typography } from '@signozhq/ui/typography';
@@ -11,6 +12,7 @@ function GraphPopover({
 	popoverRef,
 	openInExpandedView,
 }: GraphPopoverProps): JSX.Element | null {
+	const translate = useConsoleTranslation();
 	const { x, y, value, timestamp, timeSeries } = options || {
 		x: 0,
 		y: 0,
@@ -60,7 +62,7 @@ function GraphPopover({
 				</div>
 				<div className="inspect-graph-popover-button-row">
 					<Button size="small" type="primary" onClick={openInExpandedView}>
-						<Typography.Text>View details</Typography.Text>
+						<Typography.Text>{translate('View details')}</Typography.Text>
 						<ArrowRight size={10} />
 					</Button>
 				</div>

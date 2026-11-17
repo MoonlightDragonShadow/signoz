@@ -1,3 +1,4 @@
+import useConsoleTranslation from 'hooks/useConsoleTranslation';
 import {
 	type ReactNode,
 	useCallback,
@@ -97,6 +98,7 @@ function MarkdownEditor({
 	className,
 	testId = 'markdown-editor',
 }: MarkdownEditorProps): JSX.Element {
+	const translate = useConsoleTranslation();
 	const isDarkMode = useIsDarkMode();
 	const viewRef = useRef<EditorView | null>(null);
 	// Set while a programmatic replacement is in flight, so the caller isn't told
@@ -223,7 +225,11 @@ function MarkdownEditor({
 					onUpdate={onUpdate}
 					theme={isDarkMode ? copilot : githubLight}
 					basicSetup={BASIC_SETUP}
-					placeholder={placeholder}
+					placeholder={
+						placeholder === 'Write Markdown…'
+							? translate('Write Markdown…')
+							: placeholder
+					}
 					editable={!readOnly}
 					readOnly={readOnly}
 					indentWithTab={false}
